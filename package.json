@@ -7,7 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint --ext ts,tsx .",
+    "test:watch": "jest --watchAll",
+    "test:unit": "jest",
+    "test:coverage": "yarn test:unit --coverage"
   },
   "repository": {
     "type": "git",
@@ -25,8 +28,16 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.16.3",
+    "@testing-library/dom": "^8.11.1",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^27.0.2",
+    "@types/jest-plugin-context": "^2",
     "@types/node": "^16.11.7",
     "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
+    "@types/testing-library__jest-dom": "^5",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
     "eslint": "^8.2.0",
@@ -41,6 +52,9 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-testing-library": "^5.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "given2": "^2.1.7",
+    "jest": "^27.3.1",
+    "jest-plugin-context": "^2.9.0",
     "typescript": "^4.4.4"
   }
 }

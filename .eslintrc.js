@@ -18,6 +18,7 @@ module.exports = {
     'airbnb',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
+    'plugin:jest/recommended',
     'plugin:testing-library/react',
   ],
   plugins: [
