@@ -29,6 +29,19 @@ module.exports = {
     'jest',
     'testing-library',
   ],
+  overrides: [
+    {
+      extends: [
+        'plugin:cypress/recommended',
+      ],
+      files: [
+        'cypress/**/*.ts',
+      ],
+      rules: {
+        'jest/expect-expect': 'off',
+      },
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
