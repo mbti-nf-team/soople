@@ -17,7 +17,7 @@ jobs:
           node-version: 14.x
 
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache
+        run: yarn install
 
       - name: Check Lint
         if: ${{ github.event_name == 'pull_request' }}
@@ -46,7 +46,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           command-prefix: yarn dlx
-          start: yarn serve
+          start: yarn dev
           browser: chrome
           headless: true
           record: true
