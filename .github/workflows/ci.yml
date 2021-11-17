@@ -46,8 +46,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           command-prefix: yarn dlx
-          start: yarn start
-          wait-on: 'http://localhost:3000'
+          start: yarn serve
           browser: chrome
           headless: true
           record: true
