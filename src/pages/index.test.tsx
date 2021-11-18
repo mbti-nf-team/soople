@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import Home from '.';
+import Home from './index.page';
 
 describe('index', () => {
   const renderIndex = () => render(<Home />);
