@@ -1,4 +1,4 @@
-# unnamed
+# Conner
 
 <a href="https://github.com/jennie-harang/unnamed/actions/workflows/ci.yml">
   <img src="https://img.shields.io/github/workflow/status/jennie-harang/unnamed/CI?label=CI&logo=GitHub&style=flat-square" />
