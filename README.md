@@ -4,8 +4,8 @@
   <img src="https://img.shields.io/github/workflow/status/jennie-harang/unnamed/CI?label=CI&logo=GitHub&style=flat-square" />
 </a>
 
-<a href="https://codecov.io/gh/jennie-harang/unnamed">
-  <img src="https://codecov.io/gh/jennie-harang/unnamed/branch/main/graph/badge.svg?token=hxDPxQyLYa">
+<a href="https://codecov.io/gh/jennie-harang/Conner">
+  <img src="https://codecov.io/gh/jennie-harang/Conner/branch/main/graph/badge.svg?token=hxDPxQyLYa"/>
 </a>
 
 <a href="https://dashboard.cypress.io/projects/oj7cg1/runs">
