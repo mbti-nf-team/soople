@@ -1,7 +1,7 @@
 # Conner
 
-<a href="https://github.com/jennie-harang/unnamed/actions/workflows/ci.yml">
-  <img src="https://img.shields.io/github/workflow/status/jennie-harang/unnamed/CI?label=CI&logo=GitHub&style=flat-square" />
+<a href="https://github.com/jennie-harang/Conner/actions/workflows/ci.yml">
+  <img src="https://img.shields.io/github/workflow/status/jennie-harang/Conner/CI?label=CI&logo=GitHub&style=flat-square" />
 </a>
 
 <a href="https://codecov.io/gh/jennie-harang/Conner">
@@ -12,16 +12,16 @@
   <img src="https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/oj7cg1&style=flat-square&logo=cypress">
 </a>
 
-<a href="https://github.com/jennie-harang/unnamed/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
-  <img src="https://img.shields.io/github/issues/jennie-harang/unnamed?style=flat-square" />
+<a href="https://github.com/jennie-harang/Conner/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
+  <img src="https://img.shields.io/github/issues/jennie-harang/Conner?style=flat-square" />
 </a>
 
-<a href="https://github.com/jennie-harang/unnamed/blob/main/LICENSE">
-  <img src="https://img.shields.io/github/license/jennie-harang/unnamed?style=flat-square">
+<a href="https://github.com/jennie-harang/Conner/blob/main/LICENSE">
+  <img src="https://img.shields.io/github/license/jennie-harang/Conner?style=flat-square">
 </a>
 
 <a href="#">
-  <img src="https://img.shields.io/github/repo-size/jennie-harang/unnamed?logo=yarn&style=flat-square">
+  <img src="https://img.shields.io/github/repo-size/jennie-harang/Conner?logo=yarn&style=flat-square">
 </a>
 
 ## 💻 Develop by
@@ -34,7 +34,7 @@
 </table>
 
 ## 🐛 Bug reporting
-[Issues](https://github.com/jennie-harang/unnamed/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
+[Issues](https://github.com/jennie-harang/Conner/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
 
 ## 🔒 LICENSE
-This Project is [MIT licensed](https://github.com/jennie-harang/unnamed/blob/main/LICENSE).
+This Project is [MIT licensed](https://github.com/jennie-harang/Conner/blob/main/LICENSE).
