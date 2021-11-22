@@ -1,27 +1,27 @@
-# Conner
+# Conners
 
-<a href="https://github.com/jennie-harang/Conner/actions/workflows/ci.yml">
-  <img src="https://img.shields.io/github/workflow/status/jennie-harang/Conner/CI?label=CI&logo=GitHub&style=flat-square" />
+<a href="https://github.com/jennie-harang/Conners/actions/workflows/ci.yml">
+  <img src="https://img.shields.io/github/workflow/status/jennie-harang/Conners/CI?label=CI&logo=GitHub&style=flat-square" />
 </a>
 
-<a href="https://codecov.io/gh/jennie-harang/Conner">
-  <img src="https://codecov.io/gh/jennie-harang/Conner/branch/main/graph/badge.svg?token=hxDPxQyLYa"/>
+<a href="https://codecov.io/gh/jennie-harang/Conners">
+  <img src="https://codecov.io/gh/jennie-harang/Conners/branch/main/graph/badge.svg?token=hxDPxQyLYa"/>
 </a>
 
 <a href="https://dashboard.cypress.io/projects/oj7cg1/runs">
   <img src="https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/oj7cg1&style=flat-square&logo=cypress">
 </a>
 
-<a href="https://github.com/jennie-harang/Conner/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
-  <img src="https://img.shields.io/github/issues/jennie-harang/Conner?style=flat-square" />
+<a href="https://github.com/jennie-harang/Conners/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
+  <img src="https://img.shields.io/github/issues/jennie-harang/Conners?style=flat-square" />
 </a>
 
-<a href="https://github.com/jennie-harang/Conner/blob/main/LICENSE">
-  <img src="https://img.shields.io/github/license/jennie-harang/Conner?style=flat-square">
+<a href="https://github.com/jennie-harang/Conners/blob/main/LICENSE">
+  <img src="https://img.shields.io/github/license/jennie-harang/Conners?style=flat-square">
 </a>
 
 <a href="#">
-  <img src="https://img.shields.io/github/repo-size/jennie-harang/Conner?logo=yarn&style=flat-square">
+  <img src="https://img.shields.io/github/repo-size/jennie-harang/Conners?logo=yarn&style=flat-square">
 </a>
 
 ## 💻 Develop by
@@ -34,7 +34,7 @@
 </table>
 
 ## 🐛 Bug reporting
-[Issues](https://github.com/jennie-harang/Conner/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
+[Issues](https://github.com/jennie-harang/Conners/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
 
 ## 🔒 LICENSE
-This Project is [MIT licensed](https://github.com/jennie-harang/Conner/blob/main/LICENSE).
+This Project is [MIT licensed](https://github.com/jennie-harang/Conners/blob/main/LICENSE).
