@@ -1,4 +1,6 @@
+import { AuthStore } from '@/reducers/authSlice';
+import type { AppState } from '@/reducers/store';
+
 export const isProdLevel = (env: string): boolean => env === 'production';
 
-// TODO - eslint 에러를 피하기 위한 임시 export처리
-export const temp = [];
+export const getAuth = (key: keyof AuthStore) => (obj: AppState) => obj.authReducer[key];

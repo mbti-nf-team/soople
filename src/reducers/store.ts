@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 
@@ -18,6 +20,7 @@ const store = makeStore();
 
 export type AppState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   AppState,
