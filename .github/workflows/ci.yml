@@ -45,7 +45,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          command-prefix: yarn dlx
+          install: yarn install
           start: yarn dev
           browser: chrome
           headless: true
