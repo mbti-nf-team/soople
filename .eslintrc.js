@@ -120,5 +120,6 @@ module.exports = {
       },
     ],
     'react/jsx-props-no-spreading': ['error', { exceptions: ['input'] }],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.test.ts', '**/*.test.tsx'] }],
   },
 };
