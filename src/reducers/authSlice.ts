@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { postSignInWithGoogle } from '@/services/api/auth';
+import { postSignInWithGithub, postSignInWithGoogle } from '@/services/api/auth';
 
 import type { AppDispatch } from './store';
 
@@ -38,6 +38,23 @@ export const { setAuth, setAuthError } = actions;
 export const requestSignInWithGoogle = () => async (dispatch: AppDispatch) => {
   try {
     const result = await postSignInWithGoogle();
+
+    if (!result) {
+      dispatch(setAuth(result));
+      return;
+    }
+
+    dispatch(setAuth(result.email));
+  } catch (error: unknown) {
+    const { message } = error as Error;
+
+    dispatch(setAuthError(message));
+  }
+};
+
+export const requestSignInWithGithub = () => async (dispatch: AppDispatch) => {
+  try {
+    const result = await postSignInWithGithub();
 
     if (!result) {
       dispatch(setAuth(result));
