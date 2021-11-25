@@ -20,8 +20,8 @@ function Home(): ReactElement {
     <div>
       {auth}
       <button type="button" onClick={onClick}>버튼</button>
-      <Link href="/signup">
-        counter
+      <Link href="/signin">
+        로그인
       </Link>
     </div>
   );
