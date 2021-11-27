@@ -1,7 +1,7 @@
 describe('sample', () => {
-  it('Finds the content "버튼"', () => {
+  it('Finds the content "홈"', () => {
     cy.visit('/');
 
-    cy.contains('버튼');
+    cy.contains('홈');
   });
 });
