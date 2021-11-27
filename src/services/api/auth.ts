@@ -1,17 +1,20 @@
 import {
   AuthProvider, getRedirectResult, signInWithRedirect,
 } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 
-import { auth } from '../firebase';
+import { Profile } from '@/models/auth';
+
+import { auth, db } from '../firebase';
 
 export const signInWithRedirectOAuth = (
   provider: AuthProvider,
 ) => signInWithRedirect(auth, provider);
 
 export const postSignInWithGoogle = async () => {
-  const result = await getRedirectResult(auth);
+  const response = await getRedirectResult(auth);
 
-  if (!result) {
+  if (!response) {
     return null;
   }
 
@@ -19,13 +22,13 @@ export const postSignInWithGoogle = async () => {
   // const credential = GoogleAuthProvider.credentialFromResult(result);
   // const token = credential?.accessToken;
 
-  return result.user;
+  return response.user;
 };
 
 export const postSignInWithGithub = async () => {
-  const result = await getRedirectResult(auth);
+  const response = await getRedirectResult(auth);
 
-  if (!result) {
+  if (!response) {
     return null;
   }
 
@@ -36,5 +39,12 @@ export const postSignInWithGithub = async () => {
   //   const token = credential.accessToken;
   // }
 
-  return result.user;
+  return response.user;
+};
+
+export const getUserProfile = async (uid: string) => {
+  const docRef = doc(db, 'profile', uid);
+  const response = await getDoc(docRef);
+
+  return response.data() as Profile | null;
 };

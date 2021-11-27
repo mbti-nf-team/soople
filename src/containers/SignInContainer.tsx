@@ -2,15 +2,20 @@ import React, { ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AuthProvider } from 'firebase/auth';
+import { useRouter } from 'next/router';
 
-import { requestSignInWithGithub, requestSignInWithGoogle } from '@/reducers/authSlice';
+import SignInOAuthButtons from '@/components/SignInOAuthButtons';
+import { requestSignInWithGithub, requestSignInWithGoogle, searchUserProfile } from '@/reducers/authSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { signInWithRedirectOAuth } from '@/services/api/auth';
-import { githubProvider, googleProvider } from '@/services/firebase';
 import { getAuth } from '@/utils/utils';
 
 function SingIn(): ReactElement {
+  const router = useRouter();
+
   const auth = useSelector(getAuth('auth'));
+  const isRegister = useSelector(getAuth('isRegister'));
+
   const dispatch = useAppDispatch();
 
   const onClickSignIn = (provider: AuthProvider) => signInWithRedirectOAuth(provider);
@@ -20,12 +25,22 @@ function SingIn(): ReactElement {
     dispatch(requestSignInWithGithub());
   }, []);
 
+  useEffect(() => {
+    if (auth) {
+      dispatch(searchUserProfile(auth.uid));
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    if (isRegister) {
+      router.replace('/register');
+    }
+  }, [isRegister]);
+
   return (
-    <div>
-      {auth}
-      <button type="button" onClick={() => onClickSignIn(googleProvider)}>구글 로그인</button>
-      <button type="button" onClick={() => onClickSignIn(githubProvider)}>깃허브 로그인</button>
-    </div>
+    <SignInOAuthButtons
+      onClick={onClickSignIn}
+    />
   );
 }
 

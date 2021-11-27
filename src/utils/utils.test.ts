@@ -1,3 +1,5 @@
+import { AuthStore } from '@/reducers/authSlice';
+
 import { getAuth, isProdLevel } from './utils';
 
 describe('isProdLevel', () => {
@@ -21,17 +23,21 @@ describe('isProdLevel', () => {
 test('getAuth', () => {
   const state = {
     authReducer: {
-      auth: 'auth',
+      auth: {
+        email: 'email',
+      },
       authError: 'error',
-      user: 'test',
-    },
+      user: {
+        email: 'email',
+      },
+    } as AuthStore,
   };
 
   const user = getAuth('user');
   const auth = getAuth('auth');
   const authError = getAuth('authError');
 
-  expect(user(state)).toBe('test');
-  expect(auth(state)).toBe('auth');
+  expect(user(state)).toEqual({ email: 'email' });
+  expect(auth(state)).toEqual({ email: 'email' });
   expect(authError(state)).toBe('error');
 });

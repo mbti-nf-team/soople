@@ -2,13 +2,15 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { AnyAction } from 'redux';
 
 import rootReducer from './rootReducer';
+import { AppState } from './store';
 
 describe('rootReducer', () => {
-  const initialAuth = {
+  const initialAuth: AppState = {
     authReducer: {
-      auth: '',
-      authError: '',
-      user: '',
+      auth: null,
+      authError: null,
+      user: null,
+      isRegister: false,
     },
   };
 
