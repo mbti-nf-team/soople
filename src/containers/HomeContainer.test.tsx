@@ -1,38 +1,15 @@
-import { useDispatch, useSelector } from 'react-redux';
-
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import Home from './HomeContainer';
 
 describe('Home', () => {
-  const dispatch = jest.fn();
-
-  beforeEach(() => {
-    dispatch.mockClear();
-
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        auth: '',
-      },
-    }));
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   const renderHome = () => render((
     <Home />
   ));
 
-  describe('버튼을 클릭한다', () => {
-    it('디스패치 액션이 호출되야만 한다', () => {
-      renderHome();
+  it('홈에 대한 정보가 보여져야만 한다', () => {
+    const { container } = renderHome();
 
-      fireEvent.click(screen.getByText('버튼'));
-
-      expect(dispatch).toBeCalledWith({ payload: 'test', type: 'auth/setAuth' });
-    });
+    expect(container).toHaveTextContent('홈!');
   });
 });

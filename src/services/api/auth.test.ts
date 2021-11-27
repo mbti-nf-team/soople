@@ -1,8 +1,10 @@
 import { getRedirectResult, signInWithRedirect } from 'firebase/auth';
+import { getDoc } from 'firebase/firestore';
 
 import { googleProvider } from '../firebase';
 
 import {
+  getUserProfile,
   postSignInWithGithub,
   postSignInWithGoogle,
   signInWithRedirectOAuth,
@@ -16,6 +18,12 @@ jest.mock('firebase/auth', () => ({
   GithubAuthProvider: jest.fn(),
   signInWithRedirect: jest.fn(),
   getRedirectResult: jest.fn(),
+}));
+
+jest.mock('firebase/firestore', () => ({
+  getFirestore: jest.fn(),
+  doc: jest.fn(),
+  getDoc: jest.fn(),
 }));
 
 describe('auth api', () => {
@@ -79,6 +87,27 @@ describe('auth api', () => {
 
         expect(getRedirectResult).toBeCalledWith({ languageCode: 'ko' });
         expect(result).toBe('test');
+      });
+    });
+  });
+
+  describe('getUserProfile', () => {
+    const uid = '1234567';
+
+    (getDoc as jest.Mock).mockImplementationOnce(() => ({
+      data: jest.fn().mockReturnValue({
+        uid,
+        email: 'test@test.com',
+      }),
+    }));
+
+    it('user profile 정보가 반환되어야 한다', async () => {
+      const result = await getUserProfile(uid);
+
+      expect(getDoc).toBeCalledTimes(1);
+      expect(result).toEqual({
+        uid,
+        email: 'test@test.com',
       });
     });
   });

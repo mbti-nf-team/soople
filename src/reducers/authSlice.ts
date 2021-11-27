@@ -1,24 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { postSignInWithGithub, postSignInWithGoogle } from '@/services/api/auth';
+import { Profile } from '@/models/auth';
+import { getUserProfile, postSignInWithGithub, postSignInWithGoogle } from '@/services/api/auth';
 
-import type { AppDispatch } from './store';
+import type { AppDispatch, AppThunk } from './store';
 
 export interface AuthStore {
-  user: string;
-  auth: string | null;
-  authError: string;
+  user: Profile | null;
+  auth: Profile | null;
+  authError: string | null;
+  isRegister: boolean;
 }
 
 const { actions, reducer } = createSlice({
   name: 'auth',
   initialState: {
-    user: '',
-    auth: '',
-    authError: '',
+    user: null,
+    auth: null,
+    isRegister: false,
+    authError: null,
   } as AuthStore,
   reducers: {
-    setAuth(state, { payload: auth }: PayloadAction<string | null>) {
+    setUser(state, { payload: user }: PayloadAction<Profile | null>) {
+      return {
+        ...state,
+        user,
+      };
+    },
+    setAuth(state, { payload: auth }: PayloadAction<Profile | null>) {
       return {
         ...state,
         auth,
@@ -30,21 +39,38 @@ const { actions, reducer } = createSlice({
         authError: error,
       };
     },
+    setIsRegister(state, { payload: isRegister }: PayloadAction<boolean>) {
+      return {
+        ...state,
+        isRegister,
+      };
+    },
   },
 });
 
-export const { setAuth, setAuthError } = actions;
+export const {
+  setAuth, setAuthError, setIsRegister, setUser,
+} = actions;
 
-export const requestSignInWithGoogle = () => async (dispatch: AppDispatch) => {
+export const requestSignInWithGoogle = (): AppThunk => async (dispatch: AppDispatch) => {
   try {
-    const result = await postSignInWithGoogle();
+    const profile = await postSignInWithGoogle();
 
-    if (!result) {
-      dispatch(setAuth(result));
+    if (!profile) {
+      dispatch(setAuth(profile));
       return;
     }
 
-    dispatch(setAuth(result.email));
+    const {
+      displayName, email, photoURL, uid,
+    } = profile;
+
+    dispatch(setAuth({
+      displayName,
+      email,
+      thumbnail: photoURL,
+      uid,
+    }));
   } catch (error: unknown) {
     const { message } = error as Error;
 
@@ -52,17 +78,44 @@ export const requestSignInWithGoogle = () => async (dispatch: AppDispatch) => {
   }
 };
 
-export const requestSignInWithGithub = () => async (dispatch: AppDispatch) => {
+export const requestSignInWithGithub = (): AppThunk => async (dispatch: AppDispatch) => {
   try {
-    const result = await postSignInWithGithub();
+    const profile = await postSignInWithGithub();
 
-    if (!result) {
-      dispatch(setAuth(result));
+    if (!profile) {
+      dispatch(setAuth(profile));
       return;
     }
 
-    dispatch(setAuth(result.email));
+    const {
+      displayName, email, photoURL, uid,
+    } = profile;
+
+    dispatch(setAuth({
+      displayName,
+      email,
+      thumbnail: photoURL,
+      uid,
+    }));
   } catch (error: unknown) {
+    const { message } = error as Error;
+
+    dispatch(setAuthError(message));
+  }
+};
+
+export const searchUserProfile = (uid: string): AppThunk => async (dispatch: AppDispatch) => {
+  try {
+    const profile = await getUserProfile(uid);
+
+    if (!profile) {
+      dispatch(setIsRegister(true));
+      return;
+    }
+
+    dispatch(setUser(profile));
+    dispatch(setAuth(null));
+  } catch (error) {
     const { message } = error as Error;
 
     dispatch(setAuthError(message));
