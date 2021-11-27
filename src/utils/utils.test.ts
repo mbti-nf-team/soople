@@ -1,6 +1,6 @@
 import { AuthStore } from '@/reducers/authSlice';
 
-import { getAuth, isProdLevel } from './utils';
+import { getAuth, isProdLevel, stringToExcludeNull } from './utils';
 
 describe('isProdLevel', () => {
   context('production일 때', () => {
@@ -40,4 +40,30 @@ test('getAuth', () => {
   expect(user(state)).toEqual({ email: 'email' });
   expect(auth(state)).toEqual({ email: 'email' });
   expect(authError(state)).toBe('error');
+});
+
+describe('stringToExcludeNull', () => {
+  context('undefined일 경우', () => {
+    it('빈 문자열을 반환야만 한다', () => {
+      const result = stringToExcludeNull();
+
+      expect(result).toBe('');
+    });
+  });
+
+  context('null일 경우', () => {
+    it('빈 문자열을 반환야만 한다', () => {
+      const result = stringToExcludeNull(null);
+
+      expect(result).toBe('');
+    });
+  });
+
+  context('문자열일 경우', () => {
+    it('빈 문자열을 반환야만 한다', () => {
+      const result = stringToExcludeNull('');
+
+      expect(result).toBe('');
+    });
+  });
 });

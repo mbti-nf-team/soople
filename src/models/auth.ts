@@ -3,6 +3,12 @@ export interface Profile {
   displayName: string | null;
   email: string | null;
   thumbnail: string | null;
-  id?: string;
-  portfolioUrl?: string;
+  id?: string | null;
+  portfolioUrl?: string | null;
+}
+
+export interface RegisterAdditionalForm extends Profile {
+  id: string;
+  displayName: string;
+  portfolioUrl: string;
 }
