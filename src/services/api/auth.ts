@@ -1,5 +1,5 @@
 import {
-  AuthProvider, getRedirectResult, signInWithRedirect,
+  AuthProvider, getRedirectResult, signInWithRedirect, signOut,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -52,4 +52,8 @@ export const getUserProfile = async (uid: string) => {
 export const postUserProfile = async (profile: Profile) => {
   const docRef = doc(db, 'profile', profile.uid);
   await setDoc(docRef, profile);
+};
+
+export const postSignOut = async () => {
+  await signOut(auth);
 };

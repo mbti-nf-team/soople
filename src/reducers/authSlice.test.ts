@@ -3,7 +3,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import {
-  getUserProfile, postSignInWithGithub, postSignInWithGoogle, postUserProfile,
+  getUserProfile, postSignInWithGithub, postSignInWithGoogle, postSignOut, postUserProfile,
 } from '@/services/api/auth';
 
 import PROFILE_FIXTURE from '../../fixtures/profile';
@@ -13,6 +13,7 @@ import reducer, {
   clearAuth,
   requestSignInWithGithub,
   requestSignInWithGoogle,
+  requestSignOut,
   saveUserProfile,
   searchUserProfile,
   setAuth,
@@ -321,6 +322,48 @@ describe('authReducer async actions', () => {
       it('dispatch 액션이 "auth/setAuthError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
           await store.dispatch(saveUserProfile(PROFILE_FIXTURE));
+        } catch (error) {
+          // ignore errors
+        } finally {
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: 'error',
+            type: 'auth/setAuthError',
+          });
+        }
+      });
+    });
+  });
+
+  describe('requestSignOut', () => {
+    beforeEach(() => {
+      store = mockStore({});
+    });
+
+    context('에러가 발생하지 않는 경우', () => {
+      (postSignOut as jest.Mock).mockReturnValueOnce(null);
+
+      it('dispatch 액션이 "auth/setUser"인 타입과 payload가 null 이어야 한다', async () => {
+        await store.dispatch(requestSignOut());
+
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+          payload: null,
+          type: 'auth/setUser',
+        });
+      });
+    });
+
+    context('에러가 발생하는 경우', () => {
+      (postSignOut as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      it('dispatch 액션이 "auth/setAuthError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
+        try {
+          await store.dispatch(requestSignOut());
         } catch (error) {
           // ignore errors
         } finally {
