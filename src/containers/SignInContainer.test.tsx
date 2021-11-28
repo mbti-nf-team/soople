@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import { signInWithRedirectOAuth } from '@/services/api/auth';
 import { githubProvider, googleProvider } from '@/services/firebase';
 
+import PROFILE_FIXTURE from '../../fixtures/profile';
+
 import SignUp from './SignInContainer';
 
 jest.mock('@/services/api/auth');
@@ -23,6 +25,7 @@ describe('SignUp', () => {
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
+        user: given.user,
         auth: given.auth,
         isRegister: given.isRegister,
       },
@@ -37,13 +40,34 @@ describe('SignUp', () => {
     <SignUp />
   ));
 
-  context('"isRegister" 참인 경우', () => {
+  context('"user" 존재하는 경우', () => {
+    given('user', () => (PROFILE_FIXTURE));
+
     const mockReplace = jest.fn();
 
+    beforeEach(() => {
+      (useRouter as jest.Mock).mockImplementationOnce(() => ({
+        replace: mockReplace,
+      }));
+    });
+
+    it('"router.replace"가 호출되어야만 한다', () => {
+      renderSignUp();
+
+      expect(mockReplace).toBeCalledWith('/');
+    });
+  });
+
+  context('"isRegister" 참인 경우', () => {
     given('isRegister', () => (true));
-    (useRouter as jest.Mock).mockImplementationOnce(() => ({
-      replace: mockReplace,
-    }));
+
+    const mockReplace = jest.fn();
+
+    beforeEach(() => {
+      (useRouter as jest.Mock).mockImplementationOnce(() => ({
+        replace: mockReplace,
+      }));
+    });
 
     it('"router.replace"가 호출되어야만 한다', () => {
       renderSignUp();

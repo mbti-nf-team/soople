@@ -5,3 +5,5 @@ export const postSignInWithGoogle = jest.fn();
 export const postSignInWithGithub = jest.fn();
 
 export const getUserProfile = jest.fn();
+
+export const postUserProfile = jest.fn();

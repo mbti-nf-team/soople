@@ -1,7 +1,7 @@
 import {
   AuthProvider, getRedirectResult, signInWithRedirect,
 } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
 
@@ -47,4 +47,9 @@ export const getUserProfile = async (uid: string) => {
   const response = await getDoc(docRef);
 
   return response.data() as Profile | null;
+};
+
+export const postUserProfile = async (profile: Profile) => {
+  const docRef = doc(db, 'profile', profile.uid);
+  await setDoc(docRef, profile);
 };
