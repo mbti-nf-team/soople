@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Profile } from '@/models/auth';
 import {
-  getUserProfile, postSignInWithGithub, postSignInWithGoogle, postUserProfile,
+  getUserProfile, postSignInWithGithub, postSignInWithGoogle, postSignOut, postUserProfile,
 } from '@/services/api/auth';
 
 import type { AppDispatch, AppThunk } from './store';
@@ -136,6 +136,18 @@ export const saveUserProfile = (profile: Profile): AppThunk => async (dispatch:A
     await postUserProfile(profile);
 
     dispatch(setUser(profile));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setAuthError(message));
+  }
+};
+
+export const requestSignOut = (): AppThunk => async (dispatch:AppDispatch) => {
+  try {
+    await postSignOut();
+
+    dispatch(setUser(null));
   } catch (error) {
     const { message } = error as Error;
 

@@ -1,4 +1,4 @@
-import { getRedirectResult, signInWithRedirect } from 'firebase/auth';
+import { getRedirectResult, signInWithRedirect, signOut } from 'firebase/auth';
 import { getDoc, setDoc } from 'firebase/firestore';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -8,6 +8,7 @@ import {
   getUserProfile,
   postSignInWithGithub,
   postSignInWithGoogle,
+  postSignOut,
   postUserProfile,
   signInWithRedirectOAuth,
 } from './auth';
@@ -20,6 +21,7 @@ jest.mock('firebase/auth', () => ({
   GithubAuthProvider: jest.fn(),
   signInWithRedirect: jest.fn(),
   getRedirectResult: jest.fn(),
+  signOut: jest.fn(),
 }));
 
 jest.mock('firebase/firestore', () => ({
@@ -124,6 +126,14 @@ describe('auth api', () => {
 
         expect(setDoc).toBeCalledTimes(1);
       });
+    });
+  });
+
+  describe('postSignOut', () => {
+    it('"signOut"가 호출되어야만 한다', async () => {
+      await postSignOut();
+
+      expect(signOut).toBeCalledTimes(1);
     });
   });
 });

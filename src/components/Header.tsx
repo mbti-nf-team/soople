@@ -6,9 +6,10 @@ import { Profile } from '@/models/auth';
 
 interface Props {
   user: Profile | null
+  onSignOut: () => void
 }
 
-export default function Header({ user }: Props): ReactElement {
+export default function Header({ user, onSignOut }: Props): ReactElement {
   if (!user) {
     return (
       <Link href="/signin">
@@ -18,7 +19,7 @@ export default function Header({ user }: Props): ReactElement {
   }
 
   return (
-    <button type="button">
+    <button type="button" onClick={onSignOut}>
       로그아웃
     </button>
   );

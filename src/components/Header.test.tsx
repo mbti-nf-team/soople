@@ -1,13 +1,20 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import PROFILE_FIXTURE from '../../fixtures/profile';
 
 import Header from './Header';
 
 describe('Header', () => {
+  const handleSignOut = jest.fn();
+
+  beforeEach(() => {
+    handleSignOut.mockClear();
+  });
+
   const renderHeader = () => render((
     <Header
       user={given.user}
+      onSignOut={handleSignOut}
     />
   ));
 
@@ -18,6 +25,16 @@ describe('Header', () => {
       const { container } = renderHeader();
 
       expect(container).toHaveTextContent('로그아웃');
+    });
+
+    describe('"로그아웃" 버튼을 클릭한다', () => {
+      it('클릭 이벤트가 호출되어야만 한다', () => {
+        renderHeader();
+
+        fireEvent.click(screen.getByText('로그아웃'));
+
+        expect(handleSignOut).toBeCalledTimes(1);
+      });
     });
   });
 
