@@ -1,12 +1,14 @@
 import { getRedirectResult, signInWithRedirect } from 'firebase/auth';
-import { getDoc } from 'firebase/firestore';
+import { getDoc, setDoc } from 'firebase/firestore';
 
+import PROFILE_FIXTURE from '../../../fixtures/profile';
 import { googleProvider } from '../firebase';
 
 import {
   getUserProfile,
   postSignInWithGithub,
   postSignInWithGoogle,
+  postUserProfile,
   signInWithRedirectOAuth,
 } from './auth';
 
@@ -24,6 +26,7 @@ jest.mock('firebase/firestore', () => ({
   getFirestore: jest.fn(),
   doc: jest.fn(),
   getDoc: jest.fn(),
+  setDoc: jest.fn(),
 }));
 
 describe('auth api', () => {
@@ -108,6 +111,18 @@ describe('auth api', () => {
       expect(result).toEqual({
         uid,
         email: 'test@test.com',
+      });
+    });
+  });
+
+  describe('postUserProfile', () => {
+    (setDoc as jest.Mock).mockResolvedValueOnce(null);
+
+    describe('프로필 정보가 저장되어야 한다', () => {
+      it('"setDoc"가 호출되어야만 한다', async () => {
+        await postUserProfile(PROFILE_FIXTURE);
+
+        expect(setDoc).toBeCalledTimes(1);
       });
     });
   });

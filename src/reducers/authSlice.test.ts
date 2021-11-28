@@ -2,14 +2,18 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { getUserProfile, postSignInWithGithub, postSignInWithGoogle } from '@/services/api/auth';
+import {
+  getUserProfile, postSignInWithGithub, postSignInWithGoogle, postUserProfile,
+} from '@/services/api/auth';
 
 import PROFILE_FIXTURE from '../../fixtures/profile';
 
 import reducer, {
   AuthStore,
+  clearAuth,
   requestSignInWithGithub,
   requestSignInWithGoogle,
+  saveUserProfile,
   searchUserProfile,
   setAuth,
   setAuthError,
@@ -70,6 +74,18 @@ describe('authReducer', () => {
       const { isRegister } = reducer(initialState, setIsRegister(true));
 
       expect(isRegister).toBeTruthy();
+    });
+  });
+
+  describe('clearAuth', () => {
+    it('"auth", "isRegister", "authError"가 초기화되어야만 한다', () => {
+      const state = reducer({
+        ...initialState,
+        isRegister: true,
+        authError: 'error',
+      }, clearAuth());
+
+      expect(state).toEqual(initialState);
     });
   });
 });
@@ -263,6 +279,48 @@ describe('authReducer async actions', () => {
       it('dispatch 액션이 "auth/setAuthError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
           await store.dispatch(searchUserProfile(uid));
+        } catch (error) {
+          // ignore errors
+        } finally {
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: 'error',
+            type: 'auth/setAuthError',
+          });
+        }
+      });
+    });
+  });
+
+  describe('saveUserProfile', () => {
+    beforeEach(() => {
+      store = mockStore({});
+    });
+
+    context('에러가 발생하지 않는 경우', () => {
+      (postUserProfile as jest.Mock).mockReturnValueOnce(null);
+
+      it('dispatch 액션이 "auth/setUser"인 타입과 profile 정보의 payload 이어야 한다', async () => {
+        await store.dispatch(saveUserProfile(PROFILE_FIXTURE));
+
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+          payload: PROFILE_FIXTURE,
+          type: 'auth/setUser',
+        });
+      });
+    });
+
+    context('에러가 발생하는 경우', () => {
+      (postUserProfile as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      it('dispatch 액션이 "auth/setAuthError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
+        try {
+          await store.dispatch(saveUserProfile(PROFILE_FIXTURE));
         } catch (error) {
           // ignore errors
         } finally {

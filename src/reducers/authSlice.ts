@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Profile } from '@/models/auth';
-import { getUserProfile, postSignInWithGithub, postSignInWithGoogle } from '@/services/api/auth';
+import {
+  getUserProfile, postSignInWithGithub, postSignInWithGoogle, postUserProfile,
+} from '@/services/api/auth';
 
 import type { AppDispatch, AppThunk } from './store';
 
@@ -45,11 +47,19 @@ const { actions, reducer } = createSlice({
         isRegister,
       };
     },
+    clearAuth(state) {
+      return {
+        ...state,
+        auth: null,
+        isRegister: false,
+        authError: null,
+      };
+    },
   },
 });
 
 export const {
-  setAuth, setAuthError, setIsRegister, setUser,
+  setAuth, setAuthError, setIsRegister, setUser, clearAuth,
 } = actions;
 
 export const requestSignInWithGoogle = (): AppThunk => async (dispatch: AppDispatch) => {
@@ -114,7 +124,18 @@ export const searchUserProfile = (uid: string): AppThunk => async (dispatch: App
     }
 
     dispatch(setUser(profile));
-    dispatch(setAuth(null));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setAuthError(message));
+  }
+};
+
+export const saveUserProfile = (profile: Profile): AppThunk => async (dispatch:AppDispatch) => {
+  try {
+    await postUserProfile(profile);
+
+    dispatch(setUser(profile));
   } catch (error) {
     const { message } = error as Error;
 
