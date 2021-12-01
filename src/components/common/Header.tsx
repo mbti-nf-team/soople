@@ -17,6 +17,9 @@ export default function Header({ session }: Props): ReactElement {
         <button type="button" onClick={() => signIn('github')}>
           깃허브 로그인
         </button>
+        <button type="button" onClick={() => signIn('kakao')}>
+          카카오 로그인
+        </button>
       </>
     );
   }
