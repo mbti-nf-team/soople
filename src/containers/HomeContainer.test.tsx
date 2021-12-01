@@ -1,8 +1,13 @@
 import { render } from '@testing-library/react';
+import { useSession } from 'next-auth/client';
 
 import Home from './HomeContainer';
 
 describe('Home', () => {
+  beforeEach(() => {
+    (useSession as jest.Mock).mockImplementationOnce(() => ([null]));
+  });
+
   const renderHome = () => render((
     <Home />
   ));

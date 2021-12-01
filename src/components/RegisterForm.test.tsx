@@ -49,7 +49,7 @@ describe('RegisterForm', () => {
         it('"이름을 입력해주세요." 에러 메시지가 보여진다', async () => {
           const { container } = renderRegisterForm({
             ...PROFILE_FIXTURE,
-            displayName: '',
+            name: '',
           });
 
           const button = screen.getByText('저장');
@@ -68,7 +68,7 @@ describe('RegisterForm', () => {
         it('"아이디를 입력해주세요." 에러 메시지가 보여진다', async () => {
           const { container } = renderRegisterForm({
             ...PROFILE_FIXTURE,
-            id: '',
+            userId: '',
           });
 
           const button = screen.getByText('저장');

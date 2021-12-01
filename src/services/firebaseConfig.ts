@@ -1,6 +1,4 @@
-import { FirebaseOptions } from 'firebase/app';
-
-const firebaseConfig: FirebaseOptions = {
+const firebaseConfig = {
   apiKey: 'AIzaSyCYowtRqTtNahY3jpkkGdCAd_0jtpvWhR4',
   authDomain: 'jennie-harang-conner.firebaseapp.com',
   projectId: 'jennie-harang-conner',
