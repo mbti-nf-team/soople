@@ -63,5 +63,17 @@ describe('Header', () => {
         });
       });
     });
+
+    context('OAuth가 카카오인 경우', () => {
+      describe('"카카오 로그인" 버튼을 클릭한다', () => {
+        it('클릭 이벤트가 호출되어야만 한다', () => {
+          renderHeader();
+
+          fireEvent.click(screen.getByText('카카오 로그인'));
+
+          expect(signIn).toBeCalledWith('kakao');
+        });
+      });
+    });
   });
 });
