@@ -2,20 +2,14 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import {
-  getUserProfile, postSignInWithGithub, postSignInWithGoogle, postSignOut, postUserProfile,
-} from '@/services/api/auth';
+import { updateUserProfile } from '@/services/api/auth';
 
 import PROFILE_FIXTURE from '../../fixtures/profile';
 
 import reducer, {
   AuthStore,
   clearAuth,
-  requestSignInWithGithub,
-  requestSignInWithGoogle,
-  requestSignOut,
-  saveUserProfile,
-  searchUserProfile,
+  requestUpdateProfile,
   setAuth,
   setAuthError,
   setIsRegister,
@@ -98,212 +92,16 @@ describe('authReducer async actions', () => {
 
   let store: RootState;
 
-  describe('requestSignInWithGoogle', () => {
+  describe('requestUpdateProfile', () => {
     beforeEach(() => {
       store = mockStore({});
     });
 
     context('에러가 발생하지 않는 경우', () => {
-      context('반환 값이 null인 경우', () => {
-        (postSignInWithGoogle as jest.Mock).mockReturnValueOnce(null);
-
-        it('dispatch 액션이 "auth/setAuth"인 타입과 null인 payload 이어야 한다', async () => {
-          await store.dispatch(requestSignInWithGoogle());
-
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: null,
-            type: 'auth/setAuth',
-          });
-        });
-      });
-
-      context('반환 값이 null 아닌 경우', () => {
-        const email = 'test@test.com';
-
-        (postSignInWithGoogle as jest.Mock).mockReturnValueOnce({
-          email,
-        });
-
-        it('dispatch 액션이 "auth/setAuth"인 타입과 null이 아닌 payload 이어야 한다', async () => {
-          await store.dispatch(requestSignInWithGoogle());
-
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: {
-              email,
-            },
-            type: 'auth/setAuth',
-          });
-        });
-      });
-    });
-
-    context('에러가 발생하는 경우', () => {
-      (postSignInWithGoogle as jest.Mock).mockImplementationOnce(() => {
-        throw new Error('error');
-      });
-
-      it('dispatch 액션이 "auth/setAuthError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
-        try {
-          await store.dispatch(requestSignInWithGoogle());
-        } catch (error) {
-          // ignore errors
-        } finally {
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: 'error',
-            type: 'auth/setAuthError',
-          });
-        }
-      });
-    });
-  });
-
-  describe('requestSignInWithGithub', () => {
-    beforeEach(() => {
-      store = mockStore({});
-    });
-
-    context('에러가 발생하지 않는 경우', () => {
-      context('반환 값이 null인 경우', () => {
-        (postSignInWithGithub as jest.Mock).mockReturnValueOnce(null);
-
-        it('dispatch 액션이 "auth/setAuth"인 타입과 null인 payload 이어야 한다', async () => {
-          await store.dispatch(requestSignInWithGithub());
-
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: null,
-            type: 'auth/setAuth',
-          });
-        });
-      });
-
-      context('반환 값이 null 아닌 경우', () => {
-        const email = 'test@test.com';
-
-        (postSignInWithGithub as jest.Mock).mockReturnValueOnce({
-          email,
-        });
-
-        it('dispatch 액션이 "auth/setAuth"인 타입과 null이 아닌 payload 이어야 한다', async () => {
-          await store.dispatch(requestSignInWithGithub());
-
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: {
-              email,
-            },
-            type: 'auth/setAuth',
-          });
-        });
-      });
-    });
-
-    context('에러가 발생하는 경우', () => {
-      (postSignInWithGithub as jest.Mock).mockImplementationOnce(() => {
-        throw new Error('error');
-      });
-
-      it('dispatch 액션이 "auth/setAuthError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
-        try {
-          await store.dispatch(requestSignInWithGithub());
-        } catch (error) {
-          // ignore errors
-        } finally {
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: 'error',
-            type: 'auth/setAuthError',
-          });
-        }
-      });
-    });
-  });
-
-  describe('searchUserProfile', () => {
-    const uid = '1234567';
-
-    beforeEach(() => {
-      store = mockStore({});
-    });
-
-    context('에러가 발생하지 않는 경우', () => {
-      context('반환 값이 null인 경우', () => {
-        (getUserProfile as jest.Mock).mockReturnValueOnce(null);
-
-        it('dispatch 액션이 "auth/setIsRegister"인 타입과 true인 payload 이어야 한다', async () => {
-          await store.dispatch(searchUserProfile(uid));
-
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: true,
-            type: 'auth/setIsRegister',
-          });
-        });
-      });
-
-      context('반환 값이 null 아닌 경우', () => {
-        const profile = {
-          uid: '1234567',
-          email: 'test@test.com',
-        };
-
-        (getUserProfile as jest.Mock).mockReturnValueOnce(profile);
-
-        it('dispatch 액션이 "auth/setUser"인 타입과 profile 정보의 payload 이어야 한다', async () => {
-          await store.dispatch(searchUserProfile(uid));
-
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: profile,
-            type: 'auth/setUser',
-          });
-        });
-      });
-    });
-
-    context('에러가 발생하는 경우', () => {
-      (getUserProfile as jest.Mock).mockImplementationOnce(() => {
-        throw new Error('error');
-      });
-
-      it('dispatch 액션이 "auth/setAuthError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
-        try {
-          await store.dispatch(searchUserProfile(uid));
-        } catch (error) {
-          // ignore errors
-        } finally {
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: 'error',
-            type: 'auth/setAuthError',
-          });
-        }
-      });
-    });
-  });
-
-  describe('saveUserProfile', () => {
-    beforeEach(() => {
-      store = mockStore({});
-    });
-
-    context('에러가 발생하지 않는 경우', () => {
-      (postUserProfile as jest.Mock).mockReturnValueOnce(null);
+      (updateUserProfile as jest.Mock).mockReturnValueOnce(null);
 
       it('dispatch 액션이 "auth/setUser"인 타입과 profile 정보의 payload 이어야 한다', async () => {
-        await store.dispatch(saveUserProfile(PROFILE_FIXTURE));
+        await store.dispatch(requestUpdateProfile(PROFILE_FIXTURE));
 
         const actions = store.getActions();
 
@@ -315,55 +113,13 @@ describe('authReducer async actions', () => {
     });
 
     context('에러가 발생하는 경우', () => {
-      (postUserProfile as jest.Mock).mockImplementationOnce(() => {
+      (updateUserProfile as jest.Mock).mockImplementationOnce(() => {
         throw new Error('error');
       });
 
       it('dispatch 액션이 "auth/setAuthError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
-          await store.dispatch(saveUserProfile(PROFILE_FIXTURE));
-        } catch (error) {
-          // ignore errors
-        } finally {
-          const actions = store.getActions();
-
-          expect(actions[0]).toEqual({
-            payload: 'error',
-            type: 'auth/setAuthError',
-          });
-        }
-      });
-    });
-  });
-
-  describe('requestSignOut', () => {
-    beforeEach(() => {
-      store = mockStore({});
-    });
-
-    context('에러가 발생하지 않는 경우', () => {
-      (postSignOut as jest.Mock).mockReturnValueOnce(null);
-
-      it('dispatch 액션이 "auth/setUser"인 타입과 payload가 null 이어야 한다', async () => {
-        await store.dispatch(requestSignOut());
-
-        const actions = store.getActions();
-
-        expect(actions[0]).toEqual({
-          payload: null,
-          type: 'auth/setUser',
-        });
-      });
-    });
-
-    context('에러가 발생하는 경우', () => {
-      (postSignOut as jest.Mock).mockImplementationOnce(() => {
-        throw new Error('error');
-      });
-
-      it('dispatch 액션이 "auth/setAuthError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
-        try {
-          await store.dispatch(requestSignOut());
+          await store.dispatch(requestUpdateProfile(PROFILE_FIXTURE));
         } catch (error) {
           // ignore errors
         } finally {

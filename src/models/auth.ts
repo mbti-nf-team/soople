@@ -1,14 +1,14 @@
 export interface Profile {
   uid: string;
-  displayName: string | null;
-  email: string | null;
-  thumbnail: string | null;
-  id?: string | null;
+  name?: string | null;
+  email: string;
+  thumbnail?: string | null;
+  userId?: string | null;
   portfolioUrl?: string | null;
 }
 
-export interface RegisterAdditionalForm extends Profile {
-  id: string;
-  displayName: string;
+export interface RegisterAdditionalForm {
+  userId: string;
+  name: string;
   portfolioUrl: string;
 }

@@ -1,25 +1,24 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-
-import PROFILE_FIXTURE from '../../fixtures/profile';
+import { signIn, signOut } from 'next-auth/client';
 
 import Header from './Header';
 
 describe('Header', () => {
-  const handleSignOut = jest.fn();
-
-  beforeEach(() => {
-    handleSignOut.mockClear();
-  });
-
   const renderHeader = () => render((
     <Header
-      user={given.user}
-      onSignOut={handleSignOut}
+      session={given.session}
     />
   ));
 
-  context('user 정보가 존재한 경우', () => {
-    given('user', () => (PROFILE_FIXTURE));
+  context('세션이 존재한 경우', () => {
+    given('session', () => ({
+      user: {
+        uid: '1',
+        name: 'test',
+        email: 'test@test.com',
+        image: 'http://image.com',
+      },
+    }));
 
     it('"로그아웃" 버튼이 나타나야만 한다', () => {
       const { container } = renderHeader();
@@ -33,18 +32,36 @@ describe('Header', () => {
 
         fireEvent.click(screen.getByText('로그아웃'));
 
-        expect(handleSignOut).toBeCalledTimes(1);
+        expect(signOut).toBeCalledTimes(1);
       });
     });
   });
 
-  context('user 정보가 존재하지 않는 경우', () => {
-    given('user', () => (null));
+  context('세션 정보가 존재하지 않는 경우', () => {
+    given('session', () => (null));
 
-    it('"로그인" 버튼이 나타나야만 한다', () => {
-      const { container } = renderHeader();
+    context('OAuth가 구글인 경우', () => {
+      describe('"구글 로그인" 버튼을 클릭한다', () => {
+        it('클릭 이벤트가 호출되어야만 한다', () => {
+          renderHeader();
 
-      expect(container).toHaveTextContent('로그인');
+          fireEvent.click(screen.getByText('구글 로그인'));
+
+          expect(signIn).toBeCalledWith('google');
+        });
+      });
+    });
+
+    context('OAuth가 깃허브인 경우', () => {
+      describe('"깃허브 로그인" 버튼을 클릭한다', () => {
+        it('클릭 이벤트가 호출되어야만 한다', () => {
+          renderHeader();
+
+          fireEvent.click(screen.getByText('깃허브 로그인'));
+
+          expect(signIn).toBeCalledWith('github');
+        });
+      });
     });
   });
 });

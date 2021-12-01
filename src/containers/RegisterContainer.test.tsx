@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { act } from 'react-dom/test-utils';
+import { useDispatch } from 'react-redux';
 
-import {
-  act, fireEvent, render, screen,
-} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 
-import PROFILE_FIXTURE from '../../fixtures/profile';
+import SESSION_FIXTURE from '../../fixtures/session';
 
 import RegisterContainer from './RegisterContainer';
 
@@ -20,11 +20,7 @@ describe('RegisterContainer', () => {
     dispatch.mockClear();
 
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        auth: given.auth,
-      },
-    }));
+    (useSession as jest.Mock).mockImplementation(() => ([given.session]));
   });
 
   afterEach(() => {
@@ -35,8 +31,9 @@ describe('RegisterContainer', () => {
     <RegisterContainer />
   ));
 
-  context('로그인 후 가입페이지로 redirect된 경우', () => {
-    given('auth', () => (PROFILE_FIXTURE));
+  context('세션 정보가 존재하는 경우', () => {
+    given('session', () => (SESSION_FIXTURE));
+
     it('회원가입 페이지에 대한 정보 나타나야만 한다', () => {
       const { container } = renderRegisterContainer();
 
@@ -56,6 +53,8 @@ describe('RegisterContainer', () => {
         renderRegisterContainer();
 
         await act(async () => {
+          fireEvent.change(screen.getByLabelText('아이디'), { target: { value: 'test' } });
+
           await fireEvent.submit(screen.getByText('저장'));
         });
 
@@ -65,8 +64,8 @@ describe('RegisterContainer', () => {
     });
   });
 
-  context('비정상적으로 가입페이지로 redirect된 경우', () => {
-    given('auth', () => (null));
+  context('세션 정보가 존재하지 않는 경우', () => {
+    given('session', () => (null));
 
     it('"로그인부터 진행해주세요!" 메시지가 나타나야만 한다', () => {
       const { container } = renderRegisterContainer();

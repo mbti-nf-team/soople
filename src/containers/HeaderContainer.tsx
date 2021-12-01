@@ -1,22 +1,15 @@
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
+
+import { useSession } from 'next-auth/client';
 
 import Header from '@/components/Header';
-import { requestSignOut } from '@/reducers/authSlice';
-import { useAppDispatch } from '@/reducers/store';
-import { getAuth } from '@/utils/utils';
 
 function HeaderContainer(): ReactElement {
-  const dispatch = useAppDispatch();
-
-  const user = useSelector(getAuth('user'));
-
-  const onSignOut = () => dispatch(requestSignOut());
+  const [session] = useSession();
 
   return (
     <Header
-      user={user}
-      onSignOut={onSignOut}
+      session={session}
     />
   );
 }

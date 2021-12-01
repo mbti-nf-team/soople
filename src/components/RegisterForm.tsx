@@ -13,26 +13,29 @@ interface Props {
 }
 
 const validationSchema = yup.object({
-  displayName: yup.string().required('이름을 입력해주세요.'),
-  id: yup.string().required('아이디를 입력해주세요.'),
+  name: yup.string().required('이름을 입력해주세요.'),
+  userId: yup.string().required('아이디를 입력해주세요.'),
   portfolioUrl: yup.string().notRequired().nullable(),
 }).required();
 
 function RegisterForm({ onSubmit, fields }: Props): ReactElement {
-  const { displayName, email, id } = fields;
+  const {
+    name, email, userId, thumbnail,
+  } = fields;
   const { register, handleSubmit, formState: { errors } } = useForm<RegisterAdditionalForm>({
     resolver: yupResolver(validationSchema),
   });
 
   return (
     <div>
+      <img src={stringToExcludeNull(thumbnail)} alt={`${email}-thumbnail`} width="300px" height="300px" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="displayName">
+          <label htmlFor="name">
             이름
-            <input type="text" id="displayName" defaultValue={stringToExcludeNull(displayName)} placeholder="이름" {...register('displayName')} />
+            <input type="text" id="name" defaultValue={stringToExcludeNull(name)} placeholder="이름" {...register('name')} />
           </label>
-          <div>{errors.displayName?.message}</div>
+          <div>{errors.name?.message}</div>
         </div>
 
         <div>
@@ -43,11 +46,11 @@ function RegisterForm({ onSubmit, fields }: Props): ReactElement {
         </div>
 
         <div>
-          <label htmlFor="id">
+          <label htmlFor="userId">
             아이디
-            <input type="text" id="id" placeholder="아이디를 입력하세요" defaultValue={stringToExcludeNull(id)} {...register('id')} />
+            <input type="text" id="userId" placeholder="아이디를 입력하세요" defaultValue={stringToExcludeNull(userId)} {...register('userId')} />
           </label>
-          <div>{errors.id?.message}</div>
+          <div>{errors.userId?.message}</div>
         </div>
 
         <div>
