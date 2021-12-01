@@ -3,14 +3,13 @@ import { Profile } from '@/models/auth';
 import firestore from '../firebase';
 
 export const updateUserProfile = async ({
-  uid, portfolioUrl, userId, name, thumbnail,
+  uid, portfolioUrl, name, thumbnail,
 }: Profile) => {
   const user = firestore.collection('users').doc(uid);
 
   await user.update({
     name,
     image: thumbnail,
-    userId,
     portfolioUrl,
   });
 };

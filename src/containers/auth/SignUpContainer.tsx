@@ -4,12 +4,12 @@ import { useUnmount } from 'react-use';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 
-import RegisterForm from '@/components/RegisterForm';
-import { Profile, RegisterAdditionalForm } from '@/models/auth';
+import SignUpForm from '@/components/auth/SignUpForm';
+import { Profile, SignUpAdditionalForm } from '@/models/auth';
 import { clearAuth, requestUpdateProfile } from '@/reducers/authSlice';
 import { useAppDispatch } from '@/reducers/store';
 
-function RegisterContainer(): ReactElement {
+function SignUpContainer(): ReactElement {
   const [session] = useSession();
 
   const router = useRouter();
@@ -23,7 +23,7 @@ function RegisterContainer(): ReactElement {
 
   const { user } = session;
 
-  const onSubmit = (formData: RegisterAdditionalForm) => {
+  const onSubmit = (formData: SignUpAdditionalForm) => {
     const { email, uid, image } = user;
 
     dispatch(requestUpdateProfile({
@@ -43,8 +43,9 @@ function RegisterContainer(): ReactElement {
 
   return (
     <div>
-      <h2>기본 회원 정보를 등록해주세요.</h2>
-      <RegisterForm
+      <h2>시작하기</h2>
+      <h4>코너스를 시작하기 위해 정보를 입력해주세요.</h4>
+      <SignUpForm
         fields={fields}
         onSubmit={onSubmit}
       />
@@ -52,4 +53,4 @@ function RegisterContainer(): ReactElement {
   );
 }
 
-export default RegisterContainer;
+export default SignUpContainer;

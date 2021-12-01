@@ -3,12 +3,10 @@ export interface Profile {
   name?: string | null;
   email: string;
   thumbnail?: string | null;
-  userId?: string | null;
   portfolioUrl?: string | null;
 }
 
-export interface RegisterAdditionalForm {
-  userId: string;
+export interface SignUpAdditionalForm {
   name: string;
   portfolioUrl: string;
 }

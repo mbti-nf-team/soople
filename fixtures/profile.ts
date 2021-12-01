@@ -5,7 +5,6 @@ const profile: Profile = {
   email: 'test@test.com',
   name: 'test',
   thumbnail: 'https://test.test',
-  userId: 'test',
   portfolioUrl: 'https://test.test',
 };
 
