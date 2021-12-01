@@ -16,7 +16,7 @@ export default NextAuth({
     }),
   ],
   pages: {
-    newUser: '/register',
+    newUser: '/signup',
   },
   callbacks: {
     async session(session, user) {

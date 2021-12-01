@@ -5,15 +5,15 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 
-import SESSION_FIXTURE from '../../fixtures/session';
+import SESSION_FIXTURE from '../../../fixtures/session';
 
-import RegisterContainer from './RegisterContainer';
+import SignUpContainer from './SignUpContainer';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 
-describe('RegisterContainer', () => {
+describe('SignUpContainer', () => {
   const dispatch = jest.fn();
 
   beforeEach(() => {
@@ -27,20 +27,20 @@ describe('RegisterContainer', () => {
     jest.clearAllMocks();
   });
 
-  const renderRegisterContainer = () => render((
-    <RegisterContainer />
+  const renderSignUpContainer = () => render((
+    <SignUpContainer />
   ));
 
   context('세션 정보가 존재하는 경우', () => {
     given('session', () => (SESSION_FIXTURE));
 
     it('회원가입 페이지에 대한 정보 나타나야만 한다', () => {
-      const { container } = renderRegisterContainer();
+      const { container } = renderSignUpContainer();
 
-      expect(container).toHaveTextContent('기본 회원 정보를 등록해주세요.');
+      expect(container).toHaveTextContent('시작하기');
     });
 
-    describe('저장버튼을 클릭한다', () => {
+    describe('"확인" 버튼을 클릭한다', () => {
       const mockReplace = jest.fn();
 
       beforeEach(() => {
@@ -50,12 +50,10 @@ describe('RegisterContainer', () => {
       });
 
       it('dispatch 액션이 호출되어야만 한다', async () => {
-        renderRegisterContainer();
+        renderSignUpContainer();
 
         await act(async () => {
-          fireEvent.change(screen.getByLabelText('아이디'), { target: { value: 'test' } });
-
-          await fireEvent.submit(screen.getByText('저장'));
+          await fireEvent.submit(screen.getByText('확인'));
         });
 
         expect(dispatch).toBeCalled();
@@ -68,7 +66,7 @@ describe('RegisterContainer', () => {
     given('session', () => (null));
 
     it('"로그인부터 진행해주세요!" 메시지가 나타나야만 한다', () => {
-      const { container } = renderRegisterContainer();
+      const { container } = renderSignUpContainer();
 
       expect(container).toHaveTextContent('로그인부터 진행해주세요!');
     });

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { useSession } from 'next-auth/client';
 
-import SESSION_FIXTURE from '../../fixtures/session';
+import SESSION_FIXTURE from '../../../fixtures/session';
 
 import HeaderContainer from './HeaderContainer';
 
