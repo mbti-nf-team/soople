@@ -6,10 +6,19 @@ import { Session } from 'next-auth';
 declare module 'next-auth' {
   interface Session {
     user: {
-      uid: string
-      name?: string | null
-      email: string
-      image?: string | null
+      uid: string;
+      name?: string | null;
+      email: string;
+      image?: string | null;
+      portfolioUrl?: string | null;
     },
+  }
+
+  interface User {
+    id: string;
+    name?: string | null;
+    email: string;
+    image?: string | null;
+    portfolioUrl?: string | null;
   }
 }

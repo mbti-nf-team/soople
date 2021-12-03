@@ -1,5 +1,5 @@
 import { FirebaseAdapter } from '@next-auth/firebase-adapter';
-import NextAuth from 'next-auth';
+import NextAuth, { User } from 'next-auth';
 import Providers from 'next-auth/providers';
 
 import firestore from '@/services/firebase';
@@ -23,12 +23,13 @@ export default NextAuth({
     newUser: '/signup',
   },
   callbacks: {
-    async session(session, user) {
+    async session(session, user: User) {
       return {
         ...session,
         user: {
           ...session.user,
-          uid: user.id as string,
+          uid: user.id,
+          portfolioUrl: user.portfolioUrl,
         },
       };
     },

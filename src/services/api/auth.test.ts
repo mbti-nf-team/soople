@@ -20,11 +20,11 @@ describe('auth api', () => {
     it('update 함수가 호출되어야만 한다', async () => {
       await updateUserProfile(PROFILE_FIXTURE);
 
-      const { name, thumbnail, portfolioUrl } = PROFILE_FIXTURE;
+      const { name, image, portfolioUrl } = PROFILE_FIXTURE;
 
       expect(mockUpdate).toBeCalledWith({
         name,
-        image: thumbnail,
+        image,
         portfolioUrl,
       });
     });

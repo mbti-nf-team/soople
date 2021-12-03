@@ -18,14 +18,14 @@ const validationSchema = yup.object({
 }).required();
 
 function SignUpForm({ onSubmit, fields }: Props): ReactElement {
-  const { name, email, thumbnail } = fields;
+  const { name, email, image } = fields;
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpAdditionalForm>({
     resolver: yupResolver(validationSchema),
   });
 
   return (
     <div>
-      <img src={stringToExcludeNull(thumbnail)} alt={`${email}-thumbnail`} width="300px" height="300px" />
+      <img src={stringToExcludeNull(image)} alt={`${email}-thumbnail`} width="300px" height="300px" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="name">
