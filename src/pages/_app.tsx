@@ -3,12 +3,16 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'next-auth/client';
 
 import wrapper from '@/reducers/store';
+import GlobalStyles from '@/styles/GlobalStyles';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <Provider session={session}>
-      <Component {...pageProps} />
-    </Provider>
+    <>
+      <GlobalStyles />
+      <Provider session={session}>
+        <Component {...pageProps} />
+      </Provider>
+    </>
   );
 }
 
