@@ -2,7 +2,7 @@ export interface Profile {
   uid: string;
   name?: string | null;
   email: string;
-  thumbnail?: string | null;
+  image?: string | null;
   portfolioUrl?: string | null;
 }
 
