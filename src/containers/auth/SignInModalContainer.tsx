@@ -8,7 +8,7 @@ interface Props {
   isVisible: boolean;
 }
 
-export default function SignInModalContainer({ onClose, isVisible }: Props): ReactElement {
+function SignInModalContainer({ onClose, isVisible }: Props): ReactElement {
   return (
     <SignInModal
       onClose={onClose}
@@ -18,3 +18,5 @@ export default function SignInModalContainer({ onClose, isVisible }: Props): Rea
     </SignInModal>
   );
 }
+
+export default SignInModalContainer;

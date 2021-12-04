@@ -33,6 +33,8 @@ function SignInModal({ isVisible, onClose, children }: Props): ReactElement | nu
   );
 }
 
+export default SignInModal;
+
 const SignInModalWrapper = styled.div`
   position: fixed;
   top: 0;
@@ -60,5 +62,3 @@ const SignInModalBox = styled.div<{ isVisible: boolean }>`
     animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;
   `)};
 `;
-
-export default SignInModal;
