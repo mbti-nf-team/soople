@@ -28,6 +28,7 @@ module.exports = {
     'flowtype',
     'jest',
     'testing-library',
+    '@emotion',
   ],
   overrides: [
     {
@@ -86,7 +87,7 @@ module.exports = {
     'import/no-unresolved': 'error',
     'react/react-in-jsx-scope': 'off',
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error'],
+    '@typescript-eslint/no-use-before-define': ['off'],
     'simple-import-sort/imports': ['error', {
       groups: [
         // Node.js builtins. You could also generate this regex if you use a `.js` config.
