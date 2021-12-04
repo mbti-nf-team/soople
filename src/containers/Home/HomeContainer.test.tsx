@@ -15,6 +15,6 @@ describe('Home', () => {
   it('홈에 대한 정보가 보여져야만 한다', () => {
     const { container } = renderHome();
 
-    expect(container).toHaveTextContent('홈!');
+    expect(container).toHaveTextContent('Conners');
   });
 });

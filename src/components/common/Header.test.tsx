@@ -20,10 +20,11 @@ describe('Header', () => {
       },
     }));
 
-    it('"로그아웃" 버튼이 나타나야만 한다', () => {
+    it('"로그아웃" 버튼과 "팀 모집하기" 링크가 나타나야만 한다', () => {
       const { container } = renderHeader();
 
       expect(container).toHaveTextContent('로그아웃');
+      expect(screen.getByText('팀 모집하기')).toHaveAttribute('href', '/new');
     });
 
     describe('"로그아웃" 버튼을 클릭한다', () => {

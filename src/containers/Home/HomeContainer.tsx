@@ -5,7 +5,7 @@ import HeaderContainer from '../common/HeaderContainer';
 function HomeContainer(): ReactElement {
   return (
     <div>
-      홈!
+      <h2>Conners</h2>
       <HeaderContainer />
     </div>
   );

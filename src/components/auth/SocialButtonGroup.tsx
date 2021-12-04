@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 import { signIn } from 'next-auth/client';
 
-export default function SocialButtonGroup(): ReactElement {
+function SocialButtonGroup(): ReactElement {
   return (
     <div>
       <button type="button" onClick={() => signIn('google')}>
@@ -17,3 +17,5 @@ export default function SocialButtonGroup(): ReactElement {
     </div>
   );
 }
+
+export default SocialButtonGroup;
