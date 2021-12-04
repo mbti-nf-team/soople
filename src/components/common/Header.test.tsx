@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { signIn, signOut } from 'next-auth/client';
+import { signOut } from 'next-auth/client';
 
 import Header from './Header';
 
@@ -40,38 +40,33 @@ describe('Header', () => {
   context('세션 정보가 존재하지 않는 경우', () => {
     given('session', () => (null));
 
-    context('OAuth가 구글인 경우', () => {
-      describe('"구글 로그인" 버튼을 클릭한다', () => {
-        it('클릭 이벤트가 호출되어야만 한다', () => {
-          renderHeader();
+    it('"시작하기" 버튼이 나타나야만 한다', () => {
+      const { container } = renderHeader();
 
-          fireEvent.click(screen.getByText('구글 로그인'));
+      expect(container).toHaveTextContent('시작하기');
+    });
 
-          expect(signIn).toBeCalledWith('google');
+    context('Sign In 모달창이 닫혀 있는 경우', () => {
+      describe('"시작하기" 버튼을 클릭한다', () => {
+        it('Sign In 모달창이 나타나야만 한다', () => {
+          const { container } = renderHeader();
+
+          fireEvent.click(screen.getByText('시작하기'));
+
+          expect(container).toHaveTextContent('소셜 계정으로 계속하기');
         });
       });
     });
 
-    context('OAuth가 깃허브인 경우', () => {
-      describe('"깃허브 로그인" 버튼을 클릭한다', () => {
-        it('클릭 이벤트가 호출되어야만 한다', () => {
-          renderHeader();
+    context('Sign In 모달창이 열려 있는 경우', () => {
+      describe('"X" 버튼을 클릭한다', () => {
+        it('Sign In 모달창 사라져야 한다', () => {
+          const { container } = renderHeader();
 
-          fireEvent.click(screen.getByText('깃허브 로그인'));
+          fireEvent.click(screen.getByText('시작하기'));
+          fireEvent.click(screen.getByText('X'));
 
-          expect(signIn).toBeCalledWith('github');
-        });
-      });
-    });
-
-    context('OAuth가 카카오인 경우', () => {
-      describe('"카카오 로그인" 버튼을 클릭한다', () => {
-        it('클릭 이벤트가 호출되어야만 한다', () => {
-          renderHeader();
-
-          fireEvent.click(screen.getByText('카카오 로그인'));
-
-          expect(signIn).toBeCalledWith('kakao');
+          expect(container).not.toHaveTextContent('소셜 계정으로 계속하기');
         });
       });
     });

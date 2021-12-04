@@ -31,11 +31,10 @@ describe('HeaderContainer', () => {
   context('로그인하지 않은 경우', () => {
     given('session', () => (null));
 
-    it('"로그인" 버튼이 나타나야만 한다', () => {
+    it('"시작하기" 버튼이 나타나야만 한다', () => {
       const { container } = renderHeaderContainer();
 
-      expect(container).toHaveTextContent('구글 로그인');
-      expect(container).toHaveTextContent('깃허브 로그인');
+      expect(container).toHaveTextContent('시작하기');
     });
   });
 });
