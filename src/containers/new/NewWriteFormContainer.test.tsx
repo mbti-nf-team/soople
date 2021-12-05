@@ -1,10 +1,25 @@
-import { render, screen } from '@testing-library/react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fireEvent, render, screen } from '@testing-library/react';
 import { useSession } from 'next-auth/client';
 
 import NewWriteFormContainer from './NewWriteFormContainer';
 
 describe('NewWriteFormContainer', () => {
+  const dispatch = jest.fn();
+
   beforeEach(() => {
+    dispatch.mockClear();
+
+    (useDispatch as jest.Mock).mockImplementationOnce(() => dispatch);
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      groupReducer: {
+        writeFields: {
+          title: '',
+          contents: '',
+        },
+      },
+    }));
     (useSession as jest.Mock).mockImplementation(() => ([given.session, given.loading]));
   });
 
@@ -29,6 +44,24 @@ describe('NewWriteFormContainer', () => {
 
       placeholderTexts.forEach((placeholderText) => {
         expect(screen.getByPlaceholderText(placeholderText)).toBeInTheDocument();
+      });
+    });
+
+    describe('인풋창에 글을 작성한다', () => {
+      const inputValue = {
+        name: 'title',
+        value: 'test',
+      };
+
+      it('"changeWriteFields" dispatch 액션이 호출되어야만 한다', () => {
+        renderNewWriteFormContainer();
+
+        fireEvent.change(screen.getByPlaceholderText('제목을 입력하세요'), { target: inputValue });
+
+        expect(dispatch).toBeCalledWith({
+          payload: inputValue,
+          type: 'group/changeWriteFields',
+        });
       });
     });
   });

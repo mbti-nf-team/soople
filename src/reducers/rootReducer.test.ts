@@ -1,16 +1,27 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { AnyAction } from 'redux';
 
+import { WriteFields } from '@/models/group';
+
 import rootReducer from './rootReducer';
 import { AppState } from './store';
 
 describe('rootReducer', () => {
-  const initialAuth: AppState = {
+  const fieldsInitialState: WriteFields = {
+    title: '',
+    contents: '',
+  };
+
+  const initialReducer: AppState = {
     authReducer: {
       auth: null,
       authError: null,
       user: null,
-      isRegister: false,
+    },
+    groupReducer: {
+      groupId: null,
+      groupError: null,
+      writeFields: fieldsInitialState,
     },
   };
 
@@ -23,10 +34,10 @@ describe('rootReducer', () => {
     };
 
     it('추가된 상태가 나타나야 한다', () => {
-      const result = rootReducer(initialAuth, action);
+      const result = rootReducer(initialReducer, action);
 
       expect(result).toEqual({
-        ...initialAuth,
+        ...initialReducer,
         auth: 'test',
       });
     });
@@ -41,9 +52,9 @@ describe('rootReducer', () => {
     };
 
     it('리듀서 store가 그대로인 상태로 반환해야 한다', () => {
-      const result = rootReducer(initialAuth, action);
+      const result = rootReducer(initialReducer, action);
 
-      expect(result).toEqual(initialAuth);
+      expect(result).toEqual(initialReducer);
     });
   });
 });

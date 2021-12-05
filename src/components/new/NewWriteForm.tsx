@@ -1,12 +1,40 @@
-import React, { ReactElement } from 'react';
+import React, { ChangeEvent, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
-function NewWriteForm(): ReactElement {
+import { WriteFields, WriteFieldsKey } from '@/models/group';
+
+interface Props {
+  fields: WriteFields;
+  onChange: (form: WriteFieldsKey) => void;
+}
+
+function NewWriteForm({ fields, onChange }: Props): ReactElement {
+  const { title, contents } = fields;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+
+    onChange({ name, value });
+  };
+
   return (
     <NewWriteFormWrapper>
-      <input placeholder="제목을 입력하세요" />
-      <textarea rows={10} cols={20} placeholder="내용을 입력하세요" />
+      <input
+        type="text"
+        name="title"
+        value={title}
+        onChange={handleChange}
+        placeholder="제목을 입력하세요"
+      />
+      <textarea
+        name="contents"
+        value={contents}
+        rows={10}
+        cols={20}
+        onChange={handleChange}
+        placeholder="내용을 입력하세요"
+      />
     </NewWriteFormWrapper>
   );
 }

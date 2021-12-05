@@ -1,9 +1,9 @@
 import PROFILE_FIXTURE from '../../../fixtures/profile';
-import firestore from '../firebase';
+import db from '../firebase';
 
 import { updateUserProfile } from './auth';
 
-describe('auth api', () => {
+describe('auth API', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -11,7 +11,7 @@ describe('auth api', () => {
   describe('updateUserProfile', () => {
     const mockUpdate = jest.fn();
 
-    (jest.spyOn(firestore, 'collection') as jest.Mock).mockImplementationOnce(() => ({
+    (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
       doc: jest.fn().mockImplementationOnce(() => ({
         update: mockUpdate,
       })),

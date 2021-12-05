@@ -3,13 +3,16 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { AnyAction } from 'redux';
 
 import authReducer, { AuthStore } from './authSlice';
+import groupReducer, { GroupStore } from './groupSlice';
 
 export interface RootReducerState {
   authReducer: AuthStore,
+  groupReducer: GroupStore,
 }
 
 const combineReducer = combineReducers({
   authReducer,
+  groupReducer,
 });
 
 const rootReducer = (state: RootReducerState | undefined, action: AnyAction) => {
