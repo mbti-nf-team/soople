@@ -1,6 +1,10 @@
-import { AuthStore } from '@/reducers/authSlice';
+import { RootReducerState } from '@/reducers/rootReducer';
 
-import { getAuth, isProdLevel, stringToExcludeNull } from './utils';
+import WRITE_FIELDS_FIXTURE from '../../fixtures/writeFields';
+
+import {
+  getAuth, getGroup, isProdLevel, stringToExcludeNull,
+} from './utils';
 
 describe('isProdLevel', () => {
   context('production일 때', () => {
@@ -30,8 +34,12 @@ test('getAuth', () => {
       user: {
         email: 'email',
       },
-    } as AuthStore,
-  };
+    },
+    groupReducer: {
+      writeFields: WRITE_FIELDS_FIXTURE,
+      groupError: null,
+    },
+  } as RootReducerState;
 
   const user = getAuth('user');
   const auth = getAuth('auth');
@@ -40,6 +48,30 @@ test('getAuth', () => {
   expect(user(state)).toEqual({ email: 'email' });
   expect(auth(state)).toEqual({ email: 'email' });
   expect(authError(state)).toBe('error');
+});
+
+test('getGroup', () => {
+  const state = {
+    authReducer: {
+      auth: {
+        email: 'email',
+      },
+      authError: 'error',
+      user: {
+        email: 'email',
+      },
+    },
+    groupReducer: {
+      writeFields: WRITE_FIELDS_FIXTURE,
+      groupError: null,
+    },
+  } as RootReducerState;
+
+  const groupError = getGroup('groupError');
+  const writeFields = getGroup('writeFields');
+
+  expect(groupError(state)).toBeNull();
+  expect(writeFields(state)).toEqual(WRITE_FIELDS_FIXTURE);
 });
 
 describe('stringToExcludeNull', () => {

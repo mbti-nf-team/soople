@@ -9,7 +9,6 @@ export interface AuthStore {
   user: Profile | null;
   auth: Profile | null;
   authError: string | null;
-  isRegister: boolean;
 }
 
 const { actions, reducer } = createSlice({
@@ -17,7 +16,6 @@ const { actions, reducer } = createSlice({
   initialState: {
     user: null,
     auth: null,
-    isRegister: false,
     authError: null,
   } as AuthStore,
   reducers: {
@@ -39,17 +37,10 @@ const { actions, reducer } = createSlice({
         authError: error,
       };
     },
-    setIsRegister(state, { payload: isRegister }: PayloadAction<boolean>) {
-      return {
-        ...state,
-        isRegister,
-      };
-    },
     clearAuth(state) {
       return {
         ...state,
         auth: null,
-        isRegister: false,
         authError: null,
       };
     },
@@ -57,7 +48,7 @@ const { actions, reducer } = createSlice({
 });
 
 export const {
-  setAuth, setAuthError, setIsRegister, setUser, clearAuth,
+  setAuth, setAuthError, setUser, clearAuth,
 } = actions;
 
 export const requestUpdateProfile = (

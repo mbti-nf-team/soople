@@ -1,10 +1,19 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import NewWriteForm from './NewWriteForm';
 
 describe('NewWriteForm', () => {
+  const initialFields = {
+    title: '',
+    contents: '',
+  };
+  const handleChange = jest.fn();
+
   const renderNewWriteForm = () => render((
-    <NewWriteForm />
+    <NewWriteForm
+      fields={initialFields}
+      onChange={handleChange}
+    />
   ));
 
   const placeholderTexts = [
@@ -17,6 +26,21 @@ describe('NewWriteForm', () => {
 
     placeholderTexts.forEach((placeholderText) => {
       expect(screen.getByPlaceholderText(placeholderText)).toBeInTheDocument();
+    });
+  });
+
+  describe('인풋 창에 입력한다', () => {
+    const inputValue = {
+      name: 'title',
+      value: 'test',
+    };
+
+    it('onChange 이벤트가 호출되야만 한다', () => {
+      renderNewWriteForm();
+
+      fireEvent.change(screen.getByPlaceholderText('제목을 입력하세요'), { target: inputValue });
+
+      expect(handleChange).toBeCalledWith(inputValue);
     });
   });
 });

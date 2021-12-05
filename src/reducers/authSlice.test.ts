@@ -12,7 +12,6 @@ import reducer, {
   requestUpdateProfile,
   setAuth,
   setAuthError,
-  setIsRegister,
   setUser,
 } from './authSlice';
 import { RootState } from './rootReducer';
@@ -27,7 +26,6 @@ describe('authReducer', () => {
     user: null,
     auth: null,
     authError: null,
-    isRegister: false,
   };
 
   context('previous state가 undefined일 때', () => {
@@ -64,19 +62,10 @@ describe('authReducer', () => {
     });
   });
 
-  describe('setIsRegister', () => {
-    it('isRegister는 true를 반환해야만 한다', () => {
-      const { isRegister } = reducer(initialState, setIsRegister(true));
-
-      expect(isRegister).toBeTruthy();
-    });
-  });
-
   describe('clearAuth', () => {
     it('"auth", "isRegister", "authError"가 초기화되어야만 한다', () => {
       const state = reducer({
         ...initialState,
-        isRegister: true,
         authError: 'error',
       }, clearAuth());
 
