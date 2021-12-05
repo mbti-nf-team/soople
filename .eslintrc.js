@@ -121,7 +121,7 @@ module.exports = {
       },
     ],
     'react/jsx-props-no-spreading': ['error', { exceptions: ['input'] }],
-    'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.test.ts', '**/*.test.tsx'] }],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.test.ts', '**/*.test.tsx', 'jest.setup.js'] }],
     'jest/no-identical-title': 'off',
     'testing-library/no-unnecessary-act': 'off',
     'jsx-a11y/anchor-is-valid': ['error', {

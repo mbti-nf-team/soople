@@ -1,7 +1,7 @@
 {
-  "name": "unnamed",
+  "name": "conners",
   "version": "0.0.1",
-  "description": "",
+  "description": "스터디와 프로젝트를 연결해주는 Connect + er + s, Conners! 🎨",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
@@ -16,16 +16,24 @@
     "test:e2e": "start-server-and-test dev http://localhost:3000 cypress:run",
     "prepare": "husky install"
   },
+  "keywords": [
+    "conners",
+    "react",
+    "next.js",
+    "TDD",
+    "study",
+    "project"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jennie-harang/unnamed.git"
+    "url": "git+https://github.com/jennie-harang/Conners.git"
   },
   "author": "Harang & Jennie",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jennie-harang/unnamed/issues"
+    "url": "https://github.com/jennie-harang/Conners/issues"
   },
-  "homepage": "https://github.com/jennie-harang/unnamed#readme",
+  "homepage": "https://www.conners.io",
   "lint-staged": {
     "*.{ts,tsx}": [
       "yarn lint",
