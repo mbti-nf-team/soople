@@ -2,6 +2,7 @@
 import type { AppProps } from 'next/app';
 import { Provider } from 'next-auth/client';
 
+import SignInModalContainer from '@/containers/auth/SignInModalContainer';
 import wrapper from '@/reducers/store';
 import GlobalStyles from '@/styles/GlobalStyles';
 
@@ -10,6 +11,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     <>
       <GlobalStyles />
       <Provider session={session}>
+        <SignInModalContainer />
         <Component {...pageProps} />
       </Provider>
     </>
