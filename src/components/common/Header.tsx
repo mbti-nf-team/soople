@@ -1,21 +1,15 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 
 import Link from 'next/link';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/client';
 
-import SignInModalContainer from '@/containers/auth/SignInModalContainer';
-
 interface Props {
   session: Session | null
+  onClick: () => void;
 }
 
-function Header({ session }: Props): ReactElement {
-  const [visible, setVisible] = useState<boolean>(false);
-
-  const onClick = () => setVisible(true);
-  const onClose = () => setVisible(false);
-
+function Header({ session, onClick }: Props): ReactElement {
   if (session) {
     return (
       <div>
@@ -33,15 +27,9 @@ function Header({ session }: Props): ReactElement {
   }
 
   return (
-    <>
-      <button type="button" onClick={onClick}>
-        시작하기
-      </button>
-      <SignInModalContainer
-        isVisible={visible}
-        onClose={onClose}
-      />
-    </>
+    <button type="button" onClick={onClick}>
+      시작하기
+    </button>
   );
 }
 

@@ -4,9 +4,12 @@ import { signOut } from 'next-auth/client';
 import Header from './Header';
 
 describe('Header', () => {
+  const handleClick = jest.fn();
+
   const renderHeader = () => render((
     <Header
       session={given.session}
+      onClick={handleClick}
     />
   ));
 
@@ -47,28 +50,13 @@ describe('Header', () => {
       expect(container).toHaveTextContent('시작하기');
     });
 
-    context('Sign In 모달창이 닫혀 있는 경우', () => {
-      describe('"시작하기" 버튼을 클릭한다', () => {
-        it('Sign In 모달창이 나타나야만 한다', () => {
-          const { container } = renderHeader();
+    describe('"시작하기" 버튼을 클릭한다', () => {
+      it('클릭 이벤트가 호출되어야만 한다', () => {
+        renderHeader();
 
-          fireEvent.click(screen.getByText('시작하기'));
+        fireEvent.click(screen.getByText('시작하기'));
 
-          expect(container).toHaveTextContent('소셜 계정으로 계속하기');
-        });
-      });
-    });
-
-    context('Sign In 모달창이 열려 있는 경우', () => {
-      describe('"X" 버튼을 클릭한다', () => {
-        it('Sign In 모달창 사라져야 한다', () => {
-          const { container } = renderHeader();
-
-          fireEvent.click(screen.getByText('시작하기'));
-          fireEvent.click(screen.getByText('X'));
-
-          expect(container).not.toHaveTextContent('소셜 계정으로 계속하기');
-        });
+        expect(handleClick).toBeCalledTimes(1);
       });
     });
   });

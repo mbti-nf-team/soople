@@ -12,6 +12,7 @@ describe('SignUpPage', () => {
         auth: null,
         authError: null,
         user: 'user',
+        isVisible: false,
       },
       groupReducer: {
         groupError: null,
@@ -25,6 +26,11 @@ describe('SignUpPage', () => {
   };
 
   describe('getServerSideProps', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      jest.spyOn(window.console, 'log').mockImplementation(() => null);
+    });
+
     const mockContext = (callbackUrl: string | null) => ({
       query: { callbackUrl } as ParsedUrlQuery,
     });

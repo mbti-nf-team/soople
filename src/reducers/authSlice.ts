@@ -9,6 +9,7 @@ export interface AuthStore {
   user: Profile | null;
   auth: Profile | null;
   authError: string | null;
+  isVisible: boolean;
 }
 
 const { actions, reducer } = createSlice({
@@ -17,12 +18,19 @@ const { actions, reducer } = createSlice({
     user: null,
     auth: null,
     authError: null,
+    isVisible: false,
   } as AuthStore,
   reducers: {
     setUser(state, { payload: user }: PayloadAction<Profile | null>) {
       return {
         ...state,
         user,
+      };
+    },
+    setSignInModalVisible(state, { payload: isVisible }: PayloadAction<boolean>) {
+      return {
+        ...state,
+        isVisible,
       };
     },
     setAuth(state, { payload: auth }: PayloadAction<Profile | null>) {
@@ -48,7 +56,7 @@ const { actions, reducer } = createSlice({
 });
 
 export const {
-  setAuth, setAuthError, setUser, clearAuth,
+  setAuth, setAuthError, setUser, clearAuth, setSignInModalVisible,
 } = actions;
 
 export const requestUpdateProfile = (

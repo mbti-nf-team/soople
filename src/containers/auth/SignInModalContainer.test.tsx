@@ -1,15 +1,25 @@
+import { useDispatch, useSelector } from 'react-redux';
+
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import SignInModalContainer from './SignInModalContainer';
 
 describe('SignInModalContainer', () => {
-  const handleClose = jest.fn();
+  const dispatch = jest.fn();
+
+  beforeEach(() => {
+    dispatch.mockClear();
+
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      authReducer: {
+        isVisible: given.isVisible,
+      },
+    }));
+    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
+  });
 
   const renderSignInModalContainer = () => render((
-    <SignInModalContainer
-      onClose={handleClose}
-      isVisible={given.isVisible}
-    />
+    <SignInModalContainer />
   ));
 
   context('SignIn 모달이 열린 경우', () => {
@@ -30,7 +40,10 @@ describe('SignInModalContainer', () => {
 
         fireEvent.click(screen.getByText('X'));
 
-        expect(handleClose).toBeCalledTimes(1);
+        expect(dispatch).toBeCalledWith({
+          payload: false,
+          type: 'auth/setSignInModalVisible',
+        });
       });
     });
   });

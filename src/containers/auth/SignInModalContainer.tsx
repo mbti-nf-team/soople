@@ -1,14 +1,18 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 
 import SignInModal from '@/components/auth/SignInModal';
 import SocialButtonGroup from '@/components/auth/SocialButtonGroup';
+import { setSignInModalVisible } from '@/reducers/authSlice';
+import { useAppDispatch } from '@/reducers/store';
+import { getAuth } from '@/utils/utils';
 
-interface Props {
-  onClose: () => void;
-  isVisible: boolean;
-}
+function SignInModalContainer(): ReactElement {
+  const dispatch = useAppDispatch();
+  const isVisible = useSelector(getAuth('isVisible'));
 
-function SignInModalContainer({ onClose, isVisible }: Props): ReactElement {
+  const onClose = useCallback(() => dispatch(setSignInModalVisible(false)), [dispatch]);
+
   return (
     <SignInModal
       onClose={onClose}

@@ -12,6 +12,7 @@ describe('Home', () => {
         auth: null,
         authError: null,
         user: 'user',
+        isVisible: false,
       },
       groupReducer: {
         groupError: null,
