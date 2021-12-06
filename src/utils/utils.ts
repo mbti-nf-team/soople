@@ -1,5 +1,5 @@
-import { AuthStore } from '@/reducers/authSlice';
-import { GroupStore } from '@/reducers/groupSlice';
+import type { AuthStore } from '@/reducers/authSlice';
+import type { GroupStore } from '@/reducers/groupSlice';
 import type { AppState } from '@/reducers/store';
 
 export const isProdLevel = (env: string): boolean => env === 'production';
