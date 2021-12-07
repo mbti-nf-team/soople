@@ -18,12 +18,45 @@ describe('SignUpForm', () => {
     />
   ));
 
-  it('Input 창이 나타난다', () => {
+  it('SignUp form에 대한 항목이 나타나야 한다', () => {
     renderSignUpForm(PROFILE_FIXTURE);
-    const labels = ['닉네임', '이메일', '포트폴리오 URL (선택)'];
+    const labels = ['닉네임', '이메일', '포트폴리오 URL (선택)', '포지션'];
 
     labels.forEach((label) => {
       expect(screen.getByLabelText(label)).not.toBeNull();
+    });
+  });
+
+  context('포지션 "직접 입력" 상태일 때', () => {
+    it('포지션 직접 입력 input창이 나타나야만 한다', async () => {
+      renderSignUpForm(PROFILE_FIXTURE);
+
+      await act(async () => {
+        await fireEvent.change(screen.getByDisplayValue(/포지션을 션택하세요/), {
+          target: { value: '직접 입력' },
+        });
+      });
+
+      expect(screen.getByPlaceholderText('포지션을 입력해주세요.')).not.toBeNull();
+    });
+
+    describe('"X" 버튼을 클릭한다', () => {
+      it('포지션 입력 input창이 사라져야만 한다', async () => {
+        renderSignUpForm(PROFILE_FIXTURE);
+
+        await act(async () => {
+          await fireEvent.change(screen.getByDisplayValue(/포지션을 션택하세요/), {
+            target: { value: '직접 입력' },
+          });
+        });
+
+        fireEvent.change(screen.getByPlaceholderText('포지션을 입력해주세요.'), {
+          target: { value: 'test' },
+        });
+        fireEvent.click(screen.getByText('x'));
+
+        expect(screen.queryByPlaceholderText('포지션을 입력해주세요.')).toBeNull();
+      });
     });
   });
 
@@ -37,6 +70,9 @@ describe('SignUpForm', () => {
         expect(button).not.toBeNull();
 
         await act(async () => {
+          await fireEvent.change(screen.getByDisplayValue(/포지션을 션택하세요/), {
+            target: { value: '프론트엔드' },
+          });
           await fireEvent.submit(button);
         });
 
@@ -61,6 +97,25 @@ describe('SignUpForm', () => {
           });
 
           expect(container).toHaveTextContent('닉네임을 입력해주세요.');
+        });
+      });
+
+      context('포지션을 선택하지 않은 경우', () => {
+        it('"포지션을 선택해주세요." 에러 메시지가 보여진다', async () => {
+          const { container } = renderSignUpForm({
+            ...PROFILE_FIXTURE,
+            position: '',
+          });
+
+          const button = screen.getByText('확인');
+
+          expect(button).not.toBeNull();
+
+          await act(async () => {
+            await fireEvent.submit(button);
+          });
+
+          expect(container).toHaveTextContent('포지션을 선택해주세요.');
         });
       });
     });

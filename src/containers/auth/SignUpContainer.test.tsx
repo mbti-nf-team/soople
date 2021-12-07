@@ -69,6 +69,9 @@ describe('SignUpContainer', () => {
           renderSignUpContainer();
 
           await act(async () => {
+            await fireEvent.change(screen.getByDisplayValue(/포지션을 션택하세요/), {
+              target: { value: '프론트엔드' },
+            });
             await fireEvent.submit(screen.getByText('확인'));
           });
 

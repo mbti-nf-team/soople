@@ -6,6 +6,7 @@ const profile: Profile = {
   name: 'test',
   image: 'https://test.test',
   portfolioUrl: 'https://test.test',
+  position: '프론트엔드',
 };
 
 export default profile;

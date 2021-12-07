@@ -120,7 +120,7 @@ module.exports = {
         vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_',
       },
     ],
-    'react/jsx-props-no-spreading': ['error', { exceptions: ['input'] }],
+    'react/jsx-props-no-spreading': ['error', { exceptions: ['input', 'SelectBox'] }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.test.ts', '**/*.test.tsx', 'jest.setup.js'] }],
     'jest/no-identical-title': 'off',
     'testing-library/no-unnecessary-act': 'off',
@@ -128,6 +128,10 @@ module.exports = {
       components: ['Link'],
       specialLink: ['hrefLeft', 'hrefRight'],
       aspects: ['invalidHref', 'preferButton'],
+    }],
+    'jsx-a11y/label-has-associated-control': [2, {
+      labelAttributes: ['label'],
+      depth: 3,
     }],
   },
 };
