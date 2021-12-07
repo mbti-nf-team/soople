@@ -3,7 +3,7 @@ import { Profile } from '@/models/auth';
 import { collection } from '../firebase';
 
 export const updateUserProfile = async ({
-  uid, portfolioUrl, name, image,
+  uid, portfolioUrl, name, image, position,
 }: Profile) => {
   const user = collection('users').doc(uid);
 
@@ -11,6 +11,7 @@ export const updateUserProfile = async ({
     name,
     image,
     portfolioUrl,
+    position,
   });
 };
 

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ChangeEvent, ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
@@ -7,6 +7,8 @@ import * as yup from 'yup';
 import type { Profile, SignUpAdditionalForm } from '@/models/auth';
 import { stringToExcludeNull } from '@/utils/utils';
 
+import Select from '../common/Select';
+
 interface Props {
   onSubmit: (formData: SignUpAdditionalForm) => void;
   fields: Profile;
@@ -14,14 +16,38 @@ interface Props {
 
 const validationSchema = yup.object({
   name: yup.string().required('닉네임을 입력해주세요.'),
+  position: yup.string().required('포지션을 선택해주세요.'),
   portfolioUrl: yup.string().notRequired().nullable(),
 }).required();
 
 function SignUpForm({ onSubmit, fields }: Props): ReactElement {
+  const [isDirectValue, setIsDirectValue] = useState<boolean>(false);
   const { name, email, image } = fields;
-  const { register, handleSubmit, formState: { errors } } = useForm<SignUpAdditionalForm>({
+  const {
+    register, handleSubmit, formState: { errors }, setValue, resetField, clearErrors,
+  } = useForm<SignUpAdditionalForm>({
     resolver: yupResolver(validationSchema),
   });
+
+  const positionRegister = register('position');
+
+  const onChangeSelectBox = (e: ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.value === '직접 입력') {
+      setIsDirectValue(true);
+      resetField('position');
+      return;
+    }
+
+    positionRegister.onChange(e);
+  };
+
+  const onChangeDirectInput = (e: ChangeEvent<HTMLInputElement>) => setValue('position', e.target.value);
+
+  const onClickCloseDirectInput = () => {
+    setIsDirectValue(false);
+    resetField('position');
+    clearErrors('position');
+  };
 
   return (
     <div>
@@ -40,6 +66,27 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
             이메일
             <input type="email" id="email" defaultValue={stringToExcludeNull(email)} disabled />
           </label>
+        </div>
+
+        <div>
+          <label htmlFor="position">
+            포지션
+            {isDirectValue && (
+              <>
+                <input type="text" placeholder="포지션을 입력해주세요." onChange={onChangeDirectInput} />
+                <button type="button" onClick={onClickCloseDirectInput}>x</button>
+              </>
+            )}
+            <Select
+              id="position"
+              isDirect={isDirectValue}
+              register={positionRegister}
+              onChange={onChangeSelectBox}
+              defaultOption="포지션을 션택하세요"
+              options={['프론트엔드', '학생', '백엔드', '디자인', '직접 입력']}
+            />
+          </label>
+          <div>{errors.position?.message}</div>
         </div>
 
         <div>
