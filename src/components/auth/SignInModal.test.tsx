@@ -28,10 +28,10 @@ describe('SignInModal', () => {
   context('isVisible이 true인 경우', () => {
     given('isVisible', () => true);
 
-    it('"소셜 계정으로 계속하기" 문구가 보여야만 한다', () => {
+    it('"소셜 계정으로 계속하기" 문구가 보여야만 한다', () => {
       const { container } = renderSignInModal();
 
-      expect(container).toHaveTextContent('소셜 계정으로 계속하기');
+      expect(container).toHaveTextContent('소셜 계정으로 계속하기');
     });
 
     describe('"X" 버튼을 누른다', () => {

@@ -3,28 +3,11 @@ import { ParsedUrlQuery } from 'querystring';
 import { GetServerSidePropsContext } from 'next';
 import { getSession } from 'next-auth/client';
 
+import INITIAL_STORE_FIXTURE from '../../fixtures/initialStore';
+
 import { getServerSideProps } from './index.page';
 
 describe('Home', () => {
-  const initialStore = {
-    initialState: {
-      authReducer: {
-        auth: null,
-        authError: null,
-        user: 'user',
-        isVisible: false,
-      },
-      groupReducer: {
-        groupError: null,
-        groupId: null,
-        writeFields: {
-          contents: '',
-          title: '',
-        },
-      },
-    },
-  };
-
   beforeEach(() => {
     jest.clearAllMocks();
     jest.spyOn(window.console, 'log').mockImplementation(() => null);
@@ -47,7 +30,7 @@ describe('Home', () => {
 
         expect(result).toEqual({
           props: {
-            ...initialStore,
+            ...INITIAL_STORE_FIXTURE,
             session: {
               user: 'user',
             },
@@ -66,7 +49,7 @@ describe('Home', () => {
 
         expect(result).toEqual({
           props: {
-            ...initialStore,
+            ...INITIAL_STORE_FIXTURE,
             session: null,
           },
         });
