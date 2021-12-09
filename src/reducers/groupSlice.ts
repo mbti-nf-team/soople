@@ -10,6 +10,7 @@ export interface GroupStore {
   groupError: string | null;
   writeFields: WriteFields;
   groupId: string | null;
+  isVisible: boolean;
 }
 
 const initialFieldsState: WriteFields = {
@@ -23,6 +24,7 @@ const { actions, reducer } = createSlice({
     groupId: null,
     groupError: null,
     writeFields: initialFieldsState,
+    isVisible: false,
   } as GroupStore,
   reducers: {
     changeWriteFields(state, { payload: { name, value } }: PayloadAction<WriteFieldsKey>) {
@@ -52,11 +54,17 @@ const { actions, reducer } = createSlice({
         groupError: error,
       };
     },
+    setRegisterModalVisible(state, { payload: isVisible }: PayloadAction<boolean>) {
+      return {
+        ...state,
+        isVisible,
+      };
+    },
   },
 });
 
 export const {
-  changeWriteFields, clearWriteFields, setGroupError, setGroupId,
+  changeWriteFields, clearWriteFields, setGroupError, setGroupId, setRegisterModalVisible,
 } = actions;
 
 export const requestRegisterNewGroup = (): AppThunk => async (dispatch, getStore) => {
@@ -66,6 +74,7 @@ export const requestRegisterNewGroup = (): AppThunk => async (dispatch, getStore
     const groupId = await postNewGroup(groupReducer.writeFields);
 
     dispatch(setGroupId(groupId));
+    dispatch(setRegisterModalVisible(false));
   } catch (error) {
     const { message } = error as Error;
 

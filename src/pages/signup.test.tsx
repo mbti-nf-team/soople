@@ -3,28 +3,11 @@ import { ParsedUrlQuery } from 'querystring';
 import { GetServerSidePropsContext } from 'next';
 import { getSession } from 'next-auth/client';
 
+import INITIAL_STORE_FIXTURE from '../../fixtures/initialStore';
+
 import { getServerSideProps } from './signup.page';
 
 describe('SignUpPage', () => {
-  const initialStore = {
-    initialState: {
-      authReducer: {
-        auth: null,
-        authError: null,
-        user: 'user',
-        isVisible: false,
-      },
-      groupReducer: {
-        groupError: null,
-        groupId: null,
-        writeFields: {
-          contents: '',
-          title: '',
-        },
-      },
-    },
-  };
-
   describe('getServerSideProps', () => {
     beforeEach(() => {
       jest.clearAllMocks();
@@ -49,7 +32,7 @@ describe('SignUpPage', () => {
 
         expect(result).toEqual({
           props: {
-            ...initialStore,
+            ...INITIAL_STORE_FIXTURE,
             session: user,
           },
         });
@@ -66,7 +49,7 @@ describe('SignUpPage', () => {
 
         expect(result).toEqual({
           props: {
-            ...initialStore,
+            ...INITIAL_STORE_FIXTURE,
             session: null,
           },
         });

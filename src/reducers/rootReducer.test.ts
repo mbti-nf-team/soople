@@ -17,11 +17,13 @@ describe('rootReducer', () => {
       auth: null,
       authError: null,
       user: null,
+      isVisible: false,
     },
     groupReducer: {
       groupId: null,
       groupError: null,
       writeFields: fieldsInitialState,
+      isVisible: false,
     },
   };
 
