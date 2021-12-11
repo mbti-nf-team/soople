@@ -10,13 +10,17 @@ describe('Select', () => {
   } as UseFormRegisterReturn;
 
   const handleChange = jest.fn();
+  const options = {
+    first: '1',
+    second: '2',
+  };
 
   const renderSelect = () => render((
     <Select
       register={register}
       id="id"
       onChange={handleChange}
-      options={['1', '2']}
+      options={options}
       defaultOption={given.defaultOption}
       isDirect={given.isDirect}
     />

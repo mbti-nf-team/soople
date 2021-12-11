@@ -17,6 +17,10 @@ const initialFieldsState: WriteFields = {
   title: '',
   contents: '',
   tags: [],
+  category: '',
+  recruitmentEndDate: '',
+  recruitmentEndSetting: 'automatic',
+  recruitmentNumber: 1,
 };
 
 const { actions, reducer } = createSlice({
@@ -68,11 +72,13 @@ export const {
   changeWriteFields, clearWriteFields, setGroupError, setGroupId, setPublishModalVisible,
 } = actions;
 
-export const requestRegisterNewGroup = (): AppThunk => async (dispatch, getStore) => {
+export const requestRegisterNewGroup = (
+  userUid: string,
+): AppThunk => async (dispatch, getStore) => {
   const { groupReducer } = getStore();
 
   try {
-    const groupId = await postNewGroup(groupReducer.writeFields);
+    const groupId = await postNewGroup(userUid, groupReducer.writeFields);
 
     dispatch(setGroupId(groupId));
     dispatch(setPublishModalVisible(false));

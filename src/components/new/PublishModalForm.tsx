@@ -1,6 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { ChangeEvent, ReactElement } from 'react';
 
 import { WriteFields, WriteFieldsForm } from '@/models/group';
+import { stringToExcludeNull } from '@/utils/utils';
+
+import Select from '../common/Select';
 
 import TagForm from './TagForm';
 
@@ -10,54 +13,88 @@ interface Props {
 }
 
 function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
-  const handleChangTags = (tags: string[]) => onChangeFields({
+  const {
+    recruitmentNumber, category, recruitmentEndSetting, recruitmentEndDate, tags: initialTags,
+  } = fields;
+
+  const handleChangeTags = (tags: string[]) => onChangeFields({
     name: 'tags',
     value: tags,
   });
 
+  const handleChangeFields = (e: ChangeEvent<HTMLInputElement| HTMLSelectElement>) => {
+    const { value, name } = e.target;
+
+    onChangeFields({ value, name });
+  };
+
   return (
     <div>
-      <form>
-        <div>
-          <label htmlFor="category">
-            분류
-            <select id="category">
-              <option value="">분류를 선택해주세요</option>
-              <option value="스터디">스터디</option>
-              <option value="프로젝트">프로젝트</option>
-            </select>
-          </label>
-        </div>
+      <div>
+        <label htmlFor="category">
+          분류
+          <Select
+            id="category"
+            value={category}
+            isDirect={false}
+            onChange={handleChangeFields}
+            defaultOption="분류를 선택해주세요."
+            options={{
+              study: '스터디',
+              project: '프로젝트',
+            }}
+          />
+        </label>
+      </div>
 
-        <div>
-          <label htmlFor="recruitmentNumber">
-            모집인원
-            <input id="recruitmentNumber" type="number" />
-          </label>
-        </div>
+      <div>
+        <label htmlFor="recruitmentNumber">
+          모집인원
+          <input
+            id="recruitmentNumber"
+            name="recruitmentNumber"
+            type="number"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            value={recruitmentNumber}
+            onChange={handleChangeFields}
+          />
+        </label>
+      </div>
 
-        <div>
-          <label htmlFor="recruitmentEndSetting">
-            모집 종료 설정
-            <select id="recruitmentEndSetting">
-              <option value="1">입력한 시간에 자동으로 종료</option>
-              <option value="2">미지정</option>
-            </select>
-          </label>
-        </div>
+      <div>
+        <label htmlFor="recruitmentEndSetting">
+          모집 종료 설정
+          <Select
+            id="recruitmentEndSetting"
+            value={recruitmentEndSetting}
+            isDirect={false}
+            onChange={handleChangeFields}
+            options={{
+              automatic: '입력한 시간에 자동으로 종료',
+              manual: '미지정',
+            }}
+          />
+        </label>
+      </div>
 
-        <div>
-          <label htmlFor="recruitmentEndDate">
-            모집 종료일시
-            <input id="recruitmentEndDate" type="datetime-local" />
-          </label>
-        </div>
+      <div>
+        <label htmlFor="recruitmentEndDate">
+          모집 종료일시
+          <input
+            id="recruitmentEndDate"
+            name="recruitmentEndDate"
+            type="datetime-local"
+            onChange={handleChangeFields}
+            value={stringToExcludeNull(recruitmentEndDate)}
+          />
+        </label>
+      </div>
 
-        <TagForm
-          tags={fields.tags}
-          onChange={handleChangTags}
-        />
-      </form>
+      <TagForm
+        tags={initialTags}
+        onChange={handleChangeTags}
+      />
     </div>
   );
 }

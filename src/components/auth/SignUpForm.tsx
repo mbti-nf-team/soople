@@ -14,6 +14,14 @@ interface Props {
   fields: Profile;
 }
 
+const selectPositionOptions = {
+  frontEnd: '프론트엔드',
+  backEnd: '백엔드',
+  student: '학생',
+  design: '디자인',
+  directInput: '직접 입력',
+};
+
 const validationSchema = yup.object({
   name: yup.string().required('닉네임을 입력해주세요.'),
   position: yup.string().required('포지션을 선택해주세요.'),
@@ -32,7 +40,7 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
   const positionRegister = register('position');
 
   const onChangeSelectBox = (e: ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value === '직접 입력') {
+    if (e.target.value === 'directInput') {
       setIsDirectValue(true);
       resetField('position');
       return;
@@ -83,7 +91,7 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
               register={positionRegister}
               onChange={onChangeSelectBox}
               defaultOption="포지션을 션택하세요"
-              options={['프론트엔드', '학생', '백엔드', '디자인', '직접 입력']}
+              options={selectPositionOptions}
             />
           </label>
           <div>{errors.position?.message}</div>

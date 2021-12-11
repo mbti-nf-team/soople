@@ -70,7 +70,7 @@ describe('SignUpContainer', () => {
 
           await act(async () => {
             await fireEvent.change(screen.getByDisplayValue(/포지션을 션택하세요/), {
-              target: { value: '프론트엔드' },
+              target: { value: 'frontEnd' },
             });
             await fireEvent.submit(screen.getByText('확인'));
           });

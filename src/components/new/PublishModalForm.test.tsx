@@ -26,6 +26,21 @@ describe('PublishModalForm', () => {
     });
   });
 
+  describe('분류를 선택한다', () => {
+    it('changeFields 이벤트가 발생해야만 한다', () => {
+      renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+      fireEvent.change(screen.getByDisplayValue('분류를 선택해주세요.'), {
+        target: { value: 'study' },
+      });
+
+      expect(handleChangeFields).toBeCalledWith({
+        name: 'category',
+        value: 'study',
+      });
+    });
+  });
+
   describe('태그를 입력한다', () => {
     it('changeFields 이벤트가 발생해야만 한다', () => {
       renderPublishModalForm(WRITE_FIELDS_FIXTURE);

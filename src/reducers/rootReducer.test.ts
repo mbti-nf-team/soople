@@ -10,6 +10,11 @@ describe('rootReducer', () => {
   const fieldsInitialState: WriteFields = {
     title: '',
     contents: '',
+    tags: [],
+    category: '',
+    recruitmentNumber: 1,
+    recruitmentEndSetting: 'manual',
+    recruitmentEndDate: '',
   };
 
   const initialReducer: AppState = {
