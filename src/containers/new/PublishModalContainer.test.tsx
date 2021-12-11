@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
+
 import PublishModalContainer from './PublishModalContainer';
 
 describe('PublishModalContainer', () => {
@@ -11,9 +13,10 @@ describe('PublishModalContainer', () => {
     dispatch.mockClear();
 
     (useDispatch as jest.Mock).mockImplementationOnce(() => dispatch);
-    (useSelector as jest.Mock).mockImplementationOnce((selector) => selector({
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
         isVisible: given.isVisible,
+        writeFields: given.writeFields,
       },
     }));
   });
@@ -23,6 +26,7 @@ describe('PublishModalContainer', () => {
   ));
 
   context('모달창이 보이는 경우', () => {
+    given('writeFields', () => WRITE_FIELDS_FIXTURE);
     given('isVisible', () => true);
 
     it('등록 모달에 대한 내용이 나타나야만 한다', () => {
@@ -62,12 +66,12 @@ describe('PublishModalContainer', () => {
 
         fireEvent.change(input, { target: { value: 'test' } });
 
-        fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+        fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
 
         expect(dispatch).toBeCalledWith({
           payload: {
             name: 'tags',
-            value: ['javascript', 'scala', 'test'],
+            value: ['test'],
           },
           type: 'group/changeWriteFields',
         });
@@ -76,6 +80,7 @@ describe('PublishModalContainer', () => {
   });
 
   context('모달창이 보이지 않는 경우', () => {
+    given('writeFields', () => WRITE_FIELDS_FIXTURE);
     given('isVisible', () => false);
 
     it('아무것도 렌더링 되지 말아야 한다', () => {

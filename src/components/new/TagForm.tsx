@@ -28,18 +28,26 @@ function TagForm({ tags: initialTags, onChange }: Props): ReactElement {
     onChange(newTags);
   }, [tags]);
 
+  const actionKeyEvent = useCallback((e: KeyboardEvent<HTMLInputElement>, keys: string[]) => {
+    if (keys.includes(e.key)) {
+      e.preventDefault();
+      insertTag(value.trim());
+      setValue('');
+    }
+  }, [insertTag, value]);
+
   const handleKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && value === '') {
       setTags(tags.slice(0, tags.length - 1));
       return;
     }
 
-    if ([',', 'Enter'].includes(e.key)) {
-      e.preventDefault();
-      insertTag(value.trim());
-      setValue('');
-    }
-  }, [value, insertTag, tags]);
+    actionKeyEvent(e, [',']);
+  }, [value, actionKeyEvent, tags]);
+
+  const handleKeyPress = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+    actionKeyEvent(e, ['Enter']);
+  }, [actionKeyEvent]);
 
   const handleRemove = (nextTags: string[]) => {
     setTags(nextTags);
@@ -64,6 +72,7 @@ function TagForm({ tags: initialTags, onChange }: Props): ReactElement {
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        onKeyPress={handleKeyPress}
       />
       <div>
         태그를 입력하고 쉼표 또는 엔터를 입력하면 태그가 등록됩니다.
