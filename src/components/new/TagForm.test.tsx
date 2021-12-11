@@ -25,7 +25,7 @@ describe('TagsForm', () => {
   });
 
   describe('태그를 입력한다', () => {
-    context('태그 인풋창에서 "Enter"나 "," 키를 눌렀을 경우', () => {
+    context('태그 인풋창에서 "Enter" 키를 눌렀을 경우', () => {
       context('인풋창에 값이 존재한 경우', () => {
         const tags = ['JavaScript', 'React'];
 
@@ -37,7 +37,7 @@ describe('TagsForm', () => {
           tags.forEach((tag) => {
             fireEvent.change(input, { target: { value: tag } });
 
-            fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+            fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
 
             expect(input).toHaveValue('');
           });
@@ -56,7 +56,7 @@ describe('TagsForm', () => {
 
           fireEvent.change(input, { target: { value: '' } });
 
-          fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+          fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
 
           expect(handleChange).not.toBeCalled();
         });
@@ -73,13 +73,31 @@ describe('TagsForm', () => {
           tags.forEach((tag) => {
             fireEvent.change(input, { target: { value: tag } });
 
-            fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+            fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
 
             expect(input).toHaveValue('');
 
             expect(handleChange).not.toBeCalled();
           });
         });
+      });
+    });
+
+    context('","키를 눌렀을 경우', () => {
+      const tags = ['JavaScript', 'React'];
+
+      it('chang 이벤트가 호출되어야만 한다', () => {
+        renderTagsForm(['CSS']);
+
+        const input = screen.getByPlaceholderText('태그를 입력하세요');
+
+        tags.forEach((tag) => {
+          fireEvent.change(input, { target: { value: tag } });
+
+          fireEvent.keyDown(input, { key: ',', code: 188, charCode: 188 });
+        });
+
+        expect(handleChange).toBeCalled();
       });
     });
 

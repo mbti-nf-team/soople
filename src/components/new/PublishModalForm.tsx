@@ -1,14 +1,15 @@
 import React, { ReactElement } from 'react';
 
-import { WriteFieldsForm } from '@/models/group';
+import { WriteFields, WriteFieldsForm } from '@/models/group';
 
 import TagForm from './TagForm';
 
 interface Props {
+  fields: WriteFields;
   onChangeFields: (form: WriteFieldsForm) => void;
 }
 
-function PublishModalForm({ onChangeFields }: Props): ReactElement {
+function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
   const handleChangTags = (tags: string[]) => onChangeFields({
     name: 'tags',
     value: tags,
@@ -53,7 +54,7 @@ function PublishModalForm({ onChangeFields }: Props): ReactElement {
         </div>
 
         <TagForm
-          tags={['javascript', 'scala']}
+          tags={fields.tags}
           onChange={handleChangTags}
         />
       </form>

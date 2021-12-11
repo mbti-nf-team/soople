@@ -11,6 +11,7 @@ import { getGroup } from '@/utils/utils';
 function PublishModalContainer(): ReactElement {
   const dispatch = useAppDispatch();
   const isVisible = useSelector(getGroup('isVisible'));
+  const fields = useSelector(getGroup('writeFields'));
 
   const onClose = useCallback(() => dispatch(setPublishModalVisible(false)), [dispatch]);
   const onSubmit = useCallback(() => dispatch(requestRegisterNewGroup()), [dispatch]);
@@ -26,6 +27,7 @@ function PublishModalContainer(): ReactElement {
       onSubmit={onSubmit}
     >
       <PublishModalForm
+        fields={fields}
         onChangeFields={onChangeFields}
       />
     </PublishModal>
