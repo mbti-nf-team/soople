@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useSession } from 'next-auth/client';
 
 import NewWriteForm from '@/components/new/NewWriteForm';
-import { WriteFieldsKey } from '@/models/group';
+import { WriteFieldsForm } from '@/models/group';
 import { changeWriteFields } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getGroup } from '@/utils/utils';
@@ -14,7 +14,7 @@ function NewWriteFormContainer(): ReactElement {
   const fields = useSelector(getGroup('writeFields'));
   const dispatch = useAppDispatch();
 
-  const onChangeFields = useCallback((form: WriteFieldsKey) => {
+  const onChangeFields = useCallback((form: WriteFieldsForm) => {
     dispatch(changeWriteFields(form));
   }, [dispatch]);
 

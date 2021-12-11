@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable no-unused-vars */
 namespace NodeJS {
   interface ProcessEnv extends NodeJS.ProcessEnv {

@@ -2,11 +2,11 @@ import React, { ChangeEvent, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
-import { WriteFields, WriteFieldsKey } from '@/models/group';
+import { WriteFields, WriteFieldsForm } from '@/models/group';
 
 interface Props {
   fields: WriteFields;
-  onChange: (form: WriteFieldsKey) => void;
+  onChange: (form: WriteFieldsForm) => void;
 }
 
 function NewWriteForm({ fields, onChange }: Props): ReactElement {

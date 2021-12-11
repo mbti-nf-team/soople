@@ -1,6 +1,19 @@
 import React, { ReactElement } from 'react';
 
-function RegisterModalForm(): ReactElement {
+import { WriteFieldsForm } from '@/models/group';
+
+import TagForm from './TagForm';
+
+interface Props {
+  onChangeFields: (form: WriteFieldsForm) => void;
+}
+
+function PublishModalForm({ onChangeFields }: Props): ReactElement {
+  const handleChangTags = (tags: string[]) => onChangeFields({
+    name: 'tags',
+    value: tags,
+  });
+
   return (
     <div>
       <form>
@@ -39,15 +52,13 @@ function RegisterModalForm(): ReactElement {
           </label>
         </div>
 
-        <div>
-          <label htmlFor="tag">
-            태그
-            <input id="tag" type="text" />
-          </label>
-        </div>
+        <TagForm
+          tags={['javascript', 'scala']}
+          onChange={handleChangTags}
+        />
       </form>
     </div>
   );
 }
 
-export default RegisterModalForm;
+export default PublishModalForm;

@@ -13,7 +13,7 @@ interface Props {
   onSubmit: () => void;
 }
 
-function RegisterModal({
+function PublishModal({
   isVisible, children, onClose, onSubmit,
 }: Props): ReactElement | null {
   if (!isVisible) {
@@ -21,8 +21,8 @@ function RegisterModal({
   }
 
   return (
-    <RegisterModalWrapper>
-      <RegisterModalBox isVisible={isVisible}>
+    <PublishModalWrapper>
+      <PublishModalBox isVisible={isVisible}>
         <div>
           <h4>제목 없음 등록</h4>
           <button type="button" onClick={onClose}>X</button>
@@ -32,25 +32,25 @@ function RegisterModal({
           <button type="button" onClick={onClose}>닫기</button>
           <button type="button" onClick={onSubmit}>등록하기</button>
         </div>
-      </RegisterModalBox>
-    </RegisterModalWrapper>
+      </PublishModalBox>
+    </PublishModalWrapper>
   );
 }
 
-const RegisterModalWrapper = styled.div`
+const PublishModalWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: ${zIndexes.RegisterModal};
+  z-index: ${zIndexes.PublishModal};
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.25);
 `;
 
-const RegisterModalBox = styled.div<{ isVisible: boolean }>`
+const PublishModalBox = styled.div<{ isVisible: boolean }>`
   width: 600px;
   height: 562px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
@@ -66,4 +66,4 @@ const RegisterModalBox = styled.div<{ isVisible: boolean }>`
   `)};
 `;
 
-export default RegisterModal;
+export default PublishModal;

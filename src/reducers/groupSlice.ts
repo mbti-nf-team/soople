@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { postNewGroup } from '@/services/api/group';
 
-import { WriteFields, WriteFieldsKey } from '../models/group';
+import { WriteFields, WriteFieldsForm } from '../models/group';
 
 import type { AppThunk } from './store';
 
@@ -16,6 +16,7 @@ export interface GroupStore {
 const initialFieldsState: WriteFields = {
   title: '',
   contents: '',
+  tags: [],
 };
 
 const { actions, reducer } = createSlice({
@@ -27,7 +28,7 @@ const { actions, reducer } = createSlice({
     isVisible: false,
   } as GroupStore,
   reducers: {
-    changeWriteFields(state, { payload: { name, value } }: PayloadAction<WriteFieldsKey>) {
+    changeWriteFields(state, { payload: { name, value } }: PayloadAction<WriteFieldsForm>) {
       return {
         ...state,
         writeFields: {
@@ -54,7 +55,7 @@ const { actions, reducer } = createSlice({
         groupError: error,
       };
     },
-    setRegisterModalVisible(state, { payload: isVisible }: PayloadAction<boolean>) {
+    setPublishModalVisible(state, { payload: isVisible }: PayloadAction<boolean>) {
       return {
         ...state,
         isVisible,
@@ -64,7 +65,7 @@ const { actions, reducer } = createSlice({
 });
 
 export const {
-  changeWriteFields, clearWriteFields, setGroupError, setGroupId, setRegisterModalVisible,
+  changeWriteFields, clearWriteFields, setGroupError, setGroupId, setPublishModalVisible,
 } = actions;
 
 export const requestRegisterNewGroup = (): AppThunk => async (dispatch, getStore) => {
@@ -74,7 +75,7 @@ export const requestRegisterNewGroup = (): AppThunk => async (dispatch, getStore
     const groupId = await postNewGroup(groupReducer.writeFields);
 
     dispatch(setGroupId(groupId));
-    dispatch(setRegisterModalVisible(false));
+    dispatch(setPublishModalVisible(false));
   } catch (error) {
     const { message } = error as Error;
 

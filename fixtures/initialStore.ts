@@ -12,6 +12,7 @@ const initialStore = {
       writeFields: {
         contents: '',
         title: '',
+        tags: [],
       },
       isVisible: false,
     },
