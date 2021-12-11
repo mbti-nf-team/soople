@@ -45,7 +45,7 @@ describe('NewHeaderContainer', () => {
         fireEvent.click(screen.getByText('등록하기'));
 
         expect(dispatch).toBeCalledWith({
-          type: 'group/setRegisterModalVisible',
+          type: 'group/setPublishModalVisible',
           payload: true,
         });
       });

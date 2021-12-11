@@ -1,6 +1,7 @@
 export interface WriteFields {
   title: string;
   contents: string;
+  tags: string[];
 }
 
 export interface WriteFrom {
@@ -8,7 +9,7 @@ export interface WriteFrom {
   contents: string;
 }
 
-export interface WriteFieldsKey {
+export interface WriteFieldsForm {
   name: string;
-  value: string;
+  value: string | string[];
 }

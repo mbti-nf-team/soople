@@ -2,14 +2,14 @@ import React, { ReactElement } from 'react';
 
 import NewHeaderContainer from '@/containers/new/NewHeaderContainer';
 import NewWriteFormContainer from '@/containers/new/NewWriteFormContainer';
-import RegisterModalContainer from '@/containers/new/RegisterModalContainer';
+import PublishModalContainer from '@/containers/new/PublishModalContainer';
 
 function NewPage(): ReactElement {
   return (
     <div>
       <NewHeaderContainer />
       <NewWriteFormContainer />
-      <RegisterModalContainer />
+      <PublishModalContainer />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { WriteFields } from '@/models/group';
+
 import db, { fireStore } from '../firebase';
 
 import { postNewGroup } from './group';
@@ -10,9 +12,10 @@ describe('group API', () => {
   describe('updateUserProfile', () => {
     const mockAdd = jest.fn().mockReturnValueOnce({ id: '1' });
     const createAt = '2021-11-11';
-    const group = {
+    const group: WriteFields = {
       title: 'title',
       contents: 'contents',
+      tags: [],
     };
 
     beforeEach(() => {

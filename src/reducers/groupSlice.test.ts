@@ -13,7 +13,7 @@ import reducer, {
   requestRegisterNewGroup,
   setGroupError,
   setGroupId,
-  setRegisterModalVisible,
+  setPublishModalVisible,
 } from './groupSlice';
 import { RootState } from './rootReducer';
 
@@ -88,9 +88,9 @@ describe('groupReducer', () => {
     });
   });
 
-  describe('setRegisterModalVisible', () => {
+  describe('setPublishModalVisible', () => {
     it('isVisible이 true로 변경되어야만 한다', () => {
-      const { isVisible } = reducer(initialState, setRegisterModalVisible(true));
+      const { isVisible } = reducer(initialState, setPublishModalVisible(true));
 
       expect(isVisible).toBeTruthy();
     });
@@ -127,7 +127,7 @@ describe('groupReducer async actions', () => {
         });
         expect(actions[1]).toEqual({
           payload: false,
-          type: 'group/setRegisterModalVisible',
+          type: 'group/setPublishModalVisible',
         });
       });
     });
