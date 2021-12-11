@@ -4,28 +4,37 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-interface Props {
+interface Props<OptionsType> {
   id: string;
-  register: UseFormRegisterReturn;
-  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  options: string[];
-  defaultOption: string | null;
   isDirect: boolean;
+  options: OptionsType;
+  defaultOption?: string;
+  register?: UseFormRegisterReturn;
+  value?: string;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-function Select({
-  register, onChange, options, defaultOption, id, isDirect,
-}: Props): ReactElement {
+function Select<OptionsType extends object>({
+  register, onChange, options, defaultOption, id, isDirect, value: selectValue,
+}: Props<OptionsType>): ReactElement {
   return (
-    <SelectBox isDirect={isDirect} id={id} {...register} onChange={onChange} data-testid="select">
+    <SelectBox
+      value={selectValue}
+      id={id}
+      name={id}
+      isDirect={isDirect}
+      {...register}
+      onChange={onChange}
+      data-testid="select"
+    >
       {defaultOption && (
       <option value="">
         {defaultOption}
       </option>
       )}
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
+      {Object.entries(options).map(([key, value]) => (
+        <option key={key} value={key}>
+          {value}
         </option>
       ))}
     </SelectBox>

@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -9,10 +9,11 @@ import zIndexes from '@/styles/zIndexes';
 interface Props {
   isVisible: boolean;
   onClose: () => void;
-  children: ReactNode;
 }
 
-function SignInModal({ isVisible, onClose, children }: Props): ReactElement | null {
+function SignInModal({
+  isVisible, onClose, children,
+}: PropsWithChildren<Props>): ReactElement | null {
   if (!isVisible) {
     return null;
   }

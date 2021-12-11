@@ -117,7 +117,7 @@ describe('groupReducer async actions', () => {
       (postNewGroup as jest.Mock).mockReturnValueOnce('1');
 
       it('dispatch 액션이 "group/setGroupId"인 타입과 group id 이어야 한다', async () => {
-        await store.dispatch(requestRegisterNewGroup());
+        await store.dispatch(requestRegisterNewGroup('userUid'));
 
         const actions = store.getActions();
 
@@ -139,7 +139,7 @@ describe('groupReducer async actions', () => {
 
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
-          await store.dispatch(requestRegisterNewGroup());
+          await store.dispatch(requestRegisterNewGroup('userUid'));
         } catch (error) {
           // ignore errors
         } finally {

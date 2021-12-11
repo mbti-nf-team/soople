@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
+import { useSession } from 'next-auth/client';
 
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 
@@ -19,6 +20,11 @@ describe('PublishModalContainer', () => {
         writeFields: given.writeFields,
       },
     }));
+    (useSession as jest.Mock).mockImplementation(() => ([{
+      user: {
+        uid: 'uid',
+      },
+    }]));
   });
 
   const renderPublishModalContainer = () => render((

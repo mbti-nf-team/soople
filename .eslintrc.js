@@ -133,5 +133,6 @@ module.exports = {
       labelAttributes: ['label'],
       depth: 3,
     }],
+    'react/require-default-props': 'off',
   },
 };
