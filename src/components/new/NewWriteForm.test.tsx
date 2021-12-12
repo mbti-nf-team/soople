@@ -1,17 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
+
 import NewWriteForm from './NewWriteForm';
 
 describe('NewWriteForm', () => {
-  const initialFields = {
-    title: '',
-    contents: '',
-  };
   const handleChange = jest.fn();
+
+  beforeEach(() => {
+    handleChange.mockClear();
+  });
 
   const renderNewWriteForm = () => render((
     <NewWriteForm
-      fields={initialFields}
+      fields={WRITE_FIELDS_FIXTURE}
       onChange={handleChange}
     />
   ));
