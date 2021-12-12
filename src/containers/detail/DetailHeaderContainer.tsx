@@ -1,10 +1,20 @@
 import React, { ReactElement } from 'react';
+import { useSelector } from 'react-redux';
 
-function DetailHeaderContainer(): ReactElement {
+import DetailHeaderSection from '@/components/detail/DetailHeaderSection';
+import { getGroup } from '@/utils/utils';
+
+function DetailHeaderContainer(): ReactElement | null {
+  const group = useSelector(getGroup('group'));
+
+  if (!group) {
+    return null;
+  }
+
   return (
-    <div>
-      detail 페이지
-    </div>
+    <DetailHeaderSection
+      group={group}
+    />
   );
 }
 

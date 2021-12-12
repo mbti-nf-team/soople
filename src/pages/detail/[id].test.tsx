@@ -1,5 +1,6 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { ParsedUrlQuery } from 'querystring';
+
+import { useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
@@ -13,6 +14,14 @@ import DetailPage, { getServerSideProps } from './[id].page';
 jest.mock('@/services/api/group');
 
 describe('DetailPage', () => {
+  beforeEach(() => {
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      groupReducer: {
+        group: GROUP_FIXTURE,
+      },
+    }));
+  });
+
   const renderDetailPage = () => render((
     <DetailPage />
   ));
@@ -20,7 +29,8 @@ describe('DetailPage', () => {
   it('detail 페이지에 대한 내용이 나타나야만 한다', () => {
     const { container } = renderDetailPage();
 
-    expect(container).toHaveTextContent('detail 페이지');
+    expect(container).toHaveTextContent('title');
+    expect(container).toHaveTextContent('contents');
   });
 });
 

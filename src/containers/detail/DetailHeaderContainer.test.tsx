@@ -1,15 +1,41 @@
+import { useSelector } from 'react-redux';
+
 import { render } from '@testing-library/react';
+
+import GROUP_FIXTURE from '../../../fixtures/group';
 
 import DetailHeaderContainer from './DetailHeaderContainer';
 
 describe('DetailHeaderContainer', () => {
+  beforeEach(() => {
+    (useSelector as jest.Mock).mockImplementationOnce((selector) => selector({
+      groupReducer: {
+        group: given.group,
+      },
+    }));
+  });
+
   const renderDetailHeaderContainer = () => render((
     <DetailHeaderContainer />
   ));
 
-  it('DetailHeaderContainer에 대한 내용이 나타나야만 한다', () => {
-    const { container } = renderDetailHeaderContainer();
+  context('group 정보가 존재하는 경우', () => {
+    given('group', () => GROUP_FIXTURE);
 
-    expect(container).toHaveTextContent('detail 페이지');
+    it('DetailHeaderContainer에 대한 내용이 나타나야만 한다', () => {
+      const { container } = renderDetailHeaderContainer();
+
+      expect(container).toHaveTextContent('title');
+    });
+  });
+
+  context('group 정보가 존재하지 않는 경우', () => {
+    given('group', () => null);
+
+    it('아무것도 나타나지 말아야 한다', () => {
+      const { container } = renderDetailHeaderContainer();
+
+      expect(container).toBeEmptyDOMElement();
+    });
   });
 });

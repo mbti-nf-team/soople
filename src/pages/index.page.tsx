@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/client';
 
-import Home from '@/containers/Home/HomeContainer';
+import Home from '@/containers/home/HomeContainer';
 import { setUser } from '@/reducers/authSlice';
 import wrapper from '@/reducers/store';
 
