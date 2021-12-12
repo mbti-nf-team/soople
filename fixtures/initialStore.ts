@@ -7,6 +7,7 @@ const initialStore = {
       isVisible: false,
     },
     groupReducer: {
+      group: null,
       groupError: null,
       groupId: null,
       writeFields: {

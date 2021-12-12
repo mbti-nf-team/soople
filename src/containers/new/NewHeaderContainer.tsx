@@ -17,7 +17,7 @@ function NewHeaderContainer(): ReactElement {
 
   useEffect(() => {
     if (groupId) {
-      router.replace('/');
+      router.replace(`/detail/${groupId}`);
     }
   }, [groupId]);
 

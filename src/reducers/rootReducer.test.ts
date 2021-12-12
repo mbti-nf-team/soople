@@ -25,6 +25,7 @@ describe('rootReducer', () => {
       isVisible: false,
     },
     groupReducer: {
+      group: null,
       groupId: null,
       groupError: null,
       writeFields: fieldsInitialState,

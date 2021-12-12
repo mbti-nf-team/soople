@@ -64,7 +64,7 @@ describe('NewHeaderContainer', () => {
     it('"router.replace"가 "/"와 같이 호출되어야만 한다', async () => {
       renderNewHeaderContainer();
 
-      expect(mockReplace).toBeCalledWith('/');
+      expect(mockReplace).toBeCalledWith('/detail/1');
     });
   });
 });

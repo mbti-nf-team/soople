@@ -2,15 +2,18 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { postNewGroup } from '@/services/api/group';
+import { getGroupDetail, postNewGroup } from '@/services/api/group';
 
+import GROUP_FIXTURE from '../../fixtures/group';
 import WRITE_FIELDS_FIXTURE from '../../fixtures/writeFields';
 
 import reducer, {
   changeWriteFields,
   clearWriteFields,
   GroupStore,
+  loadGroupDetail,
   requestRegisterNewGroup,
+  setGroup,
   setGroupError,
   setGroupId,
   setPublishModalVisible,
@@ -24,6 +27,7 @@ jest.mock('@/services/api/group');
 
 describe('groupReducer', () => {
   const initialState: GroupStore = {
+    group: null,
     groupId: null,
     groupError: null,
     writeFields: WRITE_FIELDS_FIXTURE,
@@ -35,6 +39,14 @@ describe('groupReducer', () => {
       const state = reducer(undefined, { type: 'action' });
 
       expect(state).toEqual(initialState);
+    });
+  });
+
+  describe('setGroup', () => {
+    it('group 필드가 변경되어야 한다', () => {
+      const { group } = reducer(initialState, setGroup(GROUP_FIXTURE));
+
+      expect(group).toBe(GROUP_FIXTURE);
     });
   });
 
@@ -140,6 +152,52 @@ describe('groupReducer async actions', () => {
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
           await store.dispatch(requestRegisterNewGroup('userUid'));
+        } catch (error) {
+          // ignore errors
+        } finally {
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: 'error',
+            type: 'group/setGroupError',
+          });
+        }
+      });
+    });
+  });
+
+  describe('loadGroupDetail', () => {
+    beforeEach(() => {
+      store = mockStore({
+        groupReducer: {
+          group: GROUP_FIXTURE,
+        },
+      });
+    });
+
+    context('에러가 발생하지 않는 경우', () => {
+      (getGroupDetail as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+
+      it('dispatch 액션이 "group/setGroup"인 타입과 payload는 group 정보이어야 한다', async () => {
+        await store.dispatch(loadGroupDetail('id'));
+
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+          payload: GROUP_FIXTURE,
+          type: 'group/setGroup',
+        });
+      });
+    });
+
+    context('에러가 발생하는 경우', () => {
+      (getGroupDetail as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
+        try {
+          await store.dispatch(loadGroupDetail('id'));
         } catch (error) {
           // ignore errors
         } finally {
