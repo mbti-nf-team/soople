@@ -4,6 +4,7 @@ import React, { ReactElement } from 'react';
 
 import { GetServerSideProps } from 'next';
 
+import DetailContentsContainer from '@/containers/detail/DetailContentsContainer';
 import DetailHeaderContainer from '@/containers/detail/DetailHeaderContainer';
 import { setGroup } from '@/reducers/groupSlice';
 import wrapper from '@/reducers/store';
@@ -40,7 +41,10 @@ export const getServerSideProps: GetServerSideProps = wrapper
 
 function DetailPage(): ReactElement {
   return (
-    <DetailHeaderContainer />
+    <>
+      <DetailHeaderContainer />
+      <DetailContentsContainer />
+    </>
   );
 }
 
