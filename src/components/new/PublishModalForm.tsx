@@ -1,4 +1,6 @@
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, {
+  ChangeEvent, ReactElement, useEffect, useState,
+} from 'react';
 
 import { WriteFields, WriteFieldsForm } from '@/models/group';
 import { stringToExcludeNull } from '@/utils/utils';
@@ -13,6 +15,7 @@ interface Props {
 }
 
 function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
+  const [isEndDateDisabled, setEndDateDisabled] = useState<boolean>(false);
   const {
     recruitmentNumber, category, recruitmentEndSetting, recruitmentEndDate, tags: initialTags,
   } = fields;
@@ -25,8 +28,21 @@ function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
   const handleChangeFields = (e: ChangeEvent<HTMLInputElement| HTMLSelectElement>) => {
     const { value, name } = e.target;
 
-    onChangeFields({ value, name });
+    onChangeFields({ name, value });
   };
+
+  useEffect(() => {
+    if (recruitmentEndSetting === 'manual') {
+      setEndDateDisabled(true);
+      onChangeFields({
+        name: 'recruitmentEndDate',
+        value: '',
+      });
+      return;
+    }
+
+    setEndDateDisabled(false);
+  }, [recruitmentEndSetting]);
 
   return (
     <div>
@@ -87,6 +103,7 @@ function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
             type="datetime-local"
             onChange={handleChangeFields}
             value={stringToExcludeNull(recruitmentEndDate)}
+            disabled={isEndDateDisabled}
           />
         </label>
       </div>

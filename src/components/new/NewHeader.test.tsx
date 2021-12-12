@@ -5,6 +5,10 @@ import NewHeader from './NewHeader';
 describe('NewHeader', () => {
   const handleSubmit = jest.fn();
 
+  beforeEach(() => {
+    handleSubmit.mockClear();
+  });
+
   const renderNewHeader = () => render((
     <NewHeader
       onSubmit={handleSubmit}
