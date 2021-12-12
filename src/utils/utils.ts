@@ -23,3 +23,5 @@ export const stringToExcludeNull = (value?: string | null): string => {
 
   return value;
 };
+
+export const timestampToString = (timestamp: any) => timestamp.toDate().toString();

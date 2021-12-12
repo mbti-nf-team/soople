@@ -1,4 +1,5 @@
-import { WriteFields } from '@/models/group';
+import { Group, WriteFields } from '@/models/group';
+import { timestampToString } from '@/utils/utils';
 
 import { collection, fireStore } from '../firebase';
 
@@ -13,5 +14,20 @@ export const postNewGroup = async (writerUid: string, fields: WriteFields) => {
   return id;
 };
 
-// TODO - 추후 삭제
-export const temp = [];
+export const getGroupDetail = async (id: string) => {
+  const response = await collection('groups')
+    .doc(id)
+    .get();
+
+  if (!response.exists) {
+    return null;
+  }
+
+  const group = response.data() as any;
+
+  return {
+    groupId: response.id,
+    ...group,
+    createAt: timestampToString(group.createAt),
+  } as Group;
+};

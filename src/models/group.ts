@@ -11,6 +11,19 @@ export interface WriteFields {
   recruitmentEndDate: string | null;
 }
 
+export interface Group {
+  groupId: string;
+  title: string;
+  contents: string;
+  tags: string[];
+  category: Category | string;
+  recruitmentNumber: number;
+  recruitmentEndSetting: RecruitmentEndSetting;
+  recruitmentEndDate: string | null;
+  writer: string;
+  createAt: string;
+}
+
 export interface WriteFieldsForm {
   name: string;
   value: string | string[];
