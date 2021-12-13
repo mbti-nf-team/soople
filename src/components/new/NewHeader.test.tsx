@@ -11,6 +11,7 @@ describe('NewHeader', () => {
 
   const renderNewHeader = () => render((
     <NewHeader
+      title={given.title}
       onSubmit={handleSubmit}
     />
   ));
@@ -23,12 +24,26 @@ describe('NewHeader', () => {
   });
 
   describe('"등록하기" 버튼을 클릭한다', () => {
-    it('클릭 이벤트가 호출되어야만 한다', () => {
-      renderNewHeader();
+    context('제목이 존재하는 경우', () => {
+      given('title', () => 'title');
 
-      fireEvent.click(screen.getByText('등록하기'));
+      it('클릭 이벤트가 호출되어야만 한다', () => {
+        renderNewHeader();
 
-      expect(handleSubmit).toBeCalledTimes(1);
+        fireEvent.click(screen.getByText('등록하기'));
+
+        expect(handleSubmit).toBeCalledTimes(1);
+      });
+    });
+
+    context('제목이 존재하지 않는 경우', () => {
+      given('title', () => '');
+
+      it('"등록하기" 버튼은 disable되어야만 한다', () => {
+        renderNewHeader();
+
+        expect(screen.getByText('등록하기')).toHaveAttribute('disabled');
+      });
     });
   });
 });

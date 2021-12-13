@@ -12,6 +12,7 @@ function NewHeaderContainer(): ReactElement {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const groupId = useSelector(getGroup('groupId'));
+  const { title } = useSelector(getGroup('writeFields'));
 
   const onSubmit = useCallback(() => dispatch(setPublishModalVisible(true)), [dispatch]);
 
@@ -23,6 +24,7 @@ function NewHeaderContainer(): ReactElement {
 
   return (
     <NewHeader
+      title={title}
       onSubmit={onSubmit}
     />
   );

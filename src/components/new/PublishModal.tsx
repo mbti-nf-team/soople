@@ -7,13 +7,14 @@ import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
 interface Props {
+  title: string;
   isVisible: boolean;
   onClose: () => void;
   onSubmit: () => void;
 }
 
 function PublishModal({
-  isVisible, onClose, onSubmit, children,
+  title, isVisible, onClose, onSubmit, children,
 }: PropsWithChildren<Props>): ReactElement | null {
   if (!isVisible) {
     return null;
@@ -23,7 +24,7 @@ function PublishModal({
     <PublishModalWrapper>
       <PublishModalBox isVisible={isVisible}>
         <div>
-          <h4>제목 없음 등록</h4>
+          <h4>{`${title} 등록`}</h4>
           <button type="button" onClick={onClose}>X</button>
         </div>
         {children}
