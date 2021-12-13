@@ -11,8 +11,9 @@ describe('PublishModal', () => {
     jest.clearAllMocks();
   });
 
-  const renderPublishModal = () => render((
+  const renderPublishModal = (title = 'title') => render((
     <PublishModal
+      title={title}
       isVisible={given.isVisible}
       onClose={handleClose}
       onSubmit={handleSubmit}
@@ -25,9 +26,11 @@ describe('PublishModal', () => {
     given('isVisible', () => true);
 
     it('모달 타이틀이 나타나야만 한다', () => {
-      const { container } = renderPublishModal();
+      const title = '제목입니다';
 
-      expect(container).toHaveTextContent('제목 없음 등록');
+      const { container } = renderPublishModal(title);
+
+      expect(container).toHaveTextContent(`${title} 등록`);
     });
 
     describe('닫기 버튼을 누른다', () => {

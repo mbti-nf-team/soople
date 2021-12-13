@@ -17,7 +17,6 @@ const initialStore = {
         category: '',
         recruitmentEndDate: '',
         recruitmentEndSetting: 'automatic',
-        recruitmentNumber: 1,
       },
       isVisible: false,
     },

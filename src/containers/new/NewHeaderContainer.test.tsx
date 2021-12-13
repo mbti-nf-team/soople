@@ -17,10 +17,11 @@ describe('NewHeaderContainer', () => {
     dispatch.mockClear();
     mockReplace.mockClear();
 
-    (useDispatch as jest.Mock).mockImplementationOnce(() => dispatch);
-    (useSelector as jest.Mock).mockImplementationOnce((selector) => selector({
+    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
         groupId: given.groupId,
+        writeFields: given.writeFields,
       },
     }));
   });
@@ -29,24 +30,40 @@ describe('NewHeaderContainer', () => {
     <NewHeaderContainer />
   ));
 
-  it('헤더 정보가 나타나야만 한다', () => {
-    const { container } = renderNewHeaderContainer();
-
-    expect(container).toHaveTextContent('등록하기');
-  });
-
   context('글을 작성하지 않은 경우', () => {
     given('groupId', () => null);
 
-    describe('"등록하기" 버튼을 클릭한다', () => {
-      it('클릭 이베트가 발생해야만 한다', () => {
-        renderNewHeaderContainer();
+    context('제목이 작성되지 않은 경우', () => {
+      given('writeFields', () => ({
+        title: '',
+      }));
 
-        fireEvent.click(screen.getByText('등록하기'));
+      describe('"등록하기" 버튼을 클릭한다', () => {
+        it('클릭 이베트가 발생해야만 한다', () => {
+          renderNewHeaderContainer();
 
-        expect(dispatch).toBeCalledWith({
-          type: 'group/setPublishModalVisible',
-          payload: true,
+          fireEvent.click(screen.getByText('등록하기'));
+
+          expect(dispatch).not.toBeCalled();
+        });
+      });
+    });
+
+    context('제목이 작성된 경우', () => {
+      given('writeFields', () => ({
+        title: 'title',
+      }));
+
+      describe('"등록하기" 버튼을 클릭한다', () => {
+        it('클릭 이베트가 발생해야만 한다', () => {
+          renderNewHeaderContainer();
+
+          fireEvent.click(screen.getByText('등록하기'));
+
+          expect(dispatch).toBeCalledWith({
+            type: 'group/setPublishModalVisible',
+            payload: true,
+          });
         });
       });
     });
@@ -54,6 +71,9 @@ describe('NewHeaderContainer', () => {
 
   context('이미 글을 작성한 경우', () => {
     given('groupId', () => '1');
+    given('writeFields', () => ({
+      title: 'title',
+    }));
 
     beforeEach(() => {
       (useRouter as jest.Mock).mockImplementationOnce(() => ({

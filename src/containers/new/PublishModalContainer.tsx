@@ -27,6 +27,7 @@ function PublishModalContainer(): ReactElement {
 
   return (
     <PublishModal
+      title={fields.title}
       isVisible={isVisible}
       onClose={onClose}
       onSubmit={onSubmit}

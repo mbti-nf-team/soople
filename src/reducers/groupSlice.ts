@@ -21,7 +21,6 @@ const initialFieldsState: WriteFields = {
   category: '',
   recruitmentEndDate: '',
   recruitmentEndSetting: 'automatic',
-  recruitmentNumber: 1,
 };
 
 const { actions, reducer } = createSlice({

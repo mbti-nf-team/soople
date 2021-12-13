@@ -32,13 +32,18 @@ describe('PublishModalContainer', () => {
   ));
 
   context('모달창이 보이는 경우', () => {
-    given('writeFields', () => WRITE_FIELDS_FIXTURE);
+    const title = '제목입니다.';
+
+    given('writeFields', () => ({
+      ...WRITE_FIELDS_FIXTURE,
+      title,
+    }));
     given('isVisible', () => true);
 
     it('등록 모달에 대한 내용이 나타나야만 한다', () => {
       const { container } = renderPublishModalContainer();
 
-      expect(container).toHaveTextContent('제목 없음 등록');
+      expect(container).toHaveTextContent(`${title} 등록`);
     });
 
     describe('닫기 버튼을 클릭한다', () => {

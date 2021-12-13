@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+
 import { render } from '@testing-library/react';
 import { useSession } from 'next-auth/client';
 
@@ -9,6 +11,14 @@ describe('New page', () => {
   ));
 
   beforeEach(() => {
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      groupReducer: {
+        groupId: '',
+        writeFields: {
+          title: '',
+        },
+      },
+    }));
     (useSession as jest.Mock).mockImplementation(() => ([given.session, given.loading]));
   });
 

@@ -12,7 +12,6 @@ describe('rootReducer', () => {
     contents: '',
     tags: [],
     category: '',
-    recruitmentNumber: 1,
     recruitmentEndSetting: 'manual',
     recruitmentEndDate: '',
   };
