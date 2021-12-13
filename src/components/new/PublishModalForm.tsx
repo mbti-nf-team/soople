@@ -17,7 +17,7 @@ interface Props {
 function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
   const [isEndDateDisabled, setEndDateDisabled] = useState<boolean>(false);
   const {
-    recruitmentNumber, category, recruitmentEndSetting, recruitmentEndDate, tags: initialTags,
+    category, recruitmentEndSetting, recruitmentEndDate, tags: initialTags,
   } = fields;
 
   const handleChangeTags = (tags: string[]) => onChangeFields({
@@ -64,21 +64,6 @@ function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
       </div>
 
       <div>
-        <label htmlFor="recruitmentNumber">
-          모집인원
-          <input
-            id="recruitmentNumber"
-            name="recruitmentNumber"
-            type="number"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={recruitmentNumber}
-            onChange={handleChangeFields}
-          />
-        </label>
-      </div>
-
-      <div>
         <label htmlFor="recruitmentEndSetting">
           모집 종료 설정
           <Select
@@ -88,7 +73,7 @@ function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
             onChange={handleChangeFields}
             options={{
               automatic: '입력한 시간에 자동으로 종료',
-              manual: '미지정',
+              manual: '수동으로 종료',
             }}
           />
         </label>

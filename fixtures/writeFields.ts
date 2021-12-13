@@ -7,7 +7,6 @@ const writeFields: WriteFields = {
   category: '',
   recruitmentEndDate: '',
   recruitmentEndSetting: 'automatic',
-  recruitmentNumber: 1,
 };
 
 export default writeFields;

@@ -21,7 +21,7 @@ describe('PublishModalForm', () => {
   ));
 
   it('등록하기 폼 항목이 나타나야만 한다', () => {
-    const labels = ['분류', '모집인원', '모집 종료 설정', '모집 종료일시'];
+    const labels = ['분류', '모집 종료 설정', '모집 종료일시'];
 
     renderPublishModalForm(WRITE_FIELDS_FIXTURE);
 
@@ -54,7 +54,7 @@ describe('PublishModalForm', () => {
       });
     });
 
-    context('모집 종료 설정이 "미지정"인 경우', () => {
+    context('모집 종료 설정이 "수동으로 종료"인 경우', () => {
       it('모집 종료일시는 "disabled" 속성이 있어야하고, changeFields 이벤트가 발생해야만 한다', () => {
         renderPublishModalForm({
           ...WRITE_FIELDS_FIXTURE,

@@ -9,7 +9,6 @@ const group: Group = {
   category: 'frontEnd',
   recruitmentEndDate: '',
   recruitmentEndSetting: 'manual',
-  recruitmentNumber: 1,
   createAt: '2021-10-11',
 };
 

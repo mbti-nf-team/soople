@@ -22,7 +22,6 @@ describe('group API', () => {
       category: '',
       recruitmentEndDate: '',
       recruitmentEndSetting: 'automatic',
-      recruitmentNumber: 1,
     };
 
     beforeEach(() => {

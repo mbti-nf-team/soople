@@ -6,7 +6,6 @@ export interface WriteFields {
   contents: string;
   tags: string[];
   category: Category | string;
-  recruitmentNumber: number | string;
   recruitmentEndSetting: RecruitmentEndSetting;
   recruitmentEndDate: string | null;
 }
@@ -17,7 +16,6 @@ export interface Group {
   contents: string;
   tags: string[];
   category: Category | string;
-  recruitmentNumber: number;
   recruitmentEndSetting: RecruitmentEndSetting;
   recruitmentEndDate: string | null;
   writer: string;
