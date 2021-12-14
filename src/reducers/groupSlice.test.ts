@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import { getGroupDetail, postNewGroup } from '@/services/api/group';
 
 import GROUP_FIXTURE from '../../fixtures/group';
+import PROFILE_FIXTURE from '../../fixtures/profile';
 import WRITE_FIELDS_FIXTURE from '../../fixtures/writeFields';
 
 import reducer, {
@@ -17,6 +18,7 @@ import reducer, {
   setGroupError,
   setGroupId,
   setPublishModalVisible,
+  setWriterProfile,
 } from './groupSlice';
 import { RootState } from './rootReducer';
 
@@ -31,6 +33,7 @@ describe('groupReducer', () => {
     groupId: null,
     groupError: null,
     writeFields: WRITE_FIELDS_FIXTURE,
+    writer: null,
     isVisible: false,
   };
 
@@ -105,6 +108,14 @@ describe('groupReducer', () => {
       const { isVisible } = reducer(initialState, setPublishModalVisible(true));
 
       expect(isVisible).toBeTruthy();
+    });
+  });
+
+  describe('setWriterProfile', () => {
+    it('writer 정보가 반환되어야만 한다', () => {
+      const { writer } = reducer(initialState, setWriterProfile(PROFILE_FIXTURE));
+
+      expect(writer).toBe(PROFILE_FIXTURE);
     });
   });
 });

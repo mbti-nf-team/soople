@@ -1,3 +1,5 @@
+import { GroupStore } from '@/reducers/groupSlice';
+
 const initialStore = {
   initialState: {
     authReducer: {
@@ -10,6 +12,7 @@ const initialStore = {
       group: null,
       groupError: null,
       groupId: null,
+      writer: null,
       writeFields: {
         contents: '',
         title: '',
@@ -19,7 +22,7 @@ const initialStore = {
         recruitmentEndSetting: 'automatic',
       },
       isVisible: false,
-    },
+    } as GroupStore,
   },
 };
 

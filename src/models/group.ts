@@ -18,7 +18,7 @@ export interface Group {
   category: Category | string;
   recruitmentEndSetting: RecruitmentEndSetting;
   recruitmentEndDate: string | null;
-  writer: string;
+  writerUid: string;
   createAt: string;
 }
 

@@ -6,8 +6,9 @@ import { GetServerSideProps } from 'next';
 
 import DetailContentsContainer from '@/containers/detail/DetailContentsContainer';
 import DetailHeaderContainer from '@/containers/detail/DetailHeaderContainer';
-import { setGroup } from '@/reducers/groupSlice';
+import { setGroup, setWriterProfile } from '@/reducers/groupSlice';
 import wrapper from '@/reducers/store';
+import { getUserProfile } from '@/services/api/auth';
 import { getGroupDetail } from '@/services/api/group';
 
 interface Params extends ParsedUrlQuery {
@@ -32,7 +33,10 @@ export const getServerSideProps: GetServerSideProps = wrapper
       };
     }
 
+    const profile = await getUserProfile(group.writerUid);
+
     store.dispatch(setGroup(group));
+    store.dispatch(setWriterProfile(profile));
 
     return {
       props: {},

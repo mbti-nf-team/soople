@@ -2,7 +2,7 @@ import { Group } from '@/models/group';
 
 const group: Group = {
   groupId: '1',
-  writer: 'test',
+  writerUid: 'test',
   title: 'title',
   contents: 'contents',
   tags: [],

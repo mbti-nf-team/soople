@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { Profile } from '@/models/auth';
 import { getGroupDetail, postNewGroup } from '@/services/api/group';
 
 import { Group, WriteFields, WriteFieldsForm } from '../models/group';
@@ -10,6 +11,7 @@ export interface GroupStore {
   group: Group | null;
   groupError: string | null;
   writeFields: WriteFields;
+  writer: Profile | null;
   groupId: string | null;
   isVisible: boolean;
 }
@@ -30,6 +32,7 @@ const { actions, reducer } = createSlice({
     groupId: null,
     groupError: null,
     writeFields: initialFieldsState,
+    writer: null,
     isVisible: false,
   } as GroupStore,
   reducers: {
@@ -72,11 +75,23 @@ const { actions, reducer } = createSlice({
         isVisible,
       };
     },
+    setWriterProfile(state, { payload: writer }: PayloadAction<Profile>) {
+      return {
+        ...state,
+        writer,
+      };
+    },
   },
 });
 
 export const {
-  changeWriteFields, clearWriteFields, setGroupError, setGroupId, setPublishModalVisible, setGroup,
+  changeWriteFields,
+  clearWriteFields,
+  setGroupError,
+  setGroupId,
+  setPublishModalVisible,
+  setGroup,
+  setWriterProfile,
 } = actions;
 
 export const requestRegisterNewGroup = (

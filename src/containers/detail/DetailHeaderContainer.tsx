@@ -6,14 +6,16 @@ import { getGroup } from '@/utils/utils';
 
 function DetailHeaderContainer(): ReactElement | null {
   const group = useSelector(getGroup('group'));
+  const writer = useSelector(getGroup('writer'));
 
-  if (!group) {
+  if (!group || !writer) {
     return null;
   }
 
   return (
     <DetailHeaderSection
       group={group}
+      writer={writer}
     />
   );
 }
