@@ -3,7 +3,7 @@ import { RootReducerState } from '@/reducers/rootReducer';
 import WRITE_FIELDS_FIXTURE from '../../fixtures/writeFields';
 
 import {
-  getAuth, getGroup, isProdLevel, stringToExcludeNull, timestampToString,
+  getAuth, getGroup, isProdLevel, stringToExcludeNull, timestampToString, tomorrow, yesterday,
 } from './utils';
 
 describe('isProdLevel', () => {
@@ -111,5 +111,29 @@ describe('timestampToString', () => {
     const result = timestampToString(timestamp);
 
     expect(result).toBe('2021-11-11');
+  });
+});
+
+describe('tomorrow', () => {
+  it('내일 날짜를 반환해야만 한다', () => {
+    const now = new Date();
+
+    const result = tomorrow(new Date());
+
+    now.setDate(now.getDate() + 1);
+
+    expect(result).toBe(now.toString());
+  });
+});
+
+describe('yesterday', () => {
+  it('어제 날짜를 반환해야만 한다', () => {
+    const now = new Date();
+
+    const result = yesterday(new Date());
+
+    now.setDate(now.getDate() - 1);
+
+    expect(result).toBe(now.toString());
   });
 });
