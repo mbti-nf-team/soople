@@ -15,4 +15,10 @@ export const updateUserProfile = async ({
   });
 };
 
-export const temp = [];
+export const getUserProfile = async (id:string): Promise<Profile> => {
+  const user = await collection('users')
+    .doc(id)
+    .get();
+
+  return user.data() as Profile;
+};

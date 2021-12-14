@@ -5,19 +5,23 @@ import { useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 
+import { getUserProfile } from '@/services/api/auth';
 import { getGroupDetail } from '@/services/api/group';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
+import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import DetailPage, { getServerSideProps } from './[id].page';
 
 jest.mock('@/services/api/group');
+jest.mock('@/services/api/auth');
 
 describe('DetailPage', () => {
   beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
         group: GROUP_FIXTURE,
+        writer: PROFILE_FIXTURE,
       },
     }));
   });
@@ -82,6 +86,7 @@ describe('getServerSideProps', () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
       expect(getGroupDetail).toBeCalledWith('id');
+      expect(getUserProfile).toBeCalledWith('test');
       expect(response.props.initialState.groupReducer.group).toEqual(GROUP_FIXTURE);
     });
   });

@@ -1,7 +1,7 @@
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import db from '../firebase';
 
-import { updateUserProfile } from './auth';
+import { getUserProfile, updateUserProfile } from './auth';
 
 describe('auth API', () => {
   beforeEach(() => {
@@ -30,6 +30,29 @@ describe('auth API', () => {
         portfolioUrl,
         position,
       });
+    });
+  });
+
+  describe('getUserProfile', () => {
+    const mockResponse = {
+      email: 'test@test.com',
+      name: 'test',
+    };
+
+    beforeEach(() => {
+      (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
+        doc: jest.fn().mockImplementationOnce(() => ({
+          get: jest.fn().mockReturnValue({
+            data: jest.fn().mockReturnValueOnce(mockResponse),
+          }),
+        })),
+      }));
+    });
+
+    it('해당 detail 글 정보가 나타나야만 한다', async () => {
+      const response = await getUserProfile('id');
+
+      expect(response).toEqual(mockResponse);
     });
   });
 });
