@@ -25,3 +25,14 @@ export const stringToExcludeNull = (value?: string | null): string => {
 };
 
 export const timestampToString = (timestamp: any) => timestamp.toDate().toString();
+
+export const tomorrow = (date: Date) => {
+  date.setDate(date.getDate() + 1);
+
+  return date.toString();
+};
+export const yesterday = (date: Date) => {
+  date.setDate(date.getDate() - 1);
+
+  return date.toString();
+};
