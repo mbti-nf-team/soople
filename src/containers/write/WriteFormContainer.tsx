@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 
 import { useSession } from 'next-auth/client';
 
-import NewWriteForm from '@/components/new/NewWriteForm';
+import WriteForm from '@/components/write/WriteForm';
 import { WriteFieldsForm } from '@/models/group';
 import { changeWriteFields } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getGroup } from '@/utils/utils';
 
-function NewWriteFormContainer(): ReactElement {
+function WriteFormContainer(): ReactElement {
   const [session, loading] = useSession();
   const fields = useSelector(getGroup('writeFields'));
   const dispatch = useAppDispatch();
@@ -27,11 +27,11 @@ function NewWriteFormContainer(): ReactElement {
   }
 
   return (
-    <NewWriteForm
+    <WriteForm
       fields={fields}
       onChange={onChangeFields}
     />
   );
 }
 
-export default NewWriteFormContainer;
+export default WriteFormContainer;

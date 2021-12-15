@@ -7,7 +7,7 @@ interface Props {
   title: string;
 }
 
-function NewHeader({ title, onSubmit }: Props): ReactElement {
+function WriteHeader({ title, onSubmit }: Props): ReactElement {
   return (
     <div>
       <Link href="/" passHref>
@@ -21,4 +21,4 @@ function NewHeader({ title, onSubmit }: Props): ReactElement {
   );
 }
 
-export default NewHeader;
+export default WriteHeader;

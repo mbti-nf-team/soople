@@ -16,7 +16,7 @@ function Header({ session, onClick }: Props): ReactElement {
         <div>
           {session.user?.email}
         </div>
-        <Link href="/new" passHref>
+        <Link href="/write" passHref>
           <a>팀 모집하기</a>
         </Link>
         <button type="button" onClick={() => signOut()}>

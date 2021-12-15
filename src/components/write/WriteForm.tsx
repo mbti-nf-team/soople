@@ -9,7 +9,7 @@ interface Props {
   onChange: (form: WriteFieldsForm) => void;
 }
 
-function NewWriteForm({ fields, onChange }: Props): ReactElement {
+function WriteForm({ fields, onChange }: Props): ReactElement {
   const { title, contents } = fields;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -19,7 +19,7 @@ function NewWriteForm({ fields, onChange }: Props): ReactElement {
   };
 
   return (
-    <NewWriteFormWrapper>
+    <WriteFormWrapper>
       <input
         type="text"
         name="title"
@@ -35,13 +35,13 @@ function NewWriteForm({ fields, onChange }: Props): ReactElement {
         onChange={handleChange}
         placeholder="내용을 입력하세요"
       />
-    </NewWriteFormWrapper>
+    </WriteFormWrapper>
   );
 }
 
-export default NewWriteForm;
+export default WriteForm;
 
-const NewWriteFormWrapper = styled.div`
+const WriteFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
