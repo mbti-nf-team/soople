@@ -1,9 +1,9 @@
 import { WriteFields } from '@/models/group';
-import { getGroupDetail, postNewGroup } from '@/services/api/group';
+import { getGroupDetail, getGroups, postNewGroup } from '@/services/api/group';
 
 import db, { fireStore } from '../firebase';
 
-jest.mock('@/utils/utils');
+jest.mock('@/utils/firestore');
 
 describe('group API', () => {
   beforeEach(() => {
@@ -87,6 +87,14 @@ describe('group API', () => {
 
         expect(response).toBeNull();
       });
+    });
+  });
+
+  describe('getGroups', () => {
+    it('그룹 리스트가 반환되어야만 한다', async () => {
+      const response = await getGroups();
+
+      expect(response).toEqual([]);
     });
   });
 });

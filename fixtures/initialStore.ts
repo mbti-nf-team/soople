@@ -9,6 +9,7 @@ const initialStore = {
       isVisible: false,
     },
     groupReducer: {
+      groups: [],
       group: null,
       groupError: null,
       groupId: null,

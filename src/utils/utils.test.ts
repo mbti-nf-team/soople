@@ -3,7 +3,7 @@ import { RootReducerState } from '@/reducers/rootReducer';
 import WRITE_FIELDS_FIXTURE from '../../fixtures/writeFields';
 
 import {
-  getAuth, getGroup, isProdLevel, stringToExcludeNull, timestampToString, tomorrow, yesterday,
+  getAuth, getGroup, isProdLevel, stringToExcludeNull, tomorrow, yesterday,
 } from './utils';
 
 describe('isProdLevel', () => {
@@ -97,20 +97,6 @@ describe('stringToExcludeNull', () => {
 
       expect(result).toBe('');
     });
-  });
-});
-
-describe('timestampToString', () => {
-  const timestamp = {
-    toDate: jest.fn().mockImplementationOnce(() => ({
-      toString: jest.fn().mockReturnValueOnce('2021-11-11'),
-    })),
-  };
-
-  it('날짜 형식으로 변경되어야만 한다', () => {
-    const result = timestampToString(timestamp);
-
-    expect(result).toBe('2021-11-11');
   });
 });
 

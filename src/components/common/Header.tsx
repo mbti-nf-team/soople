@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/client';
 
+import { stringToExcludeNull } from '@/utils/utils';
+
 interface Props {
   session: Session | null
   onClick: () => void;
@@ -14,7 +16,8 @@ function Header({ session, onClick }: Props): ReactElement {
     return (
       <div>
         <div>
-          {session.user?.email}
+          <h2>Conners</h2>
+          <img src={stringToExcludeNull(session.user?.image)} alt="user-profile" />
         </div>
         <Link href="/write" passHref>
           <a>팀 모집하기</a>
@@ -27,9 +30,12 @@ function Header({ session, onClick }: Props): ReactElement {
   }
 
   return (
-    <button type="button" onClick={onClick}>
-      시작하기
-    </button>
+    <>
+      <h2>Conners</h2>
+      <button type="button" onClick={onClick}>
+        시작하기
+      </button>
+    </>
   );
 }
 
