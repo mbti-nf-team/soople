@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
 import { useSession } from 'next-auth/client';
 
-import NewPage from './new.page';
+import NewPage from './write.page';
 
-describe('New page', () => {
+describe('WritePage', () => {
   const renderNewPage = () => render((
     <NewPage />
   ));
@@ -22,7 +22,7 @@ describe('New page', () => {
     (useSession as jest.Mock).mockImplementation(() => ([given.session, given.loading]));
   });
 
-  it('New page에 대한 내용이 나타나야만 한다', () => {
+  it('"등록하기" 버튼이 나타나야만 한다', () => {
     const { container } = renderNewPage();
 
     expect(container).toHaveTextContent('등록하기');

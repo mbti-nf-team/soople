@@ -2,17 +2,17 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 
-import NewWriteForm from './NewWriteForm';
+import WriteForm from './WriteForm';
 
-describe('NewWriteForm', () => {
+describe('WriteForm', () => {
   const handleChange = jest.fn();
 
   beforeEach(() => {
     handleChange.mockClear();
   });
 
-  const renderNewWriteForm = () => render((
-    <NewWriteForm
+  const renderWriteForm = () => render((
+    <WriteForm
       fields={WRITE_FIELDS_FIXTURE}
       onChange={handleChange}
     />
@@ -24,7 +24,7 @@ describe('NewWriteForm', () => {
   ];
 
   it('팀 모집하기 작성 폼에 대한 인풋 창이 나타나야만 한다', () => {
-    renderNewWriteForm();
+    renderWriteForm();
 
     placeholderTexts.forEach((placeholderText) => {
       expect(screen.getByPlaceholderText(placeholderText)).toBeInTheDocument();
@@ -38,7 +38,7 @@ describe('NewWriteForm', () => {
     };
 
     it('onChange 이벤트가 호출되야만 한다', () => {
-      renderNewWriteForm();
+      renderWriteForm();
 
       fireEvent.change(screen.getByPlaceholderText('제목을 입력하세요'), { target: inputValue });
 

@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
 
-import NewHeader from '@/components/new/NewHeader';
+import WriteHeader from '@/components/write/WriteHeader';
 import { setPublishModalVisible } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getGroup } from '@/utils/utils';
 
-function NewHeaderContainer(): ReactElement {
+function WriteHeaderContainer(): ReactElement {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const groupId = useSelector(getGroup('groupId'));
@@ -23,11 +23,11 @@ function NewHeaderContainer(): ReactElement {
   }, [groupId]);
 
   return (
-    <NewHeader
+    <WriteHeader
       title={title}
       onSubmit={onSubmit}
     />
   );
 }
 
-export default NewHeaderContainer;
+export default WriteHeaderContainer;

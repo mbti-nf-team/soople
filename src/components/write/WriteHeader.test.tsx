@@ -1,23 +1,23 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import NewHeader from './NewHeader';
+import WriteHeader from './WriteHeader';
 
-describe('NewHeader', () => {
+describe('WriteHeader', () => {
   const handleSubmit = jest.fn();
 
   beforeEach(() => {
     handleSubmit.mockClear();
   });
 
-  const renderNewHeader = () => render((
-    <NewHeader
+  const renderWriteHeader = () => render((
+    <WriteHeader
       title={given.title}
       onSubmit={handleSubmit}
     />
   ));
 
   it('헤더 정보가 나타나야만 한다', () => {
-    const { container } = renderNewHeader();
+    const { container } = renderWriteHeader();
 
     expect(container).toHaveTextContent('등록하기');
     expect(screen.getByText('< 팀 모집하기')).toHaveAttribute('href', '/');
@@ -28,7 +28,7 @@ describe('NewHeader', () => {
       given('title', () => 'title');
 
       it('클릭 이벤트가 호출되어야만 한다', () => {
-        renderNewHeader();
+        renderWriteHeader();
 
         fireEvent.click(screen.getByText('등록하기'));
 
@@ -40,7 +40,7 @@ describe('NewHeader', () => {
       given('title', () => '');
 
       it('"등록하기" 버튼은 disable되어야만 한다', () => {
-        renderNewHeader();
+        renderWriteHeader();
 
         expect(screen.getByText('등록하기')).toHaveAttribute('disabled');
       });

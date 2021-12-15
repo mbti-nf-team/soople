@@ -27,7 +27,7 @@ describe('Header', () => {
       const { container } = renderHeader();
 
       expect(container).toHaveTextContent('로그아웃');
-      expect(screen.getByText('팀 모집하기')).toHaveAttribute('href', '/new');
+      expect(screen.getByText('팀 모집하기')).toHaveAttribute('href', '/write');
     });
 
     describe('"로그아웃" 버튼을 클릭한다', () => {

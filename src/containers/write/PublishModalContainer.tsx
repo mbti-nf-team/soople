@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { useSession } from 'next-auth/client';
 
-import PublishModal from '@/components/new/PublishModal';
-import PublishModalForm from '@/components/new/PublishModalForm';
+import PublishModal from '@/components/write/PublishModal';
+import PublishModalForm from '@/components/write/PublishModalForm';
 import { WriteFieldsForm } from '@/models/group';
 import { changeWriteFields, requestRegisterNewGroup, setPublishModalVisible } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';

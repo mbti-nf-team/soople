@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
-import NewHeaderContainer from './NewHeaderContainer';
+import WriteHeaderContainer from './WriteHeaderContainer';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 
-describe('NewHeaderContainer', () => {
+describe('WriteHeaderContainer', () => {
   const dispatch = jest.fn();
   const mockReplace = jest.fn();
 
@@ -26,8 +26,8 @@ describe('NewHeaderContainer', () => {
     }));
   });
 
-  const renderNewHeaderContainer = () => render((
-    <NewHeaderContainer />
+  const renderWriteHeaderContainer = () => render((
+    <WriteHeaderContainer />
   ));
 
   context('글을 작성하지 않은 경우', () => {
@@ -40,7 +40,7 @@ describe('NewHeaderContainer', () => {
 
       describe('"등록하기" 버튼을 클릭한다', () => {
         it('클릭 이베트가 발생해야만 한다', () => {
-          renderNewHeaderContainer();
+          renderWriteHeaderContainer();
 
           fireEvent.click(screen.getByText('등록하기'));
 
@@ -56,7 +56,7 @@ describe('NewHeaderContainer', () => {
 
       describe('"등록하기" 버튼을 클릭한다', () => {
         it('클릭 이베트가 발생해야만 한다', () => {
-          renderNewHeaderContainer();
+          renderWriteHeaderContainer();
 
           fireEvent.click(screen.getByText('등록하기'));
 
@@ -82,7 +82,7 @@ describe('NewHeaderContainer', () => {
     });
 
     it('"router.replace"가 "/"와 같이 호출되어야만 한다', async () => {
-      renderNewHeaderContainer();
+      renderWriteHeaderContainer();
 
       expect(mockReplace).toBeCalledWith('/detail/1');
     });
