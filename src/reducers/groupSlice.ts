@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Profile } from '@/models/auth';
-import { getGroupDetail, postNewGroup } from '@/services/api/group';
-
-import { Group, WriteFields, WriteFieldsForm } from '../models/group';
+import {
+  Group, WriteFields, WriteFieldsForm,
+} from '@/models/group';
+import { getGroupDetail, getGroups, postNewGroup } from '@/services/api/group';
+import { formatGroup } from '@/utils/firestore';
 
 import type { AppThunk } from './store';
 
 export interface GroupStore {
+  groups: Group[];
   group: Group | null;
   groupError: string | null;
   writeFields: WriteFields;
@@ -28,6 +31,7 @@ const initialFieldsState: WriteFields = {
 const { actions, reducer } = createSlice({
   name: 'group',
   initialState: {
+    groups: [],
     group: null,
     groupId: null,
     groupError: null,
@@ -55,6 +59,12 @@ const { actions, reducer } = createSlice({
       return {
         ...state,
         group,
+      };
+    },
+    setGroups(state, { payload: groups }: PayloadAction<Group[]>): GroupStore {
+      return {
+        ...state,
+        groups,
       };
     },
     setGroupId(state, { payload: id }: PayloadAction<string>):GroupStore {
@@ -85,13 +95,14 @@ const { actions, reducer } = createSlice({
 });
 
 export const {
-  changeWriteFields,
-  clearWriteFields,
-  setGroupError,
-  setGroupId,
-  setPublishModalVisible,
   setGroup,
+  setGroups,
+  setGroupId,
+  setGroupError,
+  clearWriteFields,
   setWriterProfile,
+  changeWriteFields,
+  setPublishModalVisible,
 } = actions;
 
 export const requestRegisterNewGroup = (
@@ -113,9 +124,23 @@ export const requestRegisterNewGroup = (
 
 export const loadGroupDetail = (id: string): AppThunk => async (dispatch) => {
   try {
-    const response = await getGroupDetail(id);
+    const group = await getGroupDetail(id);
 
-    dispatch(setGroup(response));
+    dispatch(setGroup(group));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setGroupError(message));
+  }
+};
+
+export const loadGroups = (): AppThunk => async (dispatch) => {
+  try {
+    const response = await getGroups();
+
+    const groups = response.map((doc) => formatGroup(doc)) as Group[];
+
+    dispatch(setGroups(groups));
   } catch (error) {
     const { message } = error as Error;
 

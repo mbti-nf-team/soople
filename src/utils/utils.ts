@@ -24,8 +24,6 @@ export const stringToExcludeNull = (value?: string | null): string => {
   return value;
 };
 
-export const timestampToString = (timestamp: any) => timestamp.toDate().toString();
-
 export const tomorrow = (date: Date) => {
   date.setDate(date.getDate() + 1);
 

@@ -1,6 +1,9 @@
+import React, { ReactElement } from 'react';
+
 import { getSession } from 'next-auth/client';
 
-import Home from '@/containers/home/HomeContainer';
+import HeaderContainer from '@/containers/common/HeaderContainer';
+import RecruitPostsContainer from '@/containers/home/RecruitPostsContainer';
 import { setUser } from '@/reducers/authSlice';
 import wrapper from '@/reducers/store';
 
@@ -16,4 +19,13 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   };
 });
 
-export default Home;
+function HomePage(): ReactElement {
+  return (
+    <>
+      <HeaderContainer />
+      <RecruitPostsContainer />
+    </>
+  );
+}
+
+export default HomePage;

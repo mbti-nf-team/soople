@@ -24,6 +24,7 @@ describe('rootReducer', () => {
       isVisible: false,
     },
     groupReducer: {
+      groups: [],
       group: null,
       groupId: null,
       groupError: null,
