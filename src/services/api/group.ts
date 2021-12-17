@@ -1,4 +1,4 @@
-import { Group, WriteFields } from '@/models/group';
+import { Category, Group, WriteFields } from '@/models/group';
 import { timestampToString } from '@/utils/firestore';
 
 import { collection, fireStore } from '../firebase';
@@ -31,8 +31,9 @@ export const getGroupDetail = async (id: string) => {
   } as Group;
 };
 
-export const getGroups = async () => {
+export const getGroups = async (condition: Category[]) => {
   const response = await collection('groups')
+    .where('category', 'in', condition)
     .orderBy('createAt', 'asc')
     .get();
 

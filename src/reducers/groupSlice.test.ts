@@ -246,7 +246,7 @@ describe('groupReducer async actions', () => {
       (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
 
       it('dispatch 액션이 "group/setGroups"인 타입과 payload는 group 리스트여야 한다', async () => {
-        await store.dispatch(loadGroups());
+        await store.dispatch(loadGroups(['study', 'project']));
 
         const actions = store.getActions();
 
@@ -264,7 +264,7 @@ describe('groupReducer async actions', () => {
 
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
-          await store.dispatch(loadGroups());
+          await store.dispatch(loadGroups(['study', 'project']));
         } catch (error) {
           // ignore errors
         } finally {

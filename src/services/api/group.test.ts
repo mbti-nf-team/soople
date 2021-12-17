@@ -92,7 +92,7 @@ describe('group API', () => {
 
   describe('getGroups', () => {
     it('그룹 리스트가 반환되어야만 한다', async () => {
-      const response = await getGroups();
+      const response = await getGroups([]);
 
       expect(response).toEqual([]);
     });

@@ -11,7 +11,7 @@ function RecruitPostsContainer(): ReactElement {
   const groups = useSelector(getGroup('groups'));
 
   useEffect(() => {
-    dispatch(loadGroups());
+    dispatch(loadGroups(['study', 'project']));
   }, []);
 
   if (!groups || !groups.length) {
