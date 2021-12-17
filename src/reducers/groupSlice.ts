@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Profile } from '@/models/auth';
 import {
+  Category,
   Group, WriteFields, WriteFieldsForm,
 } from '@/models/group';
 import { getGroupDetail, getGroups, postNewGroup } from '@/services/api/group';
@@ -134,9 +135,9 @@ export const loadGroupDetail = (id: string): AppThunk => async (dispatch) => {
   }
 };
 
-export const loadGroups = (): AppThunk => async (dispatch) => {
+export const loadGroups = (condition: Category[]): AppThunk => async (dispatch) => {
   try {
-    const response = await getGroups();
+    const response = await getGroups(condition);
 
     const groups = response.map((doc) => formatGroup(doc)) as Group[];
 

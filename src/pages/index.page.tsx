@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import { getSession } from 'next-auth/client';
 
 import HeaderContainer from '@/containers/common/HeaderContainer';
+import FilterBarContainer from '@/containers/home/FilterBarContainer';
 import RecruitPostsContainer from '@/containers/home/RecruitPostsContainer';
 import { setUser } from '@/reducers/authSlice';
 import wrapper from '@/reducers/store';
@@ -23,6 +24,7 @@ function HomePage(): ReactElement {
   return (
     <>
       <HeaderContainer />
+      <FilterBarContainer />
       <RecruitPostsContainer />
     </>
   );
