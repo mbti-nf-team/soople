@@ -1,8 +1,10 @@
 import { Group } from '@/models/group';
 
+import PROFILE_FIXTURE from './profile';
+
 const group: Group = {
   groupId: '1',
-  writerUid: 'test',
+  writer: PROFILE_FIXTURE,
   title: 'title',
   contents: 'contents',
   tags: [],

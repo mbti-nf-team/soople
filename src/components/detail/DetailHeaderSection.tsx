@@ -3,7 +3,6 @@ import React, { ReactElement } from 'react';
 import dayjs from 'dayjs';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
-import { Profile } from '@/models/auth';
 import { Group } from '@/models/group';
 
 import 'dayjs/locale/ko';
@@ -12,26 +11,25 @@ dayjs.locale('ko');
 
 interface Props {
   group: Group;
-  writer: Profile;
   currentTime: number;
 }
 
-function DetailHeaderSection({ group, writer, currentTime }: Props): ReactElement {
-  const recruitDate = useRecruitDateStatus(group, currentTime);
+function DetailHeaderSection({ group, currentTime }: Props): ReactElement {
+  const { writer } = group;
 
-  const { image, name, email } = writer;
+  const recruitDate = useRecruitDateStatus(group, currentTime);
 
   return (
     <div>
       <h1>{group.title}</h1>
       <div>
-        {image ? (
-          <img src={image} alt="writer-img" width="50px" height="50px" />
+        {writer.image ? (
+          <img src={writer.image} alt="writer-img" width="50px" height="50px" />
         ) : (
           <div>이미지 없음</div>
         )}
         <span>
-          {name || email}
+          {writer.name || writer.email}
         </span>
         <div>
           {recruitDate}

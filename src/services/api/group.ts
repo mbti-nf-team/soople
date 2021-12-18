@@ -1,12 +1,13 @@
+import { Profile } from '@/models/auth';
 import { Category, Group, WriteFields } from '@/models/group';
 import { timestampToString } from '@/utils/firestore';
 
 import { collection, fireStore } from '../firebase';
 
-export const postNewGroup = async (writerUid: string, fields: WriteFields) => {
+export const postNewGroup = async (profile: Profile, fields: WriteFields) => {
   const { id } = await collection('groups').add({
     ...fields,
-    writerUid,
+    writer: profile,
     createAt: fireStore.FieldValue.serverTimestamp(),
   });
 

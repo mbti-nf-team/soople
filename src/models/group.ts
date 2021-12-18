@@ -1,3 +1,5 @@
+import { Profile } from './auth';
+
 export type Category = 'study' | 'project';
 export type RecruitmentEndSetting = 'manual' | 'automatic';
 
@@ -18,7 +20,7 @@ export interface Group {
   category: Category | string;
   recruitmentEndSetting: RecruitmentEndSetting;
   recruitmentEndDate: string | null;
-  writerUid: string;
+  writer: Profile;
   createAt: string;
 }
 

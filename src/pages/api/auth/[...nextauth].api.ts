@@ -30,6 +30,7 @@ export default NextAuth({
           ...session.user,
           uid: user.id,
           portfolioUrl: user.portfolioUrl,
+          position: user.position,
         },
       };
     },

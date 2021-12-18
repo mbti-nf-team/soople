@@ -1,6 +1,7 @@
 import { WriteFields } from '@/models/group';
 import { getGroupDetail, getGroups, postNewGroup } from '@/services/api/group';
 
+import PROFILE_FIXTURE from '../../../fixtures/profile';
 import db, { fireStore } from '../firebase';
 
 jest.mock('@/utils/firestore');
@@ -13,7 +14,6 @@ describe('group API', () => {
   describe('updateUserProfile', () => {
     const mockAdd = jest.fn().mockReturnValueOnce({ id: '1' });
     const createAt = '2021-11-11';
-    const userUid = 'userUid';
 
     const group: WriteFields = {
       title: 'title',
@@ -35,11 +35,11 @@ describe('group API', () => {
     });
 
     it('update 함수가 호출되어야만 한다', async () => {
-      const id = await postNewGroup(userUid, group);
+      const id = await postNewGroup(PROFILE_FIXTURE, group);
 
       expect(mockAdd).toBeCalledWith({
         ...group,
-        writerUid: userUid,
+        writer: PROFILE_FIXTURE,
         createAt,
       });
       expect(id).toBe('1');
