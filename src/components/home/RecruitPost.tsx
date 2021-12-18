@@ -17,7 +17,9 @@ interface Props {
 }
 
 function RecruitPost({ group }: Props): ReactElement {
-  const { title, contents, groupId } = group;
+  const {
+    title, contents, groupId, writer,
+  } = group;
   const currentTime = useCurrentTime();
   const recruitDate = useRecruitDateStatus(group, currentTime);
 
@@ -28,6 +30,14 @@ function RecruitPost({ group }: Props): ReactElement {
       </Link>
       <p>{contents}</p>
       <small>{recruitDate}</small>
+      <div>
+        {writer.image ? (
+          <img src={writer.image} alt="writer-img" width="30px" height="30px" />
+        ) : (
+          <small>이미지 없음</small>
+        )}
+        <span>{writer.name || writer.email}</span>
+      </div>
     </RecruitPostWrapper>
   );
 }

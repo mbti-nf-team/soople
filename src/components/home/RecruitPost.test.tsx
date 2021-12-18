@@ -7,14 +7,49 @@ import RecruitPost from './RecruitPost';
 describe('RecruitPost', () => {
   const renderRecruitPost = () => render((
     <RecruitPost
-      group={GROUP_FIXTURE}
+      group={given.group}
     />
   ));
 
-  it('모집글에 대한 정보가 나타나야만 한다', () => {
-    const { container } = renderRecruitPost();
+  context('작성자 이미지가 존재할 경우', () => {
+    given('group', () => (GROUP_FIXTURE));
 
-    expect(container).toHaveTextContent(GROUP_FIXTURE.title);
-    expect(screen.getByText('title')).toHaveAttribute('href', `/detail/${GROUP_FIXTURE.groupId}`);
+    it('프로필 이미지가 나타나야만 한다', () => {
+      renderRecruitPost();
+
+      expect(screen.getByAltText('writer-img')).not.toBeNull();
+    });
+  });
+
+  context('작성자 이미지가 존재하지 않는 경우', () => {
+    given('group', () => ({
+      ...GROUP_FIXTURE,
+      writer: {
+        ...GROUP_FIXTURE.writer,
+        image: '',
+      },
+    }));
+
+    it('프로필 이미지가 나타나야만 한다', () => {
+      const { container } = renderRecruitPost();
+
+      expect(container).toHaveTextContent('이미지 없음');
+    });
+  });
+
+  context('작성자 닉네임이 존재하지 않는 경우', () => {
+    given('group', () => ({
+      ...GROUP_FIXTURE,
+      writer: {
+        ...GROUP_FIXTURE.writer,
+        name: '',
+      },
+    }));
+
+    it('작성자 이메일이 나타나야만 한다', () => {
+      const { container } = renderRecruitPost();
+
+      expect(container).toHaveTextContent(/test@test.com/);
+    });
   });
 });
