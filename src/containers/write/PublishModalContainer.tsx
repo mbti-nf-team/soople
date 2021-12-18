@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/client';
 
 import PublishModal from '@/components/write/PublishModal';
 import PublishModalForm from '@/components/write/PublishModalForm';
+import { Profile } from '@/models/auth';
 import { WriteFieldsForm } from '@/models/group';
 import { changeWriteFields, requestRegisterNewGroup, setPublishModalVisible } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
@@ -18,7 +19,7 @@ function PublishModalContainer(): ReactElement {
 
   const onClose = useCallback(() => dispatch(setPublishModalVisible(false)), [dispatch]);
   const onSubmit = useCallback(() => dispatch(requestRegisterNewGroup(
-    session?.user.uid as string,
+    session?.user as Profile,
   )), [dispatch]);
 
   const onChangeFields = useCallback((form: WriteFieldsForm) => {

@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 
-import { getUserProfile } from '@/services/api/auth';
 import { getGroupDetail } from '@/services/api/group';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
@@ -86,7 +85,6 @@ describe('getServerSideProps', () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
       expect(getGroupDetail).toBeCalledWith('id');
-      expect(getUserProfile).toBeCalledWith('test');
       expect(response.props.initialState.groupReducer.group).toEqual(GROUP_FIXTURE);
     });
   });

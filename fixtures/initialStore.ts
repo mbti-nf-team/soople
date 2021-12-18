@@ -13,7 +13,6 @@ const initialStore = {
       group: null,
       groupError: null,
       groupId: null,
-      writer: null,
       writeFields: {
         contents: '',
         title: '',

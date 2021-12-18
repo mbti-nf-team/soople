@@ -8,16 +8,14 @@ import { getGroup } from '@/utils/utils';
 function DetailHeaderContainer(): ReactElement | null {
   const currentTime = useCurrentTime();
   const group = useSelector(getGroup('group'));
-  const writer = useSelector(getGroup('writer'));
 
-  if (!group || !writer) {
+  if (!group) {
     return null;
   }
 
   return (
     <DetailHeaderSection
       group={group}
-      writer={writer}
       currentTime={currentTime}
     />
   );

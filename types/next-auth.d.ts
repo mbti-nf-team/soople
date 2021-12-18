@@ -11,6 +11,7 @@ declare module 'next-auth' {
       email: string;
       image?: string | null;
       portfolioUrl?: string | null;
+      position?: string | null;
     },
   }
 
@@ -20,5 +21,6 @@ declare module 'next-auth' {
     email: string;
     image?: string | null;
     portfolioUrl?: string | null;
+    position?: string | null;
   }
 }

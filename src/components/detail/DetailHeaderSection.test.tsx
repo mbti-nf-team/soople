@@ -11,7 +11,6 @@ describe('DetailHeaderSection', () => {
   const renderDetailHeaderSection = (group = GROUP_FIXTURE) => render((
     <DetailHeaderSection
       currentTime={given.currentTime}
-      writer={given.writer}
       group={group}
     />
   ));
@@ -59,23 +58,22 @@ describe('DetailHeaderSection', () => {
 
   describe('작성자의 프로필 이미지 섹션을 볼 수 있다', () => {
     context('작성자의 프로필 이미지가 존재하지 않는 경우', () => {
-      given('writer', () => ({
-        ...PROFILE_FIXTURE,
-        image: '',
-      }));
-
       it('"이미지 없음"이 나타나야 한다', () => {
-        const { container } = renderDetailHeaderSection();
+        const { container } = renderDetailHeaderSection({
+          ...GROUP_FIXTURE,
+          writer: {
+            ...PROFILE_FIXTURE,
+            image: '',
+          },
+        });
 
         expect(container).toHaveTextContent('이미지 없음');
       });
     });
 
     context('작성자의 프로필 이미지가 존재하는 경우', () => {
-      given('writer', () => (PROFILE_FIXTURE));
-
       it('작성자의 이미지가 나타나야 한다', () => {
-        renderDetailHeaderSection();
+        renderDetailHeaderSection(GROUP_FIXTURE);
 
         expect(screen.getByAltText('writer-img')).not.toBeNull();
       });
@@ -84,23 +82,25 @@ describe('DetailHeaderSection', () => {
 
   describe('작성자의 아이디를 볼 수 있다', () => {
     context('작성자의 이름이 존재하는 경우', () => {
-      given('writer', () => (PROFILE_FIXTURE));
-
       it('작성자의 이름이 나타나야만 한다', () => {
-        const { container } = renderDetailHeaderSection();
+        const { container } = renderDetailHeaderSection({
+          ...GROUP_FIXTURE,
+          writer: PROFILE_FIXTURE,
+        });
 
         expect(container).toHaveTextContent(PROFILE_FIXTURE.name as string);
       });
     });
 
     context('작성자의 이름이 존재하지 않는 경우', () => {
-      given('writer', () => ({
-        ...PROFILE_FIXTURE,
-        name: '',
-      }));
-
       it('작성자의 이메일이 나타나야만 한다', () => {
-        const { container } = renderDetailHeaderSection();
+        const { container } = renderDetailHeaderSection({
+          ...GROUP_FIXTURE,
+          writer: {
+            ...PROFILE_FIXTURE,
+            name: '',
+          },
+        });
 
         expect(container).toHaveTextContent(PROFILE_FIXTURE.email);
       });

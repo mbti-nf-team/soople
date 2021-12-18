@@ -21,7 +21,6 @@ import reducer, {
   setGroupId,
   setGroups,
   setPublishModalVisible,
-  setWriterProfile,
 } from './groupSlice';
 import { RootState } from './rootReducer';
 
@@ -38,7 +37,6 @@ describe('groupReducer', () => {
     groupId: null,
     groupError: null,
     writeFields: WRITE_FIELDS_FIXTURE,
-    writer: null,
     isVisible: false,
   };
 
@@ -123,14 +121,6 @@ describe('groupReducer', () => {
       expect(isVisible).toBeTruthy();
     });
   });
-
-  describe('setWriterProfile', () => {
-    it('writer 정보가 반환되어야만 한다', () => {
-      const { writer } = reducer(initialState, setWriterProfile(PROFILE_FIXTURE));
-
-      expect(writer).toBe(PROFILE_FIXTURE);
-    });
-  });
 });
 
 describe('groupReducer async actions', () => {
@@ -153,7 +143,7 @@ describe('groupReducer async actions', () => {
       (postNewGroup as jest.Mock).mockReturnValueOnce('1');
 
       it('dispatch 액션이 "group/setGroupId"인 타입과 group id 이어야 한다', async () => {
-        await store.dispatch(requestRegisterNewGroup('userUid'));
+        await store.dispatch(requestRegisterNewGroup(PROFILE_FIXTURE));
 
         const actions = store.getActions();
 
@@ -175,7 +165,7 @@ describe('groupReducer async actions', () => {
 
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
-          await store.dispatch(requestRegisterNewGroup('userUid'));
+          await store.dispatch(requestRegisterNewGroup(PROFILE_FIXTURE));
         } catch (error) {
           // ignore errors
         } finally {

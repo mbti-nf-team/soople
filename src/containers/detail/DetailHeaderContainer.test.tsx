@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
-import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import DetailHeaderContainer from './DetailHeaderContainer';
 
@@ -12,7 +11,6 @@ describe('DetailHeaderContainer', () => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
         group: given.group,
-        writer: PROFILE_FIXTURE,
       },
     }));
   });
