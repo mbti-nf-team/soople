@@ -9,10 +9,11 @@ const initialStore = {
       isVisible: false,
     },
     groupReducer: {
+      groupId: null,
       groups: [],
       group: null,
+      comments: [],
       groupError: null,
-      groupId: null,
       writeFields: {
         contents: '',
         title: '',

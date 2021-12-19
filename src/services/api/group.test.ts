@@ -1,5 +1,7 @@
 import { WriteFields } from '@/models/group';
-import { getGroupDetail, getGroups, postNewGroup } from '@/services/api/group';
+import {
+  getGroupDetail, getGroups, postNewGroup,
+} from '@/services/api/group';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import db, { fireStore } from '../firebase';
@@ -11,7 +13,7 @@ describe('group API', () => {
     jest.clearAllMocks();
   });
 
-  describe('updateUserProfile', () => {
+  describe('postNewGroup', () => {
     const mockAdd = jest.fn().mockReturnValueOnce({ id: '1' });
     const createAt = '2021-11-11';
 

@@ -4,6 +4,7 @@ import React, { ReactElement } from 'react';
 
 import { GetServerSideProps } from 'next';
 
+import CommentsContainer from '@/containers/detail/CommentsContainer';
 import DetailContentsContainer from '@/containers/detail/DetailContentsContainer';
 import DetailHeaderContainer from '@/containers/detail/DetailHeaderContainer';
 import { setGroup } from '@/reducers/groupSlice';
@@ -44,6 +45,7 @@ function DetailPage(): ReactElement {
     <>
       <DetailHeaderContainer />
       <DetailContentsContainer />
+      <CommentsContainer />
     </>
   );
 }

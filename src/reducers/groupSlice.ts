@@ -3,19 +3,25 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Profile } from '@/models/auth';
 import {
   Category,
+  Comment,
+  CommentFields,
   Group, WriteFields, WriteFieldsForm,
 } from '@/models/group';
-import { getGroupDetail, getGroups, postNewGroup } from '@/services/api/group';
+import { postGroupComment } from '@/services/api/comment';
+import {
+  getGroupDetail, getGroups, postNewGroup,
+} from '@/services/api/group';
 import { formatGroup } from '@/utils/firestore';
 
 import type { AppThunk } from './store';
 
 export interface GroupStore {
+  groupId: string | null;
   groups: Group[];
   group: Group | null;
+  comments: Comment[];
   groupError: string | null;
   writeFields: WriteFields;
-  groupId: string | null;
   isVisible: boolean;
 }
 
@@ -31,9 +37,10 @@ const initialFieldsState: WriteFields = {
 const { actions, reducer } = createSlice({
   name: 'group',
   initialState: {
+    groupId: null,
     groups: [],
     group: null,
-    groupId: null,
+    comments: [],
     groupError: null,
     writeFields: initialFieldsState,
     isVisible: false,
@@ -133,6 +140,23 @@ export const loadGroups = (condition: Category[]): AppThunk => async (dispatch) 
     const groups = response.map((doc) => formatGroup(doc)) as Group[];
 
     dispatch(setGroups(groups));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setGroupError(message));
+  }
+};
+
+export const requestAddComment = (
+  fields: CommentFields,
+): AppThunk => async (dispatch, getState) => {
+  const { groupReducer: { group } } = getState();
+
+  try {
+    await postGroupComment({
+      groupId: (group as Group).groupId,
+      ...fields,
+    });
   } catch (error) {
     const { message } = error as Error;
 

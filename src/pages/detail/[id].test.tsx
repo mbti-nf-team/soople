@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
+import { useSession } from 'next-auth/client';
 
 import { getGroupDetail } from '@/services/api/group';
 
@@ -23,6 +24,7 @@ describe('DetailPage', () => {
         writer: PROFILE_FIXTURE,
       },
     }));
+    (useSession as jest.Mock).mockImplementation(() => ([]));
   });
 
   const renderDetailPage = () => render((

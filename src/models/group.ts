@@ -12,6 +12,20 @@ export interface WriteFields {
   recruitmentEndDate: string | null;
 }
 
+export interface CommentFields {
+  groupId?: string;
+  content: string;
+  writer: Profile;
+}
+
+export interface Comment {
+  commentId: string;
+  groupId: string;
+  content: string;
+  writer: Profile;
+  createdAt: string;
+}
+
 export interface Group {
   groupId: string;
   title: string;
