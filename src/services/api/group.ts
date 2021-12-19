@@ -1,5 +1,7 @@
 import { Profile } from '@/models/auth';
-import { Category, Group, WriteFields } from '@/models/group';
+import {
+  Category, Group, WriteFields,
+} from '@/models/group';
 import { timestampToString } from '@/utils/firestore';
 
 import { collection, fireStore } from '../firebase';

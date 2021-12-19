@@ -2,7 +2,10 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { getGroupDetail, getGroups, postNewGroup } from '@/services/api/group';
+import { postGroupComment } from '@/services/api/comment';
+import {
+  getGroupDetail, getGroups, postNewGroup,
+} from '@/services/api/group';
 import { formatGroup } from '@/utils/firestore';
 
 import GROUP_FIXTURE from '../../fixtures/group';
@@ -15,6 +18,7 @@ import reducer, {
   GroupStore,
   loadGroupDetail,
   loadGroups,
+  requestAddComment,
   requestRegisterNewGroup,
   setGroup,
   setGroupError,
@@ -28,6 +32,7 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 jest.mock('@/services/api/group');
+jest.mock('@/services/api/comment');
 jest.mock('@/utils/firestore');
 
 describe('groupReducer', () => {
@@ -35,6 +40,7 @@ describe('groupReducer', () => {
     groups: [],
     group: null,
     groupId: null,
+    comments: [],
     groupError: null,
     writeFields: WRITE_FIELDS_FIXTURE,
     isVisible: false,
@@ -255,6 +261,53 @@ describe('groupReducer async actions', () => {
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
           await store.dispatch(loadGroups(['study', 'project']));
+        } catch (error) {
+          // ignore errors
+        } finally {
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: 'error',
+            type: 'group/setGroupError',
+          });
+        }
+      });
+    });
+  });
+
+  describe('requestAddComment', () => {
+    beforeEach(() => {
+      store = mockStore({
+        groupReducer: {
+          group: GROUP_FIXTURE,
+        },
+      });
+    });
+
+    const commentFields = {
+      groupId: '1',
+      content: 'content',
+      writer: PROFILE_FIXTURE,
+    };
+
+    context('에러가 발생하지 않는 경우', () => {
+      (postGroupComment as jest.Mock).mockReturnValueOnce('id');
+
+      it('postGroupComment가 호출되어야만 한다', async () => {
+        await store.dispatch(requestAddComment(commentFields));
+
+        expect(postGroupComment).toBeCalledWith(commentFields);
+      });
+    });
+
+    context('에러가 발생하는 경우', () => {
+      (postGroupComment as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
+        try {
+          await store.dispatch(requestAddComment(commentFields));
         } catch (error) {
           // ignore errors
         } finally {
