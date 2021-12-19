@@ -7,8 +7,11 @@ import Link from 'next/link';
 import useCurrentTime from '@/hooks/useCurrentTime';
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
+import { emptyAThenB } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
+
+import ProfileImage from '../common/ProfileImage';
 
 dayjs.locale('ko');
 
@@ -31,12 +34,10 @@ function RecruitPost({ group }: Props): ReactElement {
       <p>{contents}</p>
       <small>{recruitDate}</small>
       <div>
-        {writer.image ? (
-          <img src={writer.image} alt="writer-img" width="30px" height="30px" />
-        ) : (
-          <small>이미지 없음</small>
-        )}
-        <span>{writer.name || writer.email}</span>
+        <ProfileImage
+          src={writer.image}
+        />
+        <span>{emptyAThenB(writer.email, writer.name)}</span>
       </div>
     </RecruitPostWrapper>
   );

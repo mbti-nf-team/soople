@@ -4,8 +4,11 @@ import dayjs from 'dayjs';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
+import { emptyAThenB } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
+
+import ProfileImage from '../common/ProfileImage';
 
 dayjs.locale('ko');
 
@@ -23,13 +26,12 @@ function DetailHeaderSection({ group, currentTime }: Props): ReactElement {
     <div>
       <h1>{group.title}</h1>
       <div>
-        {writer.image ? (
-          <img src={writer.image} alt="writer-img" width="50px" height="50px" />
-        ) : (
-          <div>이미지 없음</div>
-        )}
+        <ProfileImage
+          src={writer.image}
+          size="50px"
+        />
         <span>
-          {writer.name || writer.email}
+          {emptyAThenB(writer.email, writer.name)}
         </span>
         <div>
           {recruitDate}

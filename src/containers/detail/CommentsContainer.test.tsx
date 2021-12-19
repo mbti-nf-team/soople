@@ -1,7 +1,10 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useSession } from 'next-auth/client';
+
+import COMMENT_FIXTURE from '../../../fixtures/comment';
+import GROUP_FIXTURE from '../../../fixtures/group';
 
 import CommentsContainer from './CommentsContainer';
 
@@ -11,6 +14,12 @@ describe('CommentsContainer', () => {
   beforeEach(() => {
     dispatch.mockClear();
 
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      groupReducer: {
+        group: given.group,
+        comments: [COMMENT_FIXTURE],
+      },
+    }));
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
     (useSession as jest.Mock).mockImplementation(() => ([given.session]));
   });
@@ -18,6 +27,16 @@ describe('CommentsContainer', () => {
   const renderCommentsContainer = () => render((
     <CommentsContainer />
   ));
+
+  context('group이 존재하는 경우', () => {
+    given('group', () => (GROUP_FIXTURE));
+
+    it('dispatch 액션이 호출되어야만 한다', () => {
+      renderCommentsContainer();
+
+      expect(dispatch).toBeCalledTimes(1);
+    });
+  });
 
   describe('"댓글 남기기" 버튼을 클릭한다', () => {
     const commentValue = '댓글 내용';

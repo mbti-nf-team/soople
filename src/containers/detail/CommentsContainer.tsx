@@ -1,13 +1,18 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { useSession } from 'next-auth/client';
 
 import CommentForm from '@/components/detail/CommentForm';
-import { requestAddComment } from '@/reducers/groupSlice';
+import CommentsView from '@/components/detail/CommentsView';
+import { loadComments, requestAddComment } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
+import { getGroup } from '@/utils/utils';
 
 function CommentsContainer(): ReactElement {
   const dispatch = useAppDispatch();
+  const comments = useSelector(getGroup('comments'));
+  const group = useSelector(getGroup('group'));
   const [session] = useSession();
 
   const onSubmit = useCallback((content: string) => {
@@ -21,10 +26,21 @@ function CommentsContainer(): ReactElement {
     }));
   }, [dispatch, session]);
 
+  useEffect(() => {
+    if (group) {
+      dispatch(loadComments(group.groupId));
+    }
+  }, []);
+
   return (
-    <CommentForm
-      onSubmit={onSubmit}
-    />
+    <>
+      <CommentsView
+        comments={comments}
+      />
+      <CommentForm
+        onSubmit={onSubmit}
+      />
+    </>
   );
 }
 

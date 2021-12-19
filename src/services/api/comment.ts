@@ -12,5 +12,11 @@ export const postGroupComment = async (fields: CommentFields) => {
   return id;
 };
 
-// TODO - 추후 삭제
-export const temp = [];
+export const getGroupComments = async (groupId: string) => {
+  const response = await collection('comments')
+    .where('groupId', '==', groupId)
+    .orderBy('createdAt', 'asc')
+    .get();
+
+  return response.docs;
+};

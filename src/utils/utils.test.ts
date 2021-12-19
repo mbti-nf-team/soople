@@ -3,6 +3,7 @@ import { RootReducerState } from '@/reducers/rootReducer';
 import WRITE_FIELDS_FIXTURE from '../../fixtures/writeFields';
 
 import {
+  emptyAThenB,
   getAuth, getGroup, isProdLevel, stringToExcludeNull, tomorrow, yesterday,
 } from './utils';
 
@@ -92,10 +93,34 @@ describe('stringToExcludeNull', () => {
   });
 
   context('문자열일 경우', () => {
-    it('빈 문자열을 반환야만 한다', () => {
-      const result = stringToExcludeNull('');
+    const value = 'value';
 
-      expect(result).toBe('');
+    it('문자열을 반환야만 한다', () => {
+      const result = stringToExcludeNull(value);
+
+      expect(result).toBe(value);
+    });
+  });
+});
+
+describe('emptyAThenB', () => {
+  const b = 'B';
+
+  context('null일 경우', () => {
+    it('첫 번째 인자를 반환야만 한다', () => {
+      const result = emptyAThenB(b, null);
+
+      expect(result).toBe(b);
+    });
+  });
+
+  context('문자열일 경우', () => {
+    const a = 'test';
+
+    it('두 번째 인자를 반환야만 한다', () => {
+      const result = emptyAThenB(b, a);
+
+      expect(result).toBe(a);
     });
   });
 });

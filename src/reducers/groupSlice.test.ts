@@ -2,12 +2,13 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { postGroupComment } from '@/services/api/comment';
+import { getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
-import { formatGroup } from '@/utils/firestore';
+import { formatComment, formatGroup } from '@/utils/firestore';
 
+import COMMENT_FIXTURE from '../../fixtures/comment';
 import GROUP_FIXTURE from '../../fixtures/group';
 import PROFILE_FIXTURE from '../../fixtures/profile';
 import WRITE_FIELDS_FIXTURE from '../../fixtures/writeFields';
@@ -16,10 +17,13 @@ import reducer, {
   changeWriteFields,
   clearWriteFields,
   GroupStore,
+  loadComments,
   loadGroupDetail,
   loadGroups,
   requestAddComment,
   requestRegisterNewGroup,
+  setComment,
+  setComments,
   setGroup,
   setGroupError,
   setGroupId,
@@ -125,6 +129,22 @@ describe('groupReducer', () => {
       const { isVisible } = reducer(initialState, setPublishModalVisible(true));
 
       expect(isVisible).toBeTruthy();
+    });
+  });
+
+  describe('setComments', () => {
+    it('comments에 값이 추가되야만 한다', () => {
+      const { comments } = reducer(initialState, setComments([COMMENT_FIXTURE]));
+
+      expect(comments).toEqual([COMMENT_FIXTURE]);
+    });
+  });
+
+  describe('setComment', () => {
+    it('comments에 값이 추가되야만 한다', () => {
+      const { comments } = reducer(initialState, setComment(COMMENT_FIXTURE));
+
+      expect(comments).toEqual([COMMENT_FIXTURE]);
     });
   });
 });
@@ -275,6 +295,49 @@ describe('groupReducer async actions', () => {
     });
   });
 
+  describe('loadComments', () => {
+    beforeEach(() => {
+      store = mockStore({});
+    });
+
+    context('에러가 발생하지 않는 경우', () => {
+      (getGroupComments as jest.Mock).mockReturnValueOnce([COMMENT_FIXTURE]);
+      (formatComment as jest.Mock).mockReturnValueOnce(COMMENT_FIXTURE);
+
+      it('dispatch 액션이 "group/setComments"인 타입과 payload는 comment 리스트여야 한다', async () => {
+        await store.dispatch(loadComments('groupId'));
+
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+          payload: [COMMENT_FIXTURE],
+          type: 'group/setComments',
+        });
+      });
+    });
+
+    context('에러가 발생하는 경우', () => {
+      (getGroupComments as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
+        try {
+          await store.dispatch(loadComments('groupId'));
+        } catch (error) {
+          // ignore errors
+        } finally {
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: 'error',
+            type: 'group/setGroupError',
+          });
+        }
+      });
+    });
+  });
+
   describe('requestAddComment', () => {
     beforeEach(() => {
       store = mockStore({
@@ -291,12 +354,23 @@ describe('groupReducer async actions', () => {
     };
 
     context('에러가 발생하지 않는 경우', () => {
-      (postGroupComment as jest.Mock).mockReturnValueOnce('id');
+      const commentId = 'id';
 
-      it('postGroupComment가 호출되어야만 한다', async () => {
+      (postGroupComment as jest.Mock).mockReturnValueOnce(commentId);
+
+      it('dispatch 액션이 "group/setComment"인 타입과 payload는 comment여야 한다', async () => {
         await store.dispatch(requestAddComment(commentFields));
 
-        expect(postGroupComment).toBeCalledWith(commentFields);
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+          payload: {
+            commentId,
+            ...commentFields,
+            createdAt: new Date().toString(),
+          },
+          type: 'group/setComment',
+        });
       });
     });
 

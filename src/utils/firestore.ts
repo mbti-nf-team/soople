@@ -9,3 +9,13 @@ export const formatGroup = (group: any) => {
     createAt: timestampToString(createAt),
   };
 };
+
+export const formatComment = (comment: any) => {
+  const { createdAt } = comment.data();
+
+  return {
+    ...comment.data(),
+    commentId: comment.id,
+    createdAt: timestampToString(createdAt),
+  };
+};

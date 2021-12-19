@@ -1,4 +1,4 @@
-import { formatGroup, timestampToString } from './firestore';
+import { formatComment, formatGroup, timestampToString } from './firestore';
 
 describe('timestampToString', () => {
   const timestamp = {
@@ -34,6 +34,30 @@ describe('formatGroup', () => {
     expect(result).toEqual({
       groupId: '1',
       createAt: nowString,
+    });
+  });
+});
+
+describe('formatComment', () => {
+  const nowString = new Date().toString();
+
+  const date = {
+    toDate: () => new Date(),
+  };
+
+  const settings = {
+    id: '1',
+    data: () => ({
+      createdAt: date,
+    }),
+  };
+
+  it('포매팅된 댓글 정보가 반환되어야만 한다', () => {
+    const result = formatComment(settings);
+
+    expect(result).toEqual({
+      commentId: '1',
+      createdAt: nowString,
     });
   });
 });

@@ -93,10 +93,17 @@ describe('group API', () => {
   });
 
   describe('getGroups', () => {
+    const spyOnCollection = jest.spyOn(db, 'collection');
+
+    beforeEach(() => {
+      spyOnCollection.mockClear();
+    });
+
     it('그룹 리스트가 반환되어야만 한다', async () => {
       const response = await getGroups([]);
 
       expect(response).toEqual([]);
+      expect(spyOnCollection).toBeCalledTimes(1);
     });
   });
 });

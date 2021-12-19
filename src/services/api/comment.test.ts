@@ -3,7 +3,7 @@ import { CommentFields } from '@/models/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import db, { fireStore } from '../firebase';
 
-import { postGroupComment } from './comment';
+import { getGroupComments, postGroupComment } from './comment';
 
 describe('postGroupComment', () => {
   const mockAdd = jest.fn().mockReturnValueOnce({ id: '1' });
@@ -34,5 +34,20 @@ describe('postGroupComment', () => {
     });
 
     expect(id).toBe('1');
+  });
+});
+
+describe('getGroupComments', () => {
+  const spyOnCollection = jest.spyOn(db, 'collection');
+
+  beforeEach(() => {
+    spyOnCollection.mockClear();
+  });
+
+  it('댓글 리스트가 반환되어야만 한다', async () => {
+    const response = await getGroupComments('groupId');
+
+    expect(response).toEqual([]);
+    expect(spyOnCollection).toBeCalledTimes(1);
   });
 });
