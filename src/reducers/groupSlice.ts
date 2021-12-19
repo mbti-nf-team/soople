@@ -7,11 +7,11 @@ import {
   CommentFields,
   Group, WriteFields, WriteFieldsForm,
 } from '@/models/group';
-import { postGroupComment } from '@/services/api/comment';
+import { getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
-import { formatGroup } from '@/utils/firestore';
+import { formatComment, formatGroup } from '@/utils/firestore';
 
 import type { AppThunk } from './store';
 
@@ -91,13 +91,30 @@ const { actions, reducer } = createSlice({
         isVisible,
       };
     },
+    setComments(state, { payload: comments }: PayloadAction<Comment[]>): GroupStore {
+      return {
+        ...state,
+        comments,
+      };
+    },
+    setComment(state, { payload: comment }: PayloadAction<Comment>): GroupStore {
+      return {
+        ...state,
+        comments: [
+          ...state.comments,
+          comment,
+        ],
+      };
+    },
   },
 });
 
 export const {
   setGroup,
   setGroups,
+  setComment,
   setGroupId,
+  setComments,
   setGroupError,
   clearWriteFields,
   changeWriteFields,
@@ -147,16 +164,41 @@ export const loadGroups = (condition: Category[]): AppThunk => async (dispatch) 
   }
 };
 
+export const loadComments = (groupId: string): AppThunk => async (dispatch) => {
+  try {
+    const response = await getGroupComments(groupId);
+
+    const comments = response.map((doc) => formatComment(doc)) as Comment[];
+
+    dispatch(setComments(comments));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setGroupError(message));
+  }
+};
+
 export const requestAddComment = (
   fields: CommentFields,
 ): AppThunk => async (dispatch, getState) => {
   const { groupReducer: { group } } = getState();
+  const { groupId } = (group as Group);
 
   try {
-    await postGroupComment({
-      groupId: (group as Group).groupId,
+    const commentId = await postGroupComment({
+      groupId,
       ...fields,
     });
+
+    const { content, writer } = fields;
+
+    dispatch(setComment({
+      commentId,
+      groupId,
+      content,
+      writer,
+      createdAt: new Date().toString(),
+    }));
   } catch (error) {
     const { message } = error as Error;
 

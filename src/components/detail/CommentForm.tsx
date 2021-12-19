@@ -8,6 +8,7 @@ function CommentForm({ onSubmit }: Props): ReactElement {
   const [content, setContent] = useState<string>('');
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
+
   const handleSubmit = () => {
     onSubmit(content);
     setContent('');

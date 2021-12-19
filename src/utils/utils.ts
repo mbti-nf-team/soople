@@ -24,6 +24,8 @@ export const stringToExcludeNull = (value?: string | null): string => {
   return value;
 };
 
+export const emptyAThenB = (b: string, a?: string | null): string => a || b;
+
 export const tomorrow = (date: Date) => {
   date.setDate(date.getDate() + 1);
 

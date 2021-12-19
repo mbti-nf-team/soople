@@ -1,6 +1,6 @@
 import { ParsedUrlQuery } from 'querystring';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/client';
 
 import { getGroupDetail } from '@/services/api/group';
 
+import COMMENT_FIXTURE from '../../../fixtures/comment';
 import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
@@ -17,13 +18,19 @@ jest.mock('@/services/api/group');
 jest.mock('@/services/api/auth');
 
 describe('DetailPage', () => {
+  const dispatch = jest.fn();
+
   beforeEach(() => {
+    dispatch.mockClear();
+
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
         group: GROUP_FIXTURE,
         writer: PROFILE_FIXTURE,
+        comments: [COMMENT_FIXTURE],
       },
     }));
+    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
     (useSession as jest.Mock).mockImplementation(() => ([]));
   });
 
