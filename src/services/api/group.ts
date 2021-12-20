@@ -10,7 +10,7 @@ export const postNewGroup = async (profile: Profile, fields: WriteFields) => {
   const { id } = await collection('groups').add({
     ...fields,
     writer: profile,
-    createAt: fireStore.FieldValue.serverTimestamp(),
+    createdAt: fireStore.FieldValue.serverTimestamp(),
   });
 
   return id;
@@ -30,14 +30,14 @@ export const getGroupDetail = async (id: string) => {
   return {
     groupId: response.id,
     ...group,
-    createAt: timestampToString(group.createAt),
+    createdAt: timestampToString(group.createdAt),
   } as Group;
 };
 
 export const getGroups = async (condition: Category[]) => {
   const response = await collection('groups')
     .where('category', 'in', condition)
-    .orderBy('createAt', 'asc')
+    .orderBy('createdAt', 'asc')
     .get();
 
   return response.docs;

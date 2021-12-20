@@ -22,7 +22,7 @@ describe('DetailHeaderSection', () => {
       it('글을 작성한 날짜가 나타나야만 한다', () => {
         const { container } = renderDetailHeaderSection({
           ...GROUP_FIXTURE,
-          createAt: '2021-11-11',
+          createdAt: '2021-11-11',
         });
 
         expect(container).toHaveTextContent('2021년 11월 11일');

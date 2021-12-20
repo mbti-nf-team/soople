@@ -24,7 +24,7 @@ describe('formatGroup', () => {
   const settings = {
     id: '1',
     data: () => ({
-      createAt: date,
+      createdAt: date,
     }),
   };
 
@@ -33,7 +33,7 @@ describe('formatGroup', () => {
 
     expect(result).toEqual({
       groupId: '1',
-      createAt: nowString,
+      createdAt: nowString,
     });
   });
 });

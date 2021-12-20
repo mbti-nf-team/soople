@@ -27,7 +27,7 @@ describe('DetailContentsContainer', () => {
   it('해당 글의 내용이 나타나야만 한다', () => {
     const { container } = renderDetailContentsContainer();
 
-    expect(container).toHaveTextContent('contents');
+    expect(container).toHaveTextContent('content');
     expect(container).toHaveTextContent('javascript');
   });
 });

@@ -15,11 +15,11 @@ describe('group API', () => {
 
   describe('postNewGroup', () => {
     const mockAdd = jest.fn().mockReturnValueOnce({ id: '1' });
-    const createAt = '2021-11-11';
+    const createdAt = '2021-11-11';
 
     const group: WriteFields = {
       title: 'title',
-      contents: 'contents',
+      content: 'content',
       tags: [],
       category: '',
       recruitmentEndDate: '',
@@ -32,7 +32,7 @@ describe('group API', () => {
       }));
 
       fireStore.FieldValue = {
-        serverTimestamp: jest.fn().mockReturnValueOnce(createAt),
+        serverTimestamp: jest.fn().mockReturnValueOnce(createdAt),
       } as any;
     });
 
@@ -42,7 +42,7 @@ describe('group API', () => {
       expect(mockAdd).toBeCalledWith({
         ...group,
         writer: PROFILE_FIXTURE,
-        createAt,
+        createdAt,
       });
       expect(id).toBe('1');
     });

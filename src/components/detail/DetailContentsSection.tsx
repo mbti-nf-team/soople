@@ -3,16 +3,16 @@ import React, { ReactElement } from 'react';
 import { Group } from '@/models/group';
 
 interface Props {
-  group: Group
+  group: Group;
 }
 
 function DetailContentsSection({ group }: Props): ReactElement {
-  const { contents, tags } = group;
+  const { content, tags } = group;
 
   return (
     <div>
       <div>
-        {contents}
+        {content}
       </div>
       <div>
         {tags.map((tag) => (

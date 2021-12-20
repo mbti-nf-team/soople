@@ -27,7 +27,7 @@ export interface GroupStore {
 
 const initialFieldsState: WriteFields = {
   title: '',
-  contents: '',
+  content: '',
   tags: [],
   category: '',
   recruitmentEndDate: '',

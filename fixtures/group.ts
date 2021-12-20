@@ -6,12 +6,12 @@ const group: Group = {
   groupId: '1',
   writer: PROFILE_FIXTURE,
   title: 'title',
-  contents: 'contents',
+  content: 'content',
   tags: [],
   category: 'frontEnd',
   recruitmentEndDate: '',
   recruitmentEndSetting: 'manual',
-  createAt: '2021-10-11',
+  createdAt: '2021-10-11',
 };
 
 export default group;
