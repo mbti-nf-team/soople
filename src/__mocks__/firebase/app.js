@@ -26,6 +26,7 @@ firebase.initializeApp = jest.fn().mockImplementation(() => ({
   firestore: mockFirestore,
 }));
 
+firebase.analytics = jest.fn();
 firebase.firestore = mockFirestore;
 
 export default firebase;
