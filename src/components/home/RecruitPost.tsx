@@ -21,7 +21,7 @@ interface Props {
 
 function RecruitPost({ group }: Props): ReactElement {
   const {
-    title, contents, groupId, writer,
+    title, content, groupId, writer,
   } = group;
   const currentTime = useCurrentTime();
   const recruitDate = useRecruitDateStatus(group, currentTime);
@@ -31,7 +31,7 @@ function RecruitPost({ group }: Props): ReactElement {
       <Link href={`/detail/${groupId}`} passHref>
         <StyledLink>{title}</StyledLink>
       </Link>
-      <p>{contents}</p>
+      <p>{content}</p>
       <small>{recruitDate}</small>
       <div>
         <ProfileImage

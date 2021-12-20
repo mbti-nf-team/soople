@@ -11,13 +11,13 @@ dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
 const useRecruitDateStatus = (group: Group, time: number) => {
-  const { recruitmentEndDate, recruitmentEndSetting, createAt } = group;
-  const createDate = dayjs(createAt).format('YYYY년 MM월 DD일');
-  const [recruitDateStatus, setRecruitDateStatus] = useState<string>(createDate);
+  const { recruitmentEndDate, recruitmentEndSetting, createdAt } = group;
+  const createdDate = dayjs(createdAt).format('YYYY년 MM월 DD일');
+  const [recruitDateStatus, setRecruitDateStatus] = useState<string>(createdDate);
 
   useEffect(() => {
     if (!recruitmentEndDate && recruitmentEndSetting === 'manual') {
-      setRecruitDateStatus(createDate);
+      setRecruitDateStatus(createdDate);
       return;
     }
 
@@ -29,7 +29,7 @@ const useRecruitDateStatus = (group: Group, time: number) => {
     }
 
     setRecruitDateStatus('모집 마감');
-  }, [recruitmentEndDate, recruitmentEndSetting, createDate, time]);
+  }, [recruitmentEndDate, recruitmentEndSetting, createdDate, time]);
 
   return recruitDateStatus;
 };

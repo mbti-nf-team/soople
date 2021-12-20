@@ -9,7 +9,7 @@ import { AppState } from './store';
 describe('rootReducer', () => {
   const fieldsInitialState: WriteFields = {
     title: '',
-    contents: '',
+    content: '',
     tags: [],
     category: '',
     recruitmentEndSetting: 'manual',

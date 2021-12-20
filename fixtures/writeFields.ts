@@ -2,7 +2,7 @@ import { WriteFields } from '@/models/group';
 
 const writeFields: WriteFields = {
   title: '',
-  contents: '',
+  content: '',
   tags: [],
   category: '',
   recruitmentEndDate: '',

@@ -42,7 +42,7 @@ describe('DetailPage', () => {
     const { container } = renderDetailPage();
 
     expect(container).toHaveTextContent('title');
-    expect(container).toHaveTextContent('contents');
+    expect(container).toHaveTextContent('content');
   });
 });
 

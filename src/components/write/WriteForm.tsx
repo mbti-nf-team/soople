@@ -10,7 +10,7 @@ interface Props {
 }
 
 function WriteForm({ fields, onChange }: Props): ReactElement {
-  const { title, contents } = fields;
+  const { title, content } = fields;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -28,8 +28,8 @@ function WriteForm({ fields, onChange }: Props): ReactElement {
         placeholder="제목을 입력하세요"
       />
       <textarea
-        name="contents"
-        value={contents}
+        name="content"
+        value={content}
         rows={10}
         cols={20}
         onChange={handleChange}

@@ -15,7 +15,7 @@ const initialStore = {
       comments: [],
       groupError: null,
       writeFields: {
-        contents: '',
+        content: '',
         title: '',
         tags: [],
         category: '',

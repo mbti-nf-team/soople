@@ -5,7 +5,7 @@ export type RecruitmentEndSetting = 'manual' | 'automatic';
 
 export interface WriteFields {
   title: string;
-  contents: string;
+  content: string;
   tags: string[];
   category: Category | string;
   recruitmentEndSetting: RecruitmentEndSetting;
@@ -29,13 +29,13 @@ export interface Comment {
 export interface Group {
   groupId: string;
   title: string;
-  contents: string;
+  content: string;
   tags: string[];
   category: Category | string;
   recruitmentEndSetting: RecruitmentEndSetting;
   recruitmentEndDate: string | null;
   writer: Profile;
-  createAt: string;
+  createdAt: string;
 }
 
 export interface WriteFieldsForm {
