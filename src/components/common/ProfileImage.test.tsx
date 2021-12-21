@@ -11,9 +11,9 @@ describe('ProfileImage', () => {
 
   context('프로필 이미지가 존재하지 않는 경우', () => {
     it('"이미지 없음"이 나타나야 한다', () => {
-      const { container } = renderProfileImage('');
+      renderProfileImage('');
 
-      expect(container).toHaveTextContent('이미지 없음');
+      expect(screen.getByTestId('default-profile-icon')).not.toBeNull();
     });
   });
 

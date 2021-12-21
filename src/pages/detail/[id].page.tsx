@@ -4,6 +4,7 @@ import React, { ReactElement } from 'react';
 
 import { GetServerSideProps } from 'next';
 
+import HeaderContainer from '@/containers/common/HeaderContainer';
 import CommentsContainer from '@/containers/detail/CommentsContainer';
 import DetailContentsContainer from '@/containers/detail/DetailContentsContainer';
 import DetailHeaderContainer from '@/containers/detail/DetailHeaderContainer';
@@ -43,6 +44,7 @@ export const getServerSideProps: GetServerSideProps = wrapper
 function DetailPage(): ReactElement {
   return (
     <>
+      <HeaderContainer />
       <DetailHeaderContainer />
       <DetailContentsContainer />
       <CommentsContainer />

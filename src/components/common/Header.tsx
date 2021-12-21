@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/client';
 
-import { stringToExcludeNull } from '@/utils/utils';
+import ProfileImage from './ProfileImage';
 
 interface Props {
   session: Session | null
@@ -17,7 +17,7 @@ function Header({ session, onClick }: Props): ReactElement {
       <div>
         <div>
           <h2>Conners</h2>
-          <img src={stringToExcludeNull(session.user?.image)} alt="user-profile" />
+          <ProfileImage src={session.user?.image} />
         </div>
         <Link href="/write" passHref>
           <a>팀 모집하기</a>
