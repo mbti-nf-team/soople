@@ -14,6 +14,6 @@ export const fireStore = firebase.firestore;
 
 export const collection = (id: string) => db.collection(id);
 
-export const analytics = (firebase.apps[0] ?? firebase.analytics());
+export const analytics: boolean | firebase.analytics.Analytics = (typeof window !== 'undefined' && firebase.analytics());
 
 export default db;
