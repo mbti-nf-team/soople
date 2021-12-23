@@ -69,22 +69,20 @@ describe('PublishModalContainer', () => {
       });
     });
 
-    describe('태그를 입력한다', () => {
-      it('dispatch "changeWriteFields" 이벤트가 발생해야만 한다', () => {
+    describe('분류를 선택한다', () => {
+      it('changeFields 이벤트가 발생해야만 한다', () => {
         renderPublishModalContainer();
 
-        const input = screen.getByPlaceholderText('태그를 입력하세요');
-
-        fireEvent.change(input, { target: { value: 'test' } });
-
-        fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
+        fireEvent.change(screen.getByDisplayValue('분류를 선택해주세요.'), {
+          target: { value: 'study' },
+        });
 
         expect(dispatch).toBeCalledWith({
-          payload: {
-            name: 'tags',
-            value: ['test'],
-          },
           type: 'group/changeWriteFields',
+          payload: {
+            value: 'study',
+            name: 'category',
+          },
         });
       });
     });

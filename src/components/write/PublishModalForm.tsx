@@ -7,8 +7,6 @@ import { stringToExcludeNull } from '@/utils/utils';
 
 import Select from '../common/Select';
 
-import TagForm from './TagForm';
-
 interface Props {
   fields: WriteFields;
   onChangeFields: (form: WriteFieldsForm) => void;
@@ -16,14 +14,7 @@ interface Props {
 
 function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
   const [isEndDateDisabled, setEndDateDisabled] = useState<boolean>(false);
-  const {
-    category, recruitmentEndSetting, recruitmentEndDate, tags: initialTags,
-  } = fields;
-
-  const handleChangeTags = (tags: string[]) => onChangeFields({
-    name: 'tags',
-    value: tags,
-  });
+  const { category, recruitmentEndSetting, recruitmentEndDate } = fields;
 
   const handleChangeFields = (e: ChangeEvent<HTMLInputElement| HTMLSelectElement>) => {
     const { value, name } = e.target;
@@ -92,11 +83,6 @@ function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
           />
         </label>
       </div>
-
-      <TagForm
-        tags={initialTags}
-        onChange={handleChangeTags}
-      />
     </div>
   );
 }

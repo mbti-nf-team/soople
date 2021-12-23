@@ -4,19 +4,26 @@ import styled from '@emotion/styled';
 
 import { WriteFields, WriteFieldsForm } from '@/models/group';
 
+import TagForm from './TagForm';
+
 interface Props {
   fields: WriteFields;
   onChange: (form: WriteFieldsForm) => void;
 }
 
 function WriteForm({ fields, onChange }: Props): ReactElement {
-  const { title, content } = fields;
+  const { title, content, tags: initialTags } = fields;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
     onChange({ name, value });
   };
+
+  const handleChangeTags = (tags: string[]) => onChange({
+    name: 'tags',
+    value: tags,
+  });
 
   return (
     <WriteFormWrapper>
@@ -34,6 +41,10 @@ function WriteForm({ fields, onChange }: Props): ReactElement {
         cols={20}
         onChange={handleChange}
         placeholder="내용을 입력하세요"
+      />
+      <TagForm
+        tags={initialTags}
+        onChange={handleChangeTags}
       />
     </WriteFormWrapper>
   );

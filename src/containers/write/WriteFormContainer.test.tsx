@@ -17,6 +17,7 @@ describe('WriteFormContainer', () => {
         writeFields: {
           title: '',
           contents: '',
+          tags: [],
         },
       },
     }));
@@ -60,6 +61,26 @@ describe('WriteFormContainer', () => {
 
         expect(dispatch).toBeCalledWith({
           payload: inputValue,
+          type: 'group/changeWriteFields',
+        });
+      });
+    });
+
+    describe('태그를 입력한다', () => {
+      it('dispatch "changeWriteFields" 이벤트가 발생해야만 한다', () => {
+        renderWriteFormContainer();
+
+        const input = screen.getByPlaceholderText('태그를 입력하세요');
+
+        fireEvent.change(input, { target: { value: 'test' } });
+
+        fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
+
+        expect(dispatch).toBeCalledWith({
+          payload: {
+            name: 'tags',
+            value: ['test'],
+          },
           type: 'group/changeWriteFields',
         });
       });
