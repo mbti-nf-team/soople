@@ -68,26 +68,6 @@ describe('PublishModalContainer', () => {
         expect(dispatch).toBeCalled();
       });
     });
-
-    describe('태그를 입력한다', () => {
-      it('dispatch "changeWriteFields" 이벤트가 발생해야만 한다', () => {
-        renderPublishModalContainer();
-
-        const input = screen.getByPlaceholderText('태그를 입력하세요');
-
-        fireEvent.change(input, { target: { value: 'test' } });
-
-        fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
-
-        expect(dispatch).toBeCalledWith({
-          payload: {
-            name: 'tags',
-            value: ['test'],
-          },
-          type: 'group/changeWriteFields',
-        });
-      });
-    });
   });
 
   context('모달창이 보이지 않는 경우', () => {

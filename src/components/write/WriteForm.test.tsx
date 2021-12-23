@@ -45,4 +45,21 @@ describe('WriteForm', () => {
       expect(handleChange).toBeCalledWith(inputValue);
     });
   });
+
+  describe('태그를 입력한다', () => {
+    it('changeFields 이벤트가 발생해야만 한다', () => {
+      renderWriteForm();
+
+      const input = screen.getByPlaceholderText('태그를 입력하세요');
+
+      fireEvent.change(input, { target: { value: 'test' } });
+
+      fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
+
+      expect(handleChange).toBeCalledWith({
+        name: 'tags',
+        value: ['test'],
+      });
+    });
+  });
 });
