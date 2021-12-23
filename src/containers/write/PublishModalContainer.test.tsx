@@ -68,6 +68,24 @@ describe('PublishModalContainer', () => {
         expect(dispatch).toBeCalled();
       });
     });
+
+    describe('분류를 선택한다', () => {
+      it('changeFields 이벤트가 발생해야만 한다', () => {
+        renderPublishModalContainer();
+
+        fireEvent.change(screen.getByDisplayValue('분류를 선택해주세요.'), {
+          target: { value: 'study' },
+        });
+
+        expect(dispatch).toBeCalledWith({
+          type: 'group/changeWriteFields',
+          payload: {
+            value: 'study',
+            name: 'category',
+          },
+        });
+      });
+    });
   });
 
   context('모달창이 보이지 않는 경우', () => {
