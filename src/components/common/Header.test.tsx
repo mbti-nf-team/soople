@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { signOut } from 'next-auth/client';
 
+import palette from '@/styles/palette';
+
 import Header from './Header';
 
 describe('Header', () => {
@@ -8,10 +10,37 @@ describe('Header', () => {
 
   const renderHeader = () => render((
     <Header
+      isScrollTop={given.isScrollTop}
       session={given.session}
       onClick={handleClick}
     />
   ));
+
+  describe('스크롤 위치에 따라서 스타일이 변경된다', () => {
+    context('scroll 위치가 최상단일 때', () => {
+      given('isScrollTop', () => true);
+
+      it('box-shadow 속성이 "transparent"이어야 한다', () => {
+        renderHeader();
+
+        expect(screen.getByTestId('header-block')).toHaveStyle({
+          'box-shadow': 'inset 0 -1px 0 0 transparent',
+        });
+      });
+    });
+
+    context('scroll 위치가 최상단일 때', () => {
+      given('isScrollTop', () => false);
+
+      it(`box-shadow 속성이 ${palette.accent4} 이어야 한다`, () => {
+        renderHeader();
+
+        expect(screen.getByTestId('header-block')).toHaveStyle({
+          'box-shadow': `inset 0 -1px 0 0 ${palette.accent4}`,
+        });
+      });
+    });
+  });
 
   context('세션이 존재한 경우', () => {
     given('session', () => ({
