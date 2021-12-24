@@ -11,6 +11,7 @@ import DetailHeaderContainer from '@/containers/detail/DetailHeaderContainer';
 import { setGroup } from '@/reducers/groupSlice';
 import wrapper from '@/reducers/store';
 import { getGroupDetail } from '@/services/api/group';
+import Layout from '@/styles/Layout';
 
 interface Params extends ParsedUrlQuery {
   id: string;
@@ -45,9 +46,11 @@ function DetailPage(): ReactElement {
   return (
     <>
       <HeaderContainer />
-      <DetailHeaderContainer />
-      <DetailContentsContainer />
-      <CommentsContainer />
+      <Layout>
+        <DetailHeaderContainer />
+        <DetailContentsContainer />
+        <CommentsContainer />
+      </Layout>
     </>
   );
 }

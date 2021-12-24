@@ -15,12 +15,20 @@ const combineReducer = combineReducers({
   groupReducer,
 });
 
-const rootReducer = (state: RootReducerState | undefined, action: AnyAction) => {
+const rootReducer = (state: RootReducerState | undefined, action: AnyAction): RootReducerState => {
   if (action.type === HYDRATE) {
-    return {
+    const nextState: RootReducerState = {
       ...state,
       ...action.payload,
     };
+
+    return {
+      ...nextState,
+      groupReducer: {
+        ...nextState.groupReducer,
+        groups: state ? state.groupReducer.groups : [],
+      },
+    } as RootReducerState;
   }
 
   return combineReducer(state, action);

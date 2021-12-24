@@ -7,6 +7,7 @@ import FilterBarContainer from '@/containers/home/FilterBarContainer';
 import RecruitPostsContainer from '@/containers/home/RecruitPostsContainer';
 import { setUser } from '@/reducers/authSlice';
 import wrapper from '@/reducers/store';
+import Layout from '@/styles/Layout';
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
   const session = await getSession(context);
@@ -24,8 +25,10 @@ function HomePage(): ReactElement {
   return (
     <>
       <HeaderContainer />
-      <FilterBarContainer />
-      <RecruitPostsContainer />
+      <Layout>
+        <FilterBarContainer />
+        <RecruitPostsContainer />
+      </Layout>
     </>
   );
 }

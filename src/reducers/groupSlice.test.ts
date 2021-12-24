@@ -30,7 +30,6 @@ import reducer, {
   setGroups,
   setPublishModalVisible,
 } from './groupSlice';
-import { RootState } from './rootReducer';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -154,7 +153,7 @@ describe('groupReducer async actions', () => {
     jest.clearAllMocks();
   });
 
-  let store: RootState;
+  let store: any;
 
   describe('requestRegisterNewGroup', () => {
     beforeEach(() => {

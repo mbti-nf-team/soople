@@ -42,14 +42,14 @@ function SignUpContainer(): ReactElement {
   }
 
   return (
-    <div>
+    <>
       <h2>시작하기</h2>
       <h4>코너스를 시작하기 위해 정보를 입력해주세요.</h4>
       <SignUpForm
         fields={session.user}
         onSubmit={onSubmit}
       />
-    </div>
+    </>
   );
 }
 

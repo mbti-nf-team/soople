@@ -1,21 +1,27 @@
 import { ParsedUrlQuery } from 'querystring';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 import { getSession, useSession } from 'next-auth/client';
 
+import GROUP_FIXTURE from '../../fixtures/group';
 import INITIAL_STORE_FIXTURE from '../../fixtures/initialStore';
 
 import HomePage, { getServerSideProps } from './index.page';
 
-describe('Home', () => {
+describe('HomePage', () => {
   const dispatch = jest.fn();
 
   beforeEach(() => {
     (useSession as jest.Mock).mockImplementationOnce(() => ([null]));
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      groupReducer: {
+        groups: [GROUP_FIXTURE],
+      },
+    }));
   });
 
   const renderHome = () => render((
@@ -25,7 +31,7 @@ describe('Home', () => {
   it('홈에 대한 정보가 보여져야만 한다', () => {
     const { container } = renderHome();
 
-    expect(container).toHaveTextContent('Conners');
+    expect(container).toHaveTextContent('시작하기');
   });
 });
 

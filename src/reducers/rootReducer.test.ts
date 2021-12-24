@@ -24,9 +24,9 @@ describe('rootReducer', () => {
       isVisible: false,
     },
     groupReducer: {
-      groups: [],
-      group: null,
       groupId: null,
+      group: null,
+      groups: [],
       comments: [],
       groupError: null,
       writeFields: fieldsInitialState,
@@ -42,12 +42,25 @@ describe('rootReducer', () => {
       },
     };
 
-    it('추가된 상태가 나타나야 한다', () => {
-      const result = rootReducer(initialReducer, action);
+    context('previous state가 undefined일 때', () => {
+      it('추가된 상태가 나타나야 한다', () => {
+        const result = rootReducer(undefined, {
+          ...action,
+          payload: initialReducer,
+        });
 
-      expect(result).toEqual({
-        ...initialReducer,
-        auth: 'test',
+        expect(result).toEqual(initialReducer);
+      });
+    });
+
+    context('previous state가 undefined가 아닐 때', () => {
+      it('추가된 상태가 나타나야 한다', () => {
+        const result = rootReducer(initialReducer, action);
+
+        expect(result).toEqual({
+          ...initialReducer,
+          auth: 'test',
+        });
       });
     });
   });

@@ -1,4 +1,7 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, {
+  ReactElement, useCallback, useEffect, useState,
+} from 'react';
+import { useUnmount } from 'react-use';
 
 import { useSession } from 'next-auth/client';
 
@@ -11,9 +14,22 @@ function HeaderContainer(): ReactElement {
   const dispatch = useAppDispatch();
 
   const onClickSignIn = useCallback(() => dispatch(setSignInModalVisible(true)), [dispatch]);
+  const [isScrollTop, setIsScrollTop] = useState<boolean>(true);
+
+  const handleScrollAction = () => setIsScrollTop(window.scrollY === 0);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScrollAction);
+  }, []);
+
+  useUnmount(() => {
+    window.removeEventListener('scroll', handleScrollAction);
+    setIsScrollTop(true);
+  });
 
   return (
     <Header
+      isScrollTop={isScrollTop}
       onClick={onClickSignIn}
       session={session}
     />
