@@ -1,0 +1,126 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { HTMLProps, PropsWithChildren, ReactElement } from 'react';
+
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import Link from 'next/link';
+
+import palette from '@/styles/palette';
+
+type ColorType = 'primary' | 'outlined';
+type ButtonSize = 'small' | 'medium' | 'large';
+
+interface Props extends Omit<HTMLProps<HTMLButtonElement | HTMLAnchorElement>, 'size'> {
+  color?: ColorType;
+  size?: ButtonSize;
+}
+
+interface StyledButtonProps {
+  color: ColorType;
+  size: ButtonSize;
+}
+
+function Button({
+  color = 'outlined', size = 'medium', href, children, ...rest
+}: PropsWithChildren<Props>): ReactElement {
+  const htmlProps = rest as any;
+
+  if (href) {
+    return (
+      <Link href={href} passHref>
+        <StyledLink
+          color={color}
+          size={size}
+          {...htmlProps}
+        >
+          {children}
+        </StyledLink>
+      </Link>
+    );
+  }
+
+  return (
+    <StyledButton
+      color={color}
+      size={size}
+      {...htmlProps}
+    >
+      {children}
+    </StyledButton>
+  );
+}
+
+export default Button;
+
+const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all .3s;
+
+  ${size === 'large' && css`
+    font-size: 17px;
+    line-height: 24px;
+    height: 48px;
+    padding: 0;
+    border-radius: 8px;
+    width: 320px;
+  `};
+
+  ${size === 'medium' && css`
+    font-size: 15px;
+    line-height: 24px;
+    height: 36px;
+  `};
+
+  ${size === 'small' && css`
+    font-size: 0.875rem;
+    line-height: 22px;
+    height: 32px;
+  `};
+
+  ${color === 'outlined' && css`
+    color: ${palette.foreground};
+    background: ${palette.background};
+    border: 1px solid ${palette.accent2};
+
+    &:hover {
+      background: ${palette.accent2};
+      border: 1px solid ${palette.accent3};
+    }
+
+    &:disabled {
+      color: ${palette.accent4};
+      background: ${palette.accent1};
+      border: 1px solid ${palette.accent1};
+    }
+  `}
+
+  ${color === 'primary' && css`
+    color: ${palette.background};
+    background: ${palette.success};
+
+    &:hover {
+      color: ${palette.accent2};
+      background: ${palette.success10};
+    }
+
+    &:disabled {
+      color: ${palette.accent4};
+      background: ${palette.accent1};
+    }
+  `}
+`;
+
+const StyledLink = styled.a<StyledButtonProps>`
+  ${ButtonWrapper}
+`;
+
+const StyledButton = styled.button<StyledButtonProps>`
+  ${ButtonWrapper}
+`;
