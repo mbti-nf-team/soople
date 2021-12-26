@@ -3,6 +3,7 @@ import { collection } from '../firebase';
 export const getTagsCount = async () => {
   const response = await collection('tagsCount')
     .orderBy('count', 'desc')
+    .limit(10)
     .get();
 
   return response.docs;

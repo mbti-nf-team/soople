@@ -10,6 +10,8 @@ describe('RecruitPostsContainer', () => {
   const dispatch = jest.fn();
 
   beforeEach(() => {
+    dispatch.mockClear();
+
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
@@ -21,6 +23,12 @@ describe('RecruitPostsContainer', () => {
   const renderRecruitPostsContainer = () => render((
     <RecruitPostsContainer />
   ));
+
+  it('초기 렌더링에 dispatch 액션이 호출되어야만 한다', () => {
+    renderRecruitPostsContainer();
+
+    expect(dispatch).toBeCalledTimes(1);
+  });
 
   context('그룹 리스트가 존재하지 않는 경우', () => {
     given('groups', () => []);

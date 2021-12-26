@@ -11,7 +11,7 @@ import { getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
-import { updateTagCount } from '@/services/api/tagsCount';
+import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
 import { formatComment, formatGroup } from '@/utils/firestore';
 
 import type { AppThunk } from './store';
@@ -109,6 +109,12 @@ const { actions, reducer } = createSlice({
         ],
       };
     },
+    setTagsCount(state, { payload: tagsCount }: PayloadAction<TagCount[]>): GroupStore {
+      return {
+        ...state,
+        tagsCount,
+      };
+    },
   },
 });
 
@@ -118,6 +124,7 @@ export const {
   setComment,
   setGroupId,
   setComments,
+  setTagsCount,
   setGroupError,
   clearWriteFields,
   changeWriteFields,
@@ -165,6 +172,20 @@ export const loadGroups = (condition: Category[]): AppThunk => async (dispatch) 
     const groups = response.map((doc) => formatGroup(doc)) as Group[];
 
     dispatch(setGroups(groups));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setGroupError(message));
+  }
+};
+
+export const loadTagsCount = (): AppThunk => async (dispatch) => {
+  try {
+    const response = await getTagsCount();
+
+    const tagsCount = response.map((doc) => doc.data()) as TagCount[];
+
+    dispatch(setTagsCount(tagsCount));
   } catch (error) {
     const { message } = error as Error;
 

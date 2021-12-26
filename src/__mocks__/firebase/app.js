@@ -1,10 +1,15 @@
 const firebase = jest.createMockFromModule('firebase/app');
 
+const mockGetWithDocs = {
+  get: jest.fn().mockReturnValue({
+    docs: [],
+  }),
+};
+
 const mockOrderBy = {
   orderBy: jest.fn().mockImplementation(() => ({
-    get: jest.fn().mockReturnValue({
-      docs: [],
-    }),
+    limit: jest.fn().mockImplementation(() => (mockGetWithDocs)),
+    ...mockGetWithDocs,
   })),
 };
 

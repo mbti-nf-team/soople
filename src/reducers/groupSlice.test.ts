@@ -6,7 +6,7 @@ import { getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
-import { updateTagCount } from '@/services/api/tagsCount';
+import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
 import { formatComment, formatGroup } from '@/utils/firestore';
 
 import COMMENT_FIXTURE from '../../fixtures/comment';
@@ -21,6 +21,7 @@ import reducer, {
   loadComments,
   loadGroupDetail,
   loadGroups,
+  loadTagsCount,
   requestAddComment,
   requestRegisterNewGroup,
   setComment,
@@ -30,6 +31,7 @@ import reducer, {
   setGroupId,
   setGroups,
   setPublishModalVisible,
+  setTagsCount,
 } from './groupSlice';
 
 const middlewares = [thunk];
@@ -147,6 +149,18 @@ describe('groupReducer', () => {
       const { comments } = reducer(initialState, setComment(COMMENT_FIXTURE));
 
       expect(comments).toEqual([COMMENT_FIXTURE]);
+    });
+  });
+
+  describe('setTagsCount', () => {
+    const tags = [
+      { name: 'test', count: 1 },
+    ];
+
+    it('tagsCount에 값이 추가되야만 한다', () => {
+      const { tagsCount } = reducer(initialState, setTagsCount(tags));
+
+      expect(tagsCount).toEqual(tags);
     });
   });
 });
@@ -287,6 +301,53 @@ describe('groupReducer async actions', () => {
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
           await store.dispatch(loadGroups(['study', 'project']));
+        } catch (error) {
+          // ignore errors
+        } finally {
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: 'error',
+            type: 'group/setGroupError',
+          });
+        }
+      });
+    });
+  });
+
+  describe('loadTagsCount', () => {
+    beforeEach(() => {
+      store = mockStore({});
+    });
+    const responseTags = { name: 'test', count: 1 };
+
+    context('에러가 발생하지 않는 경우', () => {
+      (getTagsCount as jest.Mock).mockImplementationOnce(() => ([
+        {
+          data: jest.fn().mockReturnValue(responseTags),
+        },
+      ]));
+
+      it('dispatch 액션이 "group/setTagsCount"인 타입과 payload는 tag 리스트여야 한다', async () => {
+        await store.dispatch(loadTagsCount());
+
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+          payload: [responseTags],
+          type: 'group/setTagsCount',
+        });
+      });
+    });
+
+    context('에러가 발생하는 경우', () => {
+      (getTagsCount as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
+        try {
+          await store.dispatch(loadTagsCount());
         } catch (error) {
           // ignore errors
         } finally {
