@@ -20,6 +20,7 @@ describe('HomePage', () => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
         groups: [GROUP_FIXTURE],
+        tagsCount: [],
       },
     }));
   });
