@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { signOut } from 'next-auth/client';
 
 import palette from '@/styles/palette';
 
@@ -52,21 +51,10 @@ describe('Header', () => {
       },
     }));
 
-    it('"로그아웃" 버튼과 "팀 모집하기" 링크가 나타나야만 한다', () => {
-      const { container } = renderHeader();
+    it('"팀 모집하기" 링크가 나타나야만 한다', () => {
+      renderHeader();
 
-      expect(container).toHaveTextContent('로그아웃');
       expect(screen.getByText('팀 모집하기')).toHaveAttribute('href', '/write');
-    });
-
-    describe('"로그아웃" 버튼을 클릭한다', () => {
-      it('클릭 이벤트가 호출되어야만 한다', () => {
-        renderHeader();
-
-        fireEvent.click(screen.getByText('로그아웃'));
-
-        expect(signOut).toBeCalledTimes(1);
-      });
     });
   });
 
