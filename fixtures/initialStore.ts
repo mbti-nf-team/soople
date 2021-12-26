@@ -22,6 +22,7 @@ const initialStore = {
         recruitmentEndDate: '',
         recruitmentEndSetting: 'automatic',
       },
+      tagsCount: [],
       isVisible: false,
     } as GroupStore,
   },

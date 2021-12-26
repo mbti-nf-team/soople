@@ -5,12 +5,13 @@ import {
   Category,
   Comment,
   CommentFields,
-  Group, WriteFields, WriteFieldsForm,
+  Group, TagCount, WriteFields, WriteFieldsForm,
 } from '@/models/group';
 import { getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
+import { updateTagCount } from '@/services/api/tagsCount';
 import { formatComment, formatGroup } from '@/utils/firestore';
 
 import type { AppThunk } from './store';
@@ -22,6 +23,7 @@ export interface GroupStore {
   comments: Comment[];
   groupError: string | null;
   writeFields: WriteFields;
+  tagsCount: TagCount[];
   isVisible: boolean;
 }
 
@@ -43,6 +45,7 @@ const { actions, reducer } = createSlice({
     comments: [],
     groupError: null,
     writeFields: initialFieldsState,
+    tagsCount: [],
     isVisible: false,
   } as GroupStore,
   reducers: {
@@ -124,10 +127,15 @@ export const {
 export const requestRegisterNewGroup = (
   profile: Profile,
 ): AppThunk => async (dispatch, getStore) => {
-  const { groupReducer } = getStore();
+  const { groupReducer: { writeFields } } = getStore();
 
   try {
-    const groupId = await postNewGroup(profile, groupReducer.writeFields);
+    const responseUpdateTags = writeFields.tags.map((tag) => updateTagCount(tag));
+
+    const [groupId] = await Promise.all([
+      postNewGroup(profile, writeFields),
+      ...responseUpdateTags,
+    ]);
 
     dispatch(setGroupId(groupId));
     dispatch(setPublishModalVisible(false));

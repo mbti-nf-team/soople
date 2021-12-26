@@ -42,3 +42,8 @@ export interface WriteFieldsForm {
   name: string;
   value: string | string[];
 }
+
+export interface TagCount {
+  name: string;
+  count: number;
+}

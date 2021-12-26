@@ -27,6 +27,7 @@ const rootReducer = (state: RootReducerState | undefined, action: AnyAction): Ro
       groupReducer: {
         ...nextState.groupReducer,
         groups: state ? state.groupReducer.groups : [],
+        tagsCount: state ? state.groupReducer.tagsCount : [],
       },
     } as RootReducerState;
   }
