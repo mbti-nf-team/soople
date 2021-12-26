@@ -52,10 +52,10 @@ describe('HeaderContainer', () => {
   context('로그인한 경우', () => {
     given('session', () => (SESSION_FIXTURE));
 
-    it('"로그아웃" 버튼이 나타나야만 한다', () => {
+    it('"팀 모집하기" 버튼이 나타나야만 한다', () => {
       const { container } = renderHeaderContainer();
 
-      expect(container).toHaveTextContent('로그아웃');
+      expect(container).toHaveTextContent('팀 모집하기');
     });
   });
 
