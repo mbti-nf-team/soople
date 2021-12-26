@@ -19,8 +19,8 @@ function PublishModalContainer(): ReactElement {
 
   const onClose = useCallback(() => dispatch(setPublishModalVisible(false)), [dispatch]);
   const onSubmit = useCallback(() => dispatch(requestRegisterNewGroup(
-    session?.user as Profile,
-  )), [dispatch]);
+      session?.user as Profile,
+  )), [dispatch, session]);
 
   const onChangeFields = useCallback((form: WriteFieldsForm) => {
     dispatch(changeWriteFields(form));

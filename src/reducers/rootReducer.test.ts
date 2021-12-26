@@ -30,6 +30,7 @@ describe('rootReducer', () => {
       comments: [],
       groupError: null,
       writeFields: fieldsInitialState,
+      tagsCount: [],
       isVisible: false,
     },
   };

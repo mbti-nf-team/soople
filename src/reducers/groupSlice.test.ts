@@ -6,6 +6,7 @@ import { getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
+import { updateTagCount } from '@/services/api/tagsCount';
 import { formatComment, formatGroup } from '@/utils/firestore';
 
 import COMMENT_FIXTURE from '../../fixtures/comment';
@@ -35,6 +36,7 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 jest.mock('@/services/api/group');
+jest.mock('@/services/api/tagsCount');
 jest.mock('@/services/api/comment');
 jest.mock('@/utils/firestore');
 
@@ -46,6 +48,7 @@ describe('groupReducer', () => {
     comments: [],
     groupError: null,
     writeFields: WRITE_FIELDS_FIXTURE,
+    tagsCount: [],
     isVisible: false,
   };
 
@@ -159,13 +162,17 @@ describe('groupReducer async actions', () => {
     beforeEach(() => {
       store = mockStore({
         groupReducer: {
-          writeFields: WRITE_FIELDS_FIXTURE,
+          writeFields: {
+            ...WRITE_FIELDS_FIXTURE,
+            tags: ['test1', 'test2'],
+          },
         },
       });
     });
 
     context('에러가 발생하지 않는 경우', () => {
       (postNewGroup as jest.Mock).mockReturnValueOnce('1');
+      (updateTagCount as jest.Mock).mockImplementation(() => Promise.resolve('test'));
 
       it('dispatch 액션이 "group/setGroupId"인 타입과 group id 이어야 한다', async () => {
         await store.dispatch(requestRegisterNewGroup(PROFILE_FIXTURE));
