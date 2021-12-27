@@ -23,7 +23,7 @@ describe('Header', () => {
         renderHeader();
 
         expect(screen.getByTestId('header-block')).toHaveStyle({
-          'box-shadow': 'inset 0 -1px 0 0 transparent',
+          'box-shadow': '0 1px 0 0 transparent',
         });
       });
     });
@@ -31,11 +31,11 @@ describe('Header', () => {
     context('scroll 위치가 최상단일 때', () => {
       given('isScrollTop', () => false);
 
-      it(`box-shadow 속성이 ${palette.accent4} 이어야 한다`, () => {
+      it(`box-shadow 속성이 ${palette.accent2} 이어야 한다`, () => {
         renderHeader();
 
         expect(screen.getByTestId('header-block')).toHaveStyle({
-          'box-shadow': `inset 0 -1px 0 0 ${palette.accent4}`,
+          'box-shadow': `0 1px 0 0 ${palette.accent2}`,
         });
       });
     });

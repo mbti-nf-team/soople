@@ -1,10 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import SESSION_FIXTURE from '../../../fixtures/session';
+
 import UserNavbar from './UserNavbar';
 
 describe('UserNavbar', () => {
   const renderUserNavbar = () => render((
-    <UserNavbar />
+    <UserNavbar
+      session={{
+        user: {
+          ...SESSION_FIXTURE.user,
+          image: '',
+        },
+      }}
+    />
   ));
 
   it('"팀 모집하기" 링크가 나타나야만 한다', () => {

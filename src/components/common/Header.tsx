@@ -31,7 +31,7 @@ function Header({ session, onClick, isScrollTop }: Props): ReactElement {
           </Link>
           {session ? (
             <UserNavbar
-              userImage={session.user.image}
+              session={session}
             />
           ) : (
             <Button
@@ -62,7 +62,7 @@ const HeaderBlock = styled.div<{isScrollTop: boolean }>`
   width: 100%;
   z-index: ${zIndexes.TopNavigation};
   background: ${palette.accent1};
-  box-shadow: inset 0 -1px 0 0 ${({ isScrollTop }) => (isScrollTop ? 'transparent' : palette.accent4)};
+  box-shadow: 0 1px 0 0 ${({ isScrollTop }) => (isScrollTop ? 'transparent' : palette.accent2)};
   transition: box-shadow .2s ease-in-out;
 `;
 

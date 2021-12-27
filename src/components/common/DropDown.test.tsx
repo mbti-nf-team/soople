@@ -8,6 +8,8 @@ import DropDown from './DropDown';
 describe('DropDown', () => {
   const renderDropDown = () => render((
     <DropDown
+      name="test"
+      email="test@test.com"
       isVisible={given.isVisible}
     />
   ));
