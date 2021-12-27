@@ -4,16 +4,19 @@ import React, {
 import { useUnmount } from 'react-use';
 
 import styled from '@emotion/styled';
+import { Session } from 'next-auth';
 
 import Button from './Button';
 import DropDown from './DropDown';
 import ProfileImage from './ProfileImage';
 
 interface Props {
-  userImage?: string | null;
+  session: Session;
 }
 
-function UserNavbar({ userImage }: Props): ReactElement {
+function UserNavbar({ session }: Props): ReactElement {
+  const { user } = session;
+
   const [isVisible, setVisible] = useState<boolean>(false);
   const userIconRef = useRef<HTMLDivElement>(null);
 
@@ -53,10 +56,14 @@ function UserNavbar({ userImage }: Props): ReactElement {
       </Button>
       <div className="profile-dropdown-wrapper" ref={userIconRef}>
         <ProfileImage
-          src={userImage}
+          src={user?.image}
           onClick={() => setVisible(!isVisible)}
         />
-        <DropDown isVisible={isVisible} />
+        <DropDown
+          name={user?.name}
+          email={user.email}
+          isVisible={isVisible}
+        />
       </div>
     </UserNavbarWrapper>
   );
@@ -73,6 +80,6 @@ const UserNavbarWrapper = styled.div`
   }
 
   .profile-dropdown-wrapper {
-    display: contents;
+    position: relative;
   }
 `;

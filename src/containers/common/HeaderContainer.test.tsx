@@ -31,19 +31,19 @@ describe('HeaderContainer', () => {
         renderHeaderContainer();
 
         expect(screen.getByTestId('header-block')).toHaveStyle({
-          'box-shadow': 'inset 0 -1px 0 0 transparent',
+          'box-shadow': '0 1px 0 0 transparent',
         });
       });
     });
 
     context('스크롤 위치가 최상단이 아닐 경우', () => {
-      it(`box-shadow 속성이 ${palette.accent4} 이어야 한다`, () => {
+      it(`box-shadow 속성이 ${palette.accent2} 이어야 한다`, () => {
         renderHeaderContainer();
 
         fireEvent.scroll(window, { target: { scrollY: 200 } });
 
         expect(screen.getByTestId('header-block')).toHaveStyle({
-          'box-shadow': `inset 0 -1px 0 0 ${palette.accent4}`,
+          'box-shadow': `0 1px 0 0 ${palette.accent2}`,
         });
       });
     });

@@ -9,6 +9,7 @@ const setGlobalStyles = () => css`
   ${emotionNormalize}
 
   body {
+    color: ${palette.foreground};
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
     background: ${palette.accent1};
   }
