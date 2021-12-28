@@ -137,5 +137,6 @@ module.exports = {
     'react/require-default-props': [2, {
       ignoreFunctionalComponents: true,
     }],
+    'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
   },
 };

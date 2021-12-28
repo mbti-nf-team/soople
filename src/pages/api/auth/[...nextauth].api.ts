@@ -21,6 +21,7 @@ export default NextAuth({
   ],
   pages: {
     newUser: '/signup',
+    error: '/',
   },
   callbacks: {
     async session(session, user: User) {
