@@ -28,6 +28,13 @@ const setGlobalStyles = () => css`
       cursor: not-allowed;
     }
   }
+
+  h4 {
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 24px;
+    text-align: center;
+  }
 `;
 
 function GlobalStyles(): ReactElement {

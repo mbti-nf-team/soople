@@ -13,7 +13,7 @@ describe('SocialButtonGroup', () => {
       it('클릭 이벤트가 호출되어야만 한다', () => {
         renderSocialButtonGroup();
 
-        fireEvent.click(screen.getByText('구글 로그인'));
+        fireEvent.click(screen.getByTestId('google-icon'));
 
         expect(signIn).toBeCalledWith('google');
       });
@@ -25,7 +25,7 @@ describe('SocialButtonGroup', () => {
       it('클릭 이벤트가 호출되어야만 한다', () => {
         renderSocialButtonGroup();
 
-        fireEvent.click(screen.getByText('깃허브 로그인'));
+        fireEvent.click(screen.getByTestId('github-icon'));
 
         expect(signIn).toBeCalledWith('github');
       });
@@ -37,7 +37,7 @@ describe('SocialButtonGroup', () => {
       it('클릭 이벤트가 호출되어야만 한다', () => {
         renderSocialButtonGroup();
 
-        fireEvent.click(screen.getByText('카카오 로그인'));
+        fireEvent.click(screen.getByTestId('kakao-icon'));
 
         expect(signIn).toBeCalledWith('kakao');
       });

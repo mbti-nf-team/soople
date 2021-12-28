@@ -28,17 +28,11 @@ describe('SignInModal', () => {
   context('isVisible이 true인 경우', () => {
     given('isVisible', () => true);
 
-    it('"소셜 계정으로 계속하기" 문구가 보여야만 한다', () => {
-      const { container } = renderSignInModal();
-
-      expect(container).toHaveTextContent('소셜 계정으로 계속하기');
-    });
-
-    describe('"X" 버튼을 누른다', () => {
+    describe('"X" 아이콘을 누른다', () => {
       it('클릭 이벤트가 호출되어야만 한다', () => {
         renderSignInModal();
 
-        fireEvent.click(screen.getByText('X'));
+        fireEvent.click(screen.getByTestId('close-icon'));
 
         expect(handleClose).toBeCalledTimes(1);
       });
