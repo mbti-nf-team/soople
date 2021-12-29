@@ -1,6 +1,10 @@
 import React, { ReactElement } from 'react';
 
+import styled from '@emotion/styled';
+
 import { TagCount } from '@/models/group';
+
+import Tag from '../common/Tag';
 
 interface Props {
   tags: TagCount[];
@@ -12,12 +16,25 @@ function TagsBar({ tags }: Props): ReactElement {
   }
 
   return (
-    <div>
+    <TagsWrapper>
       {tags.map(({ name }) => (
-        <span key={name}>{`#${name}`}</span>
+        <Tag
+          key={name}
+          tag={name}
+        />
       ))}
-    </div>
+    </TagsWrapper>
   );
 }
 
 export default TagsBar;
+
+const TagsWrapper = styled.div`
+  div {
+    margin-right: 8px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+`;

@@ -18,10 +18,30 @@ describe('TagsForm', () => {
     />
   ));
 
-  it('태그를 입력하는 인풋창이 나타나야만 한다', () => {
-    renderTagsForm([]);
+  describe('태그의 유무에 따라 인풋창의 스타일이 변경된다', () => {
+    context('태그가 존재하지 않는 경우', () => {
+      const height = '34px';
 
-    expect(screen.getByPlaceholderText('태그를 입력하세요')).not.toBeNull();
+      it(`인풋창의 "height"가 ${height}이어야 한다`, () => {
+        renderTagsForm([]);
+
+        expect(screen.getByPlaceholderText('태그를 입력하세요')).toHaveStyle({
+          height,
+        });
+      });
+    });
+
+    context('태그가 존재하는 경우', () => {
+      const height = '40px';
+
+      it(`인풋창의 "height"가 ${height}이어야 한다`, () => {
+        renderTagsForm(['test']);
+
+        expect(screen.getByPlaceholderText('태그를 입력하세요')).toHaveStyle({
+          height,
+        });
+      });
+    });
   });
 
   describe('태그를 입력한다', () => {
@@ -138,13 +158,13 @@ describe('TagsForm', () => {
     });
   });
 
-  describe('입력된 태그의 "x"를 클릭하여 삭제한다', () => {
+  describe('입력된 태그의 "x" 아이콘을 클릭하여 삭제한다', () => {
     const tags = ['JavaScript'];
 
     it('태그가 삭제되어야만 한다', () => {
       const { container } = renderTagsForm(tags);
 
-      fireEvent.click(screen.getByText('x'));
+      fireEvent.click(screen.getByTestId('remove-icon'));
 
       expect(container).not.toHaveTextContent('#JavaScript');
 
