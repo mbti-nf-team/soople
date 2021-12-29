@@ -31,7 +31,6 @@ function SignInModal({
             size={24}
             color={palette.accent6}
             onClick={onClose}
-            cursor="pointer"
             data-testid="close-icon"
           />
         </HeaderWrapper>
@@ -54,6 +53,7 @@ const LogoIcon = styled(LogoSvg)`
 
 const CloseIcon = styled(CloseSvg)`
   position: absolute;
+  cursor: pointer;
   top: 15px;
   right: 20px;
 `;

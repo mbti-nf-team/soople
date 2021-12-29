@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 
+import Tag from '../common/Tag';
+
 interface Props {
   onRemove: (tags: string[]) => void;
   tags: string[];
@@ -15,10 +17,11 @@ function TagList({ onRemove, tags }: Props): ReactElement {
   return (
     <>
       {tags.map((tag) => (
-        <div key={tag}>
-          {`#${tag}`}
-          <button type="button" onClick={() => handleRemove(tag)}>x</button>
-        </div>
+        <Tag
+          key={tag}
+          tag={tag}
+          onRemove={() => handleRemove(tag)}
+        />
       ))}
     </>
   );

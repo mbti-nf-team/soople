@@ -28,6 +28,7 @@ function DropDown({ isVisible, name, email }: Props):ReactElement | null {
         </MenuContent>
         <Pipe />
         <MenuContent
+          className="logout-menu"
           onClick={() => signOut()}
         >
           로그아웃
@@ -89,6 +90,10 @@ const MenuContent = styled.div`
   cursor: pointer;
   transition: background-color .2s;
   
+  &.logout-menu {
+    padding-bottom: 0.875rem;
+  }
+
   &:hover {
     background: ${palette.accent1};
   }

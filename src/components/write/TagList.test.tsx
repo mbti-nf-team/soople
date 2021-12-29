@@ -26,7 +26,7 @@ describe('TagList', () => {
     it('클릭 이벤트가 발생해야만 한다', () => {
       renderTagList(['javascript']);
 
-      fireEvent.click(screen.getByText('x'));
+      fireEvent.click(screen.getByTestId('remove-icon'));
 
       expect(handleRemove).toBeCalledWith([]);
     });
