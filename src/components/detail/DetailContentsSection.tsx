@@ -1,6 +1,10 @@
 import React, { ReactElement } from 'react';
 
+import styled from '@emotion/styled';
+
 import { Group } from '@/models/group';
+
+import Tag from '../common/Tag';
 
 interface Props {
   group: Group;
@@ -14,13 +18,26 @@ function DetailContentsSection({ group }: Props): ReactElement {
       <div>
         {content}
       </div>
-      <div>
+      <TagsWrapper>
         {tags.map((tag) => (
-          <span key={tag}>{`#${tag}`}</span>
+          <Tag
+            key={tag}
+            tag={tag}
+          />
         ))}
-      </div>
+      </TagsWrapper>
     </div>
   );
 }
 
 export default DetailContentsSection;
+
+const TagsWrapper = styled.div`
+  div {
+    margin-right: 8px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+`;
