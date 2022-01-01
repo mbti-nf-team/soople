@@ -1,19 +1,18 @@
-/* eslint-disable import/no-duplicates */
-import firebase from 'firebase/app';
-
-import 'firebase/firestore';
-import 'firebase/analytics';
+import { Analytics, getAnalytics } from 'firebase/analytics';
+import { getApps, initializeApp } from 'firebase/app';
+import { collection, doc, getFirestore } from 'firebase/firestore';
 
 import firebaseConfig from './firebaseConfig';
 
-const db = (
-  firebase.apps[0] ?? firebase.initializeApp(firebaseConfig(process.env.NODE_ENV))
-).firestore();
+export const firebaseApp = getApps()
+  .length < 1 && initializeApp(firebaseConfig(process.env.NODE_ENV));
 
-export const fireStore = firebase.firestore;
+export const db = getFirestore();
 
-export const collection = (id: string) => db.collection(id);
+export const collectionRef = (collectionId: string) => collection(db, collectionId);
 
-export const analytics: boolean | firebase.analytics.Analytics = (typeof window !== 'undefined' && firebase.analytics());
+export const docRef = (collectionId: string, uid: string) => doc(db, collectionId, uid);
+
+export const analytics: boolean | Analytics = (typeof window !== 'undefined' && getAnalytics());
 
 export default db;

@@ -1,13 +1,15 @@
+import { getDoc, updateDoc } from 'firebase/firestore';
+
 import { Profile } from '@/models/auth';
 
-import { collection } from '../firebase';
+import { docRef } from '../firebase';
 
 export const updateUserProfile = async ({
   uid, portfolioUrl, name, image, position,
 }: Profile) => {
-  const user = collection('users').doc(uid);
+  const userRef = docRef('users', uid);
 
-  await user.update({
+  await updateDoc(userRef, {
     name,
     image,
     portfolioUrl,
@@ -15,10 +17,8 @@ export const updateUserProfile = async ({
   });
 };
 
-export const getUserProfile = async (id:string): Promise<Profile> => {
-  const user = await collection('users')
-    .doc(id)
-    .get();
+export const getUserProfile = async (uid: string): Promise<Profile> => {
+  const user = await getDoc(docRef('users', uid));
 
   return user.data() as Profile;
 };

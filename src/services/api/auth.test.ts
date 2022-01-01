@@ -1,7 +1,11 @@
+import { getDoc, updateDoc } from 'firebase/firestore';
+
 import PROFILE_FIXTURE from '../../../fixtures/profile';
-import db from '../firebase';
+import { docRef } from '../firebase';
 
 import { getUserProfile, updateUserProfile } from './auth';
+
+jest.mock('../firebase');
 
 describe('auth API', () => {
   beforeEach(() => {
@@ -9,22 +13,20 @@ describe('auth API', () => {
   });
 
   describe('updateUserProfile', () => {
-    const mockUpdate = jest.fn();
+    const userRef = 'userRef';
 
-    (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
-      doc: jest.fn().mockImplementationOnce(() => ({
-        update: mockUpdate,
-      })),
-    }));
+    beforeEach(() => {
+      (docRef as jest.Mock).mockReturnValueOnce(userRef);
+    });
 
-    it('update 함수가 호출되어야만 한다', async () => {
+    it('updateDoc 함수가 호출되어야만 한다', async () => {
       await updateUserProfile(PROFILE_FIXTURE);
 
       const {
         name, image, portfolioUrl, position,
       } = PROFILE_FIXTURE;
 
-      expect(mockUpdate).toBeCalledWith({
+      expect(updateDoc).toBeCalledWith(userRef, {
         name,
         image,
         portfolioUrl,
@@ -40,18 +42,15 @@ describe('auth API', () => {
     };
 
     beforeEach(() => {
-      (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
-        doc: jest.fn().mockImplementationOnce(() => ({
-          get: jest.fn().mockReturnValue({
-            data: jest.fn().mockReturnValueOnce(mockResponse),
-          }),
-        })),
+      (getDoc as jest.Mock).mockImplementationOnce(() => ({
+        data: jest.fn().mockReturnValue(mockResponse),
       }));
     });
 
     it('해당 detail 글 정보가 나타나야만 한다', async () => {
       const response = await getUserProfile('id');
 
+      expect(getDoc).toBeCalled();
       expect(response).toEqual(mockResponse);
     });
   });

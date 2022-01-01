@@ -1,31 +1,33 @@
+import {
+  addDoc, getDoc, getDocs, orderBy, query, serverTimestamp, where,
+} from 'firebase/firestore';
+
 import { Profile } from '@/models/auth';
 import {
   Category, Group, WriteFields,
 } from '@/models/group';
 import { timestampToString } from '@/utils/firestore';
 
-import { collection, fireStore } from '../firebase';
+import { collectionRef, docRef } from '../firebase';
 
 export const postNewGroup = async (profile: Profile, fields: WriteFields) => {
-  const { id } = await collection('groups').add({
+  const { id } = await addDoc(collectionRef('groups'), {
     ...fields,
     writer: profile,
-    createdAt: fireStore.FieldValue.serverTimestamp(),
+    createdAt: serverTimestamp(),
   });
 
   return id;
 };
 
 export const getGroupDetail = async (id: string) => {
-  const response = await collection('groups')
-    .doc(id)
-    .get();
+  const response = await getDoc(docRef('groups', id));
 
-  if (!response.exists) {
+  if (!response.exists()) {
     return null;
   }
 
-  const group = response.data() as any;
+  const group = response.data();
 
   return {
     groupId: response.id,
@@ -35,10 +37,13 @@ export const getGroupDetail = async (id: string) => {
 };
 
 export const getGroups = async (condition: Category[]) => {
-  const response = await collection('groups')
-    .where('category', 'in', condition)
-    .orderBy('createdAt', 'asc')
-    .get();
+  const getQuery = query(
+    collectionRef('groups'),
+    where('category', 'in', condition),
+    orderBy('createdAt', 'asc'),
+  );
+
+  const response = await getDocs(getQuery);
 
   return response.docs;
 };

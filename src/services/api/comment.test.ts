@@ -1,53 +1,63 @@
+import { addDoc, getDocs, serverTimestamp } from 'firebase/firestore';
+
 import { CommentFields } from '@/models/group';
 
+import COMMENT_FIXTURE from '../../../fixtures/comment';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
-import db, { fireStore } from '../firebase';
+import { collectionRef } from '../firebase';
 
 import { getGroupComments, postGroupComment } from './comment';
 
-describe('postGroupComment', () => {
-  const mockAdd = jest.fn().mockReturnValueOnce({ id: '1' });
-  const createdAt = '2021-11-11';
+jest.mock('../firebase');
 
-  const comment: CommentFields = {
-    groupId: '1',
-    content: 'content',
-    writer: PROFILE_FIXTURE,
-  };
-
+describe('comment API', () => {
   beforeEach(() => {
-    (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
-      add: mockAdd,
-    }));
-
-    fireStore.FieldValue = {
-      serverTimestamp: jest.fn().mockReturnValueOnce(createdAt),
-    } as any;
+    jest.clearAllMocks();
   });
 
-  it('update 함수가 호출되어야만 한다', async () => {
-    const id = await postGroupComment(comment);
+  describe('postGroupComment', () => {
+    const collection = 'collectionRef';
+    const createdAt = '2021-11-11';
 
-    expect(mockAdd).toBeCalledWith({
-      ...comment,
-      createdAt,
+    const comment: CommentFields = {
+      groupId: '1',
+      content: 'content',
+      writer: PROFILE_FIXTURE,
+    };
+
+    beforeEach(() => {
+      (collectionRef as jest.Mock).mockReturnValueOnce(collection);
+      (addDoc as jest.Mock).mockImplementation(() => ({
+        id: '1',
+      }));
+
+      (serverTimestamp as jest.Mock).mockReturnValueOnce(createdAt);
     });
 
-    expect(id).toBe('1');
+    it('addDoc 함수가 호출되어야만 한다', async () => {
+      const id = await postGroupComment(comment);
+
+      expect(addDoc).toBeCalledWith(collection, {
+        ...comment,
+        createdAt,
+      });
+
+      expect(id).toBe('1');
+    });
   });
-});
 
-describe('getGroupComments', () => {
-  const spyOnCollection = jest.spyOn(db, 'collection');
+  describe('getGroupComments', () => {
+    beforeEach(() => {
+      (getDocs as jest.Mock).mockImplementationOnce(() => ({
+        docs: [COMMENT_FIXTURE],
+      }));
+    });
 
-  beforeEach(() => {
-    spyOnCollection.mockClear();
-  });
+    it('댓글 리스트가 반환되어야만 한다', async () => {
+      const response = await getGroupComments('groupId');
 
-  it('댓글 리스트가 반환되어야만 한다', async () => {
-    const response = await getGroupComments('groupId');
-
-    expect(response).toEqual([]);
-    expect(spyOnCollection).toBeCalledTimes(1);
+      expect(response).toEqual([COMMENT_FIXTURE]);
+      expect(getDocs).toBeCalledTimes(1);
+    });
   });
 });
