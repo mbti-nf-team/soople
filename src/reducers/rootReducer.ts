@@ -22,10 +22,15 @@ const rootReducer = (state: RootReducerState | undefined, action: AnyAction): Ro
       ...action.payload,
     };
 
+    const { authReducer: authStore, groupReducer: groupStore } = nextState;
+
     return {
-      ...nextState,
+      authReducer: {
+        ...authStore,
+        user: authStore.user ? authStore.user : state?.authReducer.user,
+      },
       groupReducer: {
-        ...nextState.groupReducer,
+        ...groupStore,
         groups: state ? state.groupReducer.groups : [],
         tagsCount: state ? state.groupReducer.tagsCount : [],
       },

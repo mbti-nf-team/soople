@@ -1,6 +1,9 @@
+import { signInWithRedirect } from 'firebase/auth';
 import { collection, doc } from 'firebase/firestore';
 
-import { collectionRef, docRef } from '.';
+import {
+  collectionRef, docRef, googleProvider, signInRedirectOAuth,
+} from '.';
 
 describe('firebase', () => {
   describe('collectionRef', () => {
@@ -16,6 +19,14 @@ describe('firebase', () => {
       docRef('collectionId', 'id');
 
       expect(doc).toBeCalledWith(undefined, 'collectionId', 'id');
+    });
+  });
+
+  describe('signInRedirectOAuth', () => {
+    it('signInWithRedirect가 호출되어야만 한다', () => {
+      signInRedirectOAuth(googleProvider);
+
+      expect(signInWithRedirect).toBeCalledWith({ languageCode: 'ko' }, googleProvider);
     });
   });
 });

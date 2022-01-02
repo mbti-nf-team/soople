@@ -1,5 +1,12 @@
 import { Analytics, getAnalytics } from 'firebase/analytics';
 import { getApps, initializeApp } from 'firebase/app';
+import {
+  AuthProvider,
+  getAuth,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithRedirect,
+} from 'firebase/auth';
 import { collection, doc, getFirestore } from 'firebase/firestore';
 
 import firebaseConfig from './firebaseConfig';
@@ -15,4 +22,13 @@ export const docRef = (collectionId: string, uid: string) => doc(db, collectionI
 
 export const analytics: boolean | Analytics = (typeof window !== 'undefined' && getAnalytics());
 
-export default db;
+export const firebaseAuth = getAuth();
+
+firebaseAuth.languageCode = 'ko';
+
+export const googleProvider = new GoogleAuthProvider();
+export const githubProvider = new GithubAuthProvider();
+
+export const signInRedirectOAuth = (
+  authProvider: AuthProvider,
+) => signInWithRedirect(firebaseAuth, authProvider);

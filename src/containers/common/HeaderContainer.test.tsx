@@ -1,11 +1,10 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
-import { useSession } from 'next-auth/client';
 
 import palette from '@/styles/palette';
 
-import SESSION_FIXTURE from '../../../fixtures/session';
+import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import HeaderContainer from './HeaderContainer';
 
@@ -16,7 +15,11 @@ describe('HeaderContainer', () => {
     dispatch.mockClear();
 
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
-    (useSession as jest.Mock).mockImplementation(() => ([given.session]));
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      authReducer: {
+        user: given.user,
+      },
+    }));
   });
 
   const renderHeaderContainer = () => render((
@@ -24,7 +27,7 @@ describe('HeaderContainer', () => {
   ));
 
   describe('스크롤 위치에 따라 스타일이 변경된다', () => {
-    given('session', () => (null));
+    given('user', () => (null));
 
     context('스크롤 위치가 최상단일 경우', () => {
       it('box-shadow가 "transparent"가 되어야 한다', () => {
@@ -50,17 +53,31 @@ describe('HeaderContainer', () => {
   });
 
   context('로그인한 경우', () => {
-    given('session', () => (SESSION_FIXTURE));
+    given('user', () => ({
+      ...PROFILE_FIXTURE,
+      image: '',
+    }));
 
     it('"팀 모집하기" 버튼이 나타나야만 한다', () => {
       const { container } = renderHeaderContainer();
 
       expect(container).toHaveTextContent('팀 모집하기');
     });
+
+    describe('"로그아웃" 버튼을 클릭한다', () => {
+      it('dispatch 액션이 호출되어야만 한다', () => {
+        renderHeaderContainer();
+
+        fireEvent.click(screen.getByTestId('default-profile-icon'));
+        fireEvent.click(screen.getByText('로그아웃'));
+
+        expect(dispatch).toBeCalled();
+      });
+    });
   });
 
   context('로그인하지 않은 경우', () => {
-    given('session', () => (null));
+    given('user', () => (null));
 
     describe('"시작하기" 버튼을 클릭한다', () => {
       it('dispatch 액션이 호출되어야만 한다', () => {

@@ -1,3 +1,7 @@
-export const updateUserProfile = jest.fn();
+export const postUserProfile = jest.fn();
 
 export const getUserProfile = jest.fn();
+
+export const postSignOut = jest.fn();
+
+export const postSignIn = jest.fn();

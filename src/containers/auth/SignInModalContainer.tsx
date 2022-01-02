@@ -4,7 +4,6 @@ import React, {
 import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
 
 import SignInError from '@/components/auth/SignInError';
 import SignInModal from '@/components/auth/SignInModal';
@@ -16,9 +15,12 @@ import { getAuth } from '@/utils/utils';
 function SignInModalContainer(): ReactElement | null {
   const { query, replace } = useRouter();
   const dispatch = useAppDispatch();
+
   const isVisible = useSelector(getAuth('isVisible'));
+  const auth = useSelector(getAuth('auth'));
+  const user = useSelector(getAuth('user'));
+
   const [error, setError] = useState<string>('');
-  const [session] = useSession();
 
   const onClose = useCallback(() => {
     dispatch(setSignInModalVisible(false));
@@ -33,7 +35,13 @@ function SignInModalContainer(): ReactElement | null {
     }
   }, [query, dispatch]);
 
-  if (session) {
+  useEffect(() => {
+    if (auth) {
+      replace('/signup');
+    }
+  }, [auth]);
+
+  if (user) {
     return null;
   }
 

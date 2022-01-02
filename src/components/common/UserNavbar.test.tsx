@@ -1,17 +1,16 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import SESSION_FIXTURE from '../../../fixtures/session';
+import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import UserNavbar from './UserNavbar';
 
 describe('UserNavbar', () => {
   const renderUserNavbar = () => render((
     <UserNavbar
-      session={{
-        user: {
-          ...SESSION_FIXTURE.user,
-          image: '',
-        },
+      signOut={jest.fn()}
+      user={{
+        ...PROFILE_FIXTURE,
+        image: '',
       }}
     />
   ));

@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { signIn } from 'next-auth/client';
+
+import { githubProvider, googleProvider, signInRedirectOAuth } from '@/services/firebase';
 
 import GithubIcon from '../../assets/icons/img_logo_github.svg';
 import GoogleIcon from '../../assets/icons/img_logo_google.svg';
@@ -13,15 +14,14 @@ function SocialButtonGroup(): ReactElement {
       <h4>소셜 계정으로 계속하기</h4>
       <GoogleIcon
         data-testid="google-icon"
-        onClick={() => signIn('google')}
+        onClick={() => signInRedirectOAuth(googleProvider)}
       />
       <GithubIcon
         data-testid="github-icon"
-        onClick={() => signIn('github')}
+        onClick={() => signInRedirectOAuth(githubProvider)}
       />
       <KakaoIcon
         data-testid="kakao-icon"
-        onClick={() => signIn('kakao')}
       />
     </SocialButtonGroupWrapper>
   );

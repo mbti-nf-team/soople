@@ -1,9 +1,14 @@
-import { getDoc, updateDoc } from 'firebase/firestore';
+import {
+  getRedirectResult, GithubAuthProvider, signOut,
+} from 'firebase/auth';
+import { getDoc, setDoc } from 'firebase/firestore';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
-import { docRef } from '../firebase';
+import { docRef, firebaseAuth } from '../firebase';
 
-import { getUserProfile, updateUserProfile } from './auth';
+import {
+  getUserProfile, getUserToken, postSignIn, postSignOut, postUserProfile,
+} from './auth';
 
 jest.mock('../firebase');
 
@@ -12,7 +17,11 @@ describe('auth API', () => {
     jest.clearAllMocks();
   });
 
-  describe('updateUserProfile', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  describe('postUserProfile', () => {
     const userRef = 'userRef';
 
     beforeEach(() => {
@@ -20,18 +29,9 @@ describe('auth API', () => {
     });
 
     it('updateDoc 함수가 호출되어야만 한다', async () => {
-      await updateUserProfile(PROFILE_FIXTURE);
+      await postUserProfile(PROFILE_FIXTURE);
 
-      const {
-        name, image, portfolioUrl, position,
-      } = PROFILE_FIXTURE;
-
-      expect(updateDoc).toBeCalledWith(userRef, {
-        name,
-        image,
-        portfolioUrl,
-        position,
-      });
+      expect(setDoc).toBeCalledWith(userRef, PROFILE_FIXTURE);
     });
   });
 
@@ -52,6 +52,78 @@ describe('auth API', () => {
 
       expect(getDoc).toBeCalled();
       expect(response).toEqual(mockResponse);
+    });
+  });
+
+  describe('postSignIn', () => {
+    context('반환값이 존재하지 않을 경우', () => {
+      (getRedirectResult as jest.Mock).mockReturnValueOnce(null);
+
+      it('null이 반환되어야만 한다', async () => {
+        const result = await postSignIn();
+
+        expect(getRedirectResult).toBeCalledWith({ languageCode: 'ko' });
+        expect(result).toBeNull();
+      });
+    });
+
+    context('반환값이 존재하는 경우', () => {
+      (getRedirectResult as jest.Mock).mockReturnValueOnce({
+        user: 'test',
+      });
+
+      GithubAuthProvider.credentialFromResult = jest.fn().mockImplementationOnce(() => ({
+        accessToken: 'token',
+      }));
+
+      it('user 정보가 반환되어야 한다', async () => {
+        const result = await postSignIn();
+
+        expect(getRedirectResult).toBeCalledWith({ languageCode: 'ko' });
+        expect(result).toBe('test');
+      });
+    });
+  });
+
+  describe('postSignOut', () => {
+    it('"signOut"이 호출되어야만 한다', async () => {
+      await postSignOut();
+
+      expect(signOut).toBeCalled();
+    });
+  });
+
+  describe('getUserToken', () => {
+    const mockGetIdToken = jest.fn();
+
+    beforeEach(() => {
+      mockGetIdToken.mockClear();
+    });
+
+    context('유저 정보가 존재한 경우', () => {
+      beforeEach(() => {
+        (firebaseAuth.currentUser as any) = {
+          getIdToken: mockGetIdToken,
+        };
+      });
+
+      it('"getIdToken"이 호출되어야만 한다', async () => {
+        await getUserToken();
+
+        expect(mockGetIdToken).toBeCalled();
+      });
+    });
+
+    context('유저 정보가 존재하지 않는 경우', () => {
+      beforeEach(() => {
+        (firebaseAuth.currentUser as any) = null;
+      });
+
+      it('"getIdToken"이 호출되지 않아야만 한다', async () => {
+        await getUserToken();
+
+        expect(mockGetIdToken).not.toBeCalled();
+      });
     });
   });
 });

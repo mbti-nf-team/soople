@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { signOut } from 'next-auth/client';
 
 import palette from '../../styles/palette';
 
@@ -9,9 +8,12 @@ interface Props {
   isVisible: boolean;
   name?: string | null;
   email: string;
+  signOut: () => void;
 }
 
-function DropDown({ isVisible, name, email }: Props):ReactElement | null {
+function DropDown({
+  isVisible, name, email, signOut,
+}: Props):ReactElement | null {
   if (!isVisible) {
     return null;
   }
@@ -29,7 +31,7 @@ function DropDown({ isVisible, name, email }: Props):ReactElement | null {
         <Pipe />
         <MenuContent
           className="logout-menu"
-          onClick={() => signOut()}
+          onClick={signOut}
         >
           로그아웃
         </MenuContent>

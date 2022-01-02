@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
-import { useSession } from 'next-auth/client';
 
 import WriteFormContainer from './WriteFormContainer';
 
@@ -13,6 +12,9 @@ describe('WriteFormContainer', () => {
 
     (useDispatch as jest.Mock).mockImplementationOnce(() => dispatch);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      authReducer: {
+        user: given.user,
+      },
       groupReducer: {
         writeFields: {
           title: '',
@@ -21,7 +23,6 @@ describe('WriteFormContainer', () => {
         },
       },
     }));
-    (useSession as jest.Mock).mockImplementation(() => ([given.session, given.loading]));
   });
 
   afterEach(() => {
@@ -32,8 +33,8 @@ describe('WriteFormContainer', () => {
     <WriteFormContainer />
   ));
 
-  context('세션이 존재하는 경우', () => {
-    given('session', () => 'session');
+  context('로그인한 사용자인 경우', () => {
+    given('user', () => 'user');
 
     const placeholderTexts = [
       '제목을 입력하세요',
@@ -87,23 +88,13 @@ describe('WriteFormContainer', () => {
     });
   });
 
-  context('세션이 존재하지 않는 경우', () => {
-    given('session', () => null);
+  context('로그인하지 않은 사용자인 경우', () => {
+    given('user', () => null);
 
     it('"로그인 후 이용해주세요!" 문구가 나타나야만 한다', () => {
       const { container } = renderWriteFormContainer();
 
       expect(container).toHaveTextContent('로그인 후 이용해주세요!');
-    });
-  });
-
-  context('로딩중인 경우', () => {
-    given('loading', () => true);
-
-    it('"로딩중..." 문구가 나타나야마 한다', () => {
-      const { container } = renderWriteFormContainer();
-
-      expect(container).toHaveTextContent('로딩중...');
     });
   });
 });

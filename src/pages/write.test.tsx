@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
-import { useSession } from 'next-auth/client';
 
 import NewPage from './write.page';
 
@@ -12,6 +11,9 @@ describe('WritePage', () => {
 
   beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      authReducer: {
+        user: '',
+      },
       groupReducer: {
         groupId: '',
         writeFields: {
@@ -19,7 +21,6 @@ describe('WritePage', () => {
         },
       },
     }));
-    (useSession as jest.Mock).mockImplementation(() => ([given.session, given.loading]));
   });
 
   it('"등록하기" 버튼이 나타나야만 한다', () => {

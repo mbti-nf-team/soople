@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { Session } from 'next-auth';
 
+import { Profile } from '@/models/auth';
 import Layout from '@/styles/Layout';
 import palette from '@/styles/palette';
 import zIndexes from '@/styles/zIndexes';
@@ -14,12 +14,15 @@ import Button from './Button';
 import UserNavbar from './UserNavbar';
 
 interface Props {
-  session: Session | null
+  user: Profile | null
   onClick: () => void;
+  signOut: () => void;
   isScrollTop: boolean;
 }
 
-function Header({ session, onClick, isScrollTop }: Props): ReactElement {
+function Header({
+  user, onClick, isScrollTop, signOut,
+}: Props): ReactElement {
   return (
     <>
       <HeaderBlock isScrollTop={isScrollTop} data-testid="header-block">
@@ -29,9 +32,10 @@ function Header({ session, onClick, isScrollTop }: Props): ReactElement {
               <LogoIcon />
             </a>
           </Link>
-          {session ? (
+          {user ? (
             <UserNavbar
-              session={session}
+              signOut={signOut}
+              user={user}
             />
           ) : (
             <Button

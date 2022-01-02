@@ -1,9 +1,16 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { signIn } from 'next-auth/client';
+
+import { githubProvider, googleProvider, signInRedirectOAuth } from '@/services/firebase';
 
 import SocialButtonGroup from './SocialButtonGroup';
 
+jest.mock('@/services/firebase');
+
 describe('SocialButtonGroup', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const renderSocialButtonGroup = () => render((
     <SocialButtonGroup />
   ));
@@ -15,7 +22,7 @@ describe('SocialButtonGroup', () => {
 
         fireEvent.click(screen.getByTestId('google-icon'));
 
-        expect(signIn).toBeCalledWith('google');
+        expect(signInRedirectOAuth).toBeCalledWith(googleProvider);
       });
     });
   });
@@ -27,19 +34,7 @@ describe('SocialButtonGroup', () => {
 
         fireEvent.click(screen.getByTestId('github-icon'));
 
-        expect(signIn).toBeCalledWith('github');
-      });
-    });
-  });
-
-  context('OAuth가 카카오인 경우', () => {
-    describe('"카카오 로그인" 버튼을 클릭한다', () => {
-      it('클릭 이벤트가 호출되어야만 한다', () => {
-        renderSocialButtonGroup();
-
-        fireEvent.click(screen.getByTestId('kakao-icon'));
-
-        expect(signIn).toBeCalledWith('kakao');
+        expect(signInRedirectOAuth).toBeCalledWith(githubProvider);
       });
     });
   });

@@ -39,7 +39,10 @@ describe('rootReducer', () => {
     const action: AnyAction = {
       type: HYDRATE,
       payload: {
-        auth: 'test',
+        authReducer: {
+          ...initialReducer.authReducer,
+          auth: 'test',
+        },
       },
     };
 
@@ -50,7 +53,13 @@ describe('rootReducer', () => {
           payload: initialReducer,
         });
 
-        expect(result).toEqual(initialReducer);
+        expect(result).toEqual({
+          ...initialReducer,
+          authReducer: {
+            ...initialReducer.authReducer,
+            user: undefined,
+          },
+        });
       });
     });
 
@@ -60,7 +69,34 @@ describe('rootReducer', () => {
 
         expect(result).toEqual({
           ...initialReducer,
-          auth: 'test',
+          authReducer: {
+            ...initialReducer.authReducer,
+            auth: 'test',
+          },
+        });
+      });
+    });
+
+    context('payload에 user 정보가 존재할 경우', () => {
+      const user = 'TEST';
+
+      it('user 정보가 변경되어야만 한다', () => {
+        const result = rootReducer(initialReducer, {
+          type: HYDRATE,
+          payload: {
+            authReducer: {
+              ...initialReducer.authReducer,
+              user,
+            },
+          },
+        });
+
+        expect(result).toEqual({
+          ...initialReducer,
+          authReducer: {
+            ...initialReducer.authReducer,
+            user,
+          },
         });
       });
     });

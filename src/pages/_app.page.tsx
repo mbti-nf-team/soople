@@ -1,19 +1,19 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import type { AppProps } from 'next/app';
-import { Provider } from 'next-auth/client';
 
+import AuthProvider from '@/components/common/AuthProvider';
 import SignInModalContainer from '@/containers/auth/SignInModalContainer';
 import wrapper from '@/reducers/store';
 import GlobalStyles from '@/styles/GlobalStyles';
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
   return (
     <>
       <GlobalStyles />
-      <Provider session={session}>
+      <AuthProvider>
         <SignInModalContainer />
         <Component {...pageProps} />
-      </Provider>
+      </AuthProvider>
     </>
   );
 }
