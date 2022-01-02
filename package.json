@@ -44,7 +44,6 @@
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@hookform/resolvers": "^2.8.3",
-    "@next-auth/firebase-adapter": "^0.1.2-pr.183-76202b42.8",
     "@reduxjs/toolkit": "^1.6.2",
     "dayjs": "^1.10.7",
     "emotion-normalize": "^11.0.1",
