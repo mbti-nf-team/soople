@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Profile } from '@/models/auth';
-import { updateUserProfile } from '@/services/api/auth';
+import {
+  getUserProfile, postSignIn, postSignOut, postUserProfile,
+} from '@/services/api/auth';
 
 import type { AppDispatch, AppThunk } from './store';
 
@@ -59,14 +61,71 @@ export const {
   setAuth, setAuthError, setUser, clearAuth, setSignInModalVisible,
 } = actions;
 
-export const requestUpdateProfile = (
+export const requestUserProfile = (
   profile: Profile,
-): AppThunk => async (dispatch:AppDispatch) => {
+): AppThunk => async (dispatch: AppDispatch) => {
   try {
-    await updateUserProfile(profile);
+    await postUserProfile(profile);
 
     dispatch(setUser(profile));
   } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setAuthError(message));
+  }
+};
+
+export const requestSignOut = (): AppThunk => async (dispatch: AppDispatch) => {
+  try {
+    await postSignOut();
+
+    dispatch(clearAuth());
+    dispatch(setUser(null));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setAuthError(message));
+  }
+};
+
+export const loadUserProfile = (uid: string) => async (dispatch: AppDispatch) => {
+  try {
+    const profile = await getUserProfile(uid);
+
+    dispatch(setUser(profile));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setAuthError(message));
+  }
+};
+
+export const requestSignIn = () => async (dispatch: AppDispatch) => {
+  try {
+    const user = await postSignIn();
+
+    if (!user) {
+      return;
+    }
+
+    const {
+      uid, displayName, email, photoURL,
+    } = user;
+
+    const profile = await getUserProfile(uid);
+
+    if (profile) {
+      dispatch(setUser(profile));
+      return;
+    }
+
+    dispatch(setAuth({
+      uid,
+      name: displayName,
+      email: email as string,
+      image: photoURL,
+    }));
+  } catch (error: unknown) {
     const { message } = error as Error;
 
     dispatch(setAuthError(message));

@@ -39,3 +39,4 @@ cypress/log
 
 # firebase
 .firebase
+dev-firestore-admin.json

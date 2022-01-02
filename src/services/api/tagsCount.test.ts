@@ -1,6 +1,10 @@
-import db from '../firebase';
+import {
+  getDoc, getDocs, setDoc, updateDoc,
+} from 'firebase/firestore';
 
 import { getTagsCount, updateTagCount } from './tagsCount';
+
+jest.mock('../firebase');
 
 describe('tagsCount API', () => {
   beforeEach(() => {
@@ -8,17 +12,20 @@ describe('tagsCount API', () => {
   });
 
   describe('getTagsCount', () => {
-    const spyOnCollection = jest.spyOn(db, 'collection');
+    const tagsCount = [
+      { name: 'test', count: 1 },
+    ];
 
     beforeEach(() => {
-      spyOnCollection.mockClear();
+      (getDocs as jest.Mock).mockImplementationOnce(() => ({
+        docs: tagsCount,
+      }));
     });
 
     it('테그 리스트가 반환되어야만 한다', async () => {
       const response = await getTagsCount();
 
-      expect(response).toEqual([]);
-      expect(spyOnCollection).toBeCalledTimes(1);
+      expect(response).toEqual(tagsCount);
     });
   });
 
@@ -27,32 +34,21 @@ describe('tagsCount API', () => {
       name: 'test',
       count: 1,
     };
-
-    const handleEvent = jest.fn();
-
-    beforeEach(() => {
-      handleEvent.mockClear();
-    });
+    const ref = 'ref';
 
     context('exists가 true인 경우', () => {
       beforeEach(() => {
-        (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
-          doc: jest.fn().mockImplementationOnce(() => ({
-            get: jest.fn().mockReturnValue({
-              exists: true,
-              data: jest.fn().mockReturnValueOnce(mockResponse),
-              ref: {
-                update: handleEvent,
-              },
-            }),
-          })),
+        (getDoc as jest.Mock).mockImplementationOnce(() => ({
+          exists: jest.fn().mockReturnValueOnce(true),
+          data: jest.fn().mockReturnValueOnce(mockResponse),
+          ref,
         }));
       });
 
       it('update가 count는 1 증가와 함께 호출되어야만 한다', async () => {
         await updateTagCount(mockResponse.name);
 
-        expect(handleEvent).toBeCalledWith({
+        expect(updateDoc).toBeCalledWith(ref, {
           count: mockResponse.count + 1,
         });
       });
@@ -60,22 +56,17 @@ describe('tagsCount API', () => {
 
     context('exists가 false인 경우', () => {
       beforeEach(() => {
-        (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
-          doc: jest.fn().mockImplementationOnce(() => ({
-            get: jest.fn().mockReturnValue({
-              exists: false,
-              ref: {
-                set: handleEvent,
-              },
-            }),
-          })),
+        (getDoc as jest.Mock).mockImplementationOnce(() => ({
+          exists: jest.fn().mockReturnValueOnce(false),
+          data: jest.fn().mockReturnValueOnce(mockResponse),
+          ref,
         }));
       });
 
       it('set가 count는 1과 함께 호출되어야만 한다', async () => {
         await updateTagCount(mockResponse.name);
 
-        expect(handleEvent).toBeCalledWith({
+        expect(setDoc).toBeCalledWith(ref, {
           name: mockResponse.name,
           count: 1,
         });

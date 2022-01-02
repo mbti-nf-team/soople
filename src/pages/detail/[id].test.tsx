@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
-import { useSession } from 'next-auth/client';
 
 import { getGroupDetail } from '@/services/api/group';
 
@@ -24,6 +23,9 @@ describe('DetailPage', () => {
     dispatch.mockClear();
 
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      authReducer: {
+        user: '',
+      },
       groupReducer: {
         group: GROUP_FIXTURE,
         writer: PROFILE_FIXTURE,
@@ -31,7 +33,6 @@ describe('DetailPage', () => {
       },
     }));
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
-    (useSession as jest.Mock).mockImplementation(() => ([]));
   });
 
   const renderDetailPage = () => render((

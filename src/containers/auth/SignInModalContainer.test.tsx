@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
 
 import SignInModalContainer from './SignInModalContainer';
 
@@ -20,6 +19,8 @@ describe('SignInModalContainer', () => {
 
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
+        user: given.user,
+        auth: given.auth,
         isVisible: given.isVisible,
       },
     }));
@@ -28,20 +29,29 @@ describe('SignInModalContainer', () => {
       replace: mockReplace,
       query: given.query,
     }));
-    (useSession as jest.Mock).mockImplementation(() => [given.session]);
   });
 
   const renderSignInModalContainer = () => render((
     <SignInModalContainer />
   ));
 
-  context('세션이 존재하는 경우', () => {
-    given('session', () => 'user');
+  context('로그인한 사용자인 경우', () => {
+    given('user', () => 'user');
 
     it('아무것도 렌더링되지 않아야 한다', () => {
       const { container } = renderSignInModalContainer();
 
       expect(container).toBeEmptyDOMElement();
+    });
+  });
+
+  context('처음 가입한 사용자인 경우', () => {
+    given('auth', () => 'auth');
+
+    it('signup 페이지로 replace가 호축되어야만 한다', () => {
+      renderSignInModalContainer();
+
+      expect(mockReplace).toBeCalledWith('/signup');
     });
   });
 

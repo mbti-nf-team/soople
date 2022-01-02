@@ -1,16 +1,18 @@
 import React from 'react';
 
 import { fireEvent, render, screen } from '@testing-library/react';
-import { signOut } from 'next-auth/client';
 
 import DropDown from './DropDown';
 
 describe('DropDown', () => {
+  const handleSignOut = jest.fn();
+
   const renderDropDown = () => render((
     <DropDown
       name="test"
       email="test@test.com"
       isVisible={given.isVisible}
+      signOut={handleSignOut}
     />
   ));
 
@@ -23,7 +25,7 @@ describe('DropDown', () => {
 
         fireEvent.click(screen.getByText('로그아웃'));
 
-        expect(signOut).toBeCalledTimes(1);
+        expect(handleSignOut).toBeCalledTimes(1);
       });
     });
   });

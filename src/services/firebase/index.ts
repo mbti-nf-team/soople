@@ -1,19 +1,34 @@
-/* eslint-disable import/no-duplicates */
-import firebase from 'firebase/app';
-
-import 'firebase/firestore';
-import 'firebase/analytics';
+import { Analytics, getAnalytics } from 'firebase/analytics';
+import { getApps, initializeApp } from 'firebase/app';
+import {
+  AuthProvider,
+  getAuth,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithRedirect,
+} from 'firebase/auth';
+import { collection, doc, getFirestore } from 'firebase/firestore';
 
 import firebaseConfig from './firebaseConfig';
 
-const db = (
-  firebase.apps[0] ?? firebase.initializeApp(firebaseConfig(process.env.NODE_ENV))
-).firestore();
+export const firebaseApp = getApps()
+  .length < 1 && initializeApp(firebaseConfig(process.env.NODE_ENV));
 
-export const fireStore = firebase.firestore;
+export const db = getFirestore();
 
-export const collection = (id: string) => db.collection(id);
+export const collectionRef = (collectionId: string) => collection(db, collectionId);
 
-export const analytics: boolean | firebase.analytics.Analytics = (typeof window !== 'undefined' && firebase.analytics());
+export const docRef = (collectionId: string, uid: string) => doc(db, collectionId, uid);
 
-export default db;
+export const analytics: boolean | Analytics = (typeof window !== 'undefined' && getAnalytics());
+
+export const firebaseAuth = getAuth();
+
+firebaseAuth.languageCode = 'ko';
+
+export const googleProvider = new GoogleAuthProvider();
+export const githubProvider = new GithubAuthProvider();
+
+export const signInRedirectOAuth = (
+  authProvider: AuthProvider,
+) => signInWithRedirect(firebaseAuth, authProvider);

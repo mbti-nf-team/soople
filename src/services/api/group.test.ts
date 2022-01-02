@@ -1,12 +1,17 @@
+import {
+  addDoc, getDoc, getDocs, serverTimestamp,
+} from 'firebase/firestore';
+
 import { WriteFields } from '@/models/group';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
 
+import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
-import db, { fireStore } from '../firebase';
 
 jest.mock('@/utils/firestore');
+jest.mock('../firebase');
 
 describe('group API', () => {
   beforeEach(() => {
@@ -14,7 +19,6 @@ describe('group API', () => {
   });
 
   describe('postNewGroup', () => {
-    const mockAdd = jest.fn().mockReturnValueOnce({ id: '1' });
     const createdAt = '2021-11-11';
 
     const group: WriteFields = {
@@ -27,19 +31,17 @@ describe('group API', () => {
     };
 
     beforeEach(() => {
-      (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
-        add: mockAdd,
+      (addDoc as jest.Mock).mockImplementationOnce(() => ({
+        id: '1',
       }));
 
-      fireStore.FieldValue = {
-        serverTimestamp: jest.fn().mockReturnValueOnce(createdAt),
-      } as any;
+      (serverTimestamp as jest.Mock).mockReturnValueOnce(createdAt);
     });
 
-    it('update 함수가 호출되어야만 한다', async () => {
+    it('addDoc 함수가 호출되어야만 한다', async () => {
       const id = await postNewGroup(PROFILE_FIXTURE, group);
 
-      expect(mockAdd).toBeCalledWith({
+      expect(addDoc).toBeCalledWith(undefined, {
         ...group,
         writer: PROFILE_FIXTURE,
         createdAt,
@@ -56,13 +58,9 @@ describe('group API', () => {
 
     context('exists가 true인 경우', () => {
       beforeEach(() => {
-        (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
-          doc: jest.fn().mockImplementationOnce(() => ({
-            get: jest.fn().mockReturnValue({
-              exists: true,
-              data: jest.fn().mockReturnValueOnce(mockResponse),
-            }),
-          })),
+        (getDoc as jest.Mock).mockImplementationOnce(() => ({
+          exists: jest.fn().mockReturnValueOnce(true),
+          data: jest.fn().mockReturnValueOnce(mockResponse),
         }));
       });
 
@@ -75,12 +73,9 @@ describe('group API', () => {
 
     context('exists가 false인 경우', () => {
       beforeEach(() => {
-        (jest.spyOn(db, 'collection') as jest.Mock).mockImplementationOnce(() => ({
-          doc: jest.fn().mockImplementationOnce(() => ({
-            get: jest.fn().mockReturnValue({
-              exists: false,
-            }),
-          })),
+        (getDoc as jest.Mock).mockImplementationOnce(() => ({
+          exists: jest.fn().mockReturnValueOnce(false),
+          data: jest.fn().mockReturnValueOnce(mockResponse),
         }));
       });
 
@@ -93,17 +88,16 @@ describe('group API', () => {
   });
 
   describe('getGroups', () => {
-    const spyOnCollection = jest.spyOn(db, 'collection');
-
     beforeEach(() => {
-      spyOnCollection.mockClear();
+      (getDocs as jest.Mock).mockImplementationOnce(() => ({
+        docs: [GROUP_FIXTURE],
+      }));
     });
 
     it('그룹 리스트가 반환되어야만 한다', async () => {
       const response = await getGroups([]);
 
-      expect(response).toEqual([]);
-      expect(spyOnCollection).toBeCalledTimes(1);
+      expect(response).toEqual([GROUP_FIXTURE]);
     });
   });
 });
