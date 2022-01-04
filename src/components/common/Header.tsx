@@ -39,7 +39,7 @@ function Header({
             />
           ) : (
             <Button
-              color="primary"
+              color="success"
               size="small"
               type="button"
               onClick={onClick}

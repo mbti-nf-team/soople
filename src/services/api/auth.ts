@@ -48,8 +48,6 @@ export const getUserToken = async () => {
   console.log('refreshing token...');
   const { currentUser } = firebaseAuth;
 
-  console.log(currentUser);
-
   if (currentUser) {
     await currentUser.getIdToken(true);
   }

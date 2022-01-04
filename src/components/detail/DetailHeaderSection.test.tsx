@@ -10,8 +10,9 @@ import DetailHeaderSection from './DetailHeaderSection';
 describe('DetailHeaderSection', () => {
   const renderDetailHeaderSection = (group = GROUP_FIXTURE) => render((
     <DetailHeaderSection
-      currentTime={given.currentTime}
+      user={PROFILE_FIXTURE}
       group={group}
+      currentTime={given.currentTime}
     />
   ));
 

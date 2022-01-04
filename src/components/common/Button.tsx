@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import palette from '@/styles/palette';
 
-type ColorType = 'primary' | 'outlined';
+type ColorType = 'success' | 'outlined' | 'primary';
 type ButtonSize = 'small' | 'medium' | 'large';
 
 interface Props extends Omit<HTMLProps<HTMLButtonElement | HTMLAnchorElement>, 'size'> {
@@ -101,13 +101,28 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
     }
   `}
 
-  ${color === 'primary' && css`
+  ${color === 'success' && css`
     color: ${palette.background};
     background: ${palette.success};
 
     &:hover {
       color: ${palette.accent2};
       background: ${palette.success10};
+    }
+
+    &:disabled {
+      color: ${palette.accent4};
+      background: ${palette.accent1};
+    }
+  `}
+
+  ${color === 'primary' && css`
+    color: ${palette.background};
+    background: ${palette.accent7};
+
+    &:hover {
+      color: ${palette.accent2};
+      background: ${palette.accent6};
     }
 
     &:disabled {
