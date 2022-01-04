@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
+import { body1Font, body2Font, h4Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
 type ColorType = 'success' | 'outlined' | 'primary';
@@ -59,13 +60,11 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
   justify-content: center;
   text-align: center;
   padding: 0 1rem;
-  font-weight: 600;
   border-radius: 6px;
   transition: all .3s;
 
   ${size === 'large' && css`
-    font-size: 17px;
-    line-height: 24px;
+    ${h4Font(true)};
     height: 48px;
     padding: 0;
     border-radius: 8px;
@@ -73,14 +72,12 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
   `};
 
   ${size === 'medium' && css`
-    font-size: 15px;
-    line-height: 24px;
+    ${body1Font(true)};
     height: 36px;
   `};
 
   ${size === 'small' && css`
-    font-size: 0.875rem;
-    line-height: 22px;
+    ${body2Font(true)};
     height: 32px;
   `};
 

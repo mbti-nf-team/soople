@@ -4,6 +4,7 @@ import React, {
 
 import styled from '@emotion/styled';
 
+import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
 import TagList from './TagList';
@@ -97,17 +98,14 @@ const TagFormWrapper = styled.div`
   align-items: flex-start;
 
   .title {
+    ${body2Font(true)};
     margin-left: 4px;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 22px;
     color: ${palette.accent6};
   }
 
   .tag-tip {
+    ${subtitle1Font()};
     margin-left: 4px;
-    font-size: 13px;
-    line-height: 20px;
     color: ${palette.accent5};
   }
 `;
@@ -133,13 +131,11 @@ const TagsWrapper = styled.div<{isHaveTag: boolean }>`
 `;
 
 const TagInput = styled.input<{isHaveTag: boolean }>`
+  ${body1Font()};
   display: inline-flex;
   outline: none;
   height: ${({ isHaveTag }) => (isHaveTag ? '40px' : '34px')};
   min-width: 8rem;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 24px;
   color: ${palette.foreground};
   border: none;
   cursor: text;

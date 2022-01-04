@@ -4,6 +4,7 @@ import { X as CloseSvg } from 'react-feather';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import { body1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
@@ -67,9 +68,8 @@ const HeaderWrapper = styled.div`
 `;
 
 const SignInDescription = styled.p`
+  ${body1Font()};
   color: ${palette.accent7};
-  font-size: 15px;
-  line-height: 24px;
   text-align: center;
   margin-bottom: 2rem;
 `;

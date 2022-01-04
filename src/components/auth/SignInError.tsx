@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
+import { subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
 interface Props {
@@ -31,15 +32,13 @@ function SignInError({ error }: Props): ReactElement | null {
 export default SignInError;
 
 const ErrorBlock = styled.div`
+  ${subtitle1Font(true)};
   width: 100%;
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${palette.warning};
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 20px;
   text-align: center;
   color: ${palette.background};
 `;
