@@ -61,11 +61,21 @@ describe('Button', () => {
     });
 
     context('색상 속성이 "primary"인 경우', () => {
-      it(`색상이 ${palette.background} 이어야만 한다`, () => {
+      it(`배경 색상이 ${palette.accent7} 이어야만 한다`, () => {
         renderButton({ color: 'primary' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          color: palette.background,
+          background: palette.accent7,
+        });
+      });
+    });
+
+    context('색상 속성이 "success"인 경우', () => {
+      it(`배경 색상이 ${palette.success} 이어야만 한다`, () => {
+        renderButton({ color: 'success' });
+
+        expect(screen.getByText('버튼')).toHaveStyle({
+          background: palette.success,
         });
       });
     });

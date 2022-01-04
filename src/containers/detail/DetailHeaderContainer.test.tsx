@@ -3,12 +3,16 @@ import { useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
+import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import DetailHeaderContainer from './DetailHeaderContainer';
 
 describe('DetailHeaderContainer', () => {
   beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      authReducer: {
+        user: PROFILE_FIXTURE,
+      },
       groupReducer: {
         group: given.group,
       },
