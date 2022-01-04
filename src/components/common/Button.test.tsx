@@ -39,11 +39,11 @@ describe('Button', () => {
     });
 
     context('사이즈가 "small"인 경우', () => {
-      it('폰트 사이즈가 "0.875rem"이어야만 한다', () => {
+      it('폰트 사이즈가 "14px"이어야만 한다', () => {
         renderButton({ size: 'small' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          'font-size': '0.875rem',
+          'font-size': '14px',
         });
       });
     });

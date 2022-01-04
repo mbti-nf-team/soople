@@ -7,6 +7,7 @@ import * as R from 'ramda';
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Profile } from '@/models/auth';
 import { Group } from '@/models/group';
+import { body1Font, h2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 import { emptyAThenB } from '@/utils/utils';
 
@@ -61,9 +62,7 @@ const DetailHeaderSectionWrapper = styled.section`
   margin-bottom: 40px;
 
   h2 {
-    font-weight: bold;
-    font-size: 32px;
-    line-height: 48px;
+    ${h2Font(true)};
   }
 `;
 
@@ -87,14 +86,11 @@ const WriterProfileTextWrapper = styled.div`
   margin-left: 12px;
 
   span {
-    font-weight: 600;
-    font-size: 15px;
-    line-height: 24px;
+    ${body1Font(true)};
   }
 
   div {
     color: ${palette.accent6};
-    font-size: 13px;
-    line-height: 20px;
+    ${subtitle1Font()};
   }
 `;

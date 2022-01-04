@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import { css, Global } from '@emotion/react';
 import emotionNormalize from 'emotion-normalize';
 
+import { h2Font, h3Font, h4Font } from './fontStyles';
 import palette from './palette';
 
 const setGlobalStyles = () => css`
@@ -30,10 +31,16 @@ const setGlobalStyles = () => css`
   }
 
   h4 {
-    font-weight: 600;
-    font-size: 17px;
-    line-height: 24px;
+    ${h4Font()};
     text-align: center;
+  }
+
+  h3 {
+    ${h3Font(true)};
+  }
+
+  h2 {
+    ${h2Font(true)};
   }
 `;
 

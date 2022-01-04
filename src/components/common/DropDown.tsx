@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
+import { body1Font, subtitle1Font } from '@/styles/fontStyles';
+
 import palette from '../../styles/palette';
 
 interface Props {
@@ -70,25 +72,19 @@ const UserState = styled.div`
   justify-content: flex-start;
 
   .user-name {
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 24px;
+    ${body1Font(true)};
   }
 
   .user-email {
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 20px;
+    ${subtitle1Font()};
     color: ${palette.accent5};
   }
 `;
 
 const MenuContent = styled.div`
+  ${body1Font()};
   color: ${palette.foreground};
   padding: 0.6rem 1rem;
-  font-size: 15px;
-  line-height: 24px;
-  font-weight: normal;
   cursor: pointer;
   transition: background-color .2s;
   

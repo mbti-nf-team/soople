@@ -32,6 +32,7 @@ export default SocialButtonGroup;
 const SocialButtonGroupWrapper = styled.div`
   h4 {
     margin: 1rem 0;
+    font-weight: bold;
   }
 
   svg {
