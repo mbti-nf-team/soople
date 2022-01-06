@@ -32,7 +32,6 @@ const setGlobalStyles = () => css`
 
   h4 {
     ${h4Font()};
-    text-align: center;
   }
 
   h3 {

@@ -1,13 +1,15 @@
 import {
-  addDoc, getDocs, orderBy, query, serverTimestamp, where,
+  addDoc, deleteDoc, getDocs, orderBy, query, serverTimestamp, where,
 } from 'firebase/firestore';
 
 import { CommentFields } from '@/models/group';
 
-import { collectionRef } from '../firebase';
+import { collectionRef, docRef } from '../firebase';
+
+const COMMENTS = 'comments';
 
 export const postGroupComment = async (fields: CommentFields) => {
-  const { id } = await addDoc(collectionRef('comments'), {
+  const { id } = await addDoc(collectionRef(COMMENTS), {
     ...fields,
     createdAt: serverTimestamp(),
   });
@@ -17,7 +19,7 @@ export const postGroupComment = async (fields: CommentFields) => {
 
 export const getGroupComments = async (groupId: string) => {
   const getQuery = query(
-    collectionRef('comments'),
+    collectionRef(COMMENTS),
     where('groupId', '==', groupId),
     orderBy('createdAt', 'asc'),
   );
@@ -25,4 +27,8 @@ export const getGroupComments = async (groupId: string) => {
   const response = await getDocs(getQuery);
 
   return response.docs;
+};
+
+export const deleteGroupComment = async (commentId: string) => {
+  await deleteDoc(docRef(COMMENTS, commentId));
 };

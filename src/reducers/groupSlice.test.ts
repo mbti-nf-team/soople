@@ -2,7 +2,7 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { getGroupComments, postGroupComment } from '@/services/api/comment';
+import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
@@ -23,6 +23,7 @@ import reducer, {
   loadGroups,
   loadTagsCount,
   requestAddComment,
+  requestDeleteComment,
   requestRegisterNewGroup,
   setComment,
   setComments,
@@ -449,6 +450,52 @@ describe('groupReducer async actions', () => {
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
           await store.dispatch(requestAddComment(commentFields));
+        } catch (error) {
+          // ignore errors
+        } finally {
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: 'error',
+            type: 'group/setGroupError',
+          });
+        }
+      });
+    });
+  });
+
+  describe('requestDeleteComment', () => {
+    beforeEach(() => {
+      store = mockStore({
+        groupReducer: {
+          comments: [COMMENT_FIXTURE],
+        },
+      });
+    });
+
+    context('에러가 발생하지 않는 경우', () => {
+      (deleteGroupComment as jest.Mock).mockReturnValueOnce(null);
+
+      it('dispatch 액션이 "group/setComments"인 타입과 payload는 comments여야 한다', async () => {
+        await store.dispatch(requestDeleteComment('1'));
+
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+          payload: [],
+          type: 'group/setComments',
+        });
+      });
+    });
+
+    context('에러가 발생하는 경우', () => {
+      (deleteGroupComment as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
+        try {
+          await store.dispatch(requestDeleteComment('1'));
         } catch (error) {
           // ignore errors
         } finally {
