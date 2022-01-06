@@ -1,4 +1,6 @@
-import { addDoc, getDocs, serverTimestamp } from 'firebase/firestore';
+import {
+  addDoc, deleteDoc, getDocs, serverTimestamp,
+} from 'firebase/firestore';
 
 import { CommentFields } from '@/models/group';
 
@@ -6,7 +8,7 @@ import COMMENT_FIXTURE from '../../../fixtures/comment';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import { collectionRef } from '../firebase';
 
-import { getGroupComments, postGroupComment } from './comment';
+import { deleteGroupComment, getGroupComments, postGroupComment } from './comment';
 
 jest.mock('../firebase');
 
@@ -58,6 +60,14 @@ describe('comment API', () => {
 
       expect(response).toEqual([COMMENT_FIXTURE]);
       expect(getDocs).toBeCalledTimes(1);
+    });
+  });
+
+  describe('deleteGroupComment', () => {
+    it('"deleteDoc"이 호출되어야만 한다', async () => {
+      await deleteGroupComment('commentId');
+
+      expect(deleteDoc).toBeCalledTimes(1);
     });
   });
 });

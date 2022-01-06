@@ -7,7 +7,7 @@ import {
   CommentFields,
   Group, TagCount, WriteFields, WriteFieldsForm,
 } from '@/models/group';
-import { getGroupComments, postGroupComment } from '@/services/api/comment';
+import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
@@ -228,6 +228,22 @@ export const requestAddComment = (
       writer,
       createdAt: new Date().toString(),
     }));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setGroupError(message));
+  }
+};
+
+export const requestDeleteComment = (uid: string): AppThunk => async (dispatch, getState) => {
+  const { groupReducer: { comments } } = getState();
+
+  try {
+    await deleteGroupComment(uid);
+
+    const newComments = comments.filter(({ commentId }) => commentId !== uid);
+
+    dispatch(setComments(newComments));
   } catch (error) {
     const { message } = error as Error;
 

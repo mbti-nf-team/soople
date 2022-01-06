@@ -1,38 +1,44 @@
 import React, { ReactElement } from 'react';
 
+import styled from '@emotion/styled';
+
+import { Profile } from '@/models/auth';
 import { Comment } from '@/models/group';
 
 import CommentView from './CommentView';
 
 interface Props {
   comments: Comment[];
+  user: Profile | null;
+  onRemove: (commentId: string) => void;
 }
 
-function CommentsView({ comments }: Props): ReactElement {
+function CommentsView({ comments, user, onRemove }: Props): ReactElement {
   const { length } = comments;
 
-  if (!length) {
-    return (
-      <>
-        <div>{`댓글 ${length}`}</div>
-        <div>댓글이 존재하지 않아요!</div>
-      </>
-    );
-  }
-
   return (
-    <div>
-      <div>{`댓글 ${length}`}</div>
-      <ul>
-        {comments.map((comment) => (
-          <CommentView
-            key={comment.commentId}
-            comment={comment}
-          />
-        ))}
-      </ul>
-    </div>
+    <CommentsViewWrapper>
+      <h4>{`댓글 ${length}`}</h4>
+      {comments.map((comment) => (
+        <CommentView
+          key={comment.commentId}
+          user={user}
+          onRemove={onRemove}
+          comment={comment}
+        />
+      ))}
+    </CommentsViewWrapper>
   );
 }
 
 export default CommentsView;
+
+const CommentsViewWrapper = styled.div`
+  h4 {
+    font-weight: 600;
+  }
+
+  & > div:last-of-type {
+    border-bottom: none;
+  }
+`;

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import CommentForm from '@/components/detail/CommentForm';
 import CommentsView from '@/components/detail/CommentsView';
-import { loadComments, requestAddComment } from '@/reducers/groupSlice';
+import { loadComments, requestAddComment, requestDeleteComment } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getAuth, getGroup } from '@/utils/utils';
 
@@ -24,6 +24,10 @@ function CommentsContainer(): ReactElement {
     }));
   }, [dispatch, user]);
 
+  const onRemoveComment = useCallback((commentId: string) => {
+    dispatch(requestDeleteComment(commentId));
+  }, [dispatch]);
+
   useEffect(() => {
     if (group) {
       dispatch(loadComments(group.groupId));
@@ -33,7 +37,9 @@ function CommentsContainer(): ReactElement {
   return (
     <>
       <CommentsView
+        user={user}
         comments={comments}
+        onRemove={onRemoveComment}
       />
       <CommentForm
         onSubmit={onSubmit}

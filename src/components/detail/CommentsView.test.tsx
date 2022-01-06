@@ -1,31 +1,28 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
+import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import CommentsView from './CommentsView';
 
 describe('CommentsView', () => {
+  const handleRemove = jest.fn();
+
   const renderCommentsView = () => render((
-    <CommentsView comments={given.comments} />
+    <CommentsView
+      user={PROFILE_FIXTURE}
+      onRemove={handleRemove}
+      comments={[COMMENT_FIXTURE]}
+    />
   ));
 
-  context('댓글 목록이 존재하지 않는 경우', () => {
-    given('comments', () => ([]));
+  describe('댓글 작성자가 삭제버튼을 클릭한다', () => {
+    it('클릭 이벤트가 발생해야만 한다', () => {
+      renderCommentsView();
 
-    it('"댓글이 존재하지 않아요!" 문구가 나타나야만 한다', () => {
-      const { container } = renderCommentsView();
+      fireEvent.click(screen.getByText('삭제'));
 
-      expect(container).toHaveTextContent('댓글이 존재하지 않아요!');
-    });
-  });
-
-  context('댓글 목록이 존재하는 경우', () => {
-    given('comments', () => ([COMMENT_FIXTURE]));
-
-    it('"댓글이 존재하지 않아요!" 문구가 나타나야만 한다', () => {
-      const { container } = renderCommentsView();
-
-      expect(container).toHaveTextContent(COMMENT_FIXTURE.content);
+      expect(handleRemove).toBeCalledWith(COMMENT_FIXTURE.commentId);
     });
   });
 });

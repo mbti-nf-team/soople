@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
 
 import { Group } from '@/models/group';
+import palette from '@/styles/palette';
 
 import Tag from '../common/Tag';
 
@@ -14,7 +15,7 @@ function DetailContentsSection({ group }: Props): ReactElement {
   const { content, tags } = group;
 
   return (
-    <div>
+    <DetailContentsWrapper>
       <div>
         {content}
       </div>
@@ -26,7 +27,7 @@ function DetailContentsSection({ group }: Props): ReactElement {
           />
         ))}
       </TagsWrapper>
-    </div>
+    </DetailContentsWrapper>
   );
 }
 
@@ -40,4 +41,10 @@ const TagsWrapper = styled.div`
       margin-right: 0;
     }
   }
+`;
+
+const DetailContentsWrapper = styled.div`
+  border-bottom: 0.5px solid ${palette.accent2};
+  padding-bottom: 40px;
+  margin-bottom: 24px;
 `;
