@@ -79,6 +79,16 @@ describe('Button', () => {
         });
       });
     });
+
+    context('색상 속성이 "warning"인 경우', () => {
+      it(`배경 색상이 ${palette.warning} 이어야만 한다`, () => {
+        renderButton({ color: 'warning' });
+
+        expect(screen.getByText('버튼')).toHaveStyle({
+          background: palette.warning,
+        });
+      });
+    });
   });
 
   describe('"href" 속성 유무에 따라 버튼 또는 링크가 나타난다', () => {

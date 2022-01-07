@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
@@ -15,6 +15,8 @@ import 'dayjs/locale/ko';
 
 import ProfileImage from '../common/ProfileImage';
 
+import AskDeleteCommentModal from './modal/AskDeleteCommentModal';
+
 dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
@@ -25,6 +27,7 @@ interface Props {
 }
 
 function CommentView({ comment, user, onRemove }: Props): ReactElement {
+  const [isVisibleModal, setIsVisible] = useState<boolean>(false);
   const {
     writer, content, createdAt, commentId,
   } = comment;
@@ -41,12 +44,19 @@ function CommentView({ comment, user, onRemove }: Props): ReactElement {
             <div className="recruit-date">{dayjs(createdAt).fromNow()}</div>
           </CommentState>
           {isWriter && (
-            <RemoveCommentButton
-              type="button"
-              onClick={() => onRemove(commentId)}
-            >
-              삭제
-            </RemoveCommentButton>
+            <>
+              <RemoveCommentButton
+                type="button"
+                onClick={() => setIsVisible(true)}
+              >
+                삭제
+              </RemoveCommentButton>
+              <AskDeleteCommentModal
+                isVisible={isVisibleModal}
+                onClose={() => setIsVisible(false)}
+                onConfirm={() => onRemove(commentId)}
+              />
+            </>
           )}
         </CommentStatus>
         <CommentContent>{content}</CommentContent>

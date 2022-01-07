@@ -18,14 +18,15 @@ interface Props {
   onClick: () => void;
   signOut: () => void;
   isScrollTop: boolean;
+  isHome: boolean;
 }
 
 function Header({
-  user, onClick, isScrollTop, signOut,
+  user, onClick, isScrollTop, signOut, isHome,
 }: Props): ReactElement {
   return (
     <>
-      <HeaderBlock isScrollTop={isScrollTop} data-testid="header-block">
+      <HeaderBlock isHome={isHome} isScrollTop={isScrollTop} data-testid="header-block">
         <HeaderWrapper>
           <Link href="/" passHref>
             <a>
@@ -61,11 +62,11 @@ const LogoIcon = styled(LogoSvg)`
   height: 20px;
 `;
 
-const HeaderBlock = styled.div<{isScrollTop: boolean }>`
+const HeaderBlock = styled.div<{ isHome: boolean; isScrollTop: boolean }>`
   position: fixed;
   width: 100%;
   z-index: ${zIndexes.TopNavigation};
-  background: ${palette.accent1};
+  background: ${({ isHome }) => (isHome ? palette.accent1 : palette.background)};
   box-shadow: 0 1px 0 0 ${({ isScrollTop }) => (isScrollTop ? 'transparent' : palette.accent2)};
   transition: box-shadow .2s ease-in-out;
 `;
