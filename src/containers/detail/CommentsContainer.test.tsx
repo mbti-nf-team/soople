@@ -62,11 +62,14 @@ describe('CommentsContainer', () => {
         expect(dispatch).toBeCalledTimes(1);
       });
 
-      describe('삭제 버튼을 클릭한다', () => {
+      describe('삭제 모달창의 "삭제하기" 버튼을 클릭한다', () => {
         it('dispatch 액션이 호출되어야만 한다', () => {
           renderCommentsContainer();
 
           fireEvent.click(screen.getByText('삭제'));
+          screen.getAllByText(/삭제하기/).forEach((button) => {
+            fireEvent.click(button);
+          });
 
           expect(dispatch).toBeCalledTimes(1);
         });

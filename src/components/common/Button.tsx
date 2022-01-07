@@ -127,6 +127,21 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
       background: ${palette.accent1};
     }
   `}
+
+  ${color === 'warning' && css`
+    color: ${palette.background};
+    background: ${palette.warning};
+
+    &:hover {
+      color: ${palette.accent2};
+      background: ${palette.warning};
+    }
+
+    &:disabled {
+      color: ${palette.accent4};
+      background: ${palette.warning};
+    }
+  `}
 `;
 
 const StyledLink = styled.a<StyledButtonProps>`

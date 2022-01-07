@@ -1,12 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
+import { useRouter } from 'next/router';
 
 import palette from '@/styles/palette';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import HeaderContainer from './HeaderContainer';
+
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 
 describe('HeaderContainer', () => {
   const dispatch = jest.fn();
@@ -19,6 +24,9 @@ describe('HeaderContainer', () => {
       authReducer: {
         user: given.user,
       },
+    }));
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      asPath: '/',
     }));
   });
 

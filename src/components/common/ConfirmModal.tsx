@@ -72,10 +72,6 @@ const ConfirmModalBox = styled.div<{ isVisible: boolean }>`
   width: 400px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
   background: ${palette.background};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   border-radius: 8px;
 
   ${({ isVisible }) => (isVisible && css`
@@ -84,13 +80,13 @@ const ConfirmModalBox = styled.div<{ isVisible: boolean }>`
 `;
 
 const HeaderWrapper = styled.div`
-  width: 100%;
-  height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 16px 20px;
 
   h4 {
+    margin: 0px;
     ${h4Font(true)};
   }
 `;
@@ -101,21 +97,18 @@ const CloseIcon = styled(CloseSvg)`
 
 const Description = styled.div`
   ${body1Font()};
-  margin: 0 20px;
+  margin: 0 20px 24px 20px;
 `;
 
 const FooterWrapper = styled.div`
-  width: 100%;
-  height: 56px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  margin: 0 20px;
+  padding: 16px 16px 16px 20px;
+  box-shadow: inset 0px 1px 0px ${palette.accent2};
 
   button:first-of-type {
     margin-right: 8px;
   }
-  box-shadow: inset 0px 1px 0px #E6E9EE;
-
 `;

@@ -8,7 +8,7 @@ interface Props {
   onConfirm: () => void;
 }
 
-function AskDeleteComment({ isVisible, onClose, onConfirm }: Props): ReactElement {
+function AskDeleteCommentModal({ isVisible, onClose, onConfirm }: Props): ReactElement {
   return (
     <ConfirmModal
       isVisible={isVisible}
@@ -22,4 +22,4 @@ function AskDeleteComment({ isVisible, onClose, onConfirm }: Props): ReactElemen
   );
 }
 
-export default AskDeleteComment;
+export default AskDeleteCommentModal;

@@ -2,17 +2,18 @@ import React, { ReactElement } from 'react';
 
 import { css, Global } from '@emotion/react';
 import emotionNormalize from 'emotion-normalize';
+import { useRouter } from 'next/router';
 
 import { h2Font, h3Font, h4Font } from './fontStyles';
 import palette from './palette';
 
-const setGlobalStyles = () => css`
+const setGlobalStyles = (path: string) => css`
   ${emotionNormalize}
 
   body {
     color: ${palette.foreground};
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    background: ${palette.accent1};
+    background: ${path === '/' ? palette.accent1 : palette.background};
   }
 
   a {
@@ -44,8 +45,10 @@ const setGlobalStyles = () => css`
 `;
 
 function GlobalStyles(): ReactElement {
+  const router = useRouter();
+
   return (
-    <Global styles={setGlobalStyles()} />
+    <Global styles={setGlobalStyles(router.asPath)} data-testid="global-styles" />
   );
 }
 
