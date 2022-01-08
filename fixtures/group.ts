@@ -11,6 +11,8 @@ const group: Group = {
   category: 'frontEnd',
   recruitmentEndDate: '',
   recruitmentEndSetting: 'manual',
+  isCompleted: false,
+  views: 0,
   createdAt: '2021-10-11',
 };
 

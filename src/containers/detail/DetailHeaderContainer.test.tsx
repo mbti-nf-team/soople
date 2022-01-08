@@ -32,14 +32,4 @@ describe('DetailHeaderContainer', () => {
       expect(container).toHaveTextContent('title');
     });
   });
-
-  context('group 정보가 존재하지 않는 경우', () => {
-    given('group', () => null);
-
-    it('아무것도 나타나지 말아야 한다', () => {
-      const { container } = renderDetailHeaderContainer();
-
-      expect(container).toBeEmptyDOMElement();
-    });
-  });
 });
