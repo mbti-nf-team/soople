@@ -2,34 +2,48 @@ import React, { ChangeEvent, ReactElement, useState } from 'react';
 
 import styled from '@emotion/styled';
 
-import palette from '@/styles/palette';
+import { Profile } from '@/models/auth';
 
 import Button from '../common/Button';
+import Textarea from '../common/Textarea';
 
 interface Props {
-  onSubmit: (content: string) => void;
+  onSubmit: (commentForm: { content: string, writer: Profile }) => void;
+  user: Profile | null;
+  onVisible: () => void;
 }
 
-function CommentForm({ onSubmit }: Props): ReactElement {
+function CommentForm({ onSubmit, onVisible, user }: Props): ReactElement {
   const [content, setContent] = useState<string>('');
 
+  const textareaPlaceholderText = user ? '댓글을 입력하세요' : '댓글을 남기려면 로그인이 필요합니다.';
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
 
-  const handleSubmit = () => {
-    onSubmit(content.replace(/\n/g, '<br/>'));
+  const handleSubmit = (writer: Profile) => {
+    onSubmit({
+      content: content.replace(/\n/g, '<br/>'),
+      writer,
+    });
     setContent('');
   };
 
   return (
     <CommentFormWrapper>
       <Textarea
-        placeholder="댓글을 입력하세요"
+        placeholder={textareaPlaceholderText}
         value={content}
         onChange={handleChange}
+        disabled={!user}
       />
-      <Button color="primary" onClick={handleSubmit} disabled={!content}>
-        댓글 남기기
-      </Button>
+      {user ? (
+        <Button color="primary" onClick={() => handleSubmit(user)} disabled={!content}>
+          댓글 남기기
+        </Button>
+      ) : (
+        <Button color="success" onClick={onVisible}>
+          시작하기
+        </Button>
+      )}
     </CommentFormWrapper>
   );
 }
@@ -44,24 +58,5 @@ const CommentFormWrapper = styled.div`
 
   textarea {
     margin-bottom: 18px;
-  }
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 72px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 12px 16px;
-  background: ${palette.background};
-  border: 1px solid ${palette.accent2};
-  box-sizing: border-box;
-  border-radius: 8px;
-  resize: none;
-  outline: none;
-
-  &::placeholder {
-    color: ${palette.accent4};
   }
 `;

@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 
 import CommentForm from '@/components/detail/CommentForm';
 import CommentsView from '@/components/detail/CommentsView';
+import { Profile } from '@/models/auth';
+import { setSignInModalVisible } from '@/reducers/authSlice';
 import { loadComments, requestAddComment, requestDeleteComment } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getAuth, getGroup } from '@/utils/utils';
@@ -13,16 +15,11 @@ function CommentsContainer(): ReactElement {
   const group = useSelector(getGroup('group'));
   const user = useSelector(getAuth('user'));
 
-  const onSubmit = useCallback((content: string) => {
-    if (!user) {
-      return;
-    }
+  const onVisibleSignInModal = useCallback(() => dispatch(setSignInModalVisible(true)), [dispatch]);
 
-    dispatch(requestAddComment({
-      content,
-      writer: user,
-    }));
-  }, [dispatch, user]);
+  const onSubmit = useCallback((commentForm: {
+    content: string; writer: Profile;
+  }) => dispatch(requestAddComment(commentForm)), [dispatch]);
 
   const onRemoveComment = useCallback((commentId: string) => {
     dispatch(requestDeleteComment(commentId));
@@ -42,7 +39,9 @@ function CommentsContainer(): ReactElement {
         onRemove={onRemoveComment}
       />
       <CommentForm
+        user={user}
         onSubmit={onSubmit}
+        onVisible={onVisibleSignInModal}
       />
     </>
   );

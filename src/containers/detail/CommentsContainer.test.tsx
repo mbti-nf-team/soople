@@ -79,18 +79,17 @@ describe('CommentsContainer', () => {
     context('사용자가 비로그인 상태인 경우', () => {
       given('user', () => (null));
 
-      it('dispatch 액션이 호출되지 않아야 한다', () => {
-        renderCommentsContainer();
+      describe('"시작하기" 버튼을 클릭한다', () => {
+        it('dispatch 액션 type이 auth/setSignInModalVisible가 호출되어야만 한다', () => {
+          renderCommentsContainer();
 
-        fireEvent.change(screen.getByPlaceholderText('댓글을 입력하세요'), {
-          target: {
-            value: commentValue,
-          },
+          fireEvent.click(screen.getByText('시작하기'));
+
+          expect(dispatch).toBeCalledWith({
+            type: 'auth/setSignInModalVisible',
+            payload: true,
+          });
         });
-
-        fireEvent.click(screen.getByText('댓글 남기기'));
-
-        expect(dispatch).not.toBeCalled();
       });
     });
   });
