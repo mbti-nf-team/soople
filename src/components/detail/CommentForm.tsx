@@ -16,7 +16,7 @@ function CommentForm({ onSubmit }: Props): ReactElement {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
 
   const handleSubmit = () => {
-    onSubmit(content.replaceAll('\n', '<br/>'));
+    onSubmit(content.replace(/\n/g, '<br/>'));
     setContent('');
   };
 
