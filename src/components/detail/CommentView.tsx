@@ -59,7 +59,7 @@ function CommentView({ comment, user, onRemove }: Props): ReactElement {
             </>
           )}
         </CommentStatus>
-        <CommentContent>{content}</CommentContent>
+        <CommentContent dangerouslySetInnerHTML={{ __html: content }} />
       </div>
     </CommentViewWrapper>
   );

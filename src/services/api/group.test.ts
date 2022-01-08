@@ -43,6 +43,8 @@ describe('group API', () => {
 
       expect(addDoc).toBeCalledWith(undefined, {
         ...group,
+        isCompleted: false,
+        views: 0,
         writer: PROFILE_FIXTURE,
         createdAt,
       });

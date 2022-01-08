@@ -34,6 +34,8 @@ export interface Group {
   category: Category | string;
   recruitmentEndSetting: RecruitmentEndSetting;
   recruitmentEndDate: string | null;
+  isCompleted: boolean;
+  views: number;
   writer: Profile;
   createdAt: string;
 }

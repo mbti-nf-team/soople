@@ -17,8 +17,6 @@ describe('DetailHeaderSection', () => {
   ));
 
   describe('현재 시간에 따라서 마감 시간 섹션이 다르게 보인다', () => {
-    given('writer', () => (PROFILE_FIXTURE));
-
     context('모집 마감 일자를 정하지 않은 경우', () => {
       it('글을 작성한 날짜가 나타나야만 한다', () => {
         const { container } = renderDetailHeaderSection({
@@ -54,6 +52,28 @@ describe('DetailHeaderSection', () => {
 
         expect(container).toHaveTextContent(/모집 마감/);
       });
+    });
+  });
+
+  context('작성자인 경우', () => {
+    it('"신청현황 보기" 버튼이 나타나야만 한다', () => {
+      const { container } = renderDetailHeaderSection();
+
+      expect(container).toHaveTextContent('신청현황 보기');
+    });
+  });
+
+  context('작성자가 아닌 경우', () => {
+    it('"신청하기" 버튼이 나타나야만 한다', () => {
+      const { container } = renderDetailHeaderSection({
+        ...GROUP_FIXTURE,
+        writer: {
+          ...GROUP_FIXTURE.writer,
+          uid: '1',
+        },
+      });
+
+      expect(container).toHaveTextContent('신청하기');
     });
   });
 });

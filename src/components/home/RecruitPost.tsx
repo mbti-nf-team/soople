@@ -21,9 +21,9 @@ interface Props {
 
 function RecruitPost({ group }: Props): ReactElement {
   const {
-    title, content, groupId, writer,
+    title, content, groupId, writer, isCompleted,
   } = group;
-  const currentTime = useCurrentTime();
+  const currentTime = useCurrentTime(isCompleted);
   const recruitDate = useRecruitDateStatus(group, currentTime);
 
   return (
