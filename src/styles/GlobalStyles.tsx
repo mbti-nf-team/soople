@@ -42,6 +42,10 @@ const setGlobalStyles = (path: string) => css`
   h2 {
     ${h2Font(true)};
   }
+
+  :disabled {
+    cursor: not-allowed;
+  }
 `;
 
 function GlobalStyles(): ReactElement {
