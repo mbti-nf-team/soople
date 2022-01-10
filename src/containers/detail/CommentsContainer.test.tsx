@@ -18,7 +18,7 @@ describe('CommentsContainer', () => {
         user: given.user,
       },
       groupReducer: {
-        group: given.group,
+        group: GROUP_FIXTURE,
         comments: [COMMENT_FIXTURE],
       },
     }));
@@ -28,16 +28,6 @@ describe('CommentsContainer', () => {
   const renderCommentsContainer = () => render((
     <CommentsContainer />
   ));
-
-  context('group이 존재하는 경우', () => {
-    given('group', () => (GROUP_FIXTURE));
-
-    it('dispatch 액션이 호출되어야만 한다', () => {
-      renderCommentsContainer();
-
-      expect(dispatch).toBeCalledTimes(1);
-    });
-  });
 
   describe('"댓글 남기기" 버튼을 클릭한다', () => {
     const commentValue = '댓글 내용';
@@ -59,7 +49,7 @@ describe('CommentsContainer', () => {
 
         fireEvent.click(screen.getByText('댓글 남기기'));
 
-        expect(dispatch).toBeCalledTimes(1);
+        expect(dispatch).toBeCalledTimes(2);
       });
 
       describe('삭제 모달창의 "삭제하기" 버튼을 클릭한다', () => {
@@ -71,7 +61,7 @@ describe('CommentsContainer', () => {
             fireEvent.click(button);
           });
 
-          expect(dispatch).toBeCalledTimes(1);
+          expect(dispatch).toBeCalledTimes(2);
         });
       });
     });

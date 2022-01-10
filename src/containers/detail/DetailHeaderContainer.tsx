@@ -1,11 +1,11 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import DetailHeaderSection from '@/components/detail/DetailHeaderSection';
 import useCurrentTime from '@/hooks/useCurrentTime';
 import { ApplicantForm, Group } from '@/models/group';
 import { setSignInModalVisible } from '@/reducers/authSlice';
-import { requestAddApplicant } from '@/reducers/groupSlice';
+import { loadApplicants, requestAddApplicant } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getAuth, getGroup } from '@/utils/utils';
 
@@ -22,6 +22,8 @@ function DetailHeaderContainer(): ReactElement | null {
     groupId: group.groupId,
     ...applyFields,
   })), [dispatch, group.groupId]);
+
+  useEffect(() => dispatch(loadApplicants(group.groupId)), []);
 
   return (
     <DetailHeaderSection

@@ -19,3 +19,13 @@ export const formatComment = (comment: any) => {
     createdAt: timestampToString(createdAt),
   };
 };
+
+export const formatApplicant = (applicant: any) => {
+  const { createdAt } = applicant.data();
+
+  return {
+    ...applicant.data(),
+    uid: applicant.id,
+    createdAt: timestampToString(createdAt),
+  };
+};
