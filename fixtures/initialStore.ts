@@ -24,6 +24,7 @@ const initialStore = {
       },
       tagsCount: [],
       isVisible: false,
+      applicants: [],
     } as GroupStore,
   },
 };

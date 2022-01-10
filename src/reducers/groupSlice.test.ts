@@ -2,6 +2,8 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { AddApplicantForm } from '@/models/group';
+import { postAddApplicant } from '@/services/api/applicants';
 import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
@@ -9,6 +11,7 @@ import {
 import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
 import { formatComment, formatGroup } from '@/utils/firestore';
 
+import APPLICANT_FIXTURE from '../../fixtures/applicants';
 import COMMENT_FIXTURE from '../../fixtures/comment';
 import GROUP_FIXTURE from '../../fixtures/group';
 import PROFILE_FIXTURE from '../../fixtures/profile';
@@ -22,9 +25,11 @@ import reducer, {
   loadGroupDetail,
   loadGroups,
   loadTagsCount,
+  requestAddApplicant,
   requestAddComment,
   requestDeleteComment,
   requestRegisterNewGroup,
+  setApplicant,
   setComment,
   setComments,
   setGroup,
@@ -41,6 +46,7 @@ const mockStore = configureStore(middlewares);
 jest.mock('@/services/api/group');
 jest.mock('@/services/api/tagsCount');
 jest.mock('@/services/api/comment');
+jest.mock('@/services/api/applicants');
 jest.mock('@/utils/firestore');
 
 describe('groupReducer', () => {
@@ -53,6 +59,7 @@ describe('groupReducer', () => {
     writeFields: WRITE_FIELDS_FIXTURE,
     tagsCount: [],
     isVisible: false,
+    applicants: [],
   };
 
   context('previous state가 undefined일 때', () => {
@@ -162,6 +169,14 @@ describe('groupReducer', () => {
       const { tagsCount } = reducer(initialState, setTagsCount(tags));
 
       expect(tagsCount).toEqual(tags);
+    });
+  });
+
+  describe('setApplicant', () => {
+    it('applicants에 값이 추가되야만 한다', () => {
+      const { applicants } = reducer(initialState, setApplicant(APPLICANT_FIXTURE));
+
+      expect(applicants).toEqual([APPLICANT_FIXTURE]);
     });
   });
 });
@@ -496,6 +511,64 @@ describe('groupReducer async actions', () => {
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
           await store.dispatch(requestDeleteComment('1'));
+        } catch (error) {
+          // ignore errors
+        } finally {
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: 'error',
+            type: 'group/setGroupError',
+          });
+        }
+      });
+    });
+  });
+
+  describe('requestAddApplicant', () => {
+    beforeEach(() => {
+      store = mockStore({
+        authReducer: {
+          user: PROFILE_FIXTURE,
+        },
+      });
+    });
+
+    const applicantForm: AddApplicantForm = {
+      groupId: 'groupId',
+      introduce: 'introduce',
+      portfolioUrl: null,
+    };
+
+    context('에러가 발생하지 않는 경우', () => {
+      (postAddApplicant as jest.Mock).mockReturnValueOnce('id');
+
+      it('dispatch 액션이 "group/setApplicant"인 타입과 payload는 applicant여야 한다', async () => {
+        await store.dispatch(requestAddApplicant(applicantForm));
+
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+          payload: {
+            uid: 'id',
+            createdAt: new Date().toString(),
+            isConfirm: false,
+            applicant: PROFILE_FIXTURE,
+            ...applicantForm,
+          },
+          type: 'group/setApplicant',
+        });
+      });
+    });
+
+    context('에러가 발생하는 경우', () => {
+      (postAddApplicant as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
+        try {
+          await store.dispatch(requestAddApplicant(applicantForm));
         } catch (error) {
           // ignore errors
         } finally {

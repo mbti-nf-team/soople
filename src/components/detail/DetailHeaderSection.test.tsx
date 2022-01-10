@@ -8,10 +8,16 @@ import PROFILE_FIXTURE from '../../../fixtures/profile';
 import DetailHeaderSection from './DetailHeaderSection';
 
 describe('DetailHeaderSection', () => {
+  const handleApply = jest.fn();
+  const handleVisibleSignInModal = jest.fn();
+
   const renderDetailHeaderSection = (group = GROUP_FIXTURE) => render((
     <DetailHeaderSection
       user={PROFILE_FIXTURE}
       group={group}
+      applicants={[]}
+      onVisibleSignInModal={handleVisibleSignInModal}
+      onApply={handleApply}
       currentTime={given.currentTime}
     />
   ));

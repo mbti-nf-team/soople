@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { body1Font, body2Font, h4Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
-type ColorType = 'success' | 'outlined' | 'primary' | 'warning';
+export type ColorType = 'success' | 'outlined' | 'primary' | 'warning';
 type ButtonSize = 'small' | 'medium' | 'large';
 
 interface Props extends Omit<HTMLProps<HTMLButtonElement | HTMLAnchorElement>, 'size'> {
