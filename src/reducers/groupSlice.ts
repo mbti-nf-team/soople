@@ -9,13 +9,13 @@ import {
   CommentFields,
   Group, TagCount, WriteFields, WriteFieldsForm,
 } from '@/models/group';
-import { postAddApplicant } from '@/services/api/applicants';
+import { getApplicants, postAddApplicant } from '@/services/api/applicants';
 import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
 } from '@/services/api/group';
 import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
-import { formatComment, formatGroup } from '@/utils/firestore';
+import { formatApplicant, formatComment, formatGroup } from '@/utils/firestore';
 
 import type { AppThunk } from './store';
 
@@ -129,6 +129,12 @@ const { actions, reducer } = createSlice({
         ],
       };
     },
+    setApplicants(state, { payload: applicants }: PayloadAction<Applicant[]>): GroupStore {
+      return {
+        ...state,
+        applicants,
+      };
+    },
   },
 });
 
@@ -140,6 +146,7 @@ export const {
   setComments,
   setApplicant,
   setTagsCount,
+  setApplicants,
   setGroupError,
   clearWriteFields,
   changeWriteFields,
@@ -284,6 +291,20 @@ export const requestAddApplicant = (
       isConfirm: false,
       ...fields,
     }));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setGroupError(message));
+  }
+};
+
+export const loadApplicants = (groupId: string): AppThunk => async (dispatch) => {
+  try {
+    const response = await getApplicants(groupId);
+
+    const applicants = response.map((doc) => formatApplicant(doc)) as Applicant[];
+
+    dispatch(setApplicants(applicants));
   } catch (error) {
     const { message } = error as Error;
 

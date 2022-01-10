@@ -66,7 +66,7 @@ describe('DetailHeaderContainer', () => {
           fireEvent.submit(screen.getByTestId('apply-button'));
         });
 
-        expect(dispatch).toBeCalledTimes(1);
+        expect(dispatch).toBeCalledTimes(2);
       });
     });
   });
