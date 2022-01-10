@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 
 import { getGroupDetail } from '@/services/api/group';
 
+import APPLICANT_FIXTURE from '../../../fixtures/applicants';
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -34,6 +35,7 @@ describe('DetailPage', () => {
         group: GROUP_FIXTURE,
         writer: PROFILE_FIXTURE,
         comments: [COMMENT_FIXTURE],
+        applicants: [APPLICANT_FIXTURE],
       },
     }));
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);

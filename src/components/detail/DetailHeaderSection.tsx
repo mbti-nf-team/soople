@@ -7,7 +7,7 @@ import * as R from 'ramda';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Profile } from '@/models/auth';
-import { Group } from '@/models/group';
+import { Applicant, ApplicantForm, Group } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body1Font, h2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
@@ -24,15 +24,21 @@ dayjs.locale('ko');
 
 interface Props {
   group: Group;
+  applicants: Applicant[];
   user: Profile | null;
   currentTime: number;
+  onApply: (applyFields: ApplicantForm) => void;
+  onVisibleSignInModal: () => void;
 }
 
-function DetailHeaderSection({ group, user, currentTime }: Props): ReactElement {
+function DetailHeaderSection({
+  group, user, currentTime, onApply, onVisibleSignInModal, applicants,
+}: Props): ReactElement {
   const { writer, isCompleted, views } = group;
 
   const recruitDate = useRecruitDateStatus(group, currentTime);
   const isWriter = R.equals(writer.uid, user?.uid);
+  const isApplicant = applicants.some(({ applicant }) => applicant.uid === user?.uid);
 
   return (
     <DetailHeaderSectionWrapper>
@@ -65,7 +71,13 @@ function DetailHeaderSection({ group, user, currentTime }: Props): ReactElement 
         {isWriter ? (
           <WriterStatusButtons isCompleted={isCompleted} />
         ) : (
-          <ApplicantStatusButton isCompleted={isCompleted} />
+          <ApplicantStatusButton
+            user={user}
+            isCompleted={isCompleted}
+            isApplicant={isApplicant}
+            onApply={onApply}
+            onVisibleSignInModal={onVisibleSignInModal}
+          />
         )}
       </DetailSubInformation>
     </DetailHeaderSectionWrapper>

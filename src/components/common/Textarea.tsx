@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { DetailedHTMLProps, ReactElement, TextareaHTMLAttributes } from 'react';
+import React, {
+  DetailedHTMLProps, ForwardedRef, forwardRef, ReactElement, TextareaHTMLAttributes,
+} from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -11,13 +13,12 @@ interface Props extends DetailedHTMLProps<
   TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement
 > {
   placeholder: string;
-  value: string;
   isError?: boolean;
 }
 
 function Textarea({
   value, onChange, placeholder, disabled, isError, ...rest
-}: Props): ReactElement {
+}: Props, ref: ForwardedRef<HTMLTextAreaElement>): ReactElement {
   return (
     <TextareaBlock
       value={value}
@@ -25,12 +26,13 @@ function Textarea({
       placeholder={placeholder}
       disabled={disabled}
       isError={isError}
+      ref={ref}
       {...rest}
     />
   );
 }
 
-export default Textarea;
+export default forwardRef<HTMLTextAreaElement, Props>(Textarea);
 
 const TextareaBlock = styled.textarea<{isError?: boolean; }>`
   ${body1Font()};

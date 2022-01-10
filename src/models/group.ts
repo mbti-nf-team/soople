@@ -49,3 +49,29 @@ export interface TagCount {
   name: string;
   count: number;
 }
+
+export interface Applicant {
+  uid: string;
+  groupId: string;
+  introduce: string;
+  portfolioUrl: string | null;
+  isConfirm: boolean;
+  applicant: Profile;
+  createdAt: string;
+}
+
+export interface ApplicantFields {
+  groupId: string;
+  introduce: string;
+  portfolioUrl: string | null;
+  applicant: Profile;
+}
+
+export interface ApplicantForm {
+  portfolioUrl: string | null;
+  introduce: string;
+}
+
+export interface AddApplicantForm extends ApplicantForm {
+  groupId: string;
+}

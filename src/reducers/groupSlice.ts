@@ -2,11 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Profile } from '@/models/auth';
 import {
+  AddApplicantForm,
+  Applicant,
   Category,
   Comment,
   CommentFields,
   Group, TagCount, WriteFields, WriteFieldsForm,
 } from '@/models/group';
+import { postAddApplicant } from '@/services/api/applicants';
 import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
@@ -25,6 +28,7 @@ export interface GroupStore {
   writeFields: WriteFields;
   tagsCount: TagCount[];
   isVisible: boolean;
+  applicants: Applicant[];
 }
 
 const initialFieldsState: WriteFields = {
@@ -47,6 +51,7 @@ const { actions, reducer } = createSlice({
     writeFields: initialFieldsState,
     tagsCount: [],
     isVisible: false,
+    applicants: [],
   } as GroupStore,
   reducers: {
     changeWriteFields(state, { payload: { name, value } }: PayloadAction<WriteFieldsForm>) {
@@ -115,6 +120,15 @@ const { actions, reducer } = createSlice({
         tagsCount,
       };
     },
+    setApplicant(state, { payload: applicant }: PayloadAction<Applicant>): GroupStore {
+      return {
+        ...state,
+        applicants: [
+          ...state.applicants,
+          applicant,
+        ],
+      };
+    },
   },
 });
 
@@ -124,6 +138,7 @@ export const {
   setComment,
   setGroupId,
   setComments,
+  setApplicant,
   setTagsCount,
   setGroupError,
   clearWriteFields,
@@ -244,6 +259,31 @@ export const requestDeleteComment = (uid: string): AppThunk => async (dispatch, 
     const newComments = comments.filter(({ commentId }) => commentId !== uid);
 
     dispatch(setComments(newComments));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setGroupError(message));
+  }
+};
+
+export const requestAddApplicant = (
+  fields: AddApplicantForm,
+): AppThunk => async (dispatch, getState) => {
+  const { authReducer: { user } } = getState();
+
+  try {
+    const uid = await postAddApplicant({
+      ...fields,
+      applicant: user as Profile,
+    });
+
+    dispatch(setApplicant({
+      uid,
+      createdAt: new Date().toString(),
+      applicant: user as Profile,
+      isConfirm: false,
+      ...fields,
+    }));
   } catch (error) {
     const { message } = error as Error;
 
