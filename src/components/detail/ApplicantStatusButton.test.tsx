@@ -2,6 +2,7 @@ import {
   act, fireEvent, render, screen,
 } from '@testing-library/react';
 
+import APPLICANT_FIXTURE from '../../../fixtures/applicants';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import ApplicantStatusButton from './ApplicantStatusButton';
@@ -9,6 +10,7 @@ import ApplicantStatusButton from './ApplicantStatusButton';
 describe('ApplicantStatusButton', () => {
   const handleApply = jest.fn();
   const handleVisibleSignInModal = jest.fn();
+  const handleCancelApply = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -19,16 +21,17 @@ describe('ApplicantStatusButton', () => {
       onApply={handleApply}
       isCompleted={given.isCompleted}
       onVisibleSignInModal={handleVisibleSignInModal}
-      isApplicant={given.isApplicant}
+      applicant={given.applicant}
       user={given.user}
+      onCancelApply={handleCancelApply}
     />
   ));
 
   context('isCompleted가 false인 경우', () => {
     given('isCompleted', () => false);
 
-    context('"isApplicant"가 false인 경우', () => {
-      given('isApplicant', () => false);
+    context('"applicant"가 존재하지 않는 경우', () => {
+      given('applicant', () => false);
 
       it('"신청하기"버튼이 보여야만 한다', () => {
         const { container } = renderApplicantStatusButton();
@@ -91,13 +94,17 @@ describe('ApplicantStatusButton', () => {
       });
     });
 
-    context('"isApplicant"가 true인 경우', () => {
-      given('isApplicant', () => true);
+    context('"applicant"가 존재하는 경우', () => {
+      given('applicant', () => APPLICANT_FIXTURE);
 
-      it('"신청 취소" 버튼이 보여야만 한다', () => {
-        const { container } = renderApplicantStatusButton();
+      describe('"신청 취소" 버튼을 클릭한다', () => {
+        it('클릭 이벤트가 발생해야만 한다', () => {
+          renderApplicantStatusButton();
 
-        expect(container).toHaveTextContent('신청 취소');
+          fireEvent.click(screen.getByText('신청 취소'));
+
+          expect(handleCancelApply).toBeCalledWith('2');
+        });
       });
     });
   });

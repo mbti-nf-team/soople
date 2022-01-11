@@ -1,10 +1,10 @@
 import {
-  addDoc, getDocs, orderBy, query, serverTimestamp, where,
+  addDoc, deleteDoc, getDocs, orderBy, query, serverTimestamp, where,
 } from 'firebase/firestore';
 
 import { ApplicantFields } from '@/models/group';
 
-import { collectionRef } from '../firebase';
+import { collectionRef, docRef } from '../firebase';
 
 const APPLICANTS = 'applicants';
 
@@ -28,4 +28,8 @@ export const getApplicants = async (groupId: string) => {
   const response = await getDocs(getQuery);
 
   return response.docs;
+};
+
+export const deleteApplicant = async (applicantId: string) => {
+  await deleteDoc(docRef(APPLICANTS, applicantId));
 };

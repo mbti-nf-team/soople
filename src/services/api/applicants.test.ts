@@ -1,5 +1,5 @@
 import {
-  addDoc, getDocs, serverTimestamp,
+  addDoc, deleteDoc, getDocs, serverTimestamp,
 } from 'firebase/firestore';
 
 import { ApplicantFields } from '@/models/group';
@@ -8,7 +8,7 @@ import APPLICANTS_FIXTURE from '../../../fixtures/applicants';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import { collectionRef } from '../firebase';
 
-import { getApplicants, postAddApplicant } from './applicants';
+import { deleteApplicant, getApplicants, postAddApplicant } from './applicants';
 
 jest.mock('../firebase');
 
@@ -62,6 +62,14 @@ describe('applicants API', () => {
 
       expect(response).toEqual([APPLICANTS_FIXTURE]);
       expect(getDocs).toBeCalledTimes(1);
+    });
+  });
+
+  describe('deleteApplicant', () => {
+    it('"deleteDoc"이 호출되어야만 한다', async () => {
+      await deleteApplicant('applicantId');
+
+      expect(deleteDoc).toBeCalledTimes(1);
     });
   });
 });

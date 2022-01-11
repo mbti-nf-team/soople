@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 
 import { Profile } from '@/models/auth';
-import { ApplicantForm } from '@/models/group';
+import { Applicant, ApplicantForm } from '@/models/group';
 
 import Button from '../common/Button';
 
@@ -12,11 +12,12 @@ interface Props {
   isCompleted: boolean;
   onApply: (applyFields: ApplicantForm) => void;
   onVisibleSignInModal: () => void;
-  isApplicant: boolean;
+  applicant?: Applicant;
+  onCancelApply: (applicantId: string) => void;
 }
 
 function ApplicantStatusButton({
-  isCompleted, onApply, user, onVisibleSignInModal, isApplicant,
+  isCompleted, onApply, user, onVisibleSignInModal, applicant, onCancelApply,
 }: Props): ReactElement {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -42,9 +43,9 @@ function ApplicantStatusButton({
     );
   }
 
-  if (isApplicant) {
+  if (applicant) {
     return (
-      <Button color="warning">
+      <Button color="warning" onClick={() => onCancelApply(applicant.uid)}>
         신청 취소
       </Button>
     );
