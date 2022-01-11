@@ -2,14 +2,15 @@ import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import DetailHeaderSection from '@/components/detail/DetailHeaderSection';
+import DetailStatusButton from '@/components/detail/DetailStatusButton';
 import useCurrentTime from '@/hooks/useCurrentTime';
 import { ApplicantForm, Group } from '@/models/group';
 import { setSignInModalVisible } from '@/reducers/authSlice';
-import { loadApplicants, requestAddApplicant } from '@/reducers/groupSlice';
+import { loadApplicants, requestAddApplicant, requestDeleteApplicant } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getAuth, getGroup } from '@/utils/utils';
 
-function DetailHeaderContainer(): ReactElement | null {
+function DetailHeaderContainer(): ReactElement {
   const dispatch = useAppDispatch();
   const group = useSelector(getGroup('group')) as Group;
   const user = useSelector(getAuth('user'));
@@ -17,6 +18,9 @@ function DetailHeaderContainer(): ReactElement | null {
   const currentTime = useCurrentTime(group.isCompleted);
 
   const onVisibleSignInModal = useCallback(() => dispatch(setSignInModalVisible(true)), [dispatch]);
+  const onCancelApply = useCallback((applicantId: string) => {
+    dispatch(requestDeleteApplicant(applicantId));
+  }, [dispatch]);
 
   const onApply = useCallback((applyFields: ApplicantForm) => dispatch(requestAddApplicant({
     groupId: group.groupId,
@@ -27,13 +31,18 @@ function DetailHeaderContainer(): ReactElement | null {
 
   return (
     <DetailHeaderSection
-      user={user}
       group={group}
-      applicants={applicants}
       currentTime={currentTime}
-      onApply={onApply}
-      onVisibleSignInModal={onVisibleSignInModal}
-    />
+    >
+      <DetailStatusButton
+        user={user}
+        group={group}
+        onApply={onApply}
+        applicants={applicants}
+        onVisibleSignInModal={onVisibleSignInModal}
+        onCancelApply={onCancelApply}
+      />
+    </DetailHeaderSection>
   );
 }
 
