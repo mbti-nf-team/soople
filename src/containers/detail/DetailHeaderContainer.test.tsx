@@ -90,6 +90,7 @@ describe('DetailHeaderContainer', () => {
           renderDetailHeaderContainer();
 
           fireEvent.click(screen.getByText('신청 취소'));
+          fireEvent.click(screen.getByText('취소하기'));
 
           expect(dispatch).toBeCalledTimes(2);
         });

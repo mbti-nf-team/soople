@@ -26,7 +26,7 @@ describe('HeaderContainer', () => {
       },
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
-      asPath: '/',
+      pathname: '/',
     }));
   });
 

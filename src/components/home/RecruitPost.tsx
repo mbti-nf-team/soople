@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
@@ -43,7 +43,7 @@ function RecruitPost({ group }: Props): ReactElement {
   );
 }
 
-export default RecruitPost;
+export default memo(RecruitPost);
 
 const RecruitPostWrapper = styled.div`
   border: 1px solid grey;

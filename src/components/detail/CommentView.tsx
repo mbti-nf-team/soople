@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { memo, ReactElement, useState } from 'react';
 
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
@@ -65,7 +65,7 @@ function CommentView({ comment, user, onRemove }: Props): ReactElement {
   );
 }
 
-export default CommentView;
+export default memo(CommentView);
 
 const CommentStatus = styled.div`
   display: flex;

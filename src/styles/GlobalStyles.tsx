@@ -52,7 +52,7 @@ function GlobalStyles(): ReactElement {
   const router = useRouter();
 
   return (
-    <Global styles={setGlobalStyles(router.asPath)} data-testid="global-styles" />
+    <Global styles={setGlobalStyles(router.pathname)} />
   );
 }
 
