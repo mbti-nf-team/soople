@@ -25,21 +25,21 @@ function DetailStatusButton({
   const isWriter = R.equals(writer.uid, user?.uid);
   const findApplicant = applicants.find(({ applicant }) => applicant.uid === user?.uid);
 
+  if (isWriter) {
+    return (
+      <WriterStatusButtons isCompleted={isCompleted} />
+    );
+  }
+
   return (
-    <>
-      {isWriter ? (
-        <WriterStatusButtons isCompleted={isCompleted} />
-      ) : (
-        <ApplicantStatusButton
-          user={user}
-          onApply={onApply}
-          isCompleted={isCompleted}
-          applicant={findApplicant}
-          onCancelApply={onCancelApply}
-          onVisibleSignInModal={onVisibleSignInModal}
-        />
-      )}
-    </>
+    <ApplicantStatusButton
+      user={user}
+      onApply={onApply}
+      isCompleted={isCompleted}
+      applicant={findApplicant}
+      onCancelApply={onCancelApply}
+      onVisibleSignInModal={onVisibleSignInModal}
+    />
   );
 }
 
