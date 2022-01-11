@@ -33,7 +33,7 @@ function HeaderContainer(): ReactElement {
       isScrollTop={isScrollTop}
       onClick={onClickSignIn}
       user={user}
-      isHome={router.asPath === '/'}
+      isHome={router.pathname === '/'}
     />
   );
 }

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -31,7 +31,7 @@ function DetailContentsSection({ group }: Props): ReactElement {
   );
 }
 
-export default DetailContentsSection;
+export default memo(DetailContentsSection);
 
 const TagsWrapper = styled.div`
   div {

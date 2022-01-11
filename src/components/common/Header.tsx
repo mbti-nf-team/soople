@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 import Link from 'next/link';
@@ -55,7 +55,7 @@ function Header({
   );
 }
 
-export default Header;
+export default memo(Header);
 
 const LogoIcon = styled(LogoSvg)`
   width: 100px;

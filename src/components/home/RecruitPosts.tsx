@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import { Group } from '@/models/group';
 
@@ -21,4 +21,4 @@ function RecruitPosts({ groups }: Props): ReactElement {
   );
 }
 
-export default RecruitPosts;
+export default memo(RecruitPosts);

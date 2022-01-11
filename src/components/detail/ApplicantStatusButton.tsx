@@ -5,6 +5,7 @@ import { Applicant, ApplicantForm } from '@/models/group';
 
 import Button from '../common/Button';
 
+import AskApplyCancelModal from './modal/AskApplyCancelModal';
 import ApplyFormModal from './ApplyFormModal';
 
 interface Props {
@@ -19,16 +20,17 @@ interface Props {
 function ApplicantStatusButton({
   isCompleted, onApply, user, onVisibleSignInModal, applicant, onCancelApply,
 }: Props): ReactElement {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isVisibleApplyModal, setIsVisibleApplyModal] = useState<boolean>(false);
+  const [isVisibleCancelModal, setIsVisibleCancelModal] = useState<boolean>(false);
 
   const handleSubmit = (applyFields: ApplicantForm) => {
     onApply(applyFields);
-    setIsVisible(false);
+    setIsVisibleApplyModal(false);
   };
 
   const handleClick = () => {
     if (user) {
-      setIsVisible(true);
+      setIsVisibleApplyModal(true);
       return;
     }
 
@@ -45,9 +47,16 @@ function ApplicantStatusButton({
 
   if (applicant) {
     return (
-      <Button color="warning" onClick={() => onCancelApply(applicant.uid)}>
-        신청 취소
-      </Button>
+      <>
+        <Button color="warning" onClick={() => setIsVisibleCancelModal(true)}>
+          신청 취소
+        </Button>
+        <AskApplyCancelModal
+          onClose={() => setIsVisibleCancelModal(false)}
+          onCancel={() => onCancelApply(applicant.uid)}
+          isVisible={isVisibleCancelModal}
+        />
+      </>
     );
   }
 
@@ -58,9 +67,9 @@ function ApplicantStatusButton({
       </Button>
       <ApplyFormModal
         onSubmit={handleSubmit}
-        isVisible={isVisible}
+        isVisible={isVisibleApplyModal}
         initPortfolioUrl={user?.portfolioUrl}
-        onClose={() => setIsVisible(false)}
+        onClose={() => setIsVisibleApplyModal(false)}
       />
     </>
   );

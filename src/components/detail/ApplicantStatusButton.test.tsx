@@ -98,10 +98,32 @@ describe('ApplicantStatusButton', () => {
       given('applicant', () => APPLICANT_FIXTURE);
 
       describe('"신청 취소" 버튼을 클릭한다', () => {
+        it('신청 취소 모달창이 나타나야만 한다', () => {
+          const { container } = renderApplicantStatusButton();
+
+          fireEvent.click(screen.getByText('신청 취소'));
+
+          expect(container).toHaveTextContent(/신청 취소하기/);
+        });
+      });
+
+      describe('신청 취소 모달창에서 "닫기" 버튼을 클릭한다', () => {
+        it('신청 취소 모달창이 안보여야만 한다', () => {
+          const { container } = renderApplicantStatusButton();
+
+          fireEvent.click(screen.getByText('신청 취소'));
+          fireEvent.click(screen.getByText('닫기'));
+
+          expect(container).not.toHaveTextContent(/신청 취소하기/);
+        });
+      });
+
+      describe('신청 취소 모달창에서 "취소하기" 버튼을 클릭한다', () => {
         it('클릭 이벤트가 발생해야만 한다', () => {
           renderApplicantStatusButton();
 
           fireEvent.click(screen.getByText('신청 취소'));
+          fireEvent.click(screen.getByText('취소하기'));
 
           expect(handleCancelApply).toBeCalledWith('2');
         });

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -31,7 +31,7 @@ function CommentsView({ comments, user, onRemove }: Props): ReactElement {
   );
 }
 
-export default CommentsView;
+export default memo(CommentsView);
 
 const CommentsViewWrapper = styled.div`
   h4 {
