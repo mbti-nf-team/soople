@@ -121,7 +121,7 @@ module.exports = {
         vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_',
       },
     ],
-    'react/jsx-props-no-spreading': ['error', { exceptions: ['input', 'SelectBox', 'Textarea'] }],
+    'react/jsx-props-no-spreading': ['error', { exceptions: ['input', 'SelectBox', 'Textarea', 'PortfolioUrlInput'] }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.test.ts', '**/*.test.tsx', 'jest.setup.js'] }],
     'jest/no-identical-title': 'off',
     'testing-library/no-unnecessary-act': 'off',

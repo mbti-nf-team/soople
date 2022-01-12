@@ -15,7 +15,8 @@ const palette = {
   success10: '#428DC9',
 
   /* warning */
-  warning: '#DC5555',
+  warning: '#DC4146',
+  warning10: '#CD2328',
 };
 
 export default palette;

@@ -14,6 +14,7 @@ import Button from './Button';
 
 interface Props {
   isVisible: boolean;
+  isValidate: boolean;
   title: string;
   confirmText?: string;
   closeText?: string;
@@ -23,7 +24,7 @@ interface Props {
 }
 
 function FormModal({
-  isVisible, title, confirmText = '확인', closeText = '닫기', onSubmit, onClose, confirmButtonColor = 'success', children,
+  isVisible, title, confirmText = '확인', closeText = '닫기', onSubmit, onClose, confirmButtonColor = 'success', isValidate, children,
 }: PropsWithChildren<Props>): ReactElement | null {
   if (!isVisible) {
     return null;
@@ -45,7 +46,7 @@ function FormModal({
           {children}
           <FooterWrapper>
             <Button size="small" onClick={onClose} type="button">{closeText}</Button>
-            <Button size="small" color={confirmButtonColor} type="submit" data-testid="apply-button">{confirmText}</Button>
+            <Button size="small" color={confirmButtonColor} type="submit" data-testid="apply-button" disabled={!isValidate}>{confirmText}</Button>
           </FooterWrapper>
         </form>
       </FormModalBox>
@@ -99,12 +100,8 @@ const CloseIcon = styled(CloseSvg)`
 const FooterWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 16px 16px 16px 20px;
   box-shadow: inset 0px 1px 0px ${palette.accent2};
-
-  button:first-of-type {
-    margin-right: 8px;
-  }
 `;

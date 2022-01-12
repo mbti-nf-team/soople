@@ -12,12 +12,13 @@ import palette from '@/styles/palette';
 interface Props extends DetailedHTMLProps<
   TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement
 > {
+  height?: string;
   placeholder: string;
   isError?: boolean;
 }
 
 function Textarea({
-  value, onChange, placeholder, disabled, isError, ...rest
+  value, onChange, placeholder, disabled, isError, height, ...rest
 }: Props, ref: ForwardedRef<HTMLTextAreaElement>): ReactElement {
   return (
     <TextareaBlock
@@ -26,6 +27,7 @@ function Textarea({
       placeholder={placeholder}
       disabled={disabled}
       isError={isError}
+      height={height}
       ref={ref}
       {...rest}
     />
@@ -34,10 +36,10 @@ function Textarea({
 
 export default forwardRef<HTMLTextAreaElement, Props>(Textarea);
 
-const TextareaBlock = styled.textarea<{isError?: boolean; }>`
+const TextareaBlock = styled.textarea<{isError?: boolean; height?: string }>`
   ${body1Font()};
   width: 100%;
-  height: 72px;
+  height: ${({ height }) => (height || '72px')};
   display: flex;
   flex-direction: row;
   align-items: center;
