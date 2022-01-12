@@ -9,6 +9,7 @@ describe('FormModal', () => {
 
   const renderFormModal = () => render((
     <FormModal
+      isValidate={given.isValidate}
       isVisible={given.isVisible}
       title="제목"
       onClose={handleClose}
@@ -31,13 +32,27 @@ describe('FormModal', () => {
       });
     });
 
-    describe('확인 버튼을 클릭한다', () => {
-      it('클릭 이벤트가 호출되어야만 한다', () => {
+    context('isValidate가 true인 경우', () => {
+      given('isValidate', () => true);
+
+      describe('확인 버튼을 클릭한다', () => {
+        it('클릭 이벤트가 호출되어야만 한다', () => {
+          renderFormModal();
+
+          fireEvent.submit(screen.getByText('확인'));
+
+          expect(handleSubmit).toBeCalledTimes(1);
+        });
+      });
+    });
+
+    context('isValidate가 false인 경우', () => {
+      given('isValidate', () => false);
+
+      it('확인 버튼에 disabled 속성이 존재해야만 한다', () => {
         renderFormModal();
 
-        fireEvent.submit(screen.getByText('확인'));
-
-        expect(handleSubmit).toBeCalledTimes(1);
+        expect(screen.getByText('확인')).toHaveAttribute('disabled');
       });
     });
   });
