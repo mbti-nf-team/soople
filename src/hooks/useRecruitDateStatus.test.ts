@@ -12,7 +12,7 @@ describe('useRecruitDateStatus', () => {
     Date.now(),
   ));
 
-  context('모집 종료를 수동으로 하는 경우', () => {
+  context('모집 종료를 수동이거나 모집 완료된 경우', () => {
     given('group', () => GROUP_FIXTURE);
 
     it('글을 작성한 날짜가 반환되어야만 한다', () => {
@@ -44,10 +44,10 @@ describe('useRecruitDateStatus', () => {
         recruitmentEndDate: yesterday(new Date()),
       }));
 
-      it('"모집 마감"이 나타나야만 한다', () => {
+      it('글을 작성한 날짜가 반환되어야만 한다', () => {
         const { result: { current } } = useRecruitDateStatusHook();
 
-        expect(current).toBe('모집 마감');
+        expect(current).toBe('2021년 10월 11일');
       });
     });
   });

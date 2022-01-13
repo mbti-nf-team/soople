@@ -1,6 +1,10 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
+import { tomorrow, yesterday } from '@/utils/utils';
+
+import GROUP_FIXTURE from '../../fixtures/group';
+
 import useCurrentTime from './useCurrentTime';
 
 describe('useCurrentTime', () => {
@@ -8,16 +12,16 @@ describe('useCurrentTime', () => {
     jest.useFakeTimers();
   });
 
-  const useCurrentTimeHook = () => renderHook(() => useCurrentTime(given.isCompleted));
+  const useCurrentTimeHook = () => renderHook(() => useCurrentTime(given.group));
 
   afterEach(() => {
     jest.clearAllTimers();
   });
 
-  context('isCompleted가 true인 경우', () => {
-    given('isCompleted', () => true);
+  context('"isRecruitCompletedAndManual" 반환값이 true인 경우', () => {
+    given('group', () => (GROUP_FIXTURE));
 
-    it('실시간 시간이 반환되어야 한다', async () => {
+    it('딜레이가 없는 시간이 반환되어야 한다', async () => {
       const { result: { current } } = useCurrentTimeHook();
 
       const now = Date.now();
@@ -30,19 +34,47 @@ describe('useCurrentTime', () => {
     });
   });
 
-  context('isCompleted가 false인 경우', () => {
-    given('isCompleted', () => false);
+  context('isRecruitCompletedAndManual"이 false인 경우', () => {
+    context('현재 시간이 마감 시간 이전일 경우', () => {
+      given('group', () => ({
+        ...GROUP_FIXTURE,
+        isCompleted: false,
+        recruitmentEndSetting: 'automatic',
+        recruitmentEndDate: tomorrow(new Date()),
+      }));
 
-    it('실시간 시간이 반환되어야 한다', async () => {
-      const { result: { current } } = useCurrentTimeHook();
+      it('실시간 시간이 반환되어야 한다', async () => {
+        const { result: { current } } = useCurrentTimeHook();
 
-      const now = Date.now();
+        const now = Date.now();
 
-      await act(async () => {
-        jest.advanceTimersByTime(1000);
+        await act(async () => {
+          jest.advanceTimersByTime(1000);
+        });
+
+        expect((current / 100).toFixed(0)).toBe((now / 100).toFixed(0));
       });
+    });
 
-      expect((current / 100).toFixed(0)).toBe((now / 100).toFixed(0));
+    context('현재 시간이 마감 시간 이후일 경우', () => {
+      given('group', () => ({
+        ...GROUP_FIXTURE,
+        isCompleted: false,
+        recruitmentEndSetting: 'automatic',
+        recruitmentEndDate: yesterday(new Date()),
+      }));
+
+      it('딜레이가 없는 시간이 반환되어야 한다', async () => {
+        const { result: { current } } = useCurrentTimeHook();
+
+        const now = Date.now();
+
+        await act(async () => {
+          jest.advanceTimersByTime(1000);
+        });
+
+        expect((current / 100).toFixed(0)).toBe((now / 100).toFixed(0));
+      });
     });
   });
 });

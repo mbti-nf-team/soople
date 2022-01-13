@@ -4,6 +4,7 @@ import { Eye as ViewsIcon } from 'react-feather';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 
+import useCurrentTime from '@/hooks/useCurrentTime';
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
@@ -19,14 +20,14 @@ dayjs.locale('ko');
 
 interface Props {
   group: Group;
-  currentTime: number;
 }
 
 function DetailHeaderSection({
-  group, currentTime, children,
+  group, children,
 }: PropsWithChildren<Props>): ReactElement {
   const { writer, views } = group;
 
+  const currentTime = useCurrentTime(group);
   const recruitDate = useRecruitDateStatus(group, currentTime);
 
   return (

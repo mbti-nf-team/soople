@@ -10,7 +10,6 @@ describe('DetailHeaderSection', () => {
   const renderDetailHeaderSection = (group = GROUP_FIXTURE) => render((
     <DetailHeaderSection
       group={group}
-      currentTime={given.currentTime}
     />
   ));
 
@@ -42,13 +41,13 @@ describe('DetailHeaderSection', () => {
     context('모집 마감 일자가 현재 시간 이전인 경우', () => {
       given('currentTime', () => Date.now());
 
-      it('"모집 마감"이 나타나야만 한다', () => {
+      it('글 작성 일자가 나타나야만 한다', () => {
         const { container } = renderDetailHeaderSection({
           ...GROUP_FIXTURE,
           recruitmentEndDate: yesterday(new Date()),
         });
 
-        expect(container).toHaveTextContent(/모집 마감/);
+        expect(container).toHaveTextContent('2021년 10월 11일');
       });
     });
   });
