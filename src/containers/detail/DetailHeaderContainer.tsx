@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 import DetailHeaderSection from '@/components/detail/DetailHeaderSection';
 import DetailStatusButton from '@/components/detail/DetailStatusButton';
-import useCurrentTime from '@/hooks/useCurrentTime';
 import { ApplicantForm, Group } from '@/models/group';
 import { setSignInModalVisible } from '@/reducers/authSlice';
 import { loadApplicants, requestAddApplicant, requestDeleteApplicant } from '@/reducers/groupSlice';
@@ -15,7 +14,6 @@ function DetailHeaderContainer(): ReactElement {
   const group = useSelector(getGroup('group')) as Group;
   const user = useSelector(getAuth('user'));
   const applicants = useSelector(getGroup('applicants'));
-  const currentTime = useCurrentTime(group.isCompleted);
 
   const onVisibleSignInModal = useCallback(() => dispatch(setSignInModalVisible(true)), [dispatch]);
   const onCancelApply = useCallback((applicantId: string) => {
@@ -30,10 +28,7 @@ function DetailHeaderContainer(): ReactElement {
   useEffect(() => dispatch(loadApplicants(group.groupId)), []);
 
   return (
-    <DetailHeaderSection
-      group={group}
-      currentTime={currentTime}
-    >
+    <DetailHeaderSection group={group}>
       <DetailStatusButton
         user={user}
         group={group}

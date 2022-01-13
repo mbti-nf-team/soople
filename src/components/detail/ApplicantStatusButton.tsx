@@ -15,11 +15,12 @@ interface Props {
   onVisibleSignInModal: () => void;
   applicant?: Applicant;
   onCancelApply: (applicantId: string) => void;
+  isRecruiting: boolean;
 }
 
 function ApplicantStatusButton({
-  isCompleted, onApply, user, onVisibleSignInModal, applicant, onCancelApply,
-}: Props): ReactElement {
+  isCompleted, onApply, user, onVisibleSignInModal, applicant, onCancelApply, isRecruiting,
+}: Props): ReactElement | null {
   const [isVisibleApplyModal, setIsVisibleApplyModal] = useState<boolean>(false);
   const [isVisibleCancelModal, setIsVisibleCancelModal] = useState<boolean>(false);
 
@@ -45,6 +46,10 @@ function ApplicantStatusButton({
     );
   }
 
+  if (!isRecruiting) {
+    return null;
+  }
+
   if (applicant) {
     return (
       <>
@@ -53,7 +58,10 @@ function ApplicantStatusButton({
         </Button>
         <AskApplyCancelModal
           onClose={() => setIsVisibleCancelModal(false)}
-          onCancel={() => onCancelApply(applicant.uid)}
+          onCancel={() => {
+            onCancelApply(applicant.uid);
+            setIsVisibleCancelModal(false);
+          }}
           isVisible={isVisibleCancelModal}
         />
       </>

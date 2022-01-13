@@ -1,10 +1,18 @@
 import { RootReducerState } from '@/reducers/rootReducer';
 
+import GROUP_FIXTURE from '../../fixtures/group';
 import WRITE_FIELDS_FIXTURE from '../../fixtures/writeFields';
 
 import {
   emptyAThenB,
-  getAuth, getGroup, isProdLevel, stringToExcludeNull, tomorrow, yesterday,
+  getAuth,
+  getGroup,
+  isProdLevel,
+  isRecruitCompletedAndManual,
+  isRecruiting,
+  stringToExcludeNull,
+  tomorrow,
+  yesterday,
 } from './utils';
 
 describe('isProdLevel', () => {
@@ -146,5 +154,73 @@ describe('yesterday', () => {
     now.setDate(now.getDate() - 1);
 
     expect(result).toBe(now.toString());
+  });
+});
+
+describe('isRecruiting', () => {
+  context('"recruitmentEndSetting"는 "manual"이고 "recruitmentEndDate"는 존재하지 않을 경우', () => {
+    it('true를 반환해야만 한다', () => {
+      const result = isRecruiting(GROUP_FIXTURE, Date.now());
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  context('"recruitmentEndSetting"는 "automatic"이고 현재 시간보다 이전 시간일 경우', () => {
+    it('false를 반환해야만 한다', () => {
+      const result = isRecruiting({
+        ...GROUP_FIXTURE,
+        recruitmentEndDate: '2021-11-11',
+        recruitmentEndSetting: 'automatic',
+      }, Date.now());
+
+      expect(result).toBeFalsy();
+    });
+  });
+
+  context('"recruitmentEndSetting"는 "automatic"이고 현재 시간보다 이후 시간일 경우', () => {
+    it('true를 반환해야만 한다', () => {
+      const result = isRecruiting({
+        ...GROUP_FIXTURE,
+        recruitmentEndDate: tomorrow(new Date()),
+        recruitmentEndSetting: 'automatic',
+      }, Date.now());
+
+      expect(result).toBeTruthy();
+    });
+  });
+});
+
+describe('isRecruitCompletedAndManual', () => {
+  context('"isCompleted"가 true인 경우', () => {
+    it('true를 반환해야만 한다', () => {
+      const result = isRecruitCompletedAndManual({
+        ...GROUP_FIXTURE,
+        isCompleted: true,
+      });
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  context('"recruitmentEndSetting"는 "manual"이고 "recruitmentEndDate"는 존재하지 않을 경우', () => {
+    it('true를 반환해야만 한다', () => {
+      const result = isRecruitCompletedAndManual(GROUP_FIXTURE);
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  context('"recruitmentEndSetting"는 "automatic"이고 "isCompleted"가 false인 경우', () => {
+    it('false를 반환해야만 한다', () => {
+      const result = isRecruitCompletedAndManual({
+        ...GROUP_FIXTURE,
+        isCompleted: false,
+        recruitmentEndDate: tomorrow(new Date()),
+        recruitmentEndSetting: 'automatic',
+      });
+
+      expect(result).toBeFalsy();
+    });
   });
 });
