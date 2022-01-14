@@ -39,33 +39,33 @@ describe('h3Font', () => {
 });
 
 describe('h4Font', () => {
-  it('font-size는 17px이어야만 한다', () => {
+  it('font-size는 1.125rem이어야만 한다', () => {
     const result = h4Font();
 
-    expect(result.styles).toContain('font-size:17px;');
+    expect(result.styles).toContain('font-size:1.125rem;');
   });
 });
 
 describe('body1Font', () => {
-  it('font-size는 15px이어야만 한다', () => {
+  it('font-size는 1rem이어야만 한다', () => {
     const result = body1Font();
 
-    expect(result.styles).toContain('font-size:15px;');
+    expect(result.styles).toContain('font-size:1rem;');
   });
 });
 
 describe('body2Font', () => {
-  it('font-size는 14px이어야만 한다', () => {
+  it('font-size는 0.875rem이어야만 한다', () => {
     const result = body2Font();
 
-    expect(result.styles).toContain('font-size:14px;');
+    expect(result.styles).toContain('font-size:0.875rem;');
   });
 });
 
 describe('subtitle1Font', () => {
-  it('font-size는 13px이어야만 한다', () => {
+  it('font-size는 0.825rem이어야만 한다', () => {
     const result = subtitle1Font();
 
-    expect(result.styles).toContain('font-size:13px;');
+    expect(result.styles).toContain('font-size:0.825rem;');
   });
 });

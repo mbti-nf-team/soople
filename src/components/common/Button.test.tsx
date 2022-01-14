@@ -19,31 +19,31 @@ describe('Button', () => {
 
   describe('버튼 사이즈에 따라서 스타일 속성이 다르다', () => {
     context('사이즈가 "large"인 경우', () => {
-      it('폰트 사이즈가 "17px"이어야만 한다', () => {
+      it('폰트 사이즈가 "1.125rem"이어야만 한다', () => {
         renderButton({ size: 'large' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          'font-size': '17px',
+          'font-size': '1.125rem',
         });
       });
     });
 
     context('사이즈가 "medium"인 경우', () => {
-      it('폰트 사이즈가 "15px"이어야만 한다', () => {
+      it('폰트 사이즈가 "1rem"이어야만 한다', () => {
         renderButton({ size: 'medium' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          'font-size': '15px',
+          'font-size': '1rem',
         });
       });
     });
 
     context('사이즈가 "small"인 경우', () => {
-      it('폰트 사이즈가 "14px"이어야만 한다', () => {
+      it('폰트 사이즈가 "0.875rem"이어야만 한다', () => {
         renderButton({ size: 'small' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          'font-size': '14px',
+          'font-size': '0.875rem',
         });
       });
     });
