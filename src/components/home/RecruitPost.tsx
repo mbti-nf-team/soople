@@ -7,6 +7,7 @@ import Link from 'next/link';
 import useCurrentTime from '@/hooks/useCurrentTime';
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
+import palette from '@/styles/palette';
 import { emptyAThenB } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
@@ -46,9 +47,10 @@ function RecruitPost({ group }: Props): ReactElement {
 export default memo(RecruitPost);
 
 const RecruitPostWrapper = styled.div`
-  border: 1px solid grey;
   margin: 1rem;
   padding: 0.5rem;
+  border-radius: 8px;
+  background-color: ${palette.background};
 `;
 
 const StyledLink = styled.a`
