@@ -34,6 +34,8 @@ export interface Group {
   category: Category | string;
   recruitmentEndSetting: RecruitmentEndSetting;
   recruitmentEndDate: string | null;
+  isCompleted: boolean;
+  views: number;
   writer: Profile;
   createdAt: string;
 }
@@ -46,4 +48,30 @@ export interface WriteFieldsForm {
 export interface TagCount {
   name: string;
   count: number;
+}
+
+export interface Applicant {
+  uid: string;
+  groupId: string;
+  introduce: string;
+  portfolioUrl: string | null;
+  isConfirm: boolean;
+  applicant: Profile;
+  createdAt: string;
+}
+
+export interface ApplicantFields {
+  groupId: string;
+  introduce: string;
+  portfolioUrl: string | null;
+  applicant: Profile;
+}
+
+export interface ApplicantForm {
+  portfolioUrl: string | null;
+  introduce: string;
+}
+
+export interface AddApplicantForm extends ApplicantForm {
+  groupId: string;
 }

@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
+import { useRouter } from 'next/router';
 
 import { getGroupDetail } from '@/services/api/group';
 
+import APPLICANT_FIXTURE from '../../../fixtures/applicants';
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -15,6 +17,9 @@ import DetailPage, { getServerSideProps } from './[id].page';
 
 jest.mock('@/services/api/group');
 jest.mock('@/services/api/auth');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 
 describe('DetailPage', () => {
   const dispatch = jest.fn();
@@ -30,9 +35,13 @@ describe('DetailPage', () => {
         group: GROUP_FIXTURE,
         writer: PROFILE_FIXTURE,
         comments: [COMMENT_FIXTURE],
+        applicants: [APPLICANT_FIXTURE],
       },
     }));
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      asPath: '/',
+    }));
   });
 
   const renderDetailPage = () => render((

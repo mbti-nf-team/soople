@@ -10,9 +10,13 @@ import { timestampToString } from '@/utils/firestore';
 
 import { collectionRef, docRef } from '../firebase';
 
+const GROUPS = 'groups';
+
 export const postNewGroup = async (profile: Profile, fields: WriteFields) => {
-  const { id } = await addDoc(collectionRef('groups'), {
+  const { id } = await addDoc(collectionRef(GROUPS), {
     ...fields,
+    isCompleted: false,
+    views: 0,
     writer: profile,
     createdAt: serverTimestamp(),
   });
@@ -21,7 +25,7 @@ export const postNewGroup = async (profile: Profile, fields: WriteFields) => {
 };
 
 export const getGroupDetail = async (id: string) => {
-  const response = await getDoc(docRef('groups', id));
+  const response = await getDoc(docRef(GROUPS, id));
 
   if (!response.exists()) {
     return null;
@@ -38,7 +42,7 @@ export const getGroupDetail = async (id: string) => {
 
 export const getGroups = async (condition: Category[]) => {
   const getQuery = query(
-    collectionRef('groups'),
+    collectionRef(GROUPS),
     where('category', 'in', condition),
     orderBy('createdAt', 'asc'),
   );

@@ -13,8 +13,35 @@ describe('Header', () => {
       isScrollTop={given.isScrollTop}
       user={given.user}
       onClick={handleClick}
+      isHome={given.isHome}
     />
   ));
+
+  describe('홈인지 아닌지에 따라서 배경색이 변경된다', () => {
+    context('Home인 경우', () => {
+      given('isHome', () => true);
+
+      it(`background 속성이 ${palette.accent1}이어야 한다`, () => {
+        renderHeader();
+
+        expect(screen.getByTestId('header-block')).toHaveStyle({
+          background: palette.accent1,
+        });
+      });
+    });
+
+    context('Home이 아닌 경우', () => {
+      given('isHome', () => false);
+
+      it(`background 속성이 ${palette.background}이어야 한다`, () => {
+        renderHeader();
+
+        expect(screen.getByTestId('header-block')).toHaveStyle({
+          background: palette.background,
+        });
+      });
+    });
+  });
 
   describe('스크롤 위치에 따라서 스타일이 변경된다', () => {
     context('scroll 위치가 최상단일 때', () => {

@@ -16,11 +16,14 @@ describe('CommentsView', () => {
     />
   ));
 
-  describe('댓글 작성자가 삭제버튼을 클릭한다', () => {
+  describe('댓글 작성자가 삭제하기 버튼을 클릭한다', () => {
     it('클릭 이벤트가 발생해야만 한다', () => {
       renderCommentsView();
 
       fireEvent.click(screen.getByText('삭제'));
+      screen.getAllByText(/삭제하기/).forEach((button) => {
+        fireEvent.click(button);
+      });
 
       expect(handleRemove).toBeCalledWith(COMMENT_FIXTURE.commentId);
     });

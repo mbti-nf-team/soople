@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -27,7 +27,7 @@ function TagsBar({ tags }: Props): ReactElement {
   );
 }
 
-export default TagsBar;
+export default memo(TagsBar);
 
 const TagsWrapper = styled.div`
   div {

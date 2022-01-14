@@ -6,7 +6,7 @@ import SignInModalContainer from '@/containers/auth/SignInModalContainer';
 import wrapper from '@/reducers/store';
 import GlobalStyles from '@/styles/GlobalStyles';
 
-function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalStyles />

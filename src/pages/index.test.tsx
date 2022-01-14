@@ -1,10 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
+import { useRouter } from 'next/router';
 
 import GROUP_FIXTURE from '../../fixtures/group';
 
 import HomePage from './index.page';
+
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 
 describe('HomePage', () => {
   const dispatch = jest.fn();
@@ -19,6 +24,9 @@ describe('HomePage', () => {
         groups: [GROUP_FIXTURE],
         tagsCount: [],
       },
+    }));
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      asPath: '/',
     }));
   });
 

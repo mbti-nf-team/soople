@@ -6,11 +6,11 @@ import { Group } from '@/models/group';
 import { getGroup } from '@/utils/utils';
 
 function DetailContentsContainer(): ReactElement | null {
-  const group = useSelector(getGroup('group'));
+  const group = useSelector(getGroup('group')) as Group;
 
   return (
     <DetailContentsSection
-      group={group as Group}
+      group={group}
     />
   );
 }

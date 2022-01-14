@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
@@ -24,7 +24,7 @@ function RecruitPost({ group }: Props): ReactElement {
   const {
     title, content, groupId, writer,
   } = group;
-  const currentTime = useCurrentTime();
+  const currentTime = useCurrentTime(group);
   const recruitDate = useRecruitDateStatus(group, currentTime);
 
   return (
@@ -44,7 +44,7 @@ function RecruitPost({ group }: Props): ReactElement {
   );
 }
 
-export default RecruitPost;
+export default memo(RecruitPost);
 
 const RecruitPostWrapper = styled.div`
   margin: 1rem;

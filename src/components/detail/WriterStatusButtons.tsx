@@ -5,30 +5,24 @@ import styled from '@emotion/styled';
 import Button from '../common/Button';
 
 interface Props {
-  isWriter: boolean;
+  isCompleted: boolean;
 }
 
-function ApplyStatusButtonGroup({ isWriter }: Props): ReactElement {
-  if (!isWriter) {
-    return (
-      <Button
-        color="success"
-      >
-        신청하기
-      </Button>
-    );
-  }
-
+function WriterStatusButtons({ isCompleted }: Props): ReactElement {
   return (
     <WriterButtonWrapper>
       <Button>수정</Button>
       <Button>삭제</Button>
-      <Button color="primary">신청현황 보기</Button>
+      {isCompleted ? (
+        <Button color="primary">팀원 보기</Button>
+      ) : (
+        <Button color="primary">신청현황 보기</Button>
+      )}
     </WriterButtonWrapper>
   );
 }
 
-export default ApplyStatusButtonGroup;
+export default WriterStatusButtons;
 
 const WriterButtonWrapper = styled.div`
   display: flex;

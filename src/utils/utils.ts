@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+
+import { Group } from '@/models/group';
 import type { AuthStore } from '@/reducers/authSlice';
 import type { GroupStore } from '@/reducers/groupSlice';
 import type { AppState } from '@/reducers/store';
@@ -31,8 +34,25 @@ export const tomorrow = (date: Date) => {
 
   return date.toString();
 };
+
 export const yesterday = (date: Date) => {
   date.setDate(date.getDate() - 1);
 
   return date.toString();
+};
+
+export const isRecruiting = (group: Group, time: number) => {
+  const { recruitmentEndDate, recruitmentEndSetting } = group;
+
+  if (!recruitmentEndDate && recruitmentEndSetting === 'manual') {
+    return true;
+  }
+
+  return dayjs(recruitmentEndDate).diff(time) >= 0;
+};
+
+export const isRecruitCompletedAndManual = (group: Group) => {
+  const { recruitmentEndDate, recruitmentEndSetting, isCompleted } = group;
+
+  return isCompleted || (!recruitmentEndDate && recruitmentEndSetting === 'manual');
 };

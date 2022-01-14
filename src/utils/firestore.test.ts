@@ -1,4 +1,6 @@
-import { formatComment, formatGroup, timestampToString } from './firestore';
+import {
+  formatApplicant, formatComment, formatGroup, timestampToString,
+} from './firestore';
 
 describe('timestampToString', () => {
   const timestamp = {
@@ -57,6 +59,30 @@ describe('formatComment', () => {
 
     expect(result).toEqual({
       commentId: '1',
+      createdAt: nowString,
+    });
+  });
+});
+
+describe('formatApplicant', () => {
+  const nowString = new Date().toString();
+
+  const date = {
+    toDate: () => new Date(),
+  };
+
+  const settings = {
+    id: '1',
+    data: () => ({
+      createdAt: date,
+    }),
+  };
+
+  it('포매팅된 신청자 정보가 반환되어야만 한다', () => {
+    const result = formatApplicant(settings);
+
+    expect(result).toEqual({
+      uid: '1',
       createdAt: nowString,
     });
   });

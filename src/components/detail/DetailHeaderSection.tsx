@@ -1,12 +1,13 @@
-import React, { ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
+import { Eye as ViewsIcon } from 'react-feather';
 
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import * as R from 'ramda';
 
+import useCurrentTime from '@/hooks/useCurrentTime';
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
-import { Profile } from '@/models/auth';
 import { Group } from '@/models/group';
+import Divider from '@/styles/Divider';
 import { body1Font, h2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 import { emptyAThenB } from '@/utils/utils';
@@ -15,21 +16,19 @@ import 'dayjs/locale/ko';
 
 import ProfileImage from '../common/ProfileImage';
 
-import ApplyStatusButtonGroup from './ApplyStatusButtonGroup';
-
 dayjs.locale('ko');
 
 interface Props {
   group: Group;
-  user: Profile | null;
-  currentTime: number;
 }
 
-function DetailHeaderSection({ group, user, currentTime }: Props): ReactElement {
-  const { writer } = group;
+function DetailHeaderSection({
+  group, children,
+}: PropsWithChildren<Props>): ReactElement {
+  const { writer, views } = group;
 
+  const currentTime = useCurrentTime(group);
   const recruitDate = useRecruitDateStatus(group, currentTime);
-  const isWriter = R.equals(writer.uid, user?.uid);
 
   return (
     <DetailHeaderSectionWrapper>
@@ -44,12 +43,22 @@ function DetailHeaderSection({ group, user, currentTime }: Props): ReactElement 
             <span>
               {emptyAThenB(writer.email, writer.name)}
             </span>
-            <div>
-              {recruitDate}
-            </div>
+            <MetadataWrapper>
+              <div className="view-wrapper">
+                <ViewsIcon
+                  size={16}
+                  color={palette.background}
+                  fill={palette.accent6}
+                />
+                <span>{views}</span>
+              </div>
+              <Divider />
+              <div>{recruitDate}</div>
+              <Divider />
+            </MetadataWrapper>
           </WriterProfileTextWrapper>
         </WriterProfile>
-        <ApplyStatusButtonGroup isWriter={isWriter} />
+        {children}
       </DetailSubInformation>
     </DetailHeaderSectionWrapper>
   );
@@ -85,12 +94,30 @@ const WriterProfileTextWrapper = styled.div`
   justify-content: space-evenly;
   margin-left: 12px;
 
-  span {
+  & > span {
     ${body1Font(true)};
   }
 
   div {
     color: ${palette.accent6};
     ${subtitle1Font()};
+  }
+`;
+
+const MetadataWrapper = styled.div`
+  ${subtitle1Font()};
+  color: ${palette.accent6};
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .view-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    svg {
+      margin-right: 4px;
+    }
   }
 `;

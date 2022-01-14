@@ -3,12 +3,15 @@ import React, {
 } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useRouter } from 'next/router';
+
 import Header from '@/components/common/Header';
 import { requestSignOut, setSignInModalVisible } from '@/reducers/authSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getAuth } from '@/utils/utils';
 
 function HeaderContainer(): ReactElement {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const user = useSelector(getAuth('user'));
   const [isScrollTop, setIsScrollTop] = useState<boolean>(true);
@@ -30,6 +33,7 @@ function HeaderContainer(): ReactElement {
       isScrollTop={isScrollTop}
       onClick={onClickSignIn}
       user={user}
+      isHome={router.pathname === '/'}
     />
   );
 }

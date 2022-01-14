@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { body1Font, body2Font, h4Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
-type ColorType = 'success' | 'outlined' | 'primary';
+export type ColorType = 'success' | 'outlined' | 'primary' | 'warning';
 type ButtonSize = 'small' | 'medium' | 'large';
 
 interface Props extends Omit<HTMLProps<HTMLButtonElement | HTMLAnchorElement>, 'size'> {
@@ -125,6 +125,21 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
     &:disabled {
       color: ${palette.accent4};
       background: ${palette.accent1};
+    }
+  `}
+
+  ${color === 'warning' && css`
+    color: ${palette.background};
+    background: ${palette.warning};
+
+    &:hover {
+      color: ${palette.accent2};
+      background: ${palette.warning};
+    }
+
+    &:disabled {
+      color: ${palette.accent4};
+      background: ${palette.warning};
     }
   `}
 `;
