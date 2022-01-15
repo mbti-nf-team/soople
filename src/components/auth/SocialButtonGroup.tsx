@@ -16,12 +16,12 @@ function SocialButtonGroup(): ReactElement {
         data-testid="google-icon"
         onClick={() => signInRedirectOAuth(googleProvider)}
       />
+      <KakaoIcon
+        data-testid="kakao-icon"
+      />
       <GithubIcon
         data-testid="github-icon"
         onClick={() => signInRedirectOAuth(githubProvider)}
-      />
-      <KakaoIcon
-        data-testid="kakao-icon"
       />
     </SocialButtonGroupWrapper>
   );
@@ -31,6 +31,7 @@ export default SocialButtonGroup;
 
 const SocialButtonGroupWrapper = styled.div`
   h4 {
+    text-align: center;
     margin: 1rem 0;
     font-weight: bold;
   }

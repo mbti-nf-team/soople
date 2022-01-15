@@ -53,7 +53,7 @@ function ApplicantStatusButton({
   if (applicant) {
     return (
       <>
-        <Button color="warning" onClick={() => setIsVisibleCancelModal(true)}>
+        <Button color="primary" onClick={() => setIsVisibleCancelModal(true)}>
           신청 취소
         </Button>
         <AskApplyCancelModal

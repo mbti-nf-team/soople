@@ -28,7 +28,7 @@ function ApplyFormModal({
   isVisible, onClose, onSubmit, initPortfolioUrl,
 }: Props): ReactElement {
   const {
-    register, handleSubmit, formState: { errors }, clearErrors, reset, getValues,
+    register, handleSubmit, formState: { errors }, clearErrors, reset,
   } = useForm<ApplicantForm>({
     resolver: yupResolver(validationSchema),
   });
@@ -42,7 +42,6 @@ function ApplyFormModal({
   return (
     <FormModal
       isVisible={isVisible}
-      isValidate={!!getValues('introduce')?.trim()}
       title="신청"
       confirmText="신청하기"
       confirmButtonColor="success"
