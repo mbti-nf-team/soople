@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { memo, PropsWithChildren, ReactElement } from 'react';
 import { Eye as ViewsIcon } from 'react-feather';
 
 import styled from '@emotion/styled';
@@ -20,10 +20,11 @@ dayjs.locale('ko');
 
 interface Props {
   group: Group;
+  numberApplicants: number;
 }
 
 function DetailHeaderSection({
-  group, children,
+  group, numberApplicants, children,
 }: PropsWithChildren<Props>): ReactElement {
   const { writer, views } = group;
 
@@ -55,6 +56,7 @@ function DetailHeaderSection({
               <Divider />
               <div>{recruitDate}</div>
               <Divider />
+              <div>{`${numberApplicants}명 신청 중`}</div>
             </MetadataWrapper>
           </WriterProfileTextWrapper>
         </WriterProfile>
@@ -64,7 +66,7 @@ function DetailHeaderSection({
   );
 }
 
-export default DetailHeaderSection;
+export default memo(DetailHeaderSection);
 
 const DetailHeaderSectionWrapper = styled.section`
   border-bottom: 0.5px solid ${palette.accent2};
@@ -105,11 +107,19 @@ const WriterProfileTextWrapper = styled.div`
 `;
 
 const MetadataWrapper = styled.div`
-  ${subtitle1Font()};
-  color: ${palette.accent6};
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  & > :not(:last-of-type) {
+    ${subtitle1Font()};
+    color: ${palette.accent6};
+  }
+
+  & > :last-of-type {
+    ${subtitle1Font(true)};
+    color: ${palette.foreground};
+  }
 
   .view-wrapper {
     display: flex;

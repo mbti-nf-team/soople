@@ -9,6 +9,7 @@ import DetailHeaderSection from './DetailHeaderSection';
 describe('DetailHeaderSection', () => {
   const renderDetailHeaderSection = (group = GROUP_FIXTURE) => render((
     <DetailHeaderSection
+      numberApplicants={1}
       group={group}
     />
   ));

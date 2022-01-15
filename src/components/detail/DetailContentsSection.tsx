@@ -16,9 +16,9 @@ function DetailContentsSection({ group }: Props): ReactElement {
 
   return (
     <DetailContentsWrapper>
-      <div>
+      <DetailContentWrapper>
         {content}
-      </div>
+      </DetailContentWrapper>
       <TagsWrapper>
         {tags.map((tag) => (
           <Tag
@@ -41,6 +41,10 @@ const TagsWrapper = styled.div`
       margin-right: 0;
     }
   }
+`;
+
+const DetailContentWrapper = styled.div`
+  margin-bottom: 36px;
 `;
 
 const DetailContentsWrapper = styled.div`

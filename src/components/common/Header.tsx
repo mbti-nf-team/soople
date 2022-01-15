@@ -58,8 +58,8 @@ function Header({
 export default memo(Header);
 
 const LogoIcon = styled(LogoSvg)`
-  width: 100px;
-  height: 20px;
+  width: 96px;
+  height: 24px;
 `;
 
 const HeaderBlock = styled.div<{ isHome: boolean; isScrollTop: boolean }>`

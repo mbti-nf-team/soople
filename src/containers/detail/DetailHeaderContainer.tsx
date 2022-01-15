@@ -28,7 +28,7 @@ function DetailHeaderContainer(): ReactElement {
   useEffect(() => dispatch(loadApplicants(group.groupId)), []);
 
   return (
-    <DetailHeaderSection group={group}>
+    <DetailHeaderSection group={group} numberApplicants={applicants.length}>
       <DetailStatusButton
         user={user}
         group={group}

@@ -50,6 +50,7 @@ export default SignInModal;
 
 const LogoIcon = styled(LogoSvg)`
   width: 80px;
+  height: 20px;
 `;
 
 const CloseIcon = styled(CloseSvg)`

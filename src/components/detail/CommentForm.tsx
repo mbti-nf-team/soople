@@ -36,7 +36,7 @@ function CommentForm({ onSubmit, onVisible, user }: Props): ReactElement {
         disabled={!user}
       />
       {user ? (
-        <Button color="primary" onClick={() => handleSubmit(user)} disabled={!content}>
+        <Button color="primary" onClick={() => handleSubmit(user)} disabled={!content.trim()}>
           댓글 남기기
         </Button>
       ) : (
