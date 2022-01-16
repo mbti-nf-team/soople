@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { body1Font, body2Font, h4Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
-export type ColorType = 'success' | 'outlined' | 'primary' | 'warning';
+export type ColorType = 'success' | 'outlined' | 'primary' | 'warning' | 'ghost';
 type ButtonSize = 'small' | 'medium' | 'large';
 
 interface Props extends Omit<HTMLProps<HTMLButtonElement | HTMLAnchorElement>, 'size'> {
@@ -54,6 +54,16 @@ function Button({
 export default Button;
 
 const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
+  position: relative;
+  transform: translateZ(0);
+  user-select: none;
+  transition:
+    color .1s ease-in-out,
+    background-color .1s ease-in-out,
+    border-color .1s ease-in-out,
+    opacity .1s ease-in-out;
+  white-space: nowrap;
+  overflow: hidden;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -61,7 +71,24 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
   text-align: center;
   padding: 0 1rem;
   border-radius: 6px;
-  transition: all .3s;
+
+  @media(hover: hover) and (pointer: fine) {
+    &:not(:disabled):after {
+      content: " ";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: ${palette.foreground};
+      opacity: 0;
+      transition: opacity .1s ease-in-out;
+    }
+
+    &:not(:disabled):not(.disabled):hover:after {
+      opacity: 0.15;
+    }
+  }
 
   ${size === 'large' && css`
     ${h4Font(true)};
@@ -83,65 +110,34 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
 
   ${color === 'outlined' && css`
     color: ${palette.foreground};
-    background: ${palette.background};
+    background-color: ${palette.background};
     border: 1px solid ${palette.accent2};
-
-    &:hover {
-      background: ${palette.accent2};
-      border: 1px solid ${palette.accent3};
-    }
-
-    &:disabled {
-      color: ${palette.accent4};
-      background: ${palette.accent1};
-      border: 1px solid ${palette.accent1};
-    }
   `}
 
   ${color === 'success' && css`
     color: ${palette.background};
-    background: ${palette.success};
-
-    &:hover {
-      color: ${palette.accent2};
-      background: ${palette.success10};
-    }
-
-    &:disabled {
-      color: ${palette.accent4};
-      background: ${palette.accent1};
-    }
+    background-color: ${palette.success};
   `}
 
   ${color === 'primary' && css`
     color: ${palette.background};
-    background: ${palette.accent7};
-
-    &:hover {
-      color: ${palette.accent2};
-      background: ${palette.accent6};
-    }
-
-    &:disabled {
-      color: ${palette.accent4};
-      background: ${palette.accent1};
-    }
+    background-color: ${palette.accent7};
   `}
 
   ${color === 'warning' && css`
     color: ${palette.background};
-    background: ${palette.warning};
-
-    &:hover {
-      color: ${palette.accent2};
-      background: ${palette.warning};
-    }
-
-    &:disabled {
-      color: ${palette.accent4};
-      background: ${palette.warning};
-    }
+    background-color: ${palette.warning};
   `}
+
+  ${color === 'ghost' && css`
+    color: ${palette.foreground};
+    background-color: initial;
+  `}
+
+  &:disabled {
+    color: ${palette.accent4};
+    background-color: ${palette.accent1};
+  }
 `;
 
 const StyledLink = styled.a<StyledButtonProps>`

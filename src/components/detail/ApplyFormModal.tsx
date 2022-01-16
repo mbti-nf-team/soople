@@ -20,7 +20,7 @@ interface Props {
 }
 
 const validationSchema = yup.object({
-  introduce: yup.string().required('소개글을 입력해주세요.'),
+  introduce: yup.string().trim().required('소개글을 입력해주세요.'),
   portfolioUrl: yup.string().notRequired().nullable(),
 }).required();
 

@@ -11,6 +11,8 @@ const setGlobalStyles = (path: string) => css`
   ${emotionNormalize}
 
   body {
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
     color: ${palette.foreground};
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
     background: ${path === '/' ? palette.accent1 : palette.background};

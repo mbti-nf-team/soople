@@ -89,6 +89,16 @@ describe('Button', () => {
         });
       });
     });
+
+    context('색상 속성이 "ghost"인 경우', () => {
+      it(`폰트 색상이 ${palette.foreground} 이어야만 한다`, () => {
+        renderButton({ color: 'ghost' });
+
+        expect(screen.getByText('버튼')).toHaveStyle({
+          color: palette.foreground,
+        });
+      });
+    });
   });
 
   describe('"href" 속성 유무에 따라 버튼 또는 링크가 나타난다', () => {
