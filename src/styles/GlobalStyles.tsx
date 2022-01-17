@@ -4,7 +4,9 @@ import { css, Global } from '@emotion/react';
 import emotionNormalize from 'emotion-normalize';
 import { useRouter } from 'next/router';
 
-import { h2Font, h3Font, h4Font } from './fontStyles';
+import {
+  body2Font, h2Font, h3Font, h4Font,
+} from './fontStyles';
 import palette from './palette';
 
 const setGlobalStyles = (path: string) => css`
@@ -47,6 +49,12 @@ const setGlobalStyles = (path: string) => css`
 
   :disabled {
     cursor: not-allowed;
+  }
+
+  .toastBody {
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    color: ${palette.accent7};
+    ${body2Font()}
   }
 `;
 
