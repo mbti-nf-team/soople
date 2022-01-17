@@ -27,6 +27,9 @@ describe('HomePage', () => {
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       asPath: '/',
+      query: {
+        error: null,
+      },
     }));
   });
 

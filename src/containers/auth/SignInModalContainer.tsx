@@ -28,7 +28,7 @@ function SignInModalContainer(): ReactElement | null {
   }, [dispatch]);
 
   useEffect(() => {
-    if (query?.error) {
+    if (query?.error && query.error !== 'unauthenticated') {
       dispatch(setSignInModalVisible(true));
       setError(query.error as string);
       replace('/', undefined, { shallow: true });
