@@ -22,7 +22,7 @@ interface Props {
 function DetailStatusButton({
   group, user, onApply, onVisibleSignInModal, applicants, onCancelApply,
 }: Props): ReactElement {
-  const { writer, isCompleted } = group;
+  const { writer, isCompleted, groupId } = group;
 
   const currentTime = useCurrentTime(group);
   const isWriter = R.equals(writer.uid, user?.uid);
@@ -30,7 +30,10 @@ function DetailStatusButton({
 
   if (isWriter) {
     return (
-      <WriterStatusButtons isCompleted={isCompleted} />
+      <WriterStatusButtons
+        groupId={groupId}
+        isCompleted={isCompleted}
+      />
     );
   }
 

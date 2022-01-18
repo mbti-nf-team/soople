@@ -11,7 +11,7 @@ import {
 import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
 import { formatApplicant, formatComment, formatGroup } from '@/utils/firestore';
 
-import APPLICANT_FIXTURE from '../../fixtures/applicants';
+import APPLICANT_FIXTURE from '../../fixtures/applicant';
 import COMMENT_FIXTURE from '../../fixtures/comment';
 import GROUP_FIXTURE from '../../fixtures/group';
 import PROFILE_FIXTURE from '../../fixtures/profile';

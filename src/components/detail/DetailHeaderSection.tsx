@@ -38,7 +38,7 @@ function DetailHeaderSection({
         <WriterProfile>
           <ProfileImage
             src={writer.image}
-            size="50px"
+            size="48px"
           />
           <WriterProfileTextWrapper>
             <span>

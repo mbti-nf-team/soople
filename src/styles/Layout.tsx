@@ -4,8 +4,12 @@ import React, { PropsWithChildren, ReactElement } from 'react';
 import styled from '@emotion/styled';
 import facepaint from 'facepaint';
 
-const mq = facepaint([
-  '@media(min-width: 1300px)',
+const mq1 = facepaint([
+  '@media(min-width: 1100px)',
+]);
+
+const mq2 = facepaint([
+  '@media(min-width: 700px)',
 ]);
 
 const LayoutWrapper = styled.div`
@@ -13,8 +17,8 @@ const LayoutWrapper = styled.div`
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-  ${mq({
-    width: ['calc(100% - 3rem)', '1280px'],
+  ${mq1({
+    width: ['calc(100% - 3rem)', '1040px'],
   })};
 `;
 
@@ -23,5 +27,11 @@ const Layout = ({ children, ...rest }: PropsWithChildren<{}>): ReactElement => (
     {children}
   </LayoutWrapper>
 );
+
+export const DetailLayout = styled(Layout)`
+  ${mq2({
+    width: ['calc(100% - 3rem)', '686px'],
+  })};
+`;
 
 export default Layout;

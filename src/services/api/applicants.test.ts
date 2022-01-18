@@ -4,7 +4,7 @@ import {
 
 import { ApplicantFields } from '@/models/group';
 
-import APPLICANTS_FIXTURE from '../../../fixtures/applicants';
+import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import { collectionRef } from '../firebase';
 
@@ -53,14 +53,14 @@ describe('applicants API', () => {
   describe('getApplicants', () => {
     beforeEach(() => {
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
-        docs: [APPLICANTS_FIXTURE],
+        docs: [APPLICANT_FIXTURE],
       }));
     });
 
     it('신청자 리스트가 반환되어야만 한다', async () => {
       const response = await getApplicants('groupId');
 
-      expect(response).toEqual([APPLICANTS_FIXTURE]);
+      expect(response).toEqual([APPLICANT_FIXTURE]);
       expect(getDocs).toBeCalledTimes(1);
     });
   });
