@@ -2,7 +2,7 @@ import {
   act, fireEvent, render, screen,
 } from '@testing-library/react';
 
-import APPLICANT_FIXTURE from '../../../fixtures/applicants';
+import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import ApplicantStatusButton from './ApplicantStatusButton';

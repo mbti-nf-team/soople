@@ -2,7 +2,7 @@ import { Applicant } from '@/models/group';
 
 import PROFILE_FIXTURE from './profile';
 
-const applicants: Applicant = {
+const applicant: Applicant = {
   uid: '2',
   groupId: '1',
   introduce: 'introduce',
@@ -12,4 +12,4 @@ const applicants: Applicant = {
   createdAt: '2021-11-11',
 };
 
-export default applicants;
+export default applicant;

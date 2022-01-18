@@ -1,10 +1,13 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import WriterStatusButtons from './WriterStatusButtons';
 
 describe('WriterStatusButtons', () => {
+  const groupId = 'groupId';
+
   const renderWriterStatusButtons = (isCompleted: boolean) => render((
     <WriterStatusButtons
+      groupId={groupId}
       isCompleted={isCompleted}
     />
   ));
@@ -22,6 +25,7 @@ describe('WriterStatusButtons', () => {
       const { container } = renderWriterStatusButtons(false);
 
       expect(container).toHaveTextContent('신청현황 보기');
+      expect(screen.getByText('신청현황 보기')).toHaveAttribute('href', `/detail/${groupId}/applicants`);
     });
   });
 });

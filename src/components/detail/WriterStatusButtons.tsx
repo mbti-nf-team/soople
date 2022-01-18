@@ -6,9 +6,10 @@ import Button from '../common/Button';
 
 interface Props {
   isCompleted: boolean;
+  groupId: string;
 }
 
-function WriterStatusButtons({ isCompleted }: Props): ReactElement {
+function WriterStatusButtons({ groupId, isCompleted }: Props): ReactElement {
   return (
     <WriterButtonWrapper>
       <Button>수정</Button>
@@ -16,7 +17,7 @@ function WriterStatusButtons({ isCompleted }: Props): ReactElement {
       {isCompleted ? (
         <Button color="primary">팀원 보기</Button>
       ) : (
-        <Button color="primary">신청현황 보기</Button>
+        <Button href={`/detail/${groupId}/applicants`} color="primary">신청현황 보기</Button>
       )}
     </WriterButtonWrapper>
   );

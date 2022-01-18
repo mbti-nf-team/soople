@@ -17,7 +17,7 @@ const Core = () => (
       pauseOnFocusLoss
       draggable
       position="top-right"
-      bodyClassName="toastBody"
+      bodyClassName="toast-body"
     />
   </>
 );

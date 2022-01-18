@@ -1,16 +1,34 @@
 import { ParsedUrlQuery } from 'querystring';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 
 import { getGroupDetail } from '@/services/api/group';
 import firebaseAdmin from '@/services/firebase/firebaseAdmin';
 
+import APPLICANT_FIXTURE from '../../../../fixtures/applicant';
+
 import ApplicantsPage, { getServerSideProps } from './applicants.page';
 
 jest.mock('@/services/api/group');
 
 describe('applicants', () => {
+  const dispatch = jest.fn();
+
+  beforeEach(() => {
+    dispatch.mockClear();
+
+    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
+      groupReducer: {
+        applicants: [APPLICANT_FIXTURE],
+        groupId: '1',
+      },
+    }));
+  });
+
   const renderApplicants = () => render((
     <ApplicantsPage />
   ));
@@ -18,7 +36,7 @@ describe('applicants', () => {
   it('신청현황 페이지가 나타나야만 한다', () => {
     const { container } = renderApplicants();
 
-    expect(container).toHaveTextContent('신청현황');
+    expect(container).toHaveTextContent('모집 완료');
   });
 });
 
