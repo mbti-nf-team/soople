@@ -5,8 +5,8 @@ import React, { ReactElement } from 'react';
 import { GetServerSideProps } from 'next';
 import nookies from 'nookies';
 
-import Header from '@/components/applicants/Header';
 import ApplicationStatusContainer from '@/containers/applicants/ApplicationStatusContainer';
+import ApplicationStatusHeaderContainer from '@/containers/applicants/ApplicationStatusHeaderContainer';
 import { setGroupId } from '@/reducers/groupSlice';
 import wrapper from '@/reducers/store';
 import { getGroupDetail } from '@/services/api/group';
@@ -63,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = wrapper
 function ApplicantsPage(): ReactElement {
   return (
     <>
-      <Header />
+      <ApplicationStatusHeaderContainer />
       <ApplicationStatusContainer />
     </>
   );

@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
 
-import WriteHeader from '@/components/write/WriteHeader';
+import Button from '@/components/common/Button';
+import SubHeader from '@/components/common/SubHeader';
 import { setPublishModalVisible } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getGroup } from '@/utils/utils';
@@ -23,10 +24,20 @@ function WriteHeaderContainer(): ReactElement {
   }, [groupId]);
 
   return (
-    <WriteHeader
-      title={title}
-      onSubmit={onSubmit}
-    />
+    <SubHeader
+      goBack={() => router.back()}
+      previousText="팀 모집하기"
+    >
+      <Button
+        type="button"
+        size="small"
+        color="success"
+        disabled={!title}
+        onClick={onSubmit}
+      >
+        등록하기
+      </Button>
+    </SubHeader>
   );
 }
 

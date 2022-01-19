@@ -12,10 +12,12 @@ jest.mock('next/router', () => ({
 describe('WriteHeaderContainer', () => {
   const dispatch = jest.fn();
   const mockReplace = jest.fn();
+  const mockBack = jest.fn();
 
   beforeEach(() => {
     dispatch.mockClear();
     mockReplace.mockClear();
+    mockBack.mockClear();
 
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
@@ -23,6 +25,10 @@ describe('WriteHeaderContainer', () => {
         groupId: given.groupId,
         writeFields: given.writeFields,
       },
+    }));
+    (useRouter as jest.Mock).mockImplementationOnce(() => ({
+      replace: mockReplace,
+      back: mockBack,
     }));
   });
 
@@ -45,6 +51,16 @@ describe('WriteHeaderContainer', () => {
           fireEvent.click(screen.getByText('등록하기'));
 
           expect(dispatch).not.toBeCalled();
+        });
+      });
+
+      describe('"팀 모집하기"을 클릭한다', () => {
+        it('router.back이 호출되어야만 한다', () => {
+          renderWriteHeaderContainer();
+
+          fireEvent.click(screen.getByText('팀 모집하기'));
+
+          expect(mockBack).toBeCalledTimes(1);
         });
       });
     });
@@ -74,12 +90,6 @@ describe('WriteHeaderContainer', () => {
     given('writeFields', () => ({
       title: 'title',
     }));
-
-    beforeEach(() => {
-      (useRouter as jest.Mock).mockImplementationOnce(() => ({
-        replace: mockReplace,
-      }));
-    });
 
     it('"router.replace"가 "/"와 같이 호출되어야만 한다', async () => {
       renderWriteHeaderContainer();
