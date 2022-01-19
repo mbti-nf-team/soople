@@ -1,8 +1,8 @@
 import {
-  addDoc, deleteDoc, getDocs, orderBy, query, serverTimestamp, where,
+  addDoc, deleteDoc, getDocs, orderBy, query, serverTimestamp, updateDoc, where,
 } from 'firebase/firestore';
 
-import { ApplicantFields } from '@/models/group';
+import { Applicant, ApplicantFields } from '@/models/group';
 
 import { collectionRef, docRef } from '../firebase';
 
@@ -28,6 +28,19 @@ export const getApplicants = async (groupId: string) => {
   const response = await getDocs(getQuery);
 
   return response.docs;
+};
+
+export const putApplicant = async (applicantForm: Applicant) => {
+  const {
+    uid, introduce, isConfirm, portfolioUrl, applicant,
+  } = applicantForm;
+
+  await updateDoc(docRef(APPLICANTS, uid), {
+    introduce,
+    isConfirm,
+    portfolioUrl,
+    applicant,
+  });
 };
 
 export const deleteApplicant = async (applicantId: string) => {

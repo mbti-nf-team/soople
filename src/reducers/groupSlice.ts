@@ -9,7 +9,9 @@ import {
   CommentFields,
   Group, TagCount, WriteFields, WriteFieldsForm,
 } from '@/models/group';
-import { deleteApplicant, getApplicants, postAddApplicant } from '@/services/api/applicants';
+import {
+  deleteApplicant, getApplicants, postAddApplicant, putApplicant,
+} from '@/services/api/applicants';
 import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
   getGroupDetail, getGroups, postNewGroup,
@@ -321,6 +323,30 @@ export const requestDeleteApplicant = (
     await deleteApplicant(applicantId);
 
     const newApplicants = applicants.filter(({ uid }) => uid !== applicantId);
+
+    dispatch(setApplicants(newApplicants));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setGroupError(message));
+  }
+};
+
+export const updateApplicant = (
+  requestApplicant: Applicant,
+): AppThunk => async (dispatch, getState) => {
+  const { groupReducer: { applicants } } = getState();
+
+  try {
+    await putApplicant(requestApplicant);
+
+    const newApplicants = applicants.map((applicant) => {
+      if (requestApplicant.uid === applicant.uid) {
+        return requestApplicant;
+      }
+
+      return applicant;
+    });
 
     dispatch(setApplicants(newApplicants));
   } catch (error) {

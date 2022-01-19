@@ -13,9 +13,10 @@ import ProfileImage from '../common/ProfileImage';
 
 interface Props {
   applicationForm: Applicant;
+  onToggle: (applicant: Applicant) => void;
 }
 
-function ApplicantItem({ applicationForm }: Props): ReactElement {
+function ApplicantItem({ applicationForm, onToggle }: Props): ReactElement {
   const {
     portfolioUrl, applicant, introduce, isConfirm,
   } = applicationForm;
@@ -37,7 +38,12 @@ function ApplicantItem({ applicationForm }: Props): ReactElement {
             </MetadataWrapper>
           </ApplicantTextWrapper>
         </ApplicantProfile>
-        <Button type="button" size="small" color={isConfirm ? 'primary' : 'outlined'}>
+        <Button
+          type="button"
+          size="small"
+          color={isConfirm ? 'primary' : 'outlined'}
+          onClick={() => onToggle(applicationForm)}
+        >
           {isConfirm ? '해제' : '선택'}
         </Button>
       </ApplicantSubInformation>
