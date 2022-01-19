@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 
@@ -29,5 +29,15 @@ describe('ApplicationStatusContainer', () => {
     renderApplicationStatusContainer();
 
     expect(dispatch).toBeCalledTimes(1);
+  });
+
+  describe('"선택" 버튼을 클릭한다', () => {
+    it('dispatch 액션이 호출되어야만 한다', () => {
+      renderApplicationStatusContainer();
+
+      fireEvent.click(screen.getByText('선택'));
+
+      expect(dispatch).toBeCalledTimes(2);
+    });
   });
 });

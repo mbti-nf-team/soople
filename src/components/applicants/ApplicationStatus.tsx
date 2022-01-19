@@ -9,15 +9,17 @@ import ApplicantItem from './ApplicantItem';
 
 interface Props {
   applicants: Applicant[];
+  onToggleConfirm: (applicant: Applicant) => void;
 }
 
-function ApplicationStatus({ applicants }: Props): ReactElement {
+function ApplicationStatus({ applicants, onToggleConfirm }: Props): ReactElement {
   return (
     <ApplicationStatusSection>
       {applicants.map((applicant) => (
         <ApplicantItem
           key={applicant.uid}
           applicationForm={applicant}
+          onToggle={onToggleConfirm}
         />
       ))}
     </ApplicationStatusSection>
