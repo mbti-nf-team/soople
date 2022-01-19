@@ -7,11 +7,13 @@ import Layout from '@/styles/Layout';
 
 function WritePage(): ReactElement {
   return (
-    <Layout>
+    <>
       <WriteHeaderContainer />
-      <WriteFormContainer />
-      <PublishModalContainer />
-    </Layout>
+      <Layout>
+        <WriteFormContainer />
+        <PublishModalContainer />
+      </Layout>
+    </>
   );
 }
 

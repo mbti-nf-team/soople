@@ -1,30 +1,33 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { ReactElement } from 'react';
+import React, { ReactChild, ReactElement } from 'react';
 import { ChevronLeft } from 'react-feather';
 
 import styled from '@emotion/styled';
-import Link from 'next/link';
 
+import { h4Font } from '@/styles/fontStyles';
 import Layout from '@/styles/Layout';
 import palette from '@/styles/palette';
 import zIndexes from '@/styles/zIndexes';
 
-import Button from '../common/Button';
+interface Props {
+  previousText: string;
+  children: ReactChild;
+  goBack: () => void;
+}
 
-function Header(): ReactElement {
+function SubHeader({ goBack, previousText, children }: Props): ReactElement {
   return (
     <>
       <HeaderBlock>
         <HeaderWrapper>
-          <Link href="#" passHref>
-            <a>
-              <ChevronLeft size={24} />
-            </a>
-          </Link>
           <div>
-            <Button type="button" size="small" color="success">
-              모집 완료
-            </Button>
+            <ChevronLeft size={24} onClick={goBack} cursor="pointer" />
+            <GoBackButton onClick={goBack} type="button">
+              {previousText}
+            </GoBackButton>
+          </div>
+          <div>
+            {children}
           </div>
         </HeaderWrapper>
       </HeaderBlock>
@@ -33,7 +36,7 @@ function Header(): ReactElement {
   );
 }
 
-export default Header;
+export default SubHeader;
 
 const Spacer = styled.div`
   height: 4rem;
@@ -52,4 +55,15 @@ const HeaderWrapper = styled(Layout)`
   align-items: center;
   justify-content: space-between;
   height: 4rem;
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+`;
+
+const GoBackButton = styled.button`
+  ${h4Font(true)};
+  background: none;
 `;
