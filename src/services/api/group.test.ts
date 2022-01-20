@@ -1,10 +1,10 @@
 import {
-  addDoc, getDoc, getDocs, serverTimestamp,
+  addDoc, getDoc, getDocs, serverTimestamp, updateDoc,
 } from 'firebase/firestore';
 
 import { WriteFields } from '@/models/group';
 import {
-  getGroupDetail, getGroups, postNewGroup,
+  getGroupDetail, getGroups, patchCompletedGroup, postNewGroup,
 } from '@/services/api/group';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
@@ -100,6 +100,14 @@ describe('group API', () => {
       const response = await getGroups([]);
 
       expect(response).toEqual([GROUP_FIXTURE]);
+    });
+  });
+
+  describe('patchCompletedGroup', () => {
+    it('"updateDoc"이 호출되어야만 한다', async () => {
+      await patchCompletedGroup('groupId');
+
+      expect(updateDoc).toBeCalledTimes(1);
     });
   });
 });

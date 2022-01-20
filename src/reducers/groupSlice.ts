@@ -14,7 +14,7 @@ import {
 } from '@/services/api/applicants';
 import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
-  getGroupDetail, getGroups, postNewGroup,
+  getGroupDetail, getGroups, patchCompletedGroup, postNewGroup,
 } from '@/services/api/group';
 import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
 import { formatApplicant, formatComment, formatGroup } from '@/utils/firestore';
@@ -349,6 +349,21 @@ export const updateApplicant = (
     });
 
     dispatch(setApplicants(newApplicants));
+  } catch (error) {
+    const { message } = error as Error;
+
+    dispatch(setGroupError(message));
+  }
+};
+
+export const updateCompletedApply = (group: Group): AppThunk => async (dispatch) => {
+  try {
+    await patchCompletedGroup(group.groupId);
+
+    dispatch(setGroup({
+      ...group,
+      isCompleted: true,
+    }));
   } catch (error) {
     const { message } = error as Error;
 

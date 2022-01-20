@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import ApplicationStatus from '@/components/applicants/ApplicationStatus';
-import { Applicant } from '@/models/group';
+import { Applicant, Group } from '@/models/group';
 import { loadApplicants, updateApplicant } from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { DetailLayout } from '@/styles/Layout';
@@ -11,7 +11,7 @@ import { getGroup } from '@/utils/utils';
 function ApplicationStatusContainer(): ReactElement {
   const dispatch = useAppDispatch();
   const applicants = useSelector(getGroup('applicants'));
-  const groupId = useSelector(getGroup('groupId')) as string;
+  const group = useSelector(getGroup('group')) as Group;
 
   const onToggleConfirm = useCallback((applicant: Applicant) => dispatch(updateApplicant({
     ...applicant,
@@ -19,7 +19,7 @@ function ApplicationStatusContainer(): ReactElement {
   })), [dispatch]);
 
   useEffect(() => {
-    dispatch(loadApplicants(groupId));
+    dispatch(loadApplicants(group.groupId));
   }, []);
 
   return (

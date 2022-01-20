@@ -4,15 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
+import { useRouter } from 'next/router';
 
 import { getGroupDetail } from '@/services/api/group';
 import firebaseAdmin from '@/services/firebase/firebaseAdmin';
 
 import APPLICANT_FIXTURE from '../../../../fixtures/applicant';
+import GROUP_FIXTURE from '../../../../fixtures/group';
 
 import ApplicantsPage, { getServerSideProps } from './applicants.page';
 
 jest.mock('@/services/api/group');
+jest.mock('next/router');
 
 describe('applicants', () => {
   const dispatch = jest.fn();
@@ -23,9 +26,13 @@ describe('applicants', () => {
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
+        group: GROUP_FIXTURE,
         applicants: [APPLICANT_FIXTURE],
         groupId: '1',
       },
+    }));
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      back: jest.fn(),
     }));
   });
 
@@ -63,6 +70,31 @@ describe('getServerSideProps', () => {
     });
   });
 
+  context('이미 모집완료된 작성글인 경우', () => {
+    const token = {
+      uid: '1',
+    };
+
+    beforeEach(() => {
+      (getGroupDetail as jest.Mock).mockResolvedValue({
+        isCompleted: true,
+      });
+      (firebaseAdmin.auth as jest.Mock).mockImplementation(() => ({
+        verifyIdToken: jest.fn().mockResolvedValue(token),
+      }));
+    });
+
+    it('redirect를 반환해야만 한다', async () => {
+      const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
+
+      expect(getGroupDetail).toBeCalledWith('id');
+      expect(response.redirect).toEqual({
+        permanent: false,
+        destination: '/?error=unauthenticated',
+      });
+    });
+  });
+
   context('로그인한 사용자가 글 작성자가 아닐 경우', () => {
     const token = {
       uid: '1',
@@ -94,25 +126,29 @@ describe('getServerSideProps', () => {
     const token = {
       uid: '123',
     };
-    const groupId = '1';
+
+    const writer = {
+      uid: '123',
+    };
 
     beforeEach(() => {
       (getGroupDetail as jest.Mock).mockResolvedValue({
-        writer: {
-          uid: '123',
-        },
-        groupId,
+        ...GROUP_FIXTURE,
+        writer,
       });
       (firebaseAdmin.auth as jest.Mock).mockImplementation(() => ({
         verifyIdToken: jest.fn().mockResolvedValue(token),
       }));
     });
 
-    it('groupId가 반환되어야만 한다', async () => {
+    it('group이 반환되어야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
       expect(getGroupDetail).toBeCalledWith('id');
-      expect(response.props.initialState.groupReducer.groupId).toBe(groupId);
+      expect(response.props.initialState.groupReducer.group).toEqual({
+        ...GROUP_FIXTURE,
+        writer,
+      });
     });
   });
 

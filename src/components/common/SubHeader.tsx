@@ -65,5 +65,6 @@ const HeaderWrapper = styled(Layout)`
 
 const GoBackButton = styled.button`
   ${h4Font(true)};
-  background: none;
+  background: transparent;
+  color: ${palette.foreground};
 `;
