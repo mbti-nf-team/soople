@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
+import GROUP_FIXTURE from '../../../fixtures/group';
 
 import ApplicationStatusContainer from './ApplicationStatusContainer';
 
@@ -16,7 +17,7 @@ describe('ApplicationStatusContainer', () => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
         applicants: [APPLICANT_FIXTURE],
-        groupId: '1',
+        group: GROUP_FIXTURE,
       },
     }));
   });

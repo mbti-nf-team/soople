@@ -1,5 +1,5 @@
 import {
-  addDoc, getDoc, getDocs, orderBy, query, serverTimestamp, where,
+  addDoc, getDoc, getDocs, orderBy, query, serverTimestamp, updateDoc, where,
 } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
@@ -24,8 +24,8 @@ export const postNewGroup = async (profile: Profile, fields: WriteFields) => {
   return id;
 };
 
-export const getGroupDetail = async (id: string) => {
-  const response = await getDoc(docRef(GROUPS, id));
+export const getGroupDetail = async (uid: string) => {
+  const response = await getDoc(docRef(GROUPS, uid));
 
   if (!response.exists()) {
     return null;
@@ -50,4 +50,10 @@ export const getGroups = async (condition: Category[]) => {
   const response = await getDocs(getQuery);
 
   return response.docs;
+};
+
+export const patchCompletedGroup = async (uid: string) => {
+  await updateDoc(docRef(GROUPS, uid), {
+    isCompleted: true,
+  });
 };

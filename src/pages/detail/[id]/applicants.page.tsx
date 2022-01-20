@@ -7,7 +7,7 @@ import nookies from 'nookies';
 
 import ApplicationStatusContainer from '@/containers/applicants/ApplicationStatusContainer';
 import ApplicationStatusHeaderContainer from '@/containers/applicants/ApplicationStatusHeaderContainer';
-import { setGroupId } from '@/reducers/groupSlice';
+import { setGroup } from '@/reducers/groupSlice';
 import wrapper from '@/reducers/store';
 import { getGroupDetail } from '@/services/api/group';
 import firebaseAdmin from '@/services/firebase/firebaseAdmin';
@@ -23,12 +23,21 @@ export const getServerSideProps: GetServerSideProps = wrapper
     try {
       const cookies = nookies.get(context);
       const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
-
       const group = await getGroupDetail(id);
 
       if (!group) {
         return {
           notFound: true,
+        };
+      }
+
+      if (group.isCompleted) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: '/?error=unauthenticated',
+          },
+          props: {},
         };
       }
 
@@ -44,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = wrapper
         };
       }
 
-      dispatch(setGroupId(group.groupId));
+      dispatch(setGroup(group));
 
       return {
         props: {},

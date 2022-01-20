@@ -8,7 +8,7 @@ import {
 } from '@/services/api/applicants';
 import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
-  getGroupDetail, getGroups, postNewGroup,
+  getGroupDetail, getGroups, patchCompletedGroup, postNewGroup,
 } from '@/services/api/group';
 import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
 import { formatApplicant, formatComment, formatGroup } from '@/utils/firestore';
@@ -44,6 +44,7 @@ import reducer, {
   setPublishModalVisible,
   setTagsCount,
   updateApplicant,
+  updateCompletedApply,
 } from './groupSlice';
 
 const middlewares = [thunk];
@@ -730,6 +731,51 @@ describe('groupReducer async actions', () => {
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
           await store.dispatch(updateApplicant(APPLICANT_FIXTURE));
+        } catch (error) {
+          // ignore errors
+        } finally {
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: 'error',
+            type: 'group/setGroupError',
+          });
+        }
+      });
+    });
+  });
+
+  describe('updateCompletedApply', () => {
+    beforeEach(() => {
+      store = mockStore({});
+    });
+
+    context('에러가 발생하지 않는 경우', () => {
+      (patchCompletedGroup as jest.Mock).mockReturnValueOnce(null);
+
+      it('dispatch 액션이 "group/setGroup"인 타입과 payload는 group여야 한다', async () => {
+        await store.dispatch(updateCompletedApply(GROUP_FIXTURE));
+
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+          payload: {
+            ...GROUP_FIXTURE,
+            isCompleted: true,
+          },
+          type: 'group/setGroup',
+        });
+      });
+    });
+
+    context('에러가 발생하는 경우', () => {
+      (patchCompletedGroup as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('error');
+      });
+
+      it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
+        try {
+          await store.dispatch(updateCompletedApply(GROUP_FIXTURE));
         } catch (error) {
           // ignore errors
         } finally {
