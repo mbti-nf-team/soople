@@ -16,6 +16,7 @@ describe('ApplicationStatusHeader', () => {
 
   const renderApplicationStatusHeader = (applicant: Applicant) => render((
     <ApplicationStatusHeader
+      timeRemaining={null}
       onSubmit={handleSubmit}
       goBack={handleGoBack}
       applicants={[applicant]}

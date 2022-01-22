@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -14,9 +14,12 @@ interface Props{
   goBack: () => void;
   applicants: Applicant[];
   onSubmit: () => void;
+  timeRemaining: string | null;
 }
 
-function ApplicationStatusHeader({ goBack, onSubmit, applicants }: Props) {
+function ApplicationStatusHeader({
+  goBack, onSubmit, applicants, timeRemaining,
+}: Props) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const numberConfirmApplicant = applicants.filter(({ isConfirm }) => isConfirm).length;
 
@@ -52,12 +55,13 @@ function ApplicationStatusHeader({ goBack, onSubmit, applicants }: Props) {
         onSubmit={handleSubmit}
         isVisible={isVisible}
         numberApplicant={numberConfirmApplicant}
+        timeRemaining={timeRemaining}
       />
     </>
   );
 }
 
-export default ApplicationStatusHeader;
+export default memo(ApplicationStatusHeader);
 
 const SelectApplicantStatus = styled.span`
   ${body2Font()};

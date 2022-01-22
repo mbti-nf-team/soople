@@ -7,6 +7,7 @@ import {
   emptyAThenB,
   getAuth,
   getGroup,
+  isCurrentTimeBeforeEndDate,
   isProdLevel,
   isRecruitCompletedAndManual,
   isRecruiting,
@@ -154,6 +155,24 @@ describe('yesterday', () => {
     now.setDate(now.getDate() - 1);
 
     expect(result).toBe(now.toString());
+  });
+});
+
+describe('isCurrentTimeBeforeEndDate', () => {
+  context('현재 시간보다 이후 시간일 경우', () => {
+    it('true를 반환해야만 한다', () => {
+      const result = isCurrentTimeBeforeEndDate(tomorrow(new Date()), Date.now());
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  context('현재 시간보다 이전 시간일 경우', () => {
+    it('false를 반환해야만 한다', () => {
+      const result = isCurrentTimeBeforeEndDate(yesterday(new Date()), Date.now());
+
+      expect(result).toBeFalsy();
+    });
   });
 });
 

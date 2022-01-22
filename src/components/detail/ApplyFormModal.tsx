@@ -84,11 +84,15 @@ export default ApplyFormModal;
 const ContentsFormWrapper = styled.div`
   margin: 0 24px 32px 24px;
 
+  & > :not(div:first-of-type) {
+    margin-top: 20px;
+  }
+
   & > div > label > span {
     display: inline-flex;
     ${body2Font(true)};
     color: ${palette.accent6};
-    margin: 20px 0px 6px 4px;
+    margin: 0px 0px 6px 4px;
   }
 
   .option-span {

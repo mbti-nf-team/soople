@@ -1,10 +1,8 @@
 import { useMemo, useState } from 'react';
 import { useInterval } from 'react-use';
 
-import dayjs from 'dayjs';
-
 import { Group } from '@/models/group';
-import { isRecruitCompletedAndManual } from '@/utils/utils';
+import { isCurrentTimeBeforeEndDate, isRecruitCompletedAndManual } from '@/utils/utils';
 
 const useCurrentTime = (group: Group) => {
   const [currentTime, setCurrentTime] = useState<number>(Date.now());
@@ -14,9 +12,7 @@ const useCurrentTime = (group: Group) => {
       return null;
     }
 
-    const isCurrentTimeBeforeEndDate = dayjs(group.recruitmentEndDate).diff(currentTime) >= 0;
-
-    if (isCurrentTimeBeforeEndDate) {
+    if (isCurrentTimeBeforeEndDate(group.recruitmentEndDate, currentTime)) {
       return 1000;
     }
 

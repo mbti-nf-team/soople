@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { AlertCircle } from 'react-feather';
 
 import styled from '@emotion/styled';
 
@@ -13,10 +14,11 @@ interface Props {
   onClose: () => void;
   onSubmit: () => void;
   numberApplicant: number;
+  timeRemaining: string | null;
 }
 
 function CompleteApplyFormModal({
-  numberApplicant, isVisible, onClose, onSubmit,
+  numberApplicant, isVisible, onClose, onSubmit, timeRemaining,
 }: Props) {
   return (
     <FormModal
@@ -29,10 +31,20 @@ function CompleteApplyFormModal({
       size="540px"
     >
       <FormContentsWrapper>
+        {timeRemaining && (
+          <WarningRemainBlock>
+            <AlertCircle
+              size="16px"
+              fill={palette.warning}
+              color={palette.background}
+            />
+            <span>{`아직 모집 마감시간이 ${timeRemaining} 남아있어요.`}</span>
+          </WarningRemainBlock>
+        )}
         <DescribeMessage>
-          {`모집을 완료하고 선택한 ${numberApplicant}명과 함께 팀을 만드시겠습니까?`}
+          {`모집을 완료하고 선택한 ${numberApplicant}명과 함께 팀을 만드시겠어요?`}
           <br />
-          모집을 완료하시면 다시 되돌릴 수 없습니다.
+          모집을 완료하시면 다시 되돌릴 수 없어요.
         </DescribeMessage>
         <MessageInputWrapper>
           <label htmlFor="message">
@@ -47,7 +59,7 @@ function CompleteApplyFormModal({
           <small>
             팀 멤버들과 함께 대화할 오픈 채팅방 URL을 메시지로 보내보세요.
             <br />
-            메시지는 멤버들에게만 공개됩니다.
+            메시지는 멤버들에게만 공개돼요.
           </small>
         </MessageInputWrapper>
       </FormContentsWrapper>
@@ -55,7 +67,7 @@ function CompleteApplyFormModal({
   );
 }
 
-export default CompleteApplyFormModal;
+export default memo(CompleteApplyFormModal);
 
 const FormContentsWrapper = styled.div`
   display: flex;
@@ -66,7 +78,6 @@ const FormContentsWrapper = styled.div`
 
 const DescribeMessage = styled.div`
   ${body1Font()}
-  margin-top: 20px;
 `;
 
 const MessageInputWrapper = styled.div`
@@ -79,19 +90,37 @@ const MessageInputWrapper = styled.div`
   & > label {
     ${body2Font(true)}
     color: ${palette.accent6};
-    margin-left: 2px;
+    margin-left: 3px;
     margin-bottom: 6px;
 
     & > span {
       ${body2Font()}
       color: ${palette.accent4};
+      margin-left: 4px;
     }
   }
 
   & > small {
     ${subtitle1Font()}
     color: ${palette.accent5};
-    margin-left: 2px;
+    margin-left: 3px;
     margin-top: 6px;
+  }
+`;
+
+const WarningRemainBlock = styled.div`
+  background-color: ${palette.accent1};
+  border-radius: 8px;
+  padding: 9px 12px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+
+  & > span {
+    ${subtitle1Font(true)}
+    margin-left: 8px;
   }
 `;
