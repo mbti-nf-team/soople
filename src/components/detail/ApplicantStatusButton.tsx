@@ -38,7 +38,7 @@ function ApplicantStatusButton({
     onVisibleSignInModal();
   };
 
-  if (isCompleted) {
+  if (isCompleted && applicant?.isConfirm) {
     return (
       <Button color="primary">
         팀원 보기

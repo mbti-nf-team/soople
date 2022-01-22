@@ -6,6 +6,7 @@ import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
 import FormModal from '../common/FormModal';
+import Textarea from '../common/Textarea';
 
 interface Props {
   isVisible: boolean;
@@ -25,7 +26,7 @@ function CompleteApplyFormModal({
       confirmText="완료하기"
       onClose={onClose}
       onSubmit={onSubmit}
-      size="small"
+      size="540px"
     >
       <FormContentsWrapper>
         <DescribeMessage>
@@ -38,7 +39,11 @@ function CompleteApplyFormModal({
             메시지
             <span>(선택)</span>
           </label>
-          <MessageInput id="message" placeholder="팀 멤버들에게 보낼 메시지를 입력하세요" autoComplete="off" />
+          <Textarea
+            id="message"
+            placeholder="팀 멤버들에게 보낼 메시지를 입력하세요"
+            height="100px"
+          />
           <small>
             팀 멤버들과 함께 대화할 오픈 채팅방 URL을 메시지로 보내보세요.
             <br />
@@ -55,19 +60,19 @@ export default CompleteApplyFormModal;
 const FormContentsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  margin: 0 24px;
 `;
 
 const DescribeMessage = styled.div`
   ${body1Font()}
-  margin-top: 5px;
-  text-align: start;
+  margin-top: 20px;
 `;
 
 const MessageInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 360px;
+  width: 100%;
   margin-top: 20px;
   margin-bottom: 40px;
 
@@ -88,22 +93,5 @@ const MessageInputWrapper = styled.div`
     color: ${palette.accent5};
     margin-left: 2px;
     margin-top: 6px;
-  }
-`;
-
-const MessageInput = styled.input`
-  padding: 11px 16px;
-  border: 1px solid ${palette.accent2};
-  box-sizing: border-box;
-  border-radius: 8px;
-  outline: none;
-  transition: border-color 0.2s ease-in-out;
-
-  &::placeholder {
-    color: ${palette.accent4};
-  }
-
-  &:focus {
-    border: 1px solid ${palette.success};
   }
 `;

@@ -12,8 +12,6 @@ import zIndexes from '@/styles/zIndexes';
 import type { ColorType as ButtonColorType } from './Button';
 import Button from './Button';
 
-type FormModalSize = 'small' | 'medium';
-
 interface Props {
   isVisible: boolean;
   title: string;
@@ -21,12 +19,12 @@ interface Props {
   closeText?: string;
   onSubmit: () => void;
   onClose: () => void;
-  size?: FormModalSize;
+  size?: string;
   confirmButtonColor?: ButtonColorType;
 }
 
 function FormModal({
-  isVisible, title, confirmText = '확인', closeText = '닫기', onSubmit, onClose, confirmButtonColor = 'success', children, size = 'medium',
+  isVisible, title, confirmText = '확인', closeText = '닫기', onSubmit, onClose, confirmButtonColor = 'success', children, size = '600px',
 }: PropsWithChildren<Props>): ReactElement | null {
   if (!isVisible) {
     return null;
@@ -71,18 +69,11 @@ const FormModalWrapper = styled.div`
   background: rgba(0, 0, 0, 0.25);
 `;
 
-const FormModalBox = styled.div<{ size: FormModalSize; isVisible: boolean }>`
+const FormModalBox = styled.div<{ size: string; isVisible: boolean }>`
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
   background: ${palette.background};
   border-radius: 8px;
-
-  ${({ size }) => size === 'medium' && css`
-    width: 600px;
-  `};
-
-  ${({ size }) => size === 'small' && css`
-    width: 400px;
-  `};
+  width: ${({ size }) => size};
 
   ${({ isVisible }) => (isVisible && css`
     animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;
