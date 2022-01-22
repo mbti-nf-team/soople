@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -60,7 +60,7 @@ function ApplicantItem({ applicationForm, onToggle }: Props): ReactElement {
   );
 }
 
-export default ApplicantItem;
+export default memo(ApplicantItem);
 
 const ApplicantItemWrapper = styled.div`
   display: flex;

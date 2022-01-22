@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { Group } from '@/models/group';
-import { isRecruitCompletedAndManual } from '@/utils/utils';
+import { isCurrentTimeBeforeEndDate, isRecruitCompletedAndManual } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
 
@@ -22,9 +22,7 @@ const useRecruitDateStatus = (group: Group, time: number) => {
       return;
     }
 
-    const isCurrentTimeBeforeEndDate = dayjs(recruitmentEndDate).diff(time) >= 0;
-
-    if (isCurrentTimeBeforeEndDate) {
+    if (isCurrentTimeBeforeEndDate(recruitmentEndDate, time)) {
       setRecruitDateStatus(`${dayjs(time).to(dayjs(recruitmentEndDate))} 마감`);
       return;
     }

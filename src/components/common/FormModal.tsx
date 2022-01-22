@@ -86,6 +86,7 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   padding: 16px 20px;
   box-shadow: 0px 1px 0px ${palette.accent2};
+  margin-bottom: 20px;
 
   h4 {
     margin: 0px;
