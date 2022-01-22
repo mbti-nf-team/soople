@@ -6,7 +6,7 @@ import { Applicant } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
-import { emptyAThenB } from '@/utils/utils';
+import { emptyAThenB, stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
 import ProfileImage from '../common/ProfileImage';
@@ -34,7 +34,13 @@ function ApplicantItem({ applicationForm, onToggle }: Props): ReactElement {
             <MetadataWrapper>
               <span>{position}</span>
               <Divider />
-              <span>{portfolioUrl}</span>
+              <a
+                href={stringToExcludeNull(portfolioUrl)}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {portfolioUrl}
+              </a>
             </MetadataWrapper>
           </ApplicantTextWrapper>
         </ApplicantProfile>
@@ -97,6 +103,16 @@ const MetadataWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  & > a {
+    color: ${palette.success10};
+    transition: color 0.1s ease-in-out;
+
+    &:hover {
+      color: ${palette.success};
+      text-decoration: underline;
+    }
+  }
 `;
 
 const IntroduceBlock = styled.div`

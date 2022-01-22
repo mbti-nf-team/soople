@@ -22,20 +22,20 @@ describe('FormModal', () => {
   context('isVisible이 true인 경우', () => {
     given('isVisible', () => true);
 
-    context('size가 small인 경우', () => {
-      given('size', () => 'small');
+    context('size를 정한 경우', () => {
+      given('size', () => '500px');
 
-      it('width값은 400px이어야만 한다', () => {
+      it('지정한 width값이어야만 한다', () => {
         renderFormModal();
 
         expect(screen.getByTestId('form-modal-box')).toHaveStyle({
-          width: '400px',
+          width: '500px',
         });
       });
     });
 
-    context('size가 medium인 경우', () => {
-      given('size', () => 'medium');
+    context('size를 정하지 않은 경우', () => {
+      given('size', () => undefined);
 
       it('width값은 600px이어야만 한다', () => {
         renderFormModal();

@@ -146,8 +146,12 @@ describe('ApplicantStatusButton', () => {
     });
   });
 
-  context('isCompleted가 true인 경우', () => {
+  context('isCompleted가 true이고 승인된 유저인 경우', () => {
     given('isCompleted', () => true);
+    given('applicant', () => ({
+      ...APPLICANT_FIXTURE,
+      isConfirm: true,
+    }));
 
     it('"팀원 보기"버튼이 보여야만 한다', () => {
       const { container } = renderApplicantStatusButton();
