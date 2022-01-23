@@ -26,7 +26,7 @@ interface Props {
 function DetailHeaderSection({
   group, numberApplicants, children,
 }: PropsWithChildren<Props>): ReactElement {
-  const { writer, views } = group;
+  const { writer, views, isCompleted } = group;
 
   const currentTime = useCurrentTime(group);
   const recruitDate = useRecruitDateStatus(group, currentTime);
@@ -56,7 +56,7 @@ function DetailHeaderSection({
               <Divider />
               <div>{recruitDate}</div>
               <Divider />
-              <div>{`${numberApplicants}명 신청 중`}</div>
+              <div>{isCompleted ? `${numberApplicants}명 모집` : `${numberApplicants}명 신청 중`}</div>
             </MetadataWrapper>
           </WriterProfileTextWrapper>
         </WriterProfile>

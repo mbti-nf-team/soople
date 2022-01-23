@@ -31,6 +31,7 @@ describe('rootReducer', () => {
       groupError: null,
       writeFields: fieldsInitialState,
       tagsCount: [],
+      applicants: [],
       isVisible: false,
     },
   };

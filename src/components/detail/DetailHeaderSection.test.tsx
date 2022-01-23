@@ -14,6 +14,27 @@ describe('DetailHeaderSection', () => {
     />
   ));
 
+  describe('모집 완료 상태에 따라 다르게 보인다', () => {
+    context('모집 완료인 경우', () => {
+      it('"~ 명 모집" 문구가 나타나야만 한다', () => {
+        const { container } = renderDetailHeaderSection({
+          ...GROUP_FIXTURE,
+          isCompleted: true,
+        });
+
+        expect(container).toHaveTextContent('1명 모집');
+      });
+    });
+
+    context('모집 완료가 아닌 경우', () => {
+      it('"~ 명 신청 중" 문구가 나타나야만 한다', () => {
+        const { container } = renderDetailHeaderSection();
+
+        expect(container).toHaveTextContent('1명 신청 중');
+      });
+    });
+  });
+
   describe('현재 시간에 따라서 마감 시간 섹션이 다르게 보인다', () => {
     context('모집 마감 일자를 정하지 않은 경우', () => {
       it('글을 작성한 날짜가 나타나야만 한다', () => {
