@@ -8,9 +8,11 @@ import * as yup from 'yup';
 import FormModal from '@/components/common/FormModal';
 import Textarea from '@/components/common/Textarea';
 import { ApplicantForm } from '@/models/group';
-import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
+import { subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 import { stringToExcludeNull } from '@/utils/utils';
+
+import Input from '../common/Input';
 
 interface Props {
   isVisible: boolean;
@@ -28,7 +30,7 @@ function ApplyFormModal({
   isVisible, onClose, onSubmit, initPortfolioUrl,
 }: Props): ReactElement {
   const {
-    register, handleSubmit, formState: { errors }, clearErrors, reset,
+    register, handleSubmit, formState: { errors }, clearErrors, reset, resetField,
   } = useForm<ApplicantForm>({
     resolver: yupResolver(validationSchema),
   });
@@ -49,15 +51,16 @@ function ApplyFormModal({
       onSubmit={handleSubmit(onSubmit)}
     >
       <ContentsFormWrapper>
-        <div>
-          <label htmlFor="portfolioUrl">
-            <span>
-              포트폴리오&nbsp;
-              <span className="option-span">(선택)</span>
-            </span>
-            <PortfolioUrlInput id="portfolioUrl" defaultValue={stringToExcludeNull(initPortfolioUrl)} type="text" placeholder="URL을 입력하세요" {...register('portfolioUrl')} />
-          </label>
-        </div>
+        <Input
+          labelText="포트폴리오"
+          id="portfolioUrl"
+          defaultValue={stringToExcludeNull(initPortfolioUrl)}
+          type="text"
+          placeholder="URL을 입력하세요"
+          labelOptionText="선택"
+          register={register('portfolioUrl')}
+          onClear={() => resetField('portfolioUrl')}
+        />
 
         <div>
           <label htmlFor="introduce">
@@ -88,37 +91,6 @@ const ContentsFormWrapper = styled.div`
     margin-top: 20px;
   }
 
-  & > div > label > span {
-    display: inline-flex;
-    ${body2Font(true)};
-    color: ${palette.accent6};
-    margin: 0px 0px 6px 4px;
-  }
-
-  .option-span {
-    ${body2Font()};
-    color: ${palette.accent4};
-  }
-`;
-
-const PortfolioUrlInput = styled.input`
-  ${body1Font()};
-  width: 100%;
-  outline: none;
-  border: 1px solid ${palette.accent2};
-  box-sizing: border-box;
-  border-radius: 8px;
-  padding: 11px 16px;
-
-  &::placeholder {
-    color: ${palette.accent4};
-  }
-
-  &:focus {
-    border: 1px solid ${palette.success};
-  }
-
-  transition: border .3s;
 `;
 
 const IntroduceErrorBlock = styled.div`

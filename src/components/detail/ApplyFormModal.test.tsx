@@ -22,6 +22,24 @@ describe('ApplyFormModal', () => {
     />
   ));
 
+  describe('포트폴리오 인풋의 clear 버튼을 클릭한다', () => {
+    it('포트폴리오 인풋의 값이 없어저야만 한다', async () => {
+      renderApplyFormModal();
+
+      const input = screen.getByPlaceholderText('URL을 입력하세요');
+
+      await act(async () => {
+        await fireEvent.change(input, {
+          target: { value: 'Text' },
+        });
+
+        fireEvent.click(screen.getByTestId('clear-icon'));
+      });
+
+      expect(input).toHaveValue('');
+    });
+  });
+
   describe('"신청하기" 버튼을 클릭한다', () => {
     context('소개글을 입력한 경우', () => {
       const textareaValue = '소개글';
