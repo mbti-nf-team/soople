@@ -33,6 +33,8 @@ const rootReducer = (state: RootReducerState | undefined, action: AnyAction): Ro
         ...groupStore,
         groups: state ? state.groupReducer.groups : [],
         tagsCount: state ? state.groupReducer.tagsCount : [],
+        applicants: state ? state.groupReducer.applicants : [],
+        comments: state ? state.groupReducer.comments : [],
       },
     } as RootReducerState;
   }

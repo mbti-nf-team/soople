@@ -30,7 +30,7 @@ function ApplyFormModal({
   isVisible, onClose, onSubmit, initPortfolioUrl,
 }: Props): ReactElement {
   const {
-    register, handleSubmit, formState: { errors }, clearErrors, reset, resetField,
+    register, handleSubmit, formState: { errors }, clearErrors, reset, setValue,
   } = useForm<ApplicantForm>({
     resolver: yupResolver(validationSchema),
   });
@@ -59,7 +59,7 @@ function ApplyFormModal({
           placeholder="URL을 입력하세요"
           labelOptionText="선택"
           register={register('portfolioUrl')}
-          onClear={() => resetField('portfolioUrl')}
+          onClear={() => setValue('portfolioUrl', '')}
         />
 
         <div>
@@ -90,7 +90,6 @@ const ContentsFormWrapper = styled.div`
   & > :not(div:first-of-type) {
     margin-top: 20px;
   }
-
 `;
 
 const IntroduceErrorBlock = styled.div`
