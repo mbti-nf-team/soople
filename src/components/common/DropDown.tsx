@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
 
@@ -27,9 +29,9 @@ function DropDown({
           <div className="user-name">{name}</div>
           <div className="user-email">{email}</div>
         </UserState>
-        <MenuContent>
-          내 정보
-        </MenuContent>
+        <Link href="/myinfo/setting" passHref>
+          <MyInfoMenu>내 정보</MyInfoMenu>
+        </Link>
         <Pipe />
         <MenuContent
           className="logout-menu"
@@ -81,18 +83,27 @@ const UserState = styled.div`
   }
 `;
 
-const MenuContent = styled.div`
+const navItem = css`
   ${body1Font()};
   color: ${palette.foreground};
   padding: 0.6rem 1rem;
   cursor: pointer;
   transition: background-color .2s;
-  
-  &.logout-menu {
-    padding-bottom: 0.875rem;
-  }
 
   &:hover {
     background: ${palette.accent1};
   }
+`;
+
+const MenuContent = styled.div`
+  ${navItem}
+  
+  &.logout-menu {
+    padding-bottom: 0.875rem;
+  }
+`;
+
+const MyInfoMenu = styled.a`
+  ${navItem}
+  display: block;
 `;
