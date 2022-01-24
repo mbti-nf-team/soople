@@ -1,11 +1,14 @@
 import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useUnmount } from 'react-use';
 
 import DetailHeaderSection from '@/components/detail/DetailHeaderSection';
 import DetailStatusButton from '@/components/detail/DetailStatusButton';
 import { ApplicantForm, Group } from '@/models/group';
 import { setSignInModalVisible } from '@/reducers/authSlice';
-import { loadApplicants, requestAddApplicant, requestDeleteApplicant } from '@/reducers/groupSlice';
+import {
+  loadApplicants, requestAddApplicant, requestDeleteApplicant, setApplicants,
+} from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getAuth, getGroup } from '@/utils/utils';
 
@@ -26,6 +29,8 @@ function DetailHeaderContainer(): ReactElement {
   })), [dispatch, group.groupId]);
 
   useEffect(() => dispatch(loadApplicants(group.groupId)), []);
+
+  useUnmount(() => dispatch(setApplicants([])));
 
   return (
     <DetailHeaderSection group={group} numberApplicants={applicants.length}>

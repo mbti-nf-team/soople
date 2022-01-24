@@ -1,12 +1,15 @@
 import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useUnmount } from 'react-use';
 
 import CommentForm from '@/components/detail/CommentForm';
 import CommentsView from '@/components/detail/CommentsView';
 import { Profile } from '@/models/auth';
 import { Group } from '@/models/group';
 import { setSignInModalVisible } from '@/reducers/authSlice';
-import { loadComments, requestAddComment, requestDeleteComment } from '@/reducers/groupSlice';
+import {
+  loadComments, requestAddComment, requestDeleteComment, setComments,
+} from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getAuth, getGroup } from '@/utils/utils';
 
@@ -27,6 +30,8 @@ function CommentsContainer(): ReactElement {
   }, [dispatch]);
 
   useEffect(() => dispatch(loadComments(group.groupId)), []);
+
+  useUnmount(() => dispatch(setComments([])));
 
   return (
     <>

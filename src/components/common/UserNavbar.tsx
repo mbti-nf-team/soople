@@ -76,7 +76,7 @@ const UserNavbarWrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  & a:first-of-type {
+  & > a:first-of-type {
     margin-right: 24px;
   }
 
