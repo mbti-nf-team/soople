@@ -7,6 +7,12 @@ import GROUP_FIXTURE from '../../../fixtures/group';
 
 import ApplicationStatusContainer from './ApplicationStatusContainer';
 
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    back: jest.fn(),
+  })),
+}));
+
 describe('ApplicationStatusContainer', () => {
   const dispatch = jest.fn();
 
