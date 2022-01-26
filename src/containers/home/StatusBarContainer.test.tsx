@@ -51,4 +51,16 @@ describe('StatusBarContainer', () => {
       expect(dispatch).toBeCalled();
     });
   });
+
+  describe('"모집 마감 안보기" switch 버튼을 클릭한다', () => {
+    it('switch 버튼의 checked 속성이 존재해야만 한다', () => {
+      renderStatusBarContainer();
+
+      const button = screen.getByTestId('switch-button');
+
+      fireEvent.click(button);
+
+      expect(button).toHaveAttribute('checked');
+    });
+  });
 });
