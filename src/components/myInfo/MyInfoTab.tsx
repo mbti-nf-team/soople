@@ -46,13 +46,15 @@ const StyledLink = styled.a<{ pathName: MyInfoNavActive; active: MyInfoNavActive
 `;
 
 const MyInfoNav = styled.nav`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    box-shadow: 0px 1px 0px ${palette.accent2};
+  position: sticky;
+  top: 64px;
+  box-shadow: 0px 1px 0px ${palette.accent2};
+  background: ${palette.background};
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
-    & > :not(a:last-of-type) {
+  & > :not(a:last-of-type) {
     margin-right: 16px;
   }
-
 `;
