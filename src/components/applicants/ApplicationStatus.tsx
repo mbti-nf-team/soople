@@ -17,7 +17,7 @@ interface Props {
 }
 
 function ApplicationStatus({ applicants, onToggleConfirm, goBack }: Props): ReactElement {
-  if (R.empty(applicants)) {
+  if (R.isEmpty(applicants)) {
     return (
       <EmptyStateArea
         emptyText="신청한 사람이 없어요."
