@@ -1,14 +1,13 @@
 import {
-  addDoc, getDoc, getDocs, orderBy, query, serverTimestamp, updateDoc, where,
+  addDoc, getDoc, getDocs, serverTimestamp, updateDoc,
 } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
-import {
-  Category, Group, WriteFields,
-} from '@/models/group';
+import { FilterGroupsCondition, Group, WriteFields } from '@/models/group';
 import { timestampToString } from '@/utils/firestore';
 
 import { collectionRef, docRef } from '../firebase';
+import { getGroupsQuery } from '../firebase/getQuery';
 
 const GROUPS = 'groups';
 
@@ -40,12 +39,8 @@ export const getGroupDetail = async (uid: string) => {
   } as Group;
 };
 
-export const getGroups = async (condition: Category[]) => {
-  const getQuery = query(
-    collectionRef(GROUPS),
-    where('category', 'in', condition),
-    orderBy('createdAt', 'asc'),
-  );
+export const getGroups = async (condition: FilterGroupsCondition) => {
+  const getQuery = getGroupsQuery(condition);
 
   const response = await getDocs(getQuery);
 

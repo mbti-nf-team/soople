@@ -309,29 +309,57 @@ describe('groupReducer async actions', () => {
     });
 
     context('에러가 발생하지 않는 경우', () => {
-      (getGroups as jest.Mock).mockReturnValueOnce([GROUP_FIXTURE]);
-      (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+      beforeEach(() => {
+        (getGroups as jest.Mock).mockReturnValueOnce([GROUP_FIXTURE]);
+        (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+      });
 
-      it('dispatch 액션이 "group/setGroups"인 타입과 payload는 group 리스트여야 한다', async () => {
-        await store.dispatch(loadGroups(['study', 'project']));
+      context('isFilterCompleted가 true인 경우', () => {
+        it('dispatch 액션이 "group/setGroups"인 타입과 payload는 group 리스트여야 한다', async () => {
+          await store.dispatch(loadGroups({
+            category: ['study', 'project'],
+            isFilterCompleted: true,
+          }));
 
-        const actions = store.getActions();
+          const actions = store.getActions();
 
-        expect(actions[0]).toEqual({
-          payload: [GROUP_FIXTURE],
-          type: 'group/setGroups',
+          expect(actions[0]).toEqual({
+            payload: [GROUP_FIXTURE],
+            type: 'group/setGroups',
+          });
+        });
+      });
+
+      context('isFilterCompleted가 false인 경우', () => {
+        it('dispatch 액션이 "group/setGroups"인 타입과 payload는 group 리스트여야 한다', async () => {
+          await store.dispatch(loadGroups({
+            category: ['study', 'project'],
+            isFilterCompleted: false,
+          }));
+
+          const actions = store.getActions();
+
+          expect(actions[0]).toEqual({
+            payload: [GROUP_FIXTURE],
+            type: 'group/setGroups',
+          });
         });
       });
     });
 
     context('에러가 발생하는 경우', () => {
-      (getGroups as jest.Mock).mockImplementationOnce(() => {
-        throw new Error('error');
+      beforeEach(() => {
+        (getGroups as jest.Mock).mockImplementationOnce(() => {
+          throw new Error('error');
+        });
       });
 
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
-          await store.dispatch(loadGroups(['study', 'project']));
+          await store.dispatch(loadGroups({
+            category: ['study', 'project'],
+            isFilterCompleted: false,
+          }));
         } catch (error) {
           // ignore errors
         } finally {

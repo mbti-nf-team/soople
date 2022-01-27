@@ -61,6 +61,7 @@ describe('StatusBarContainer', () => {
       fireEvent.click(button);
 
       expect(button).toHaveAttribute('checked');
+      expect(dispatch).toBeCalled();
     });
   });
 });
