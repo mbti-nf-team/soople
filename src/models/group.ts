@@ -12,6 +12,11 @@ export interface WriteFields {
   recruitmentEndDate: string | null;
 }
 
+export interface FilterGroupsCondition {
+  category: Category[];
+  isFilterCompleted: boolean;
+}
+
 export interface CommentFields {
   groupId?: string;
   content: string;

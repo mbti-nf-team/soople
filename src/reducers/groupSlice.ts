@@ -4,9 +4,9 @@ import { Profile } from '@/models/auth';
 import {
   AddApplicantForm,
   Applicant,
-  Category,
   Comment,
   CommentFields,
+  FilterGroupsCondition,
   Group, TagCount, WriteFields, WriteFieldsForm,
 } from '@/models/group';
 import {
@@ -18,6 +18,7 @@ import {
 } from '@/services/api/group';
 import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
 import { formatApplicant, formatComment, formatGroup } from '@/utils/firestore';
+import { isRecruiting } from '@/utils/utils';
 
 import type { AppThunk } from './store';
 
@@ -189,13 +190,21 @@ export const loadGroupDetail = (id: string): AppThunk => async (dispatch) => {
   }
 };
 
-export const loadGroups = (condition: Category[]): AppThunk => async (dispatch) => {
+export const loadGroups = (condition: FilterGroupsCondition): AppThunk => async (dispatch) => {
   try {
     const response = await getGroups(condition);
 
     const groups = response.map((doc) => formatGroup(doc)) as Group[];
 
-    dispatch(setGroups(groups));
+    const filteredGroups = groups.filter((group) => {
+      if (condition.isFilterCompleted && isRecruiting(group)) {
+        return group;
+      }
+
+      return group;
+    });
+
+    dispatch(setGroups(filteredGroups));
   } catch (error) {
     const { message } = error as Error;
 

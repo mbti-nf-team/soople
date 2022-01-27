@@ -43,10 +43,10 @@ export const yesterday = (date: Date) => {
 
 export const isCurrentTimeBeforeEndDate = (
   recruitmentEndDate: string | null,
-  currentTime: number,
+  currentTime?: number,
 ) => dayjs(recruitmentEndDate).diff(currentTime) >= 0;
 
-export const isRecruiting = (group: Group, time: number) => {
+export const isRecruiting = (group: Group, time?: number) => {
   const { recruitmentEndDate, recruitmentEndSetting } = group;
 
   if (!recruitmentEndDate && recruitmentEndSetting === 'manual') {
