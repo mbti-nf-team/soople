@@ -1,6 +1,4 @@
-import React, {
-  ReactElement, useCallback, useState,
-} from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useEffectOnce } from 'react-use';
 
@@ -25,7 +23,6 @@ function StatusBarContainer(): ReactElement {
   const dispatch = useAppDispatch();
   const tagsCount = useSelector(getGroup('tagsCount'));
   const [toggle, setToggle] = useState<boolean>(false);
-
   const [filterConditionState, setFilterConditionState] = useState<FilterGroupsCondition>({
     category: defaultCategoryCondition,
     isFilterCompleted: false,

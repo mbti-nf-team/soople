@@ -14,7 +14,7 @@ describe('MyInfoTab', () => {
       renderMyInfoTab();
 
       expect(screen.getByText('내 정보 수정')).toHaveStyle({
-        'border-bottom': `2px solid ${palette.success10}`,
+        'border-bottom': `2px solid ${palette.foreground}`,
       });
     });
   });
