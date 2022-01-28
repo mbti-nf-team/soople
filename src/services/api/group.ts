@@ -1,5 +1,5 @@
 import {
-  addDoc, getDoc, getDocs, serverTimestamp, updateDoc,
+  addDoc, getDoc, getDocs, orderBy, query, serverTimestamp, updateDoc, where,
 } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
@@ -41,6 +41,18 @@ export const getGroupDetail = async (uid: string) => {
 
 export const getGroups = async (condition: FilterGroupsCondition) => {
   const getQuery = getGroupsQuery(condition);
+
+  const response = await getDocs(getQuery);
+
+  return response.docs;
+};
+
+export const getUserRecruitedGroups = async (userUid: string) => {
+  const getQuery = query(
+    collectionRef('groups'),
+    where('writer.uid', '==', userUid),
+    orderBy('createdAt', 'desc'),
+  );
 
   const response = await getDocs(getQuery);
 

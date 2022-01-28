@@ -4,7 +4,7 @@ import {
 
 import { WriteFields } from '@/models/group';
 import {
-  getGroupDetail, getGroups, patchCompletedGroup, postNewGroup,
+  getGroupDetail, getGroups, getUserRecruitedGroups, patchCompletedGroup, postNewGroup,
 } from '@/services/api/group';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
@@ -101,6 +101,20 @@ describe('group API', () => {
         category: [],
         isFilterCompleted: false,
       });
+
+      expect(response).toEqual([GROUP_FIXTURE]);
+    });
+  });
+
+  describe('getUserRecruitedGroups', () => {
+    beforeEach(() => {
+      (getDocs as jest.Mock).mockImplementationOnce(() => ({
+        docs: [GROUP_FIXTURE],
+      }));
+    });
+
+    it('그룹 리스트가 반환되어야만 한다', async () => {
+      const response = await getUserRecruitedGroups('userUid');
 
       expect(response).toEqual([GROUP_FIXTURE]);
     });

@@ -56,13 +56,15 @@ function StatusBarContainer(): ReactElement {
 
   return (
     <StatusBarWrapper>
-      <FilterBar
-        onChange={onChange}
-      />
-      <StyledDivider />
-      <TagsBar
-        tags={tagsCount}
-      />
+      <div>
+        <FilterBar
+          onChange={onChange}
+        />
+        <StyledDivider />
+        <TagsBar
+          tags={tagsCount}
+        />
+      </div>
       <RecruitmentDeadline>
         <span>모집 마감 안보기</span>
         <SwitchButton
@@ -83,6 +85,12 @@ const StatusBarWrapper = styled.div`
   align-items: center;
   margin-bottom: 20px;
   margin-top: 9px;
+
+  & > div:first-of-type {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 const RecruitmentDeadline = styled.div`
