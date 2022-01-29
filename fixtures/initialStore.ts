@@ -30,6 +30,7 @@ const initialStore = {
     myInfoReducer: {
       myInfoError: null,
       recruitedGroups: [],
+      appliedGroups: [],
     } as MyInfoStore,
   },
 };
