@@ -13,6 +13,7 @@ const group: Group = {
   recruitmentEndSetting: 'manual',
   isCompleted: false,
   views: 0,
+  numberApplicants: 0,
   createdAt: '2021-10-11',
 };
 

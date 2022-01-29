@@ -13,7 +13,7 @@ import CompleteApplyFormModal from './CompleteApplyFormModal';
 interface Props{
   goBack: () => void;
   applicants: Applicant[];
-  onSubmit: () => void;
+  onSubmit: (numberConfirmApplicants: number) => void;
   timeRemaining: string | null;
 }
 
@@ -21,11 +21,11 @@ function ApplicationStatusHeader({
   goBack, onSubmit, applicants, timeRemaining,
 }: Props) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const numberConfirmApplicant = applicants.filter(({ isConfirm }) => isConfirm).length;
+  const numberConfirmApplicants = applicants.filter(({ isConfirm }) => isConfirm).length;
 
   const onClose = () => setIsVisible(false);
-  const handleSubmit = () => {
-    onSubmit();
+  const handleSubmit = (numberApplicants: number) => {
+    onSubmit(numberApplicants);
     onClose();
   };
 
@@ -37,13 +37,13 @@ function ApplicationStatusHeader({
       >
         <>
           <SelectApplicantStatus>
-            {`${numberConfirmApplicant}명 선택`}
+            {`${numberConfirmApplicants}명 선택`}
           </SelectApplicantStatus>
           <Button
             type="button"
             size="small"
             color="success"
-            disabled={!numberConfirmApplicant}
+            disabled={!numberConfirmApplicants}
             onClick={() => setIsVisible(true)}
           >
             모집 완료
@@ -52,9 +52,9 @@ function ApplicationStatusHeader({
       </SubHeader>
       <CompleteApplyFormModal
         onClose={onClose}
-        onSubmit={handleSubmit}
+        onSubmit={() => handleSubmit(numberConfirmApplicants)}
         isVisible={isVisible}
-        numberApplicant={numberConfirmApplicant}
+        numberApplicant={numberConfirmApplicants}
         timeRemaining={timeRemaining}
       />
     </>

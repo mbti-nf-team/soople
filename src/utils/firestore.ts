@@ -1,6 +1,8 @@
+import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+
 export const timestampToString = (timestamp: any) => timestamp.toDate().toString();
 
-export const formatGroup = (group: any) => {
+export const formatGroup = (group: QueryDocumentSnapshot<DocumentData>) => {
   const { createdAt } = group.data();
 
   return {
@@ -10,7 +12,7 @@ export const formatGroup = (group: any) => {
   };
 };
 
-export const formatComment = (comment: any) => {
+export const formatComment = (comment: QueryDocumentSnapshot<DocumentData>) => {
   const { createdAt } = comment.data();
 
   return {
@@ -20,7 +22,7 @@ export const formatComment = (comment: any) => {
   };
 };
 
-export const formatApplicant = (applicant: any) => {
+export const formatApplicant = (applicant: QueryDocumentSnapshot<DocumentData>) => {
   const { createdAt } = applicant.data();
 
   return {

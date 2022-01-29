@@ -7,3 +7,5 @@ export const getGroups = jest.fn();
 export const patchCompletedGroup = jest.fn();
 
 export const getUserRecruitedGroups = jest.fn();
+
+export const patchNumberApplicants = jest.fn();

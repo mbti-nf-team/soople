@@ -8,7 +8,7 @@ import {
 } from '@/services/api/applicants';
 import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
-  getGroupDetail, getGroups, patchCompletedGroup, postNewGroup,
+  getGroupDetail, getGroups, patchCompletedGroup, patchNumberApplicants, postNewGroup,
 } from '@/services/api/group';
 import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
 import { formatApplicant, formatComment, formatGroup } from '@/utils/firestore';
@@ -574,6 +574,9 @@ describe('groupReducer async actions', () => {
         authReducer: {
           user: PROFILE_FIXTURE,
         },
+        groupReducer: {
+          group: GROUP_FIXTURE,
+        },
       });
     });
 
@@ -585,6 +588,7 @@ describe('groupReducer async actions', () => {
 
     context('에러가 발생하지 않는 경우', () => {
       (postAddApplicant as jest.Mock).mockReturnValueOnce('id');
+      (patchNumberApplicants as jest.Mock).mockResolvedValueOnce(1);
 
       it('dispatch 액션이 "group/setApplicant"인 타입과 payload는 applicant여야 한다', async () => {
         await store.dispatch(requestAddApplicant(applicantForm));
@@ -674,12 +678,14 @@ describe('groupReducer async actions', () => {
       store = mockStore({
         groupReducer: {
           applicants: [APPLICANT_FIXTURE],
+          group: GROUP_FIXTURE,
         },
       });
     });
 
     context('에러가 발생하지 않는 경우', () => {
       (deleteApplicant as jest.Mock).mockReturnValueOnce(null);
+      (patchNumberApplicants as jest.Mock).mockReturnValueOnce('1');
 
       it('dispatch 액션이 "group/setApplicants"인 타입과 payload는 applicants여야 한다', async () => {
         await store.dispatch(requestDeleteApplicant('2'));
@@ -782,13 +788,14 @@ describe('groupReducer async actions', () => {
       (patchCompletedGroup as jest.Mock).mockReturnValueOnce(null);
 
       it('dispatch 액션이 "group/setGroup"인 타입과 payload는 group여야 한다', async () => {
-        await store.dispatch(updateCompletedApply(GROUP_FIXTURE));
+        await store.dispatch(updateCompletedApply(GROUP_FIXTURE, 3));
 
         const actions = store.getActions();
 
         expect(actions[0]).toEqual({
           payload: {
             ...GROUP_FIXTURE,
+            numberApplicants: 3,
             isCompleted: true,
           },
           type: 'group/setGroup',
@@ -803,7 +810,7 @@ describe('groupReducer async actions', () => {
 
       it('dispatch 액션이 "group/setGroupError"인 타입과 오류 메시지 payload 이어야 한다', async () => {
         try {
-          await store.dispatch(updateCompletedApply(GROUP_FIXTURE));
+          await store.dispatch(updateCompletedApply(GROUP_FIXTURE, 3));
         } catch (error) {
           // ignore errors
         } finally {

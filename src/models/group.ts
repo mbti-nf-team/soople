@@ -41,6 +41,7 @@ export interface Group {
   recruitmentEndDate: string | null;
   isCompleted: boolean;
   views: number;
+  numberApplicants: number;
   writer: Profile;
   createdAt: string;
 }

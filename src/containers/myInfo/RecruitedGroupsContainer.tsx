@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
 
-import RecruitedPosts from '@/components/myInfo/RecruitedPosts';
+import EmptyStateArea from '@/components/common/EmptyStateArea';
+import MyGroups from '@/components/myInfo/MyGroups';
 import { loadUserRecruitedGroups } from '@/reducers/myInfoSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getAuth, getMyInfo } from '@/utils/utils';
 
-function RecruitedPostsContainer(): ReactElement {
+function RecruitedGroupsContainer(): ReactElement {
   const router = useRouter();
   const user = useSelector(getAuth('user'));
   const groups = useSelector(getMyInfo('recruitedGroups'));
@@ -23,11 +24,18 @@ function RecruitedPostsContainer(): ReactElement {
   }, [user]);
 
   return (
-    <RecruitedPosts
+    <MyGroups
       onClickGroup={onClickGroup}
       groups={groups}
-    />
+    >
+      <EmptyStateArea
+        emptyText="모집한 팀이 없어요."
+        buttonText="팀 모집하기"
+        href="/"
+        marginTop="80px"
+      />
+    </MyGroups>
   );
 }
 
-export default RecruitedPostsContainer;
+export default RecruitedGroupsContainer;

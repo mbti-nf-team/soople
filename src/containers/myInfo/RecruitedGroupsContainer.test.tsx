@@ -6,13 +6,13 @@ import { useRouter } from 'next/router';
 import FIXTURE_GROUP from '../../../fixtures/group';
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
-import RecruitedPostsContainer from './RecruitedPostsContainer';
+import RecruitedGroupsContainer from './RecruitedGroupsContainer';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 
-describe('RecruitedPostsContainer', () => {
+describe('RecruitedGroupsContainer', () => {
   const dispatch = jest.fn();
   const mockPush = jest.fn();
 
@@ -34,19 +34,19 @@ describe('RecruitedPostsContainer', () => {
     }));
   });
 
-  const renderRecruitedPostsContainer = () => render((
-    <RecruitedPostsContainer />
+  const renderRecruitedGroupsContainer = () => render((
+    <RecruitedGroupsContainer />
   ));
 
   it('렌더링 시 dispatch 액션이 호출되어야만 한다', () => {
-    renderRecruitedPostsContainer();
+    renderRecruitedGroupsContainer();
 
     expect(dispatch).toBeCalledTimes(1);
   });
 
   describe('group을 클릭한다', () => {
     it('router.push가 해당 글 url과 함께 호출되어야만 한다', () => {
-      renderRecruitedPostsContainer();
+      renderRecruitedGroupsContainer();
 
       fireEvent.click(screen.getByText(FIXTURE_GROUP.title));
 

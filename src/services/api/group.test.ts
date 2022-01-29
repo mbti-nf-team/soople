@@ -4,7 +4,12 @@ import {
 
 import { WriteFields } from '@/models/group';
 import {
-  getGroupDetail, getGroups, getUserRecruitedGroups, patchCompletedGroup, postNewGroup,
+  getGroupDetail,
+  getGroups,
+  getUserRecruitedGroups,
+  patchCompletedGroup,
+  patchNumberApplicants,
+  postNewGroup,
 } from '@/services/api/group';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
@@ -45,6 +50,7 @@ describe('group API', () => {
         ...group,
         isCompleted: false,
         views: 0,
+        numberApplicants: 0,
         writer: PROFILE_FIXTURE,
         createdAt,
       });
@@ -120,9 +126,42 @@ describe('group API', () => {
     });
   });
 
+  describe('patchNumberApplicants', () => {
+    beforeEach(() => {
+      (getDoc as jest.Mock).mockImplementationOnce(() => ({
+        ref: 'ref',
+        data: jest.fn().mockReturnValueOnce({
+          numberApplicants: 1,
+        }),
+      }));
+    });
+
+    context('isApply가 true인 경우', () => {
+      it('"updateDoc"이 numberApplicants 1증가된 상태로 호출되어야만 한다', async () => {
+        const response = await patchNumberApplicants('userUid', true);
+
+        expect(updateDoc).toBeCalledWith('ref', {
+          numberApplicants: 2,
+        });
+        expect(response).toBe(2);
+      });
+    });
+
+    context('isApply가 false인 경우', () => {
+      it('"updateDoc"이 numberApplicants 1 감소된 상태로 호출되어야만 한다', async () => {
+        const response = await patchNumberApplicants('userUid', false);
+
+        expect(updateDoc).toBeCalledWith('ref', {
+          numberApplicants: 0,
+        });
+        expect(response).toBe(0);
+      });
+    });
+  });
+
   describe('patchCompletedGroup', () => {
     it('"updateDoc"이 호출되어야만 한다', async () => {
-      await patchCompletedGroup('groupId');
+      await patchCompletedGroup('groupId', 3);
 
       expect(updateDoc).toBeCalledTimes(1);
     });
