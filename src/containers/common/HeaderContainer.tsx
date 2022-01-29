@@ -11,13 +11,16 @@ import { useAppDispatch } from '@/reducers/store';
 import { getAuth } from '@/utils/utils';
 
 function HeaderContainer(): ReactElement {
-  const router = useRouter();
+  const { replace, pathname } = useRouter();
   const dispatch = useAppDispatch();
   const user = useSelector(getAuth('user'));
   const [isScrollTop, setIsScrollTop] = useState<boolean>(true);
 
   const onClickSignIn = useCallback(() => dispatch(setSignInModalVisible(true)), [dispatch]);
-  const signOut = useCallback(() => dispatch(requestSignOut()), [dispatch]);
+  const signOut = useCallback(() => {
+    dispatch(requestSignOut());
+    replace('/');
+  }, [dispatch]);
 
   const handleScrollAction = () => setIsScrollTop(window.scrollY === 0);
 
@@ -33,7 +36,7 @@ function HeaderContainer(): ReactElement {
       isScrollTop={isScrollTop}
       onClick={onClickSignIn}
       user={user}
-      isHome={router.pathname === '/'}
+      isHome={pathname === '/'}
     />
   );
 }

@@ -15,9 +15,11 @@ jest.mock('next/router', () => ({
 
 describe('HeaderContainer', () => {
   const dispatch = jest.fn();
+  const replace = jest.fn();
 
   beforeEach(() => {
     dispatch.mockClear();
+    replace.mockClear();
 
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
@@ -27,6 +29,7 @@ describe('HeaderContainer', () => {
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       pathname: '/',
+      replace,
     }));
   });
 
@@ -80,6 +83,7 @@ describe('HeaderContainer', () => {
         fireEvent.click(screen.getByText('로그아웃'));
 
         expect(dispatch).toBeCalled();
+        expect(replace).toBeCalledWith('/');
       });
     });
   });

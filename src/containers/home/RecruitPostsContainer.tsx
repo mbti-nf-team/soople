@@ -11,7 +11,7 @@ import { useAppDispatch } from '@/reducers/store';
 import { getGroup } from '@/utils/utils';
 
 function RecruitPostsContainer(): ReactElement {
-  const { query } = useRouter();
+  const { query, replace } = useRouter();
   const dispatch = useAppDispatch();
   const groups = useSelector(getGroup('groups'));
 
@@ -23,6 +23,7 @@ function RecruitPostsContainer(): ReactElement {
   useEffect(() => {
     if (query.error === 'unauthenticated') {
       toast.error('해당 페이지를 볼 수 있는 권한이 없어요!');
+      replace('/', undefined, { shallow: true });
     }
   }, [query]);
 
