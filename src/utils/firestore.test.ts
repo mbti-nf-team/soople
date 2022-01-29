@@ -1,3 +1,5 @@
+import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+
 import {
   formatApplicant, formatComment, formatGroup, timestampToString,
 } from './firestore';
@@ -28,7 +30,7 @@ describe('formatGroup', () => {
     data: () => ({
       createdAt: date,
     }),
-  };
+  } as unknown as QueryDocumentSnapshot<DocumentData>;
 
   it('포매팅된 그룹 정보가 반환되어야만 한다', () => {
     const result = formatGroup(settings);
@@ -52,7 +54,7 @@ describe('formatComment', () => {
     data: () => ({
       createdAt: date,
     }),
-  };
+  } as unknown as QueryDocumentSnapshot<DocumentData>;
 
   it('포매팅된 댓글 정보가 반환되어야만 한다', () => {
     const result = formatComment(settings);
@@ -76,7 +78,7 @@ describe('formatApplicant', () => {
     data: () => ({
       createdAt: date,
     }),
-  };
+  } as unknown as QueryDocumentSnapshot<DocumentData>;
 
   it('포매팅된 신청자 정보가 반환되어야만 한다', () => {
     const result = formatApplicant(settings);

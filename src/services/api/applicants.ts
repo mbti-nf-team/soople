@@ -1,10 +1,21 @@
 import {
-  addDoc, deleteDoc, getDocs, orderBy, query, serverTimestamp, updateDoc, where,
+  addDoc,
+  deleteDoc,
+  DocumentData,
+  getDocs,
+  orderBy,
+  query,
+  QueryDocumentSnapshot,
+  serverTimestamp,
+  updateDoc,
+  where,
 } from 'firebase/firestore';
 
 import { Applicant, ApplicantFields } from '@/models/group';
 
 import { collectionRef, docRef } from '../firebase';
+
+import { getGroupDetail } from './group';
 
 const APPLICANTS = 'applicants';
 
@@ -30,6 +41,20 @@ export const getApplicants = async (groupId: string) => {
   return response.docs;
 };
 
+export const getUserAppliedGroups = async (userUid: string) => {
+  const getQuery = query(
+    collectionRef(APPLICANTS),
+    where('applicant.uid', '==', userUid),
+    orderBy('createdAt', 'desc'),
+  );
+
+  const response = await getDocs(getQuery);
+
+  const appliedGroups = await Promise.all(response.docs.map(getAppliedGroups));
+
+  return appliedGroups;
+};
+
 export const putApplicant = async (applicantForm: Applicant) => {
   const {
     uid, introduce, isConfirm, portfolioUrl, applicant,
@@ -45,4 +70,12 @@ export const putApplicant = async (applicantForm: Applicant) => {
 
 export const deleteApplicant = async (applicantId: string) => {
   await deleteDoc(docRef(APPLICANTS, applicantId));
+};
+
+export const getAppliedGroups = async (doc: QueryDocumentSnapshot<DocumentData>) => {
+  const { groupId } = doc.data() as Applicant;
+
+  const group = await getGroupDetail(groupId);
+
+  return group;
 };

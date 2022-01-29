@@ -1,9 +1,18 @@
 import {
-  addDoc, getDoc, getDocs, orderBy, query, serverTimestamp, updateDoc, where,
+  addDoc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
 } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
-import { FilterGroupsCondition, Group, WriteFields } from '@/models/group';
+import {
+  FilterGroupsCondition, Group, WriteFields,
+} from '@/models/group';
 import { timestampToString } from '@/utils/firestore';
 
 import { collectionRef, docRef } from '../firebase';
@@ -16,6 +25,7 @@ export const postNewGroup = async (profile: Profile, fields: WriteFields) => {
     ...fields,
     isCompleted: false,
     views: 0,
+    numberApplicants: 0,
     writer: profile,
     createdAt: serverTimestamp(),
   });
@@ -49,7 +59,7 @@ export const getGroups = async (condition: FilterGroupsCondition) => {
 
 export const getUserRecruitedGroups = async (userUid: string) => {
   const getQuery = query(
-    collectionRef('groups'),
+    collectionRef(GROUPS),
     where('writer.uid', '==', userUid),
     orderBy('createdAt', 'desc'),
   );
@@ -59,8 +69,23 @@ export const getUserRecruitedGroups = async (userUid: string) => {
   return response.docs;
 };
 
-export const patchCompletedGroup = async (uid: string) => {
+export const patchNumberApplicants = async (uid: string, isApply?: boolean) => {
+  const response = await getDoc(docRef(GROUPS, uid));
+
+  const { numberApplicants } = response.data() as Group;
+
+  const newNumberApplicants = isApply ? numberApplicants + 1 : numberApplicants - 1;
+
+  await updateDoc(response.ref, {
+    numberApplicants: newNumberApplicants,
+  });
+
+  return newNumberApplicants;
+};
+
+export const patchCompletedGroup = async (uid: string, count: number) => {
   await updateDoc(docRef(GROUPS, uid), {
+    numberApplicants: count,
     isCompleted: true,
   });
 };

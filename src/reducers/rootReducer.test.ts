@@ -36,6 +36,7 @@ describe('rootReducer', () => {
     },
     myInfoReducer: {
       recruitedGroups: [],
+      appliedGroups: [],
       myInfoError: null,
     },
   };

@@ -14,7 +14,7 @@ import {
 } from '@/services/api/applicants';
 import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
-  getGroupDetail, getGroups, patchCompletedGroup, postNewGroup,
+  getGroupDetail, getGroups, patchCompletedGroup, patchNumberApplicants, postNewGroup,
 } from '@/services/api/group';
 import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
 import { formatApplicant, formatComment, formatGroup } from '@/utils/firestore';
@@ -72,7 +72,7 @@ const { actions, reducer } = createSlice({
         writeFields: initialFieldsState,
       };
     },
-    setGroup(state, { payload: group }: PayloadAction<Group | null>):GroupStore {
+    setGroup(state, { payload: group }: PayloadAction<Group | null>): GroupStore {
       return {
         ...state,
         group,
@@ -162,7 +162,7 @@ export const requestRegisterNewGroup = (
   const { groupReducer: { writeFields } } = getStore();
 
   try {
-    const responseUpdateTags = writeFields.tags.map((tag) => updateTagCount(tag));
+    const responseUpdateTags = writeFields.tags.map(updateTagCount);
 
     const [groupId] = await Promise.all([
       postNewGroup(profile, writeFields),
@@ -194,7 +194,7 @@ export const loadGroups = (condition: FilterGroupsCondition): AppThunk => async 
   try {
     const response = await getGroups(condition);
 
-    const groups = response.map((doc) => formatGroup(doc)) as Group[];
+    const groups = response.map(formatGroup) as Group[];
 
     const filteredGroups = groups.filter((group) => {
       if (condition.isFilterCompleted && isRecruiting(group)) {
@@ -230,7 +230,7 @@ export const loadComments = (groupId: string): AppThunk => async (dispatch) => {
   try {
     const response = await getGroupComments(groupId);
 
-    const comments = response.map((doc) => formatComment(doc)) as Comment[];
+    const comments = response.map(formatComment) as Comment[];
 
     dispatch(setComments(comments));
   } catch (error) {
@@ -287,13 +287,14 @@ export const requestDeleteComment = (uid: string): AppThunk => async (dispatch, 
 export const requestAddApplicant = (
   fields: AddApplicantForm,
 ): AppThunk => async (dispatch, getState) => {
-  const { authReducer: { user } } = getState();
+  const { authReducer: { user }, groupReducer: { group } } = getState();
 
   try {
     const uid = await postAddApplicant({
       ...fields,
       applicant: user as Profile,
     });
+    const newNumberApplicants = await patchNumberApplicants(fields.groupId, true);
 
     dispatch(setApplicant({
       uid,
@@ -301,6 +302,10 @@ export const requestAddApplicant = (
       applicant: user as Profile,
       isConfirm: false,
       ...fields,
+    }));
+    dispatch(setGroup({
+      ...group as Group,
+      numberApplicants: newNumberApplicants,
     }));
   } catch (error) {
     const { message } = error as Error;
@@ -313,7 +318,7 @@ export const loadApplicants = (groupId: string): AppThunk => async (dispatch) =>
   try {
     const response = await getApplicants(groupId);
 
-    const applicants = response.map((doc) => formatApplicant(doc)) as Applicant[];
+    const applicants = response.map(formatApplicant) as Applicant[];
 
     dispatch(setApplicants(applicants));
   } catch (error) {
@@ -326,14 +331,19 @@ export const loadApplicants = (groupId: string): AppThunk => async (dispatch) =>
 export const requestDeleteApplicant = (
   applicantId: string,
 ): AppThunk => async (dispatch, getState) => {
-  const { groupReducer: { applicants } } = getState();
+  const { groupReducer: { applicants, group } } = getState();
 
   try {
     await deleteApplicant(applicantId);
+    const newNumberApplicants = await patchNumberApplicants(group?.groupId as string);
 
     const newApplicants = applicants.filter(({ uid }) => uid !== applicantId);
 
     dispatch(setApplicants(newApplicants));
+    dispatch(setGroup({
+      ...group as Group,
+      numberApplicants: newNumberApplicants,
+    }));
   } catch (error) {
     const { message } = error as Error;
 
@@ -365,12 +375,18 @@ export const updateApplicant = (
   }
 };
 
-export const updateCompletedApply = (group: Group): AppThunk => async (dispatch) => {
+export const updateCompletedApply = (
+  group: Group,
+  numberConfirmApplicants: number,
+): AppThunk => async (dispatch) => {
   try {
-    await patchCompletedGroup(group.groupId);
+    const { groupId } = group;
+
+    await patchCompletedGroup(groupId, numberConfirmApplicants);
 
     dispatch(setGroup({
       ...group,
+      numberApplicants: numberConfirmApplicants,
       isCompleted: true,
     }));
   } catch (error) {

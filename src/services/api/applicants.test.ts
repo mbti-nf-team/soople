@@ -1,18 +1,26 @@
 import {
-  addDoc, deleteDoc, getDocs, serverTimestamp, updateDoc,
+  addDoc, deleteDoc, DocumentData, getDocs, QueryDocumentSnapshot, serverTimestamp, updateDoc,
 } from 'firebase/firestore';
 
 import { ApplicantFields } from '@/models/group';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
+import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import { collectionRef } from '../firebase';
 
 import {
-  deleteApplicant, getApplicants, postAddApplicant, putApplicant,
+  deleteApplicant,
+  getApplicants,
+  getAppliedGroups,
+  getUserAppliedGroups,
+  postAddApplicant,
+  putApplicant,
 } from './applicants';
+import { getGroupDetail } from './group';
 
 jest.mock('../firebase');
+jest.mock('./group');
 
 describe('applicants API', () => {
   beforeEach(() => {
@@ -67,6 +75,29 @@ describe('applicants API', () => {
     });
   });
 
+  describe('getUserAppliedGroups', () => {
+    const groupId = '1';
+
+    const doc = {
+      data: () => ({
+        groupId,
+      }),
+    } as unknown as QueryDocumentSnapshot<DocumentData>;
+
+    beforeEach(() => {
+      (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
+      (getDocs as jest.Mock).mockImplementationOnce(() => ({
+        docs: [doc],
+      }));
+    });
+
+    it('그룹 리스트가 반환되어야만 한다', async () => {
+      const response = await getUserAppliedGroups('userUid');
+
+      expect(response).toEqual([GROUP_FIXTURE]);
+    });
+  });
+
   describe('putApplicant', () => {
     it('"updateDoc"이 호출되어야만 한다', async () => {
       await putApplicant(APPLICANT_FIXTURE);
@@ -80,6 +111,27 @@ describe('applicants API', () => {
       await deleteApplicant('applicantId');
 
       expect(deleteDoc).toBeCalledTimes(1);
+    });
+  });
+
+  describe('getAppliedGroups', () => {
+    const groupId = '1';
+
+    const doc = {
+      data: () => ({
+        groupId,
+      }),
+    } as unknown as QueryDocumentSnapshot<DocumentData>;
+
+    beforeEach(() => {
+      (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
+    });
+
+    it('그룹을 반환되어야만 한다', async () => {
+      const response = await getAppliedGroups(doc);
+
+      expect(response).toEqual(GROUP_FIXTURE);
+      expect(getGroupDetail).toBeCalledWith(groupId);
     });
   });
 });

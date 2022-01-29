@@ -26,7 +26,9 @@ function ApplicationStatusHeaderContainer(): ReactElement {
   const group = useSelector(getGroup('group')) as Group;
   const currentTime = useCurrentTime(group);
 
-  const onSubmit = useCallback(() => dispatch(updateCompletedApply(group)), [dispatch]);
+  const onSubmit = useCallback((
+    numberConfirmApplicants: number,
+  ) => dispatch(updateCompletedApply(group, numberConfirmApplicants)), [dispatch]);
 
   const timeRemaining = useMemo(() => {
     if (!isCurrentTimeBeforeEndDate(group.recruitmentEndDate, currentTime)) {
