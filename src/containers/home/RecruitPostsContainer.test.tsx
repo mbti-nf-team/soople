@@ -34,6 +34,7 @@ describe('RecruitPostsContainer', () => {
       query: {
         error: given.error,
       },
+      replace: jest.fn(),
     }));
   });
 
