@@ -1,27 +1,24 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
 
 import EmptyStateArea from '@/components/common/EmptyStateArea';
 import MyGroups from '@/components/myInfo/MyGroups';
-import { loadUserAppliedGroups } from '@/reducers/myInfoSlice';
-import { useAppDispatch } from '@/reducers/store';
-import { getAuth, getMyInfo } from '@/utils/utils';
+import useFetchUserAppliedGroups from '@/hooks/api/useFetchUserAppliedGroups';
+import { DetailLayout } from '@/styles/Layout';
+import { getAuth } from '@/utils/utils';
 
 function AppliedGroupsContainer(): ReactElement {
   const router = useRouter();
   const user = useSelector(getAuth('user'));
-  const groups = useSelector(getMyInfo('appliedGroups'));
-  const dispatch = useAppDispatch();
+  const { data: groups, isLoading } = useFetchUserAppliedGroups(user?.uid);
 
   const onClickGroup = (groupId: string) => router.push(`/detail/${groupId}`);
 
-  useEffect(() => {
-    if (user) {
-      dispatch(loadUserAppliedGroups(user.uid));
-    }
-  }, [user]);
+  if (isLoading) {
+    return <DetailLayout>로딩중...</DetailLayout>;
+  }
 
   return (
     <MyGroups

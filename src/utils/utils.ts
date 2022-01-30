@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import { Group } from '@/models/group';
 import type { AuthStore } from '@/reducers/authSlice';
 import type { GroupStore } from '@/reducers/groupSlice';
-import type { MyInfoStore } from '@/reducers/myInfoSlice';
 import type { AppState } from '@/reducers/store';
 
 export const isProdLevel = (env: string): boolean => env === 'production';
@@ -15,10 +14,6 @@ export const getAuth = <K extends keyof AuthStore>(
 export const getGroup = <K extends keyof GroupStore>(
   key: K,
 ) => (obj: AppState) => obj.groupReducer[key];
-
-export const getMyInfo = <K extends keyof MyInfoStore>(
-  key: K,
-) => (obj: AppState) => obj.myInfoReducer[key];
 
 export const stringToExcludeNull = (value?: string | null): string => {
   if (typeof value === 'undefined') {

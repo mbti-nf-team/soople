@@ -81,7 +81,9 @@ export const getUserRecruitedGroups = async (userUid: string) => {
 
   const response = await getDocs(getQuery);
 
-  return response.docs;
+  const recruitedGroups = response.docs.map(formatGroup) as Group[];
+
+  return recruitedGroups;
 };
 
 export const patchNumberApplicants = async (uid: string, isApply?: boolean) => {

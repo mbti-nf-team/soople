@@ -34,11 +34,6 @@ describe('rootReducer', () => {
       applicants: [],
       isVisible: false,
     },
-    myInfoReducer: {
-      recruitedGroups: [],
-      appliedGroups: [],
-      myInfoError: null,
-    },
   };
 
   context('action type이 HYDRATE일 때', () => {
@@ -65,7 +60,6 @@ describe('rootReducer', () => {
             ...initialReducer.authReducer,
             user: undefined,
           },
-          myInfoReducer: undefined,
         });
       });
     });
