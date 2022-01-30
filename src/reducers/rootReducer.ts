@@ -4,18 +4,15 @@ import { AnyAction } from 'redux';
 
 import authReducer, { AuthStore } from './authSlice';
 import groupReducer, { GroupStore } from './groupSlice';
-import myInfoReducer, { MyInfoStore } from './myInfoSlice';
 
 export interface RootReducerState {
   authReducer: AuthStore;
   groupReducer: GroupStore;
-  myInfoReducer: MyInfoStore;
 }
 
 const combineReducer = combineReducers({
   authReducer,
   groupReducer,
-  myInfoReducer,
 });
 
 const rootReducer = (state: RootReducerState | undefined, action: AnyAction): RootReducerState => {
@@ -39,7 +36,6 @@ const rootReducer = (state: RootReducerState | undefined, action: AnyAction): Ro
         applicants: state ? state.groupReducer.applicants : [],
         comments: state ? state.groupReducer.comments : [],
       },
-      myInfoReducer: state?.myInfoReducer,
     } as RootReducerState;
   }
 

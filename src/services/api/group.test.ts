@@ -150,6 +150,7 @@ describe('group API', () => {
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
         docs: [GROUP_FIXTURE],
       }));
+      (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
     });
 
     it('그룹 리스트가 반환되어야만 한다', async () => {

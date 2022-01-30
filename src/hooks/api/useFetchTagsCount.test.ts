@@ -36,7 +36,7 @@ describe('useFetchTagsCount', () => {
 
     given('tagsCount', () => tagsCount);
 
-    it('groups에 대한 정보를 반환해야만 한다', async () => {
+    it('태그에 대한 정보를 반환해야만 한다', async () => {
       const { result, waitFor } = useFetchTagsCountHook();
 
       await waitFor(() => !!result.current.data);

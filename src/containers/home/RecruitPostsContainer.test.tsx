@@ -26,7 +26,6 @@ describe('RecruitPostsContainer', () => {
     (useFetchGroups as jest.Mock).mockImplementation(() => ({
       data: [GROUP_FIXTURE],
       isLoading: given.isLoading,
-      isError: given.isError,
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       query: {
@@ -50,25 +49,15 @@ describe('RecruitPostsContainer', () => {
     });
   });
 
-  context('에러가 존재하는 경우', () => {
-    given('isError', () => true);
+  describe('신청현황 페이지에서 권한이 없어서 Redirect여부에 따라 메시지가 보인다', () => {
+    context('query에 error가 "unauthenticated"인 경우', () => {
+      given('error', () => ('unauthenticated'));
 
-    describe('신청현황 페이지에서 권한이 없어서 Redirect여부에 따라 메시지가 보인다', () => {
-      context('query에 error가 "unauthenticated"인 경우', () => {
-        given('error', () => ('unauthenticated'));
+      it('toast.error가 호출되어야만 한다', () => {
+        renderRecruitPostsContainer();
 
-        it('toast.error가 호출되어야만 한다', () => {
-          renderRecruitPostsContainer();
-
-          expect(toast.error).toBeCalledWith('해당 페이지를 볼 수 있는 권한이 없어요!');
-        });
+        expect(toast.error).toBeCalledWith('해당 페이지를 볼 수 있는 권한이 없어요!');
       });
-    });
-
-    it('toast.error가 호출되어야만 한다', () => {
-      renderRecruitPostsContainer();
-
-      expect(toast.error).toBeCalledWith('팀 리스트를 불러오는데 실패했어요! 다시 시도해주세요!');
     });
   });
 

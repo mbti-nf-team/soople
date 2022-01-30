@@ -1,5 +1,4 @@
-import React, { ReactElement, useCallback, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import React, { ReactElement, useCallback } from 'react';
 
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
@@ -18,7 +17,7 @@ type FilterCondition = {
 };
 
 function StatusBarContainer(): ReactElement {
-  const { data: tagsCount, isError, isLoading } = useFetchTagsCount();
+  const { data: tagsCount, isLoading } = useFetchTagsCount();
   const [{ isFilterCompleted }, setCondition] = useRecoilState(groupsConditionState);
 
   const setGroupsCondition = (condition: FilterCondition) => setCondition((prevCondition) => ({
@@ -34,12 +33,6 @@ function StatusBarContainer(): ReactElement {
 
     setGroupsCondition({ category: [category] as Category[] });
   }, [setGroupsCondition]);
-
-  useEffect(() => {
-    if (isError) {
-      toast.error('태그를 불러올 수 없어요!');
-    }
-  }, [isError]);
 
   return (
     <StatusBarWrapper>

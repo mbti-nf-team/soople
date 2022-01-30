@@ -11,7 +11,7 @@ import {
   where,
 } from 'firebase/firestore';
 
-import { Applicant, ApplicantFields } from '@/models/group';
+import { Applicant, ApplicantFields, Group } from '@/models/group';
 
 import { collectionRef, docRef } from '../firebase';
 
@@ -52,7 +52,7 @@ export const getUserAppliedGroups = async (userUid: string) => {
 
   const appliedGroups = await Promise.all(response.docs.map(getAppliedGroups));
 
-  return appliedGroups;
+  return appliedGroups.filter((group) => group) as Group[];
 };
 
 export const putApplicant = async (applicantForm: Applicant) => {

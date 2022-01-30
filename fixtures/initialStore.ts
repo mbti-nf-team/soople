@@ -1,5 +1,4 @@
 import { GroupStore } from '@/reducers/groupSlice';
-import { MyInfoStore } from '@/reducers/myInfoSlice';
 
 const initialStore = {
   initialState: {
@@ -27,11 +26,6 @@ const initialStore = {
       isVisible: false,
       applicants: [],
     } as GroupStore,
-    myInfoReducer: {
-      myInfoError: null,
-      recruitedGroups: [],
-      appliedGroups: [],
-    } as MyInfoStore,
   },
 };
 

@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchTagsCount from '@/hooks/api/useFetchTagsCount';
@@ -20,7 +18,7 @@ describe('StatusBarContainer', () => {
 
     (useFetchTagsCount as jest.Mock).mockImplementation(() => ({
       data: [{ name: 'javascript' }],
-      isError: given.isError,
+      isError: false,
       isLoading: false,
     }));
   });
@@ -30,28 +28,6 @@ describe('StatusBarContainer', () => {
       <StatusBarContainer />
     </InjectTestingRecoilState>
   ));
-
-  describe('태그 정보에 대한 이벤트', () => {
-    context('tagsCount 액션이 에러가 발생한 경우', () => {
-      given('isError', () => true);
-
-      it('"toast.error"가 호출되어야만 한다', () => {
-        renderStatusBarContainer();
-
-        expect(toast.error).toBeCalledWith('태그를 불러올 수 없어요!');
-      });
-    });
-
-    context('tagsCount 액션이 에러가 발생하지 않은 경우', () => {
-      given('isError', () => false);
-
-      it('"toast.error"가 호출되지 않아야만 한다', () => {
-        renderStatusBarContainer();
-
-        expect(toast.error).not.toBeCalled();
-      });
-    });
-  });
 
   describe('필터 select를 변경한다', () => {
     context('category가 존재하지 않는 경우', () => {

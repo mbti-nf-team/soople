@@ -7,7 +7,6 @@ import {
   emptyAThenB,
   getAuth,
   getGroup,
-  getMyInfo,
   isCurrentTimeBeforeEndDate,
   isProdLevel,
   isRecruitCompletedAndManual,
@@ -83,21 +82,6 @@ test('getGroup', () => {
 
   expect(groupError(state)).toBeNull();
   expect(writeFields(state)).toEqual(WRITE_FIELDS_FIXTURE);
-});
-
-test('getMyInfo', () => {
-  const state = {
-    myInfoReducer: {
-      myInfoError: null,
-      recruitedGroups: [GROUP_FIXTURE],
-    },
-  } as RootReducerState;
-
-  const myInfoError = getMyInfo('myInfoError');
-  const recruitedGroups = getMyInfo('recruitedGroups');
-
-  expect(myInfoError(state)).toBeNull();
-  expect(recruitedGroups(state)).toEqual([GROUP_FIXTURE]);
 });
 
 describe('stringToExcludeNull', () => {

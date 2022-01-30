@@ -8,7 +8,7 @@ import useFetchGroups from '@/hooks/api/useFetchGroups';
 
 function RecruitPostsContainer(): ReactElement {
   const { query, replace } = useRouter();
-  const { data: groups, isLoading, isError } = useFetchGroups();
+  const { data: groups, isLoading } = useFetchGroups();
 
   useEffect(() => {
     if (query.error === 'unauthenticated') {
@@ -16,12 +16,6 @@ function RecruitPostsContainer(): ReactElement {
       replace('/', undefined, { shallow: true });
     }
   }, [query]);
-
-  useEffect(() => {
-    if (isError) {
-      toast.error('팀 리스트를 불러오는데 실패했어요! 다시 시도해주세요!');
-    }
-  }, [isError]);
 
   if (isLoading) {
     return <>로딩중...</>;

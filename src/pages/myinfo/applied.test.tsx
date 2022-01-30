@@ -1,20 +1,24 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
+
+import useFetchUserAppliedGroups from '@/hooks/api/useFetchUserAppliedGroups';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
 
 import AppliedPage from './applied.page';
 
+jest.mock('@/hooks/api/useFetchUserAppliedGroups');
+
 describe('AppliedPage', () => {
   beforeEach(() => {
-    (useDispatch as jest.Mock).mockImplementation(() => jest.fn());
+    (useFetchUserAppliedGroups as jest.Mock).mockImplementation(() => ({
+      data: [FIXTURE_GROUP],
+      isLoading: false,
+    }));
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
         user: null,
-      },
-      myInfoReducer: {
-        appliedGroups: [FIXTURE_GROUP],
       },
     }));
   });
