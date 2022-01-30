@@ -4,6 +4,7 @@ import {
 
 import { WriteFields } from '@/models/group';
 import {
+  getFilteredGroups,
   getGroupDetail,
   getGroups,
   getUserRecruitedGroups,
@@ -11,6 +12,7 @@ import {
   patchNumberApplicants,
   postNewGroup,
 } from '@/services/api/group';
+import { formatGroup } from '@/utils/firestore';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -109,6 +111,37 @@ describe('group API', () => {
       });
 
       expect(response).toEqual([GROUP_FIXTURE]);
+    });
+  });
+
+  describe('getFilteredGroups', () => {
+    beforeEach(() => {
+      (getDocs as jest.Mock).mockImplementationOnce(() => ({
+        docs: [GROUP_FIXTURE],
+      }));
+      (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+    });
+
+    context('isFilterCompleted가 true인 경우', () => {
+      it('그룹 리스트가 반환되어야만 한다', async () => {
+        const response = await getFilteredGroups({
+          category: ['study', 'project'],
+          isFilterCompleted: true,
+        });
+
+        expect(response).toEqual([GROUP_FIXTURE]);
+      });
+    });
+
+    context('isFilterCompleted가 false인 경우', () => {
+      it('그룹 리스트가 반환되어야만 한다', async () => {
+        const response = await getFilteredGroups({
+          category: ['study', 'project'],
+          isFilterCompleted: false,
+        });
+
+        expect(response).toEqual([GROUP_FIXTURE]);
+      });
     });
   });
 

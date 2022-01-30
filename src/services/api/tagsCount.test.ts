@@ -12,20 +12,22 @@ describe('tagsCount API', () => {
   });
 
   describe('getTagsCount', () => {
-    const tagsCount = [
-      { name: 'test', count: 1 },
-    ];
+    const tagCount = {
+      name: 'test', count: 1,
+    };
 
     beforeEach(() => {
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
-        docs: tagsCount,
+        docs: [{
+          data: jest.fn().mockReturnValue(tagCount),
+        }],
       }));
     });
 
     it('테그 리스트가 반환되어야만 한다', async () => {
       const response = await getTagsCount();
 
-      expect(response).toEqual(tagsCount);
+      expect(response).toEqual([tagCount]);
     });
   });
 
