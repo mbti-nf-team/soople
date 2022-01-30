@@ -3,27 +3,29 @@ import { render } from '@testing-library/react';
 import TagsBar from './TagsBar';
 
 describe('TagsBar', () => {
+  const tags = [
+    { name: 'test', count: 1 },
+    { name: 'test1', count: 0 },
+  ];
+
   const renderTagsBar = () => render((
     <TagsBar
-      tags={given.tags}
+      isLoading={given.isLoading}
+      tags={tags}
     />
   ));
 
-  context('tag들이 존재하지 않는 경우', () => {
-    given('tags', () => []);
+  context('로딩중인 경우', () => {
+    given('isLoading', () => true);
 
-    it('"태그가 없어요!" 문구가 나타나야만 한다', () => {
+    it('"로딩중..." 문구가 나타나야만 한다', () => {
       const { container } = renderTagsBar();
 
-      expect(container).toHaveTextContent('태그가 없어요!');
+      expect(container).toHaveTextContent('로딩중...');
     });
   });
 
-  context('tag들이 존재하는 경우', () => {
-    const tags = [{ name: 'test' }, { name: 'test1' }];
-
-    given('tags', () => tags);
-
+  context('로딩중이 아닌 경우', () => {
     it('태그들이 나타나야만 한다', () => {
       const { container } = renderTagsBar();
 

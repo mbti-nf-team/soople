@@ -1,24 +1,14 @@
 import React, { ReactElement, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useEffectOnce } from 'react-use';
 
 import { useRouter } from 'next/router';
 
 import RecruitPosts from '@/components/home/RecruitPosts';
-import { loadGroups } from '@/reducers/groupSlice';
-import { useAppDispatch } from '@/reducers/store';
-import { getGroup } from '@/utils/utils';
+import useFetchGroups from '@/hooks/api/useFetchGroups';
 
 function RecruitPostsContainer(): ReactElement {
   const { query, replace } = useRouter();
-  const dispatch = useAppDispatch();
-  const groups = useSelector(getGroup('groups'));
-
-  useEffectOnce(() => dispatch(loadGroups({
-    category: ['study', 'project'],
-    isFilterCompleted: false,
-  })));
+  const { data: groups, isLoading, isError } = useFetchGroups();
 
   useEffect(() => {
     if (query.error === 'unauthenticated') {
@@ -27,8 +17,14 @@ function RecruitPostsContainer(): ReactElement {
     }
   }, [query]);
 
-  if (!groups || !groups.length) {
-    return <div>로딩중...</div>;
+  useEffect(() => {
+    if (isError) {
+      toast.error('팀 리스트를 불러오는데 실패했어요! 다시 시도해주세요!');
+    }
+  }, [isError]);
+
+  if (isLoading) {
+    return <>로딩중...</>;
   }
 
   return (

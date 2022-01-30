@@ -2,6 +2,8 @@ import {
   getDoc, getDocs, limit, orderBy, query, setDoc, updateDoc,
 } from 'firebase/firestore';
 
+import { TagCount } from '@/models/group';
+
 import { collectionRef, docRef } from '../firebase';
 
 export const getTagsCount = async () => {
@@ -13,7 +15,7 @@ export const getTagsCount = async () => {
 
   const response = await getDocs(getQuery);
 
-  return response.docs;
+  return response.docs.map((doc) => doc.data()) as TagCount[];
 };
 
 export const updateTagCount = async (tagName: string) => {

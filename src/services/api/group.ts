@@ -13,7 +13,8 @@ import { Profile } from '@/models/auth';
 import {
   FilterGroupsCondition, Group, WriteFields,
 } from '@/models/group';
-import { timestampToString } from '@/utils/firestore';
+import { formatGroup, timestampToString } from '@/utils/firestore';
+import { isRecruiting } from '@/utils/utils';
 
 import { collectionRef, docRef } from '../firebase';
 import { getGroupsQuery } from '../firebase/getQuery';
@@ -55,6 +56,20 @@ export const getGroups = async (condition: FilterGroupsCondition) => {
   const response = await getDocs(getQuery);
 
   return response.docs;
+};
+
+export const getFilteredGroups = async (condition: FilterGroupsCondition) => {
+  const groups = await getGroups(condition);
+
+  const filteredGroups = (groups.map(formatGroup) as Group[]).filter((group) => {
+    if (condition.isFilterCompleted && isRecruiting(group)) {
+      return group;
+    }
+
+    return group;
+  });
+
+  return filteredGroups;
 };
 
 export const getUserRecruitedGroups = async (userUid: string) => {

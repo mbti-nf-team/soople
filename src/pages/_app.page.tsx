@@ -1,8 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import type { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
+import { RecoilRoot } from 'recoil';
 
 import AuthProvider from '@/components/common/AuthProvider';
 import Core from '@/components/common/Core';
@@ -19,15 +22,26 @@ type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        refetchOnWindowFocus: false,
+      },
+    },
+  }));
 
   return getLayout((
-    <>
-      <Core />
-      <AuthProvider>
-        <SignInModalContainer />
-        <Component {...pageProps} />
-      </AuthProvider>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <Core />
+        <AuthProvider>
+          <SignInModalContainer />
+          <Component {...pageProps} />
+        </AuthProvider>
+      </RecoilRoot>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   ));
 }
 

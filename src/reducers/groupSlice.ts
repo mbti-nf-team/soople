@@ -6,7 +6,6 @@ import {
   Applicant,
   Comment,
   CommentFields,
-  FilterGroupsCondition,
   Group, TagCount, WriteFields, WriteFieldsForm,
 } from '@/models/group';
 import {
@@ -14,11 +13,10 @@ import {
 } from '@/services/api/applicants';
 import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
 import {
-  getGroupDetail, getGroups, patchCompletedGroup, patchNumberApplicants, postNewGroup,
+  getGroupDetail, patchCompletedGroup, patchNumberApplicants, postNewGroup,
 } from '@/services/api/group';
-import { getTagsCount, updateTagCount } from '@/services/api/tagsCount';
-import { formatApplicant, formatComment, formatGroup } from '@/utils/firestore';
-import { isRecruiting } from '@/utils/utils';
+import { updateTagCount } from '@/services/api/tagsCount';
+import { formatApplicant, formatComment } from '@/utils/firestore';
 
 import type { AppThunk } from './store';
 
@@ -183,42 +181,6 @@ export const loadGroupDetail = (id: string): AppThunk => async (dispatch) => {
     const group = await getGroupDetail(id);
 
     dispatch(setGroup(group));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const loadGroups = (condition: FilterGroupsCondition): AppThunk => async (dispatch) => {
-  try {
-    const response = await getGroups(condition);
-
-    const groups = response.map(formatGroup) as Group[];
-
-    const filteredGroups = groups.filter((group) => {
-      if (condition.isFilterCompleted && isRecruiting(group)) {
-        return group;
-      }
-
-      return group;
-    });
-
-    dispatch(setGroups(filteredGroups));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const loadTagsCount = (): AppThunk => async (dispatch) => {
-  try {
-    const response = await getTagsCount();
-
-    const tagsCount = response.map((doc) => doc.data()) as TagCount[];
-
-    dispatch(setTagsCount(tagsCount));
   } catch (error) {
     const { message } = error as Error;
 

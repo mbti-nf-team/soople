@@ -9,3 +9,5 @@ export const patchCompletedGroup = jest.fn();
 export const getUserRecruitedGroups = jest.fn();
 
 export const patchNumberApplicants = jest.fn();
+
+export const getFilteredGroups = jest.fn();

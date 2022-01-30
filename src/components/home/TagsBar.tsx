@@ -8,11 +8,12 @@ import Tag from '../common/Tag';
 
 interface Props {
   tags: TagCount[];
+  isLoading: boolean;
 }
 
-function TagsBar({ tags }: Props): ReactElement {
-  if (!tags.length) {
-    return <>태그가 없어요!</>;
+function TagsBar({ tags, isLoading }: Props): ReactElement {
+  if (isLoading) {
+    return <div>로딩중...</div>;
   }
 
   return (

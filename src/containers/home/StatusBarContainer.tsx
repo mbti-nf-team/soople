@@ -1,58 +1,45 @@
-import React, { ReactElement, useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useEffectOnce } from 'react-use';
+import React, { ReactElement, useCallback, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 import styled from '@emotion/styled';
+import { useRecoilState } from 'recoil';
 
 import SwitchButton from '@/components/common/SwitchButton';
 import FilterBar from '@/components/home/FilterBar';
 import TagsBar from '@/components/home/TagsBar';
+import useFetchTagsCount from '@/hooks/api/useFetchTagsCount';
 import { Category, FilterGroupsCondition } from '@/models/group';
-import { loadGroups, loadTagsCount } from '@/reducers/groupSlice';
-import { useAppDispatch } from '@/reducers/store';
+import { groupsConditionState } from '@/recoil/group/atom';
 import Divider from '@/styles/Divider';
 import { body1Font } from '@/styles/fontStyles';
-import { getGroup } from '@/utils/utils';
 
 type FilterCondition = {
   [K in keyof FilterGroupsCondition]?: FilterGroupsCondition[K];
 };
 
 function StatusBarContainer(): ReactElement {
-  const defaultCategoryCondition = ['study', 'project'] as Category[];
-  const dispatch = useAppDispatch();
-  const tagsCount = useSelector(getGroup('tagsCount'));
-  const [toggle, setToggle] = useState<boolean>(false);
-  const [filterConditionState, setFilterConditionState] = useState<FilterGroupsCondition>({
-    category: defaultCategoryCondition,
-    isFilterCompleted: false,
-  });
+  const { data: tagsCount, isError, isLoading } = useFetchTagsCount();
+  const [{ isFilterCompleted }, setCondition] = useRecoilState(groupsConditionState);
 
-  const loadFilteredGroup = useCallback((condition: FilterCondition) => {
-    const newCondition = {
-      ...filterConditionState,
-      ...condition,
-    };
-
-    dispatch(loadGroups(newCondition));
-    setFilterConditionState(newCondition);
-  }, [dispatch, filterConditionState]);
+  const setGroupsCondition = (condition: FilterCondition) => setCondition((prevCondition) => ({
+    ...prevCondition,
+    ...condition,
+  }));
 
   const onChange = useCallback((category: string) => {
     if (!category) {
-      loadFilteredGroup({ category: defaultCategoryCondition });
+      setGroupsCondition({ category: ['study', 'project'] });
       return;
     }
 
-    loadFilteredGroup({ category: [category] as Category[] });
-  }, [loadFilteredGroup]);
+    setGroupsCondition({ category: [category] as Category[] });
+  }, [setGroupsCondition]);
 
-  const onSwitch = useCallback((isFilterCompleted: boolean) => {
-    loadFilteredGroup({ isFilterCompleted });
-    setToggle(isFilterCompleted);
-  }, [loadFilteredGroup]);
-
-  useEffectOnce(() => dispatch(loadTagsCount()));
+  useEffect(() => {
+    if (isError) {
+      toast.error('태그를 불러올 수 없어요!');
+    }
+  }, [isError]);
 
   return (
     <StatusBarWrapper>
@@ -62,14 +49,15 @@ function StatusBarContainer(): ReactElement {
         />
         <StyledDivider />
         <TagsBar
+          isLoading={isLoading}
           tags={tagsCount}
         />
       </div>
       <RecruitmentDeadline>
         <span>모집 마감 안보기</span>
         <SwitchButton
-          defaultChecked={toggle}
-          onChange={() => onSwitch(!toggle)}
+          defaultChecked={isFilterCompleted}
+          onChange={() => setGroupsCondition({ isFilterCompleted: !isFilterCompleted })}
         />
       </RecruitmentDeadline>
     </StatusBarWrapper>

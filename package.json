@@ -58,10 +58,12 @@
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
     "react-hook-form": "^7.20.4",
+    "react-query": "^3.34.12",
     "react-redux": "^7.2.6",
     "react-toastify": "^8.1.0",
     "react-toggle": "^4.1.2",
     "react-use": "^17.3.1",
+    "recoil": "^0.6.1",
     "redux": "^4.1.2",
     "yup": "^0.32.11"
   },
