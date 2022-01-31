@@ -2,21 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Profile } from '@/models/auth';
 import {
-  AddApplicantForm,
   Applicant,
   Comment,
-  CommentFields,
   Group, TagCount, WriteFields, WriteFieldsForm,
 } from '@/models/group';
-import {
-  deleteApplicant, getApplicants, postAddApplicant, putApplicant,
-} from '@/services/api/applicants';
-import { deleteGroupComment, getGroupComments, postGroupComment } from '@/services/api/comment';
-import {
-  getGroupDetail, patchCompletedGroup, patchNumberApplicants, postNewGroup,
-} from '@/services/api/group';
+import { getApplicants, putApplicant } from '@/services/api/applicants';
+import { patchCompletedGroup, postNewGroup } from '@/services/api/group';
 import { updateTagCount } from '@/services/api/tagsCount';
-import { formatApplicant, formatComment } from '@/utils/firestore';
 
 import type { AppThunk } from './store';
 
@@ -176,136 +168,11 @@ export const requestRegisterNewGroup = (
   }
 };
 
-export const loadGroupDetail = (id: string): AppThunk => async (dispatch) => {
-  try {
-    const group = await getGroupDetail(id);
-
-    dispatch(setGroup(group));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const loadComments = (groupId: string): AppThunk => async (dispatch) => {
-  try {
-    const response = await getGroupComments(groupId);
-
-    const comments = response.map(formatComment) as Comment[];
-
-    dispatch(setComments(comments));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const requestAddComment = (
-  fields: CommentFields,
-): AppThunk => async (dispatch, getState) => {
-  const { groupReducer: { group } } = getState();
-  const { groupId } = (group as Group);
-
-  try {
-    const commentId = await postGroupComment({
-      groupId,
-      ...fields,
-    });
-
-    const { content, writer } = fields;
-
-    dispatch(setComment({
-      commentId,
-      groupId,
-      content,
-      writer,
-      createdAt: new Date().toString(),
-    }));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const requestDeleteComment = (uid: string): AppThunk => async (dispatch, getState) => {
-  const { groupReducer: { comments } } = getState();
-
-  try {
-    await deleteGroupComment(uid);
-
-    const newComments = comments.filter(({ commentId }) => commentId !== uid);
-
-    dispatch(setComments(newComments));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const requestAddApplicant = (
-  fields: AddApplicantForm,
-): AppThunk => async (dispatch, getState) => {
-  const { authReducer: { user }, groupReducer: { group } } = getState();
-
-  try {
-    const uid = await postAddApplicant({
-      ...fields,
-      applicant: user as Profile,
-    });
-    const newNumberApplicants = await patchNumberApplicants(fields.groupId, true);
-
-    dispatch(setApplicant({
-      uid,
-      createdAt: new Date().toString(),
-      applicant: user as Profile,
-      isConfirm: false,
-      ...fields,
-    }));
-    dispatch(setGroup({
-      ...group as Group,
-      numberApplicants: newNumberApplicants,
-    }));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
 export const loadApplicants = (groupId: string): AppThunk => async (dispatch) => {
   try {
-    const response = await getApplicants(groupId);
-
-    const applicants = response.map(formatApplicant) as Applicant[];
+    const applicants = await getApplicants(groupId);
 
     dispatch(setApplicants(applicants));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const requestDeleteApplicant = (
-  applicantId: string,
-): AppThunk => async (dispatch, getState) => {
-  const { groupReducer: { applicants, group } } = getState();
-
-  try {
-    await deleteApplicant(applicantId);
-    const newNumberApplicants = await patchNumberApplicants(group?.groupId as string);
-
-    const newApplicants = applicants.filter(({ uid }) => uid !== applicantId);
-
-    dispatch(setApplicants(newApplicants));
-    dispatch(setGroup({
-      ...group as Group,
-      numberApplicants: newNumberApplicants,
-    }));
   } catch (error) {
     const { message } = error as Error;
 

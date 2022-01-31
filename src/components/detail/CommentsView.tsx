@@ -11,14 +11,19 @@ interface Props {
   comments: Comment[];
   user: Profile | null;
   onRemove: (commentId: string) => void;
+  isLoading: boolean;
 }
 
-function CommentsView({ comments, user, onRemove }: Props): ReactElement {
-  const { length } = comments;
+function CommentsView({
+  isLoading, comments, user, onRemove,
+}: Props): ReactElement {
+  if (isLoading) {
+    return <CommentsViewWrapper>로딩중...</CommentsViewWrapper>;
+  }
 
   return (
     <CommentsViewWrapper>
-      <h4>{`댓글 ${length}`}</h4>
+      <h4>{`댓글 ${comments.length}`}</h4>
       {comments.map((comment) => (
         <CommentView
           key={comment.commentId}

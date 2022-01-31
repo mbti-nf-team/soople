@@ -9,7 +9,6 @@ import DetailHeaderSection from './DetailHeaderSection';
 describe('DetailHeaderSection', () => {
   const renderDetailHeaderSection = (group = GROUP_FIXTURE) => render((
     <DetailHeaderSection
-      numberApplicants={1}
       group={group}
     />
   ));
@@ -19,6 +18,7 @@ describe('DetailHeaderSection', () => {
       it('"~ 명 모집" 문구가 나타나야만 한다', () => {
         const { container } = renderDetailHeaderSection({
           ...GROUP_FIXTURE,
+          numberApplicants: 1,
           isCompleted: true,
         });
 
@@ -30,7 +30,7 @@ describe('DetailHeaderSection', () => {
       it('"~ 명 신청 중" 문구가 나타나야만 한다', () => {
         const { container } = renderDetailHeaderSection();
 
-        expect(container).toHaveTextContent('1명 신청 중');
+        expect(container).toHaveTextContent('0명 신청 중');
       });
     });
   });

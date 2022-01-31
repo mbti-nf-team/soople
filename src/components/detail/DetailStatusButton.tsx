@@ -7,6 +7,8 @@ import { Profile } from '@/models/auth';
 import { Applicant, ApplicantForm, Group } from '@/models/group';
 import { isRecruiting } from '@/utils/utils';
 
+import Button from '../common/Button';
+
 import ApplicantStatusButton from './ApplicantStatusButton';
 import WriterStatusButtons from './WriterStatusButtons';
 
@@ -17,10 +19,11 @@ interface Props {
   onApply: (applyFields: ApplicantForm) => void;
   onVisibleSignInModal: () => void;
   onCancelApply: (applicantId: string) => void;
+  isApplicantsLoading: boolean;
 }
 
 function DetailStatusButton({
-  group, user, onApply, onVisibleSignInModal, applicants, onCancelApply,
+  group, user, onApply, onVisibleSignInModal, applicants, onCancelApply, isApplicantsLoading,
 }: Props): ReactElement {
   const { writer, isCompleted, groupId } = group;
 
@@ -35,6 +38,10 @@ function DetailStatusButton({
         isCompleted={isCompleted}
       />
     );
+  }
+
+  if (isApplicantsLoading) {
+    return <Button disabled>로딩중...</Button>;
   }
 
   return (

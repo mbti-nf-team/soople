@@ -172,7 +172,10 @@ describe('group API', () => {
 
     context('isApply가 true인 경우', () => {
       it('"updateDoc"이 numberApplicants 1증가된 상태로 호출되어야만 한다', async () => {
-        const response = await patchNumberApplicants('userUid', true);
+        const response = await patchNumberApplicants({
+          groupId: 'groupId',
+          isApply: true,
+        });
 
         expect(updateDoc).toBeCalledWith('ref', {
           numberApplicants: 2,
@@ -183,7 +186,10 @@ describe('group API', () => {
 
     context('isApply가 false인 경우', () => {
       it('"updateDoc"이 numberApplicants 1 감소된 상태로 호출되어야만 한다', async () => {
-        const response = await patchNumberApplicants('userUid', false);
+        const response = await patchNumberApplicants({
+          groupId: 'groupId',
+          isApply: false,
+        });
 
         expect(updateDoc).toBeCalledWith('ref', {
           numberApplicants: 0,

@@ -1,22 +1,17 @@
-import { useSelector } from 'react-redux';
-
 import { render } from '@testing-library/react';
 
-import { Group } from '@/models/group';
+import useFetchGroup from '@/hooks/api/useFetchGroup';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 
 import DetailContentsContainer from './DetailContentsContainer';
 
+jest.mock('@/hooks/api/useFetchGroup');
+
 describe('DetailContentsContainer', () => {
   beforeEach(() => {
-    (useSelector as jest.Mock).mockImplementationOnce((selector) => selector({
-      groupReducer: {
-        group: {
-          ...GROUP_FIXTURE,
-          tags: ['javascript'],
-        } as Group,
-      },
+    (useFetchGroup as jest.Mock).mockImplementation(() => ({
+      data: GROUP_FIXTURE,
     }));
   });
 
@@ -28,6 +23,5 @@ describe('DetailContentsContainer', () => {
     const { container } = renderDetailContentsContainer();
 
     expect(container).toHaveTextContent('content');
-    expect(container).toHaveTextContent('javascript');
   });
 });

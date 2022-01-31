@@ -7,7 +7,10 @@ import DetailContentsSection from './DetailContentsSection';
 describe('DetailContentsSection', () => {
   const renderDetailContentsSection = () => render((
     <DetailContentsSection
-      group={GROUP_FIXTURE}
+      group={{
+        ...GROUP_FIXTURE,
+        tags: ['javascript'],
+      }}
     />
   ));
 
@@ -15,5 +18,6 @@ describe('DetailContentsSection', () => {
     const { container } = renderDetailContentsSection();
 
     expect(container).toHaveTextContent('content');
+    expect(container).toHaveTextContent('javascript');
   });
 });

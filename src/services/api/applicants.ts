@@ -12,10 +12,11 @@ import {
 } from 'firebase/firestore';
 
 import { Applicant, ApplicantFields, Group } from '@/models/group';
+import { formatApplicant } from '@/utils/firestore';
 
 import { collectionRef, docRef } from '../firebase';
 
-import { getGroupDetail } from './group';
+import { getGroupDetail, patchNumberApplicants } from './group';
 
 const APPLICANTS = 'applicants';
 
@@ -26,7 +27,15 @@ export const postAddApplicant = async (fields: ApplicantFields) => {
     createdAt: serverTimestamp(),
   });
 
-  return id;
+  const numberApplicants = await patchNumberApplicants({
+    groupId: fields.groupId,
+    isApply: true,
+  });
+
+  return {
+    uid: id,
+    numberApplicants,
+  };
 };
 
 export const getApplicants = async (groupId: string) => {
@@ -38,7 +47,7 @@ export const getApplicants = async (groupId: string) => {
 
   const response = await getDocs(getQuery);
 
-  return response.docs;
+  return response.docs.map(formatApplicant) as Applicant[];
 };
 
 export const getUserAppliedGroups = async (userUid: string) => {
@@ -68,8 +77,17 @@ export const putApplicant = async (applicantForm: Applicant) => {
   });
 };
 
-export const deleteApplicant = async (applicantId: string) => {
+export const deleteApplicant = async ({
+  applicantId, groupId,
+}: { applicantId: string; groupId: string; }) => {
   await deleteDoc(docRef(APPLICANTS, applicantId));
+
+  const numberApplicants = await patchNumberApplicants({
+    groupId,
+    isApply: false,
+  });
+
+  return numberApplicants;
 };
 
 export const getAppliedGroups = async (doc: QueryDocumentSnapshot<DocumentData>) => {

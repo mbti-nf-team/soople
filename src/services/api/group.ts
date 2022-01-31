@@ -86,8 +86,10 @@ export const getUserRecruitedGroups = async (userUid: string) => {
   return recruitedGroups;
 };
 
-export const patchNumberApplicants = async (uid: string, isApply?: boolean) => {
-  const response = await getDoc(docRef(GROUPS, uid));
+export const patchNumberApplicants = async ({
+  groupId, isApply,
+}: { groupId: string; isApply: boolean; }) => {
+  const response = await getDoc(docRef(GROUPS, groupId));
 
   const { numberApplicants } = response.data() as Group;
 

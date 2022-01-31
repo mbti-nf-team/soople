@@ -1,47 +1,71 @@
 import { ParsedUrlQuery } from 'querystring';
 
+import { QueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
-import { useRouter } from 'next/router';
 
+import useAddComment from '@/hooks/api/useAddComment';
+import useApplyGroup from '@/hooks/api/useApplyGroup';
+import useCancelApply from '@/hooks/api/useCancelApply';
+import useDeleteComment from '@/hooks/api/useDeleteComment';
+import useFetchApplicants from '@/hooks/api/useFetchApplicants';
+import useFetchComments from '@/hooks/api/useFetchComments';
+import useFetchGroup from '@/hooks/api/useFetchGroup';
 import { getGroupDetail } from '@/services/api/group';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 import GROUP_FIXTURE from '../../../fixtures/group';
-import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import DetailPage, { getServerSideProps } from './[id].page';
 
 jest.mock('@/services/api/group');
-jest.mock('@/services/api/auth');
+jest.mock('@/hooks/api/useFetchApplicants');
+jest.mock('@/hooks/api/useFetchComments');
+jest.mock('@/hooks/api/useFetchGroup');
+jest.mock('@/hooks/api/useApplyGroup');
+jest.mock('@/hooks/api/useAddComment');
+jest.mock('@/hooks/api/useCancelApply');
+jest.mock('@/hooks/api/useDeleteComment');
+
 jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
+  useRouter: jest.fn().mockImplementation(() => ({
+    query: {
+      id: '1',
+    },
+  })),
 }));
 
 describe('DetailPage', () => {
   const dispatch = jest.fn();
+  const mutate = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
+    jest.clearAllMocks();
 
+    (useFetchComments as jest.Mock).mockImplementation(() => ({
+      data: [COMMENT_FIXTURE],
+      isLoading: false,
+    }));
+    (useFetchGroup as jest.Mock).mockImplementation(() => ({
+      data: GROUP_FIXTURE,
+    }));
+    (useFetchApplicants as jest.Mock).mockImplementation(() => ({
+      data: [APPLICANT_FIXTURE],
+      isLoading: false,
+    }));
+    (useApplyGroup as jest.Mock).mockImplementation(() => ({ mutate }));
+    (useCancelApply as jest.Mock).mockImplementation(() => ({ mutate }));
+    (useAddComment as jest.Mock).mockImplementation(() => ({ mutate }));
+    (useDeleteComment as jest.Mock).mockImplementation(() => ({ mutate }));
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
         user: '',
       },
-      groupReducer: {
-        group: GROUP_FIXTURE,
-        writer: PROFILE_FIXTURE,
-        comments: [COMMENT_FIXTURE],
-        applicants: [APPLICANT_FIXTURE],
-      },
     }));
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
-    (useRouter as jest.Mock).mockImplementation(() => ({
-      asPath: '/',
-    }));
   });
 
   const renderDetailPage = () => render((
@@ -95,16 +119,18 @@ describe('getServerSideProps', () => {
     const mockContext = {
       params: { id: 'id' } as ParsedUrlQuery,
     };
+    const queryClient = new QueryClient();
 
     beforeEach(() => {
       (getGroupDetail as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+      jest.spyOn(queryClient, 'getQueryData').mockReturnValue(GROUP_FIXTURE);
     });
 
     it('그룹 정보가 반환되어야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
       expect(getGroupDetail).toBeCalledWith('id');
-      expect(response.props.initialState.groupReducer.group).toEqual(GROUP_FIXTURE);
+      expect(response.props.dehydratedState.queries[0].state.data).toEqual(GROUP_FIXTURE);
     });
   });
 });
