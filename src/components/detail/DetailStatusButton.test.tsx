@@ -15,6 +15,7 @@ describe('DetailStatusButton', () => {
       user={PROFILE_FIXTURE}
       group={group}
       applicants={[]}
+      isApplicantsLoading={given.isApplicantsLoading}
       onVisibleSignInModal={handleVisibleSignInModal}
       onApply={handleApply}
       onCancelApply={handleCancelApply}
@@ -30,16 +31,32 @@ describe('DetailStatusButton', () => {
   });
 
   context('작성자가 아닌 경우', () => {
-    it('"신청하기" 버튼이 나타나야만 한다', () => {
-      const { container } = renderDetailStatusButton({
-        ...GROUP_FIXTURE,
-        writer: {
-          ...GROUP_FIXTURE.writer,
-          uid: '1',
-        },
-      });
+    const group = {
+      ...GROUP_FIXTURE,
+      writer: {
+        ...GROUP_FIXTURE.writer,
+        uid: '1',
+      },
+    };
 
-      expect(container).toHaveTextContent('신청하기');
+    context('로딩중인 경우', () => {
+      given('isApplicantsLoading', () => true);
+
+      it('"로딩중..." 버튼이 니타나야만 한다', () => {
+        const { container } = renderDetailStatusButton(group);
+
+        expect(container).toHaveTextContent('로딩중...');
+      });
+    });
+
+    context('로딩중이 아닌 경우', () => {
+      given('isApplicantsLoading', () => false);
+
+      it('"신청하기" 버튼이 나타나야만 한다', () => {
+        const { container } = renderDetailStatusButton(group);
+
+        expect(container).toHaveTextContent('신청하기');
+      });
     });
   });
 });

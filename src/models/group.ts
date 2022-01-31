@@ -23,6 +23,12 @@ export interface CommentFields {
   writer: Profile;
 }
 
+export interface CommentForm {
+  groupId: string;
+  content: string;
+  writer: Profile;
+}
+
 export interface Comment {
   commentId: string;
   groupId: string;
@@ -76,8 +82,4 @@ export interface ApplicantFields {
 export interface ApplicantForm {
   portfolioUrl: string | null;
   introduce: string;
-}
-
-export interface AddApplicantForm extends ApplicantForm {
-  groupId: string;
 }

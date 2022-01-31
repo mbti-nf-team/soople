@@ -1,8 +1,9 @@
 import {
-  addDoc, deleteDoc, DocumentData, getDocs, QueryDocumentSnapshot, serverTimestamp, updateDoc,
+  addDoc, DocumentData, getDocs, QueryDocumentSnapshot, serverTimestamp, updateDoc,
 } from 'firebase/firestore';
 
 import { ApplicantFields } from '@/models/group';
+import { formatApplicant } from '@/utils/firestore';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import GROUP_FIXTURE from '../../../fixtures/group';
@@ -17,10 +18,11 @@ import {
   postAddApplicant,
   putApplicant,
 } from './applicants';
-import { getGroupDetail } from './group';
+import { getGroupDetail, patchNumberApplicants } from './group';
 
 jest.mock('../firebase');
 jest.mock('./group');
+jest.mock('@/utils/firestore');
 
 describe('applicants API', () => {
   beforeEach(() => {
@@ -43,12 +45,12 @@ describe('applicants API', () => {
       (addDoc as jest.Mock).mockImplementation(() => ({
         id: '1',
       }));
-
+      (patchNumberApplicants as jest.Mock).mockResolvedValue(5);
       (serverTimestamp as jest.Mock).mockReturnValueOnce(createdAt);
     });
 
     it('addDoc 함수가 호출되어야만 한다', async () => {
-      const id = await postAddApplicant(applicant);
+      const response = await postAddApplicant(applicant);
 
       expect(addDoc).toBeCalledWith(collection, {
         ...applicant,
@@ -56,7 +58,10 @@ describe('applicants API', () => {
         createdAt,
       });
 
-      expect(id).toBe('1');
+      expect(response).toEqual({
+        uid: '1',
+        numberApplicants: 5,
+      });
     });
   });
 
@@ -65,6 +70,7 @@ describe('applicants API', () => {
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
         docs: [APPLICANT_FIXTURE],
       }));
+      (formatApplicant as jest.Mock).mockReturnValueOnce(APPLICANT_FIXTURE);
     });
 
     it('신청자 리스트가 반환되어야만 한다', async () => {
@@ -107,10 +113,21 @@ describe('applicants API', () => {
   });
 
   describe('deleteApplicant', () => {
-    it('"deleteDoc"이 호출되어야만 한다', async () => {
-      await deleteApplicant('applicantId');
+    beforeEach(() => {
+      (patchNumberApplicants as jest.Mock).mockResolvedValue(5);
+    });
 
-      expect(deleteDoc).toBeCalledTimes(1);
+    it('"patchNumberApplicants"이 호출되어야만 한다', async () => {
+      const response = await deleteApplicant({
+        applicantId: 'applicantId',
+        groupId: '1',
+      });
+
+      expect(patchNumberApplicants).toBeCalledWith({
+        groupId: '1',
+        isApply: false,
+      });
+      expect(response).toBe(5);
     });
   });
 

@@ -1,44 +1,46 @@
-import React, { ReactElement, useCallback, useEffect } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { useUnmount } from 'react-use';
 
 import DetailHeaderSection from '@/components/detail/DetailHeaderSection';
 import DetailStatusButton from '@/components/detail/DetailStatusButton';
-import { ApplicantForm, Group } from '@/models/group';
+import useApplyGroup from '@/hooks/api/useApplyGroup';
+import useCancelApply from '@/hooks/api/useCancelApply';
+import useFetchGroup from '@/hooks/api/useFetchGroup';
+import { Profile } from '@/models/auth';
+import { ApplicantForm } from '@/models/group';
 import { setSignInModalVisible } from '@/reducers/authSlice';
-import {
-  loadApplicants, requestAddApplicant, requestDeleteApplicant, setApplicants,
-} from '@/reducers/groupSlice';
 import { useAppDispatch } from '@/reducers/store';
-import { getAuth, getGroup } from '@/utils/utils';
+import { getAuth } from '@/utils/utils';
+
+import useFetchApplicants from '../../hooks/api/useFetchApplicants';
 
 function DetailHeaderContainer(): ReactElement {
   const dispatch = useAppDispatch();
-  const group = useSelector(getGroup('group')) as Group;
   const user = useSelector(getAuth('user'));
-  const applicants = useSelector(getGroup('applicants'));
+  const { data: group } = useFetchGroup();
+  const { data: applicants, isLoading } = useFetchApplicants();
+  const { mutate: applyMutate } = useApplyGroup();
+  const { mutate: applyCancelMutate } = useCancelApply();
 
   const onVisibleSignInModal = useCallback(() => dispatch(setSignInModalVisible(true)), [dispatch]);
   const onCancelApply = useCallback((applicantId: string) => {
-    dispatch(requestDeleteApplicant(applicantId));
-  }, [dispatch]);
+    applyCancelMutate(applicantId);
+  }, [applyCancelMutate]);
 
-  const onApply = useCallback((applyFields: ApplicantForm) => dispatch(requestAddApplicant({
-    groupId: group.groupId,
+  const onApply = useCallback((applyFields: ApplicantForm) => applyMutate({
     ...applyFields,
-  })), [dispatch, group.groupId]);
-
-  useEffect(() => dispatch(loadApplicants(group.groupId)), []);
-
-  useUnmount(() => dispatch(setApplicants([])));
+    groupId: group.groupId,
+    applicant: user as Profile,
+  }), [group.groupId, user, applyMutate]);
 
   return (
-    <DetailHeaderSection group={group} numberApplicants={applicants.length}>
+    <DetailHeaderSection group={group}>
       <DetailStatusButton
         user={user}
         group={group}
         onApply={onApply}
         applicants={applicants}
+        isApplicantsLoading={isLoading}
         onVisibleSignInModal={onVisibleSignInModal}
         onCancelApply={onCancelApply}
       />

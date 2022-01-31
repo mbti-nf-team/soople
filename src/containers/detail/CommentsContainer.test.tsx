@@ -2,13 +2,28 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import useAddComment from '@/hooks/api/useAddComment';
+import useDeleteComment from '@/hooks/api/useDeleteComment';
+import useFetchComments from '@/hooks/api/useFetchComments';
+
 import COMMENT_FIXTURE from '../../../fixtures/comment';
-import GROUP_FIXTURE from '../../../fixtures/group';
 
 import CommentsContainer from './CommentsContainer';
 
+jest.mock('@/hooks/api/useFetchComments');
+jest.mock('@/hooks/api/useDeleteComment');
+jest.mock('@/hooks/api/useAddComment');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    query: {
+      id: '1',
+    },
+  })),
+}));
+
 describe('CommentsContainer', () => {
   const dispatch = jest.fn();
+  const mutate = jest.fn();
 
   beforeEach(() => {
     dispatch.mockClear();
@@ -18,9 +33,18 @@ describe('CommentsContainer', () => {
         user: given.user,
       },
       groupReducer: {
-        group: GROUP_FIXTURE,
         comments: [COMMENT_FIXTURE],
       },
+    }));
+    (useAddComment as jest.Mock).mockImplementation(() => ({
+      mutate,
+    }));
+    (useDeleteComment as jest.Mock).mockImplementation(() => ({
+      mutate,
+    }));
+    (useFetchComments as jest.Mock).mockImplementation(() => ({
+      data: [COMMENT_FIXTURE],
+      isLoading: false,
     }));
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
   });
@@ -31,14 +55,15 @@ describe('CommentsContainer', () => {
 
   describe('"댓글 남기기" 버튼을 클릭한다', () => {
     const commentValue = '댓글 내용';
+    const writer = {
+      name: 'test',
+      uid: '12345678',
+    };
 
     context('사용자가 로그인 상태인 경우', () => {
-      given('user', () => ({
-        name: 'test',
-        uid: '12345678',
-      }));
+      given('user', () => (writer));
 
-      it('dispatch 액션이 호출되야만 한다', () => {
+      it('mutate 액션이 호출되야만 한다', () => {
         renderCommentsContainer();
 
         fireEvent.change(screen.getByPlaceholderText('댓글을 입력하세요'), {
@@ -49,7 +74,11 @@ describe('CommentsContainer', () => {
 
         fireEvent.click(screen.getByText('댓글 남기기'));
 
-        expect(dispatch).toBeCalledTimes(2);
+        expect(mutate).toBeCalledWith({
+          content: commentValue,
+          writer,
+          groupId: '1',
+        });
       });
 
       describe('삭제 모달창의 "삭제하기" 버튼을 클릭한다', () => {
@@ -61,7 +90,10 @@ describe('CommentsContainer', () => {
             fireEvent.click(button);
           });
 
-          expect(dispatch).toBeCalledTimes(2);
+          expect(mutate).toBeCalledWith({
+            commentId: COMMENT_FIXTURE.commentId,
+            groupId: '1',
+          });
         });
       });
     });

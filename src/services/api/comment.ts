@@ -2,7 +2,8 @@ import {
   addDoc, deleteDoc, getDocs, orderBy, query, serverTimestamp, where,
 } from 'firebase/firestore';
 
-import { CommentFields } from '@/models/group';
+import { Comment, CommentFields } from '@/models/group';
+import { formatComment } from '@/utils/firestore';
 
 import { collectionRef, docRef } from '../firebase';
 
@@ -26,7 +27,7 @@ export const getGroupComments = async (groupId: string) => {
 
   const response = await getDocs(getQuery);
 
-  return response.docs;
+  return response.docs.map(formatComment) as Comment[];
 };
 
 export const deleteGroupComment = async (commentId: string) => {

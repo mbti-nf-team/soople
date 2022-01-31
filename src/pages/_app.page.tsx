@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { ReactElement, ReactNode, useState } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 import type { NextPage } from 'next';
@@ -33,14 +33,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return getLayout((
     <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        <Core />
-        <AuthProvider>
-          <SignInModalContainer />
-          <Component {...pageProps} />
-        </AuthProvider>
-      </RecoilRoot>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <Hydrate state={pageProps.dehydratedState}>
+        <RecoilRoot>
+          <Core />
+          <AuthProvider>
+            <SignInModalContainer />
+            <Component {...pageProps} />
+          </AuthProvider>
+        </RecoilRoot>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </Hydrate>
     </QueryClientProvider>
   ));
 }

@@ -20,13 +20,12 @@ dayjs.locale('ko');
 
 interface Props {
   group: Group;
-  numberApplicants: number;
 }
 
-function DetailHeaderSection({
-  group, numberApplicants, children,
-}: PropsWithChildren<Props>): ReactElement {
-  const { writer, views, isCompleted } = group;
+function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): ReactElement {
+  const {
+    writer, views, isCompleted, numberApplicants,
+  } = group;
 
   const currentTime = useCurrentTime(group);
   const recruitDate = useRecruitDateStatus(group, currentTime);

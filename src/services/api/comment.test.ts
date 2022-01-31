@@ -3,6 +3,7 @@ import {
 } from 'firebase/firestore';
 
 import { CommentFields } from '@/models/group';
+import { formatComment } from '@/utils/firestore';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -11,6 +12,7 @@ import { collectionRef } from '../firebase';
 import { deleteGroupComment, getGroupComments, postGroupComment } from './comment';
 
 jest.mock('../firebase');
+jest.mock('@/utils/firestore');
 
 describe('comment API', () => {
   beforeEach(() => {
@@ -53,6 +55,7 @@ describe('comment API', () => {
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
         docs: [COMMENT_FIXTURE],
       }));
+      (formatComment as jest.Mock).mockReturnValueOnce(COMMENT_FIXTURE);
     });
 
     it('댓글 리스트가 반환되어야만 한다', async () => {
