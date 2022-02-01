@@ -1,29 +1,26 @@
-import React, { ReactElement, useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { ReactElement, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 
 import ApplicationStatus from '@/components/applicants/ApplicationStatus';
-import { Applicant, Group } from '@/models/group';
-import { loadApplicants, updateApplicant } from '@/reducers/groupSlice';
-import { useAppDispatch } from '@/reducers/store';
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';
+import { Applicant } from '@/models/group';
 import { DetailLayout } from '@/styles/Layout';
-import { getGroup } from '@/utils/utils';
 
 function ApplicationStatusContainer(): ReactElement {
   const { back } = useRouter();
-  const dispatch = useAppDispatch();
-  const applicants = useSelector(getGroup('applicants'));
-  const group = useSelector(getGroup('group')) as Group;
+  const { data: applicants, isLoading } = useFetchApplicants();
+  const { mutate } = useUpdateApplicant();
 
-  const onToggleConfirm = useCallback((applicant: Applicant) => dispatch(updateApplicant({
+  const onToggleConfirm = useCallback((applicant: Applicant) => mutate({
     ...applicant,
     isConfirm: !applicant.isConfirm,
-  })), [dispatch]);
+  }), [mutate]);
 
-  useEffect(() => {
-    dispatch(loadApplicants(group.groupId));
-  }, []);
+  if (isLoading) {
+    return <DetailLayout>로딩중...</DetailLayout>;
+  }
 
   return (
     <DetailLayout>

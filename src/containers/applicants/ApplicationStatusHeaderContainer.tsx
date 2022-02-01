@@ -1,18 +1,17 @@
 import React, {
   ReactElement, useCallback, useEffect, useMemo,
 } from 'react';
-import { useSelector } from 'react-redux';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRouter } from 'next/router';
 
 import ApplicationStatusHeader from '@/components/applicants/ApplicationStatusHeader';
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useFetchGroup from '@/hooks/api/group/useFetchGroup';
+import useUpdateCompletedApply from '@/hooks/api/group/useUpdateCompletedApply';
 import useCurrentTime from '@/hooks/useCurrentTime';
-import { Group } from '@/models/group';
-import { updateCompletedApply } from '@/reducers/groupSlice';
-import { useAppDispatch } from '@/reducers/store';
-import { getGroup, isCurrentTimeBeforeEndDate } from '@/utils/utils';
+import { isCurrentTimeBeforeEndDate } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
 
@@ -21,14 +20,14 @@ dayjs.extend(relativeTime);
 
 function ApplicationStatusHeaderContainer(): ReactElement {
   const { back, replace } = useRouter();
-  const dispatch = useAppDispatch();
-  const applicants = useSelector(getGroup('applicants'));
-  const group = useSelector(getGroup('group')) as Group;
+  const { data: applicants } = useFetchApplicants();
+  const { data: group } = useFetchGroup();
+  const { mutate } = useUpdateCompletedApply();
   const currentTime = useCurrentTime(group);
 
-  const onSubmit = useCallback((
-    numberConfirmApplicants: number,
-  ) => dispatch(updateCompletedApply(group, numberConfirmApplicants)), [dispatch]);
+  const onSubmit = useCallback((numberConfirmApplicants: number) => mutate({
+    groupId: group.groupId, numberConfirmApplicants,
+  }), [mutate, group.groupId]);
 
   const timeRemaining = useMemo(() => {
     if (!isCurrentTimeBeforeEndDate(group.recruitmentEndDate, currentTime)) {

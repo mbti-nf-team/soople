@@ -1,59 +1,48 @@
 import React, { ReactElement } from 'react';
+import { dehydrate, QueryClient } from 'react-query';
 
+import { FirebaseError } from 'firebase/app';
 import { GetServerSideProps } from 'next';
 import nookies from 'nookies';
 
 import ApplicationStatusContainer from '@/containers/applicants/ApplicationStatusContainer';
 import ApplicationStatusHeaderContainer from '@/containers/applicants/ApplicationStatusHeaderContainer';
 import { GroupQuery } from '@/models';
-import { setGroup } from '@/reducers/groupSlice';
-import wrapper from '@/reducers/store';
+import { Group } from '@/models/group';
 import { getGroupDetail } from '@/services/api/group';
 import firebaseAdmin from '@/services/firebase/firebaseAdmin';
 
-export const getServerSideProps: GetServerSideProps = wrapper
-  .getServerSideProps(({ dispatch }) => async (context) => {
-    const { id } = context.params! as GroupQuery;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.params! as GroupQuery;
 
-    try {
-      const cookies = nookies.get(context);
-      const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
-      const group = await getGroupDetail(id);
+  const queryClient = new QueryClient();
 
-      if (!group) {
-        return {
-          notFound: true,
-        };
-      }
+  await queryClient.prefetchQuery<Group | null, FirebaseError>(['group', id], () => getGroupDetail(id));
+  const group = queryClient.getQueryData<Group | null>(['group', id]);
 
-      if (group.isCompleted) {
-        return {
-          redirect: {
-            permanent: false,
-            destination: '/?error=unauthenticated',
-          },
-          props: {},
-        };
-      }
+  if (!group) {
+    return {
+      notFound: true,
+    };
+  }
 
-      const isWriter = token.uid === group.writer.uid;
+  if (group.isCompleted) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/?error=unauthenticated',
+      },
+      props: {},
+    };
+  }
 
-      if (!isWriter) {
-        return {
-          redirect: {
-            permanent: false,
-            destination: '/?error=unauthenticated',
-          },
-          props: {},
-        };
-      }
+  try {
+    const cookies = nookies.get(context);
+    const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
 
-      dispatch(setGroup(group));
+    const isWriter = token.uid === group.writer.uid;
 
-      return {
-        props: {},
-      };
-    } catch (error) {
+    if (!isWriter) {
       return {
         redirect: {
           permanent: false,
@@ -62,7 +51,22 @@ export const getServerSideProps: GetServerSideProps = wrapper
         props: {},
       };
     }
-  });
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/?error=unauthenticated',
+      },
+      props: {},
+    };
+  }
+};
 
 function ApplicantsPage(): ReactElement {
   return (
