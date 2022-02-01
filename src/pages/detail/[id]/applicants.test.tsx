@@ -1,11 +1,14 @@
-import { ParsedUrlQuery } from 'querystring';
-
-import { useDispatch, useSelector } from 'react-redux';
+import { QueryClient } from 'react-query';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
+import type { ParsedUrlQuery } from 'querystring';
 
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';
+import useFetchGroup from '@/hooks/api/group/useFetchGroup';
+import useUpdateCompletedApply from '@/hooks/api/group/useUpdateCompletedApply';
 import { getGroupDetail } from '@/services/api/group';
 import firebaseAdmin from '@/services/firebase/firebaseAdmin';
 
@@ -14,25 +17,33 @@ import GROUP_FIXTURE from '../../../../fixtures/group';
 
 import ApplicantsPage, { getServerSideProps } from './applicants.page';
 
+jest.mock('@/hooks/api/applicant/useFetchApplicants');
+jest.mock('@/hooks/api/group/useFetchGroup');
+jest.mock('@/hooks/api/group/useUpdateCompletedApply');
+jest.mock('@/hooks/api/applicant/useUpdateApplicant');
 jest.mock('@/services/api/group');
 jest.mock('next/router');
 
 describe('applicants', () => {
-  const dispatch = jest.fn();
+  const mutate = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
+    mutate.mockClear();
 
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      groupReducer: {
-        group: GROUP_FIXTURE,
-        applicants: [APPLICANT_FIXTURE],
-        groupId: '1',
-      },
+    (useFetchApplicants as jest.Mock).mockImplementation(() => ({
+      data: [APPLICANT_FIXTURE],
+      isLoading: false,
     }));
+    (useFetchGroup as jest.Mock).mockImplementation(() => ({
+      data: GROUP_FIXTURE,
+    }));
+    (useUpdateCompletedApply as jest.Mock).mockImplementation(() => ({ mutate }));
+    (useUpdateApplicant as jest.Mock).mockImplementation(() => ({ mutate }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       back: jest.fn(),
+      query: {
+        id: '1',
+      },
     }));
   });
 
@@ -58,8 +69,11 @@ describe('getServerSideProps', () => {
   };
 
   context('해당 id를 가진 detail 페이지 정보가 없을 경우', () => {
+    const queryClient = new QueryClient();
+
     beforeEach(() => {
       (getGroupDetail as jest.Mock).mockReturnValueOnce('');
+      jest.spyOn(queryClient, 'getQueryData').mockReturnValue('');
     });
 
     it('notFound가 "true"를 반환해야만 한다', async () => {
@@ -71,6 +85,8 @@ describe('getServerSideProps', () => {
   });
 
   context('이미 모집완료된 작성글인 경우', () => {
+    const queryClient = new QueryClient();
+
     const token = {
       uid: '1',
     };
@@ -82,6 +98,9 @@ describe('getServerSideProps', () => {
       (firebaseAdmin.auth as jest.Mock).mockImplementation(() => ({
         verifyIdToken: jest.fn().mockResolvedValue(token),
       }));
+      jest.spyOn(queryClient, 'getQueryData').mockReturnValue({
+        isCompleted: true,
+      });
     });
 
     it('redirect를 반환해야만 한다', async () => {
@@ -96,6 +115,8 @@ describe('getServerSideProps', () => {
   });
 
   context('로그인한 사용자가 글 작성자가 아닐 경우', () => {
+    const queryClient = new QueryClient();
+
     const token = {
       uid: '1',
     };
@@ -109,6 +130,12 @@ describe('getServerSideProps', () => {
       (firebaseAdmin.auth as jest.Mock).mockImplementation(() => ({
         verifyIdToken: jest.fn().mockResolvedValue(token),
       }));
+      jest.spyOn(queryClient, 'getQueryData').mockReturnValue({
+        isCompleted: false,
+        writer: {
+          uid: '123',
+        },
+      });
     });
 
     it('redirect를 반환해야만 한다', async () => {
@@ -123,6 +150,8 @@ describe('getServerSideProps', () => {
   });
 
   context('로그인한 사용자가 글 작성자인 경우', () => {
+    const queryClient = new QueryClient();
+
     const token = {
       uid: '123',
     };
@@ -139,13 +168,17 @@ describe('getServerSideProps', () => {
       (firebaseAdmin.auth as jest.Mock).mockImplementation(() => ({
         verifyIdToken: jest.fn().mockResolvedValue(token),
       }));
+      jest.spyOn(queryClient, 'getQueryData').mockReturnValue({
+        ...GROUP_FIXTURE,
+        writer,
+      });
     });
 
     it('group이 반환되어야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
       expect(getGroupDetail).toBeCalledWith('id');
-      expect(response.props.initialState.groupReducer.group).toEqual({
+      expect(response.props.dehydratedState.queries[0].state.data).toEqual({
         ...GROUP_FIXTURE,
         writer,
       });

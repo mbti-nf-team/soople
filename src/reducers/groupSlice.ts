@@ -6,8 +6,7 @@ import {
   Comment,
   Group, TagCount, WriteFields, WriteFieldsForm,
 } from '@/models/group';
-import { getApplicants, putApplicant } from '@/services/api/applicants';
-import { patchCompletedGroup, postNewGroup } from '@/services/api/group';
+import { postNewGroup } from '@/services/api/group';
 import { updateTagCount } from '@/services/api/tagsCount';
 
 import type { AppThunk } from './store';
@@ -153,63 +152,6 @@ export const requestRegisterNewGroup = (
     ]);
 
     dispatch(setGroupId(groupId));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const loadApplicants = (groupId: string): AppThunk => async (dispatch) => {
-  try {
-    const applicants = await getApplicants(groupId);
-
-    dispatch(setApplicants(applicants));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const updateApplicant = (
-  requestApplicant: Applicant,
-): AppThunk => async (dispatch, getState) => {
-  const { groupReducer: { applicants } } = getState();
-
-  try {
-    await putApplicant(requestApplicant);
-
-    const newApplicants = applicants.map((applicant) => {
-      if (requestApplicant.uid === applicant.uid) {
-        return requestApplicant;
-      }
-
-      return applicant;
-    });
-
-    dispatch(setApplicants(newApplicants));
-  } catch (error) {
-    const { message } = error as Error;
-
-    dispatch(setGroupError(message));
-  }
-};
-
-export const updateCompletedApply = (
-  group: Group,
-  numberConfirmApplicants: number,
-): AppThunk => async (dispatch) => {
-  try {
-    const { groupId } = group;
-
-    await patchCompletedGroup(groupId, numberConfirmApplicants);
-
-    dispatch(setGroup({
-      ...group,
-      numberApplicants: numberConfirmApplicants,
-      isCompleted: true,
-    }));
   } catch (error) {
     const { message } = error as Error;
 

@@ -1,12 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';
+
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
-import GROUP_FIXTURE from '../../../fixtures/group';
 
 import ApplicationStatusContainer from './ApplicationStatusContainer';
 
+jest.mock('@/hooks/api/applicant/useFetchApplicants');
+jest.mock('@/hooks/api/applicant/useUpdateApplicant');
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
     back: jest.fn(),
@@ -14,17 +16,17 @@ jest.mock('next/router', () => ({
 }));
 
 describe('ApplicationStatusContainer', () => {
-  const dispatch = jest.fn();
+  const mutate = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
+    mutate.mockClear();
 
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      groupReducer: {
-        applicants: [APPLICANT_FIXTURE],
-        group: GROUP_FIXTURE,
-      },
+    (useFetchApplicants as jest.Mock).mockImplementation(() => ({
+      data: [APPLICANT_FIXTURE],
+      isLoading: given.isLoading,
+    }));
+    (useUpdateApplicant as jest.Mock).mockImplementation(() => ({
+      mutate,
     }));
   });
 
@@ -32,19 +34,30 @@ describe('ApplicationStatusContainer', () => {
     <ApplicationStatusContainer />
   ));
 
-  it('첫 랜더링시에 dispatch 액션이 호출되어야만 한다', () => {
-    renderApplicationStatusContainer();
+  context('로딩중인 경우', () => {
+    given('isLoading', () => true);
 
-    expect(dispatch).toBeCalledTimes(1);
+    it('"로딩중..." 문구가 나타나야만 한다', () => {
+      const { container } = renderApplicationStatusContainer();
+
+      expect(container).toHaveTextContent('로딩중...');
+    });
   });
 
-  describe('"선택" 버튼을 클릭한다', () => {
-    it('dispatch 액션이 호출되어야만 한다', () => {
-      renderApplicationStatusContainer();
+  context('로딩중이 아닌 경우', () => {
+    given('isLoading', () => false);
 
-      fireEvent.click(screen.getByText('선택'));
+    describe('"선택" 버튼을 클릭한다', () => {
+      it('toggleConfirm mutate 액션이 호출되어야만 한다', () => {
+        renderApplicationStatusContainer();
 
-      expect(dispatch).toBeCalledTimes(2);
+        fireEvent.click(screen.getByText('선택'));
+
+        expect(mutate).toBeCalledWith({
+          ...APPLICANT_FIXTURE,
+          isConfirm: !APPLICANT_FIXTURE.isConfirm,
+        });
+      });
     });
   });
 });
