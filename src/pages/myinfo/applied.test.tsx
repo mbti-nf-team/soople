@@ -2,13 +2,13 @@ import { useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 
-import useFetchUserAppliedGroups from '@/hooks/api/useFetchUserAppliedGroups';
+import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
 
 import AppliedPage from './applied.page';
 
-jest.mock('@/hooks/api/useFetchUserAppliedGroups');
+jest.mock('@/hooks/api/group/useFetchUserAppliedGroups');
 
 describe('AppliedPage', () => {
   beforeEach(() => {

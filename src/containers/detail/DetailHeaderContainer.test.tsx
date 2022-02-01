@@ -4,10 +4,10 @@ import {
   act, fireEvent, render, screen,
 } from '@testing-library/react';
 
-import useApplyGroup from '@/hooks/api/useApplyGroup';
-import useCancelApply from '@/hooks/api/useCancelApply';
-import useFetchApplicants from '@/hooks/api/useFetchApplicants';
-import useFetchGroup from '@/hooks/api/useFetchGroup';
+import useApplyGroup from '@/hooks/api/applicant/useApplyGroup';
+import useCancelApply from '@/hooks/api/applicant/useCancelApply';
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import GROUP_FIXTURE from '../../../fixtures/group';
@@ -15,10 +15,10 @@ import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import DetailHeaderContainer from './DetailHeaderContainer';
 
-jest.mock('@/hooks/api/useApplyGroup');
-jest.mock('@/hooks/api/useCancelApply');
-jest.mock('@/hooks/api/useFetchApplicants');
-jest.mock('@/hooks/api/useFetchGroup');
+jest.mock('@/hooks/api/applicant/useApplyGroup');
+jest.mock('@/hooks/api/applicant/useCancelApply');
+jest.mock('@/hooks/api/applicant/useFetchApplicants');
+jest.mock('@/hooks/api/group/useFetchGroup');
 
 describe('DetailHeaderContainer', () => {
   const dispatch = jest.fn();

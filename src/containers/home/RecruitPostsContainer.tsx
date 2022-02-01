@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
 import RecruitPosts from '@/components/home/RecruitPosts';
-import useFetchGroups from '@/hooks/api/useFetchGroups';
+import useFetchGroups from '@/hooks/api/group/useFetchGroups';
 
 function RecruitPostsContainer(): ReactElement {
   const { query, replace } = useRouter();

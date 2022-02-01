@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { getGroupComments } from '@/services/api/comment';
 import wrapper from '@/test/InjectMockProviders';
 
-import FIXTURE_COMMENT from '../../../fixtures/comment';
+import FIXTURE_COMMENT from '../../../../fixtures/comment';
 
 import useFetchComments from './useFetchComments';
 

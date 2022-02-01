@@ -3,16 +3,15 @@ import { useSelector } from 'react-redux';
 
 import DetailHeaderSection from '@/components/detail/DetailHeaderSection';
 import DetailStatusButton from '@/components/detail/DetailStatusButton';
-import useApplyGroup from '@/hooks/api/useApplyGroup';
-import useCancelApply from '@/hooks/api/useCancelApply';
-import useFetchGroup from '@/hooks/api/useFetchGroup';
+import useApplyGroup from '@/hooks/api/applicant/useApplyGroup';
+import useCancelApply from '@/hooks/api/applicant/useCancelApply';
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import { Profile } from '@/models/auth';
 import { ApplicantForm } from '@/models/group';
 import { setSignInModalVisible } from '@/reducers/authSlice';
 import { useAppDispatch } from '@/reducers/store';
 import { getAuth } from '@/utils/utils';
-
-import useFetchApplicants from '../../hooks/api/useFetchApplicants';
 
 function DetailHeaderContainer(): ReactElement {
   const dispatch = useAppDispatch();

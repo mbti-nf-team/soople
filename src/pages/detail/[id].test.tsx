@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 
-import useAddComment from '@/hooks/api/useAddComment';
-import useApplyGroup from '@/hooks/api/useApplyGroup';
-import useCancelApply from '@/hooks/api/useCancelApply';
-import useDeleteComment from '@/hooks/api/useDeleteComment';
-import useFetchApplicants from '@/hooks/api/useFetchApplicants';
-import useFetchComments from '@/hooks/api/useFetchComments';
-import useFetchGroup from '@/hooks/api/useFetchGroup';
+import useApplyGroup from '@/hooks/api/applicant/useApplyGroup';
+import useCancelApply from '@/hooks/api/applicant/useCancelApply';
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useAddComment from '@/hooks/api/comment/useAddComment';
+import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
+import useFetchComments from '@/hooks/api/comment/useFetchComments';
+import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import { getGroupDetail } from '@/services/api/group';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
@@ -22,13 +22,13 @@ import GROUP_FIXTURE from '../../../fixtures/group';
 import DetailPage, { getServerSideProps } from './[id].page';
 
 jest.mock('@/services/api/group');
-jest.mock('@/hooks/api/useFetchApplicants');
-jest.mock('@/hooks/api/useFetchComments');
-jest.mock('@/hooks/api/useFetchGroup');
-jest.mock('@/hooks/api/useApplyGroup');
-jest.mock('@/hooks/api/useAddComment');
-jest.mock('@/hooks/api/useCancelApply');
-jest.mock('@/hooks/api/useDeleteComment');
+jest.mock('@/hooks/api/applicant/useApplyGroup');
+jest.mock('@/hooks/api/applicant/useCancelApply');
+jest.mock('@/hooks/api/applicant/useFetchApplicants');
+jest.mock('@/hooks/api/comment/useAddComment');
+jest.mock('@/hooks/api/comment/useDeleteComment');
+jest.mock('@/hooks/api/comment/useFetchComments');
+jest.mock('@/hooks/api/group/useFetchGroup');
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({

@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import useFetchTagsCount from '@/hooks/api/useFetchTagsCount';
+import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
 import StatusBarContainer from './StatusBarContainer';
 
-jest.mock('@/hooks/api/useFetchTagsCount');
+jest.mock('@/hooks/api/tagsCount/useFetchTagsCount');
 jest.mock('react-toastify', () => ({
   toast: {
     error: jest.fn(),

@@ -3,13 +3,13 @@ import { toast } from 'react-toastify';
 import { render } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
-import useFetchGroups from '@/hooks/api/useFetchGroups';
+import useFetchGroups from '@/hooks/api/group/useFetchGroups';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 
 import RecruitPostsContainer from './RecruitPostsContainer';
 
-jest.mock('@/hooks/api/useFetchGroups');
+jest.mock('@/hooks/api/group/useFetchGroups');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));

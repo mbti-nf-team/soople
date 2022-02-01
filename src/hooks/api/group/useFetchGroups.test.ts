@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { getFilteredGroups } from '@/services/api/group';
 import wrapper from '@/test/InjectMockProviders';
 
-import FIXTURE_GROUP from '../../../fixtures/group';
+import FIXTURE_GROUP from '../../../../fixtures/group';
 
 import useFetchGroups from './useFetchGroups';
 

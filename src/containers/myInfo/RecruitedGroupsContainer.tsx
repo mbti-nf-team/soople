@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import EmptyStateArea from '@/components/common/EmptyStateArea';
 import MyGroups from '@/components/myInfo/MyGroups';
-import useFetchUserRecruitedGroups from '@/hooks/api/useFetchUserRecruitedGroups';
+import useFetchUserRecruitedGroups from '@/hooks/api/group/useFetchUserRecruitedGroups';
 import { DetailLayout } from '@/styles/Layout';
 import { getAuth } from '@/utils/utils';
 

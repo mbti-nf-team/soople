@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 
-import useFetchGroup from '@/hooks/api/useFetchGroup';
+import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 
 import DetailContentsContainer from './DetailContentsContainer';
 
-jest.mock('@/hooks/api/useFetchGroup');
+jest.mock('@/hooks/api/group/useFetchGroup');
 
 describe('DetailContentsContainer', () => {
   beforeEach(() => {

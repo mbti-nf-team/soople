@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import SwitchButton from '@/components/common/SwitchButton';
 import FilterBar from '@/components/home/FilterBar';
 import TagsBar from '@/components/home/TagsBar';
-import useFetchTagsCount from '@/hooks/api/useFetchTagsCount';
+import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
 import { Category, FilterGroupsCondition } from '@/models/group';
 import { groupsConditionState } from '@/recoil/group/atom';
 import Divider from '@/styles/Divider';
