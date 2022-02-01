@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { deleteApplicant } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
 
-import FIXTURE_APPLICANT from '../../../fixtures/applicant';
+import FIXTURE_APPLICANT from '../../../../fixtures/applicant';
 
 import useCancelApply, { filteredRemoveApplicant } from './useCancelApply';
 

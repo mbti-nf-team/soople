@@ -2,17 +2,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import useAddComment from '@/hooks/api/useAddComment';
-import useDeleteComment from '@/hooks/api/useDeleteComment';
-import useFetchComments from '@/hooks/api/useFetchComments';
+import useAddComment from '@/hooks/api/comment/useAddComment';
+import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
+import useFetchComments from '@/hooks/api/comment/useFetchComments';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 
 import CommentsContainer from './CommentsContainer';
 
-jest.mock('@/hooks/api/useFetchComments');
-jest.mock('@/hooks/api/useDeleteComment');
-jest.mock('@/hooks/api/useAddComment');
+jest.mock('@/hooks/api/comment/useFetchComments');
+jest.mock('@/hooks/api/comment/useDeleteComment');
+jest.mock('@/hooks/api/comment/useAddComment');
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
     query: {

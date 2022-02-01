@@ -1,30 +1,30 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { getUserRecruitedGroups } from '@/services/api/group';
+import { getUserAppliedGroups } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
 
-import FIXTURE_GROUP from '../../../fixtures/group';
+import FIXTURE_GROUP from '../../../../fixtures/group';
 
-import useFetchUserRecruitedGroups from './useFetchUserRecruitedGroups';
+import useFetchUserAppliedGroups from './useFetchUserAppliedGroups';
 
-jest.mock('@/services/api/group');
+jest.mock('@/services/api/applicants');
 
-describe('useFetchUserRecruitedGroups', () => {
-  const useFetchUserRecruitedGroupsHook = () => renderHook(() => useFetchUserRecruitedGroups('userUid'), {
+describe('useFetchUserAppliedGroups', () => {
+  const useFetchUserAppliedGroupsHook = () => renderHook(() => useFetchUserAppliedGroups('userUid'), {
     wrapper,
   });
 
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (getUserRecruitedGroups as jest.Mock).mockImplementation(() => (given.groups));
+    (getUserAppliedGroups as jest.Mock).mockImplementation(() => (given.groups));
   });
 
   context('useQuery 반환값이 존재하지 않는 경우', () => {
     given('groups', () => null);
 
     it('빈 배열을 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchUserRecruitedGroupsHook();
+      const { result, waitFor } = useFetchUserAppliedGroupsHook();
 
       await waitFor(() => !!result.current.data);
 
@@ -36,7 +36,7 @@ describe('useFetchUserRecruitedGroups', () => {
     given('groups', () => [FIXTURE_GROUP]);
 
     it('groups에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchUserRecruitedGroupsHook();
+      const { result, waitFor } = useFetchUserAppliedGroupsHook();
 
       await waitFor(() => !!result.current.data);
 

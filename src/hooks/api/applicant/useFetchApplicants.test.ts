@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { getApplicants } from '@/services/api/applicants';
 import wrapper from '@/test/InjectMockProviders';
 
-import FIXTURE_APPLICANT from '../../../fixtures/applicant';
+import FIXTURE_APPLICANT from '../../../../fixtures/applicant';
 
 import useFetchApplicants from './useFetchApplicants';
 

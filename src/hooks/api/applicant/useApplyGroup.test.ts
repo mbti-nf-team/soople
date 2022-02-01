@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { postAddApplicant } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
 
-import FIXTURE_PROFILE from '../../../fixtures/profile';
+import FIXTURE_PROFILE from '../../../../fixtures/profile';
 
 import useApplyGroup from './useApplyGroup';
 

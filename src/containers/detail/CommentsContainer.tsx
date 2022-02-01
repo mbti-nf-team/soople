@@ -5,9 +5,9 @@ import { useRouter } from 'next/router';
 
 import CommentForm from '@/components/detail/CommentForm';
 import CommentsView from '@/components/detail/CommentsView';
-import useAddComment from '@/hooks/api/useAddComment';
-import useDeleteComment from '@/hooks/api/useDeleteComment';
-import useFetchComments from '@/hooks/api/useFetchComments';
+import useAddComment from '@/hooks/api/comment/useAddComment';
+import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
+import useFetchComments from '@/hooks/api/comment/useFetchComments';
 import { GroupQuery } from '@/models';
 import { CommentFields } from '@/models/group';
 import { setSignInModalVisible } from '@/reducers/authSlice';

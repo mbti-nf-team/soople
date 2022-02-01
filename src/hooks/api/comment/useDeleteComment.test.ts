@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { deleteGroupComment } from '@/services/api/comment';
 import wrapper from '@/test/ReactQueryWrapper';
 
-import FIXTURE_COMMENT from '../../../fixtures/comment';
+import FIXTURE_COMMENT from '../../../../fixtures/comment';
 
 import useDeleteComment, { filteredRemoveComment } from './useDeleteComment';
 

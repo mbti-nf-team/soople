@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
-import useFetchUserAppliedGroups from '@/hooks/api/useFetchUserAppliedGroups';
+import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
 import FIXTURE_PROFILE from '../../../fixtures/profile';
@@ -13,7 +13,7 @@ import AppliedGroupsContainer from './AppliedGroupsContainer';
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
-jest.mock('@/hooks/api/useFetchUserAppliedGroups');
+jest.mock('@/hooks/api/group/useFetchUserAppliedGroups');
 
 describe('AppliedGroupsContainer', () => {
   const mockPush = jest.fn();

@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { getGroupDetail } from '@/services/api/group';
 import wrapper from '@/test/ReactQueryWrapper';
 
-import FIXTURE_GROUP from '../../../fixtures/group';
+import FIXTURE_GROUP from '../../../../fixtures/group';
 
 import useFetchGroup from './useFetchGroup';
 

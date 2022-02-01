@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { postGroupComment } from '@/services/api/comment';
 import wrapper from '@/test/ReactQueryWrapper';
 
-import FIXTURE_PROFILE from '../../../fixtures/profile';
+import FIXTURE_PROFILE from '../../../../fixtures/profile';
 
 import useAddComment from './useAddComment';
 
