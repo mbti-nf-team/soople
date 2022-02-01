@@ -1,21 +1,21 @@
-import React, { ReactElement, useCallback, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
 
 import Button from '@/components/common/Button';
 import SubHeader from '@/components/common/SubHeader';
-import { setPublishModalVisible } from '@/reducers/groupSlice';
-import { useAppDispatch } from '@/reducers/store';
+import { publishModalVisibleState } from '@/recoil/modal/atom';
 import { getGroup } from '@/utils/utils';
 
 function WriteHeaderContainer(): ReactElement {
   const router = useRouter();
-  const dispatch = useAppDispatch();
+  const setPublishModalVisible = useSetRecoilState(publishModalVisibleState);
   const groupId = useSelector(getGroup('groupId'));
   const { title } = useSelector(getGroup('writeFields'));
 
-  const onSubmit = useCallback(() => dispatch(setPublishModalVisible(true)), [dispatch]);
+  const onSubmit = () => setPublishModalVisible(true);
 
   useEffect(() => {
     if (groupId) {

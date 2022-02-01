@@ -1,25 +1,25 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
 
 import WriteHeaderContainer from './WriteHeaderContainer';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
+jest.mock('recoil');
 
 describe('WriteHeaderContainer', () => {
-  const dispatch = jest.fn();
   const mockReplace = jest.fn();
   const mockBack = jest.fn();
+  const handleSetPublishModalVisible = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
-    mockReplace.mockClear();
-    mockBack.mockClear();
+    jest.clearAllMocks();
 
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
+    (useSetRecoilState as jest.Mock).mockImplementation(() => handleSetPublishModalVisible);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       groupReducer: {
         groupId: given.groupId,
@@ -45,12 +45,12 @@ describe('WriteHeaderContainer', () => {
       }));
 
       describe('"등록하기" 버튼을 클릭한다', () => {
-        it('클릭 이베트가 발생해야만 한다', () => {
+        it('클릭 이벤트가 발생하면 안된다', () => {
           renderWriteHeaderContainer();
 
           fireEvent.click(screen.getByText('등록하기'));
 
-          expect(dispatch).not.toBeCalled();
+          expect(handleSetPublishModalVisible).not.toBeCalled();
         });
       });
 
@@ -71,15 +71,12 @@ describe('WriteHeaderContainer', () => {
       }));
 
       describe('"등록하기" 버튼을 클릭한다', () => {
-        it('클릭 이베트가 발생해야만 한다', () => {
+        it('클릭 이벤트가 발생해야만 한다', () => {
           renderWriteHeaderContainer();
 
           fireEvent.click(screen.getByText('등록하기'));
 
-          expect(dispatch).toBeCalledWith({
-            type: 'group/setPublishModalVisible',
-            payload: true,
-          });
+          expect(handleSetPublishModalVisible).toBeCalledWith(true);
         });
       });
     });

@@ -1,39 +1,37 @@
 import React, {
-  ReactElement, useCallback, useEffect, useState,
+  ReactElement, useEffect, useState,
 } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
 
 import SignInError from '@/components/auth/SignInError';
 import SignInModal from '@/components/auth/SignInModal';
 import SocialButtonGroup from '@/components/auth/SocialButtonGroup';
-import { setSignInModalVisible } from '@/reducers/authSlice';
-import { useAppDispatch } from '@/reducers/store';
+import { signInModalVisibleState } from '@/recoil/modal/atom';
 import { getAuth } from '@/utils/utils';
 
 function SignInModalContainer(): ReactElement | null {
   const { query, replace } = useRouter();
-  const dispatch = useAppDispatch();
-
-  const isVisible = useSelector(getAuth('isVisible'));
+  const [isVisible, setSignInModalVisible] = useRecoilState(signInModalVisibleState);
   const auth = useSelector(getAuth('auth'));
   const user = useSelector(getAuth('user'));
 
   const [error, setError] = useState<string>('');
 
-  const onClose = useCallback(() => {
-    dispatch(setSignInModalVisible(false));
+  const onClose = () => {
+    setSignInModalVisible(false);
     setError('');
-  }, [dispatch]);
+  };
 
   useEffect(() => {
     if (query?.error && query.error !== 'unauthenticated') {
-      dispatch(setSignInModalVisible(true));
+      setSignInModalVisible(true);
       setError(query.error as string);
       replace('/', undefined, { shallow: true });
     }
-  }, [query, dispatch]);
+  }, [query]);
 
   useEffect(() => {
     if (auth) {

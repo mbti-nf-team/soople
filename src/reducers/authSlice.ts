@@ -29,12 +29,6 @@ const { actions, reducer } = createSlice({
         user,
       };
     },
-    setSignInModalVisible(state, { payload: isVisible }: PayloadAction<boolean>) {
-      return {
-        ...state,
-        isVisible,
-      };
-    },
     setAuth(state, { payload: auth }: PayloadAction<Profile | null>) {
       return {
         ...state,
@@ -58,7 +52,7 @@ const { actions, reducer } = createSlice({
 });
 
 export const {
-  setAuth, setAuthError, setUser, clearAuth, setSignInModalVisible,
+  setAuth, setAuthError, setUser, clearAuth,
 } = actions;
 
 export const requestUserProfile = (

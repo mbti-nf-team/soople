@@ -1,8 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
   act, fireEvent, render, screen,
 } from '@testing-library/react';
+import { useSetRecoilState } from 'recoil';
 
 import useApplyGroup from '@/hooks/api/applicant/useApplyGroup';
 import useCancelApply from '@/hooks/api/applicant/useCancelApply';
@@ -19,14 +20,14 @@ jest.mock('@/hooks/api/applicant/useApplyGroup');
 jest.mock('@/hooks/api/applicant/useCancelApply');
 jest.mock('@/hooks/api/applicant/useFetchApplicants');
 jest.mock('@/hooks/api/group/useFetchGroup');
+jest.mock('recoil');
 
 describe('DetailHeaderContainer', () => {
-  const dispatch = jest.fn();
+  const handleSetSignInModalVisible = jest.fn();
   const mutate = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
-    mutate.mockClear();
+    jest.clearAllMocks();
 
     (useFetchGroup as jest.Mock).mockImplementation(() => ({
       data: GROUP_FIXTURE,
@@ -41,7 +42,7 @@ describe('DetailHeaderContainer', () => {
     (useCancelApply as jest.Mock).mockImplementation(() => ({
       mutate,
     }));
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
+    (useSetRecoilState as jest.Mock).mockImplementation(() => handleSetSignInModalVisible);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
         user: given.user,
@@ -58,15 +59,12 @@ describe('DetailHeaderContainer', () => {
     given('applicants', () => []);
 
     describe('"신청하기" 버튼을 클릭한다', () => {
-      it('dispatch 액션이 type은 auth/setSignInModalVisible와 payload는 true와 같이 호출되어야만 한다', () => {
+      it('handleSetSignInModalVisible가 true와 함께 호출되어야만 한다', () => {
         renderDetailHeaderContainer();
 
         fireEvent.click(screen.getByText('신청하기'));
 
-        expect(dispatch).toBeCalledWith({
-          type: 'auth/setSignInModalVisible',
-          payload: true,
-        });
+        expect(handleSetSignInModalVisible).toBeCalledWith(true);
       });
     });
   });

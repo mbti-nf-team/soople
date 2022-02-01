@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
 
 import palette from '@/styles/palette';
 
@@ -12,15 +13,17 @@ import HeaderContainer from './HeaderContainer';
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
+jest.mock('recoil');
 
 describe('HeaderContainer', () => {
   const dispatch = jest.fn();
   const replace = jest.fn();
+  const setSignInModalVisible = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
-    replace.mockClear();
+    jest.clearAllMocks();
 
+    (useSetRecoilState as jest.Mock).mockImplementation(() => setSignInModalVisible);
     (useDispatch as jest.Mock).mockImplementation(() => dispatch);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
@@ -92,15 +95,12 @@ describe('HeaderContainer', () => {
     given('user', () => (null));
 
     describe('"시작하기" 버튼을 클릭한다', () => {
-      it('dispatch 액션이 호출되어야만 한다', () => {
+      it('setSignInModalVisible 액션이 true와 함께 호출되어야만 한다', () => {
         renderHeaderContainer();
 
         fireEvent.click(screen.getByText('시작하기'));
 
-        expect(dispatch).toBeCalledWith({
-          payload: true,
-          type: 'auth/setSignInModalVisible',
-        });
+        expect(setSignInModalVisible).toBeCalledWith(true);
       });
     });
   });

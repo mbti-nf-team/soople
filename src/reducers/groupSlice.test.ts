@@ -27,7 +27,6 @@ import reducer, {
   setGroupError,
   setGroupId,
   setGroups,
-  setPublishModalVisible,
   setTagsCount,
   updateApplicant,
   updateCompletedApply,
@@ -129,14 +128,6 @@ describe('groupReducer', () => {
     });
   });
 
-  describe('setPublishModalVisible', () => {
-    it('isVisible이 true로 변경되어야만 한다', () => {
-      const { isVisible } = reducer(initialState, setPublishModalVisible(true));
-
-      expect(isVisible).toBeTruthy();
-    });
-  });
-
   describe('setComments', () => {
     it('comments에 값이 추가되야만 한다', () => {
       const { comments } = reducer(initialState, setComments([COMMENT_FIXTURE]));
@@ -213,10 +204,6 @@ describe('groupReducer async actions', () => {
         expect(actions[0]).toEqual({
           payload: '1',
           type: 'group/setGroupId',
-        });
-        expect(actions[1]).toEqual({
-          payload: false,
-          type: 'group/setPublishModalVisible',
         });
       });
     });

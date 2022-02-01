@@ -86,12 +86,6 @@ const { actions, reducer } = createSlice({
         groupError: error,
       };
     },
-    setPublishModalVisible(state, { payload: isVisible }: PayloadAction<boolean>) {
-      return {
-        ...state,
-        isVisible,
-      };
-    },
     setComments(state, { payload: comments }: PayloadAction<Comment[]>): GroupStore {
       return {
         ...state,
@@ -143,7 +137,6 @@ export const {
   setGroupError,
   clearWriteFields,
   changeWriteFields,
-  setPublishModalVisible,
 } = actions;
 
 export const requestRegisterNewGroup = (
@@ -160,7 +153,6 @@ export const requestRegisterNewGroup = (
     ]);
 
     dispatch(setGroupId(groupId));
-    dispatch(setPublishModalVisible(false));
   } catch (error) {
     const { message } = error as Error;
 

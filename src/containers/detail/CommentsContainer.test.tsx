@@ -1,6 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
+import { useSetRecoilState } from 'recoil';
 
 import useAddComment from '@/hooks/api/comment/useAddComment';
 import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
@@ -20,13 +21,14 @@ jest.mock('next/router', () => ({
     },
   })),
 }));
+jest.mock('recoil');
 
 describe('CommentsContainer', () => {
-  const dispatch = jest.fn();
   const mutate = jest.fn();
+  const handleSetSignInModalVisible = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
+    jest.clearAllMocks();
 
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
@@ -46,7 +48,7 @@ describe('CommentsContainer', () => {
       data: [COMMENT_FIXTURE],
       isLoading: false,
     }));
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
+    (useSetRecoilState as jest.Mock).mockImplementation(() => handleSetSignInModalVisible);
   });
 
   const renderCommentsContainer = () => render((
@@ -102,15 +104,12 @@ describe('CommentsContainer', () => {
       given('user', () => (null));
 
       describe('"시작하기" 버튼을 클릭한다', () => {
-        it('dispatch 액션 type이 auth/setSignInModalVisible가 호출되어야만 한다', () => {
+        it('handleSetSignInModalVisible이 true와 함께 호출되어야만 한다', () => {
           renderCommentsContainer();
 
           fireEvent.click(screen.getByText('시작하기'));
 
-          expect(dispatch).toBeCalledWith({
-            type: 'auth/setSignInModalVisible',
-            payload: true,
-          });
+          expect(handleSetSignInModalVisible).toBeCalledWith(true);
         });
       });
     });
