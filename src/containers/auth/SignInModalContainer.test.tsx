@@ -1,7 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
+
+import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
 import SignInModalContainer from './SignInModalContainer';
 
@@ -10,21 +12,17 @@ jest.mock('next/router', () => ({
 }));
 
 describe('SignInModalContainer', () => {
-  const dispatch = jest.fn();
   const mockReplace = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
     mockReplace.mockClear();
 
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
         user: given.user,
         auth: given.auth,
-        isVisible: given.isVisible,
       },
     }));
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
     (useRouter as jest.Mock).mockImplementation(() => ({
       replace: mockReplace,
       query: given.query,
@@ -32,7 +30,9 @@ describe('SignInModalContainer', () => {
   });
 
   const renderSignInModalContainer = () => render((
-    <SignInModalContainer />
+    <InjectTestingRecoilState signInModalVisible={given.isVisible}>
+      <SignInModalContainer />
+    </InjectTestingRecoilState>
   ));
 
   context('로그인한 사용자인 경우', () => {
@@ -65,10 +65,6 @@ describe('SignInModalContainer', () => {
       it('"이미 가입된 이메일입니다." 문구가 나타나야만 하고, replace가 호출되어야만 한다', () => {
         const { container } = renderSignInModalContainer();
 
-        expect(dispatch).toBeCalledWith({
-          payload: true,
-          type: 'auth/setSignInModalVisible',
-        });
         expect(mockReplace).toBeCalledWith('/', undefined, { shallow: true });
         expect(container).toHaveTextContent('이미 가입된 이메일입니다.');
       });
@@ -84,15 +80,12 @@ describe('SignInModalContainer', () => {
     });
 
     describe('"X" 버튼을 누른다', () => {
-      it('클릭 이벤트가 호출되어야만 한다', () => {
-        renderSignInModalContainer();
+      it('아무것도 나타나지 않아야 한다', () => {
+        const { container } = renderSignInModalContainer();
 
         fireEvent.click(screen.getByTestId('close-icon'));
 
-        expect(dispatch).toBeCalledWith({
-          payload: false,
-          type: 'auth/setSignInModalVisible',
-        });
+        expect(container).toBeEmptyDOMElement();
       });
     });
   });

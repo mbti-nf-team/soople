@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 
 import PublishModalContainer from './PublishModalContainer';
@@ -18,14 +20,15 @@ describe('PublishModalContainer', () => {
         user: 'user',
       },
       groupReducer: {
-        isVisible: given.isVisible,
         writeFields: given.writeFields,
       },
     }));
   });
 
   const renderPublishModalContainer = () => render((
-    <PublishModalContainer />
+    <InjectTestingRecoilState publishModalVisible={given.isVisible}>
+      <PublishModalContainer />
+    </InjectTestingRecoilState>
   ));
 
   context('모달창이 보이는 경우', () => {
@@ -44,15 +47,12 @@ describe('PublishModalContainer', () => {
     });
 
     describe('닫기 버튼을 클릭한다', () => {
-      it('dispatch "setPublishModalVisible" 액션이 호출되어야만 한다', () => {
-        renderPublishModalContainer();
+      it('아무것도 보이지 않아야만 한다', () => {
+        const { container } = renderPublishModalContainer();
 
         fireEvent.click(screen.getByText('닫기'));
 
-        expect(dispatch).toBeCalledWith({
-          type: 'group/setPublishModalVisible',
-          payload: false,
-        });
+        expect(container).toBeEmptyDOMElement();
       });
     });
 

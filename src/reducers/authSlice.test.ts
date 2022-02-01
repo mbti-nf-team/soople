@@ -18,7 +18,6 @@ import reducer, {
   requestUserProfile,
   setAuth,
   setAuthError,
-  setSignInModalVisible,
   setUser,
 } from './authSlice';
 
@@ -58,14 +57,6 @@ describe('authReducer', () => {
       const { authError } = reducer(initialState, setAuthError(error));
 
       expect(authError).toBe(error);
-    });
-  });
-
-  describe('setSignInModalVisible', () => {
-    it('isVisible이 true로 변경되어야만 한다', () => {
-      const { isVisible } = reducer(initialState, setSignInModalVisible(true));
-
-      expect(isVisible).toBeTruthy();
     });
   });
 
