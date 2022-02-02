@@ -3,6 +3,15 @@ import { Profile } from './auth';
 export type Category = 'study' | 'project';
 export type RecruitmentEndSetting = 'manual' | 'automatic';
 
+export const initialWriteFieldsState: WriteFields = {
+  title: '',
+  content: '',
+  tags: [],
+  category: '',
+  recruitmentEndDate: '',
+  recruitmentEndSetting: 'automatic',
+};
+
 export interface WriteFields {
   title: string;
   content: string;

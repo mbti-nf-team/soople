@@ -1,42 +1,46 @@
 import React, { ReactElement, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { useUnmount } from 'react-use';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import PublishModal from '@/components/write/PublishModal';
 import PublishModalForm from '@/components/write/PublishModalForm';
+import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
+import { KeyPair } from '@/models';
 import { Profile } from '@/models/auth';
-import { WriteFieldsForm } from '@/models/group';
+import { WriteFields } from '@/models/group';
+import { writeFieldsState } from '@/recoil/group/atom';
 import { publishModalVisibleState } from '@/recoil/modal/atom';
-import { changeWriteFields, requestRegisterNewGroup } from '@/reducers/groupSlice';
-import { useAppDispatch } from '@/reducers/store';
-import { getAuth, getGroup } from '@/utils/utils';
+import { getAuth } from '@/utils/utils';
 
 function PublishModalContainer(): ReactElement {
-  const dispatch = useAppDispatch();
   const [isVisible, setPublishModalVisible] = useRecoilState(publishModalVisibleState);
-  const user = useSelector(getAuth('user'));
-  const fields = useSelector(getGroup('writeFields'));
+  const [writeFields, changeFields] = useRecoilState(writeFieldsState);
+  const resetFields = useResetRecoilState(writeFieldsState);
+  const { mutate } = usePublishNewGroup();
+  const user = useSelector(getAuth('user')) as Profile;
 
   const onClose = () => setPublishModalVisible(false);
-  const onSubmit = useCallback(() => {
-    dispatch(requestRegisterNewGroup(user as Profile));
-    setPublishModalVisible(false);
-  }, [dispatch, user]);
+  const onSubmit = useCallback(() => mutate({
+    profile: user, writeFields,
+  }), [mutate, user, writeFields]);
 
-  const onChangeFields = useCallback((form: WriteFieldsForm) => {
-    dispatch(changeWriteFields(form));
-  }, [dispatch]);
+  const onChangeFields = useCallback((form: KeyPair<WriteFields>) => {
+    changeFields((prevState) => ({ ...prevState, ...form }));
+  }, [changeFields]);
+
+  useUnmount(resetFields);
 
   return (
     <PublishModal
-      title={fields.title}
+      title={writeFields.title}
       isVisible={isVisible}
       onClose={onClose}
       onSubmit={onSubmit}
     >
       <PublishModalForm
-        fields={fields}
+        fields={writeFields}
         onChangeFields={onChangeFields}
       />
     </PublishModal>

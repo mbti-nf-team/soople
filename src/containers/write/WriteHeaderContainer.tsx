@@ -1,27 +1,19 @@
-import React, { ReactElement, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { ReactElement } from 'react';
 
 import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import Button from '@/components/common/Button';
 import SubHeader from '@/components/common/SubHeader';
+import { writeFieldsState } from '@/recoil/group/atom';
 import { publishModalVisibleState } from '@/recoil/modal/atom';
-import { getGroup } from '@/utils/utils';
 
 function WriteHeaderContainer(): ReactElement {
   const router = useRouter();
   const setPublishModalVisible = useSetRecoilState(publishModalVisibleState);
-  const groupId = useSelector(getGroup('groupId'));
-  const { title } = useSelector(getGroup('writeFields'));
+  const { title } = useRecoilValue(writeFieldsState);
 
   const onSubmit = () => setPublishModalVisible(true);
-
-  useEffect(() => {
-    if (groupId) {
-      router.replace(`/detail/${groupId}`);
-    }
-  }, [groupId]);
 
   return (
     <SubHeader

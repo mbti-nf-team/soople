@@ -1,36 +1,26 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
+
+import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
 import WriteFormContainer from './WriteFormContainer';
 
 describe('WriteFormContainer', () => {
-  const dispatch = jest.fn();
-
   beforeEach(() => {
-    dispatch.mockClear();
+    jest.clearAllMocks();
 
-    (useDispatch as jest.Mock).mockImplementationOnce(() => dispatch);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
         user: given.user,
       },
-      groupReducer: {
-        writeFields: {
-          title: '',
-          contents: '',
-          tags: [],
-        },
-      },
     }));
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   const renderWriteFormContainer = () => render((
-    <WriteFormContainer />
+    <InjectTestingRecoilState>
+      <WriteFormContainer />
+    </InjectTestingRecoilState>
   ));
 
   context('로그인한 사용자인 경우', () => {
@@ -55,21 +45,18 @@ describe('WriteFormContainer', () => {
         value: 'test',
       };
 
-      it('"changeWriteFields" dispatch 액션이 호출되어야만 한다', () => {
+      it('change 이벤트가 호출되어 값이 변해야한다', () => {
         renderWriteFormContainer();
 
         fireEvent.change(screen.getByPlaceholderText('제목을 입력하세요'), { target: inputValue });
 
-        expect(dispatch).toBeCalledWith({
-          payload: inputValue,
-          type: 'group/changeWriteFields',
-        });
+        expect(screen.getByPlaceholderText('제목을 입력하세요')).toHaveValue('test');
       });
     });
 
     describe('태그를 입력한다', () => {
-      it('dispatch "changeWriteFields" 이벤트가 발생해야만 한다', () => {
-        renderWriteFormContainer();
+      it('change 이벤트가 호출되어 값이 변해야한다', () => {
+        const { container } = renderWriteFormContainer();
 
         const input = screen.getByPlaceholderText('태그를 입력하세요');
 
@@ -77,13 +64,7 @@ describe('WriteFormContainer', () => {
 
         fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
 
-        expect(dispatch).toBeCalledWith({
-          payload: {
-            name: 'tags',
-            value: ['test'],
-          },
-          type: 'group/changeWriteFields',
-        });
+        expect(container).toHaveTextContent('test');
       });
     });
   });

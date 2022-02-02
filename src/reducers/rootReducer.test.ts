@@ -1,37 +1,15 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { AnyAction } from 'redux';
 
-import { WriteFields } from '@/models/group';
-
 import rootReducer from './rootReducer';
 import { AppState } from './store';
 
 describe('rootReducer', () => {
-  const fieldsInitialState: WriteFields = {
-    title: '',
-    content: '',
-    tags: [],
-    category: '',
-    recruitmentEndSetting: 'manual',
-    recruitmentEndDate: '',
-  };
-
   const initialReducer: AppState = {
     authReducer: {
       auth: null,
       authError: null,
       user: null,
-      isVisible: false,
-    },
-    groupReducer: {
-      groupId: null,
-      group: null,
-      groups: [],
-      comments: [],
-      groupError: null,
-      writeFields: fieldsInitialState,
-      tagsCount: [],
-      applicants: [],
       isVisible: false,
     },
   };

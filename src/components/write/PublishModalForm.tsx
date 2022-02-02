@@ -2,14 +2,15 @@ import React, {
   ChangeEvent, ReactElement, useEffect, useState,
 } from 'react';
 
-import { WriteFields, WriteFieldsForm } from '@/models/group';
+import { KeyPair } from '@/models';
+import { WriteFields } from '@/models/group';
 import { stringToExcludeNull } from '@/utils/utils';
 
 import Select from '../common/Select';
 
 interface Props {
   fields: WriteFields;
-  onChangeFields: (form: WriteFieldsForm) => void;
+  onChangeFields: (form: KeyPair<WriteFields>) => void;
 }
 
 function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
@@ -19,16 +20,13 @@ function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
   const handleChangeFields = (e: ChangeEvent<HTMLInputElement| HTMLSelectElement>) => {
     const { value, name } = e.target;
 
-    onChangeFields({ name, value });
+    onChangeFields({ [name]: value });
   };
 
   useEffect(() => {
     if (recruitmentEndSetting === 'manual') {
       setEndDateDisabled(true);
-      onChangeFields({
-        name: 'recruitmentEndDate',
-        value: '',
-      });
+      onChangeFields({ recruitmentEndDate: '' });
       return;
     }
 

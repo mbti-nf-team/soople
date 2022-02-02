@@ -1,7 +1,6 @@
-/* eslint-disable import/prefer-default-export */
 import { atom } from 'recoil';
 
-import { FilterGroupsCondition } from '@/models/group';
+import { FilterGroupsCondition, initialWriteFieldsState, WriteFields } from '@/models/group';
 
 export const groupsConditionState = atom<FilterGroupsCondition>({
   key: 'groupsConditionState',
@@ -9,4 +8,9 @@ export const groupsConditionState = atom<FilterGroupsCondition>({
     category: ['study', 'project'],
     isFilterCompleted: false,
   },
+});
+
+export const writeFieldsState = atom<WriteFields>({
+  key: 'writeFieldsState',
+  default: initialWriteFieldsState,
 });

@@ -2,13 +2,14 @@ import React, { ChangeEvent, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
-import { WriteFields, WriteFieldsForm } from '@/models/group';
+import { KeyPair } from '@/models';
+import { WriteFields } from '@/models/group';
 
 import TagForm from './TagForm';
 
 interface Props {
   fields: WriteFields;
-  onChange: (form: WriteFieldsForm) => void;
+  onChange: (form: KeyPair<WriteFields>) => void;
 }
 
 function WriteForm({ fields, onChange }: Props): ReactElement {
@@ -17,13 +18,10 @@ function WriteForm({ fields, onChange }: Props): ReactElement {
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
-    onChange({ name, value });
+    onChange({ [name]: value });
   };
 
-  const handleChangeTags = (tags: string[]) => onChange({
-    name: 'tags',
-    value: tags,
-  });
+  const handleChangeTags = (tags: string[]) => onChange({ tags });
 
   return (
     <WriteFormWrapper>
