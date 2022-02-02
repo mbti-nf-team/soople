@@ -1,20 +1,21 @@
 import React, { ReactElement, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useRecoilState } from 'recoil';
+
 import WriteForm from '@/components/write/WriteForm';
-import { WriteFieldsForm } from '@/models/group';
-import { changeWriteFields } from '@/reducers/groupSlice';
-import { useAppDispatch } from '@/reducers/store';
-import { getAuth, getGroup } from '@/utils/utils';
+import { KeyPair } from '@/models';
+import { WriteFields } from '@/models/group';
+import { writeFieldsState } from '@/recoil/group/atom';
+import { getAuth } from '@/utils/utils';
 
 function WriteFormContainer(): ReactElement {
   const user = useSelector(getAuth('user'));
-  const fields = useSelector(getGroup('writeFields'));
-  const dispatch = useAppDispatch();
+  const [fields, changeFields] = useRecoilState(writeFieldsState);
 
-  const onChangeFields = useCallback((form: WriteFieldsForm) => {
-    dispatch(changeWriteFields(form));
-  }, [dispatch]);
+  const onChangeFields = useCallback((form: KeyPair<WriteFields>) => {
+    changeFields((prevState) => ({ ...prevState, ...form }));
+  }, [changeFields]);
 
   if (!user) {
     return <div>로그인 후 이용해주세요!</div>;

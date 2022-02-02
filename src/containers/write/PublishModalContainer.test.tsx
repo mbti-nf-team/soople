@@ -2,31 +2,37 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 
 import PublishModalContainer from './PublishModalContainer';
 
+jest.mock('@/hooks/api/group/usePublishNewGroup');
+
 describe('PublishModalContainer', () => {
-  const dispatch = jest.fn();
+  const mutate = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
+    mutate.mockClear();
 
-    (useDispatch as jest.Mock).mockImplementationOnce(() => dispatch);
+    (usePublishNewGroup as jest.Mock).mockImplementation(() => ({
+      mutate,
+    }));
+    (useDispatch as jest.Mock).mockImplementationOnce(() => mutate);
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       authReducer: {
         user: 'user',
-      },
-      groupReducer: {
-        writeFields: given.writeFields,
       },
     }));
   });
 
   const renderPublishModalContainer = () => render((
-    <InjectTestingRecoilState publishModalVisible={given.isVisible}>
+    <InjectTestingRecoilState
+      publishModalVisible={given.isVisible}
+      writeFields={given.writeFields}
+    >
       <PublishModalContainer />
     </InjectTestingRecoilState>
   ));
@@ -57,30 +63,30 @@ describe('PublishModalContainer', () => {
     });
 
     describe('"등록하기" 버튼을 클릭한다', () => {
-      it('dispatch 액션이 호출되어야만 한다', () => {
+      it('mutate 액션이 호출되어야만 한다', () => {
         renderPublishModalContainer();
 
         fireEvent.click(screen.getByText('등록하기'));
 
-        expect(dispatch).toBeCalled();
+        expect(mutate).toBeCalledWith({
+          writeFields: {
+            ...WRITE_FIELDS_FIXTURE,
+            title,
+          },
+          profile: 'user',
+        });
       });
     });
 
     describe('분류를 선택한다', () => {
-      it('changeFields 이벤트가 발생해야만 한다', () => {
-        renderPublishModalContainer();
+      it('분류의 select가 "스터디"로 변경되어야만 한다', () => {
+        const { container } = renderPublishModalContainer();
 
         fireEvent.change(screen.getByDisplayValue('분류를 선택해주세요.'), {
           target: { value: 'study' },
         });
 
-        expect(dispatch).toBeCalledWith({
-          type: 'group/changeWriteFields',
-          payload: {
-            value: 'study',
-            name: 'category',
-          },
-        });
+        expect(container).toHaveTextContent('스터디');
       });
     });
   });

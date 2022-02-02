@@ -3,16 +3,13 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { AnyAction } from 'redux';
 
 import authReducer, { AuthStore } from './authSlice';
-import groupReducer, { GroupStore } from './groupSlice';
 
 export interface RootReducerState {
   authReducer: AuthStore;
-  groupReducer: GroupStore;
 }
 
 const combineReducer = combineReducers({
   authReducer,
-  groupReducer,
 });
 
 const rootReducer = (state: RootReducerState | undefined, action: AnyAction): RootReducerState => {
@@ -22,19 +19,12 @@ const rootReducer = (state: RootReducerState | undefined, action: AnyAction): Ro
       ...action.payload,
     };
 
-    const { authReducer: authStore, groupReducer: groupStore } = nextState;
+    const { authReducer: authStore } = nextState;
 
     return {
       authReducer: {
         ...authStore,
         user: authStore.user ? authStore.user : state?.authReducer.user,
-      },
-      groupReducer: {
-        ...groupStore,
-        groups: state ? state.groupReducer.groups : [],
-        tagsCount: state ? state.groupReducer.tagsCount : [],
-        applicants: state ? state.groupReducer.applicants : [],
-        comments: state ? state.groupReducer.comments : [],
       },
     } as RootReducerState;
   }

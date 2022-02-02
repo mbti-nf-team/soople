@@ -38,10 +38,7 @@ describe('PublishModalForm', () => {
         target: { value: 'study' },
       });
 
-      expect(handleChangeFields).toBeCalledWith({
-        name: 'category',
-        value: 'study',
-      });
+      expect(handleChangeFields).toBeCalledWith({ category: 'study' });
     });
   });
 
@@ -62,10 +59,7 @@ describe('PublishModalForm', () => {
         });
 
         expect(screen.getByLabelText('모집 종료일시')).toHaveAttribute('disabled');
-        expect(handleChangeFields).toBeCalledWith({
-          name: 'recruitmentEndDate',
-          value: '',
-        });
+        expect(handleChangeFields).toBeCalledWith({ recruitmentEndDate: '' });
       });
     });
   });

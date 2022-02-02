@@ -1,12 +1,10 @@
 import { RootReducerState } from '@/reducers/rootReducer';
 
 import GROUP_FIXTURE from '../../fixtures/group';
-import WRITE_FIELDS_FIXTURE from '../../fixtures/writeFields';
 
 import {
   emptyAThenB,
   getAuth,
-  getGroup,
   isCurrentTimeBeforeEndDate,
   isProdLevel,
   isRecruitCompletedAndManual,
@@ -45,10 +43,6 @@ test('getAuth', () => {
         email: 'email',
       },
     },
-    groupReducer: {
-      writeFields: WRITE_FIELDS_FIXTURE,
-      groupError: null,
-    },
   } as RootReducerState;
 
   const user = getAuth('user');
@@ -58,30 +52,6 @@ test('getAuth', () => {
   expect(user(state)).toEqual({ email: 'email' });
   expect(auth(state)).toEqual({ email: 'email' });
   expect(authError(state)).toBe('error');
-});
-
-test('getGroup', () => {
-  const state = {
-    authReducer: {
-      auth: {
-        email: 'email',
-      },
-      authError: 'error',
-      user: {
-        email: 'email',
-      },
-    },
-    groupReducer: {
-      writeFields: WRITE_FIELDS_FIXTURE,
-      groupError: null,
-    },
-  } as RootReducerState;
-
-  const groupError = getGroup('groupError');
-  const writeFields = getGroup('writeFields');
-
-  expect(groupError(state)).toBeNull();
-  expect(writeFields(state)).toEqual(WRITE_FIELDS_FIXTURE);
 });
 
 describe('stringToExcludeNull', () => {
