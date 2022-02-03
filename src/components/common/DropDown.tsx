@@ -25,20 +25,24 @@ function DropDown({
   return (
     <DropDownWrapper>
       <div className="menu-wrapper">
-        <UserState>
-          <div className="user-name">{name}</div>
-          <div className="user-email">{email}</div>
-        </UserState>
-        <Link href="/myinfo/setting" passHref>
-          <MyInfoMenu>내 정보</MyInfoMenu>
-        </Link>
+        <div className="content-wrapper">
+          <UserState>
+            <div className="user-name">{name}</div>
+            <div className="user-email">{email}</div>
+          </UserState>
+          <Link href="/myinfo/setting" passHref>
+            <MyInfoMenu>내 정보</MyInfoMenu>
+          </Link>
+        </div>
         <Pipe />
-        <MenuContent
-          className="logout-menu"
-          onClick={signOut}
-        >
-          로그아웃
-        </MenuContent>
+        <div className="content-wrapper">
+          <MenuContent
+            className="logout-menu"
+            onClick={signOut}
+          >
+            로그아웃
+          </MenuContent>
+        </div>
       </div>
     </DropDownWrapper>
   );
@@ -49,7 +53,7 @@ export default DropDown;
 const DropDownWrapper = styled.div`
   position: absolute;
   top: 100%;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
   right: 0;
 
   .menu-wrapper {
@@ -60,17 +64,21 @@ const DropDownWrapper = styled.div`
     border-radius: 8px;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px;
   }
+
+  .content-wrapper {
+    padding: 4px 0px;
+  }
 `;
 
 const Pipe = styled.div`
-  margin: 4px 0;
+  margin: 0;
   border-top: 1px solid ${palette.accent2};
 `;
 
 const UserState = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 12px 40px 8px 16px;
+  padding: 8px 40px 8px 16px;
   justify-content: flex-start;
 
   .user-name {
@@ -86,7 +94,7 @@ const UserState = styled.div`
 const navItem = css`
   ${body1Font()};
   color: ${palette.foreground};
-  padding: 0.6rem 1rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   transition: background-color .2s;
 
@@ -99,7 +107,6 @@ const MenuContent = styled.div`
   ${navItem}
   
   &.logout-menu {
-    padding-bottom: 0.875rem;
   }
 `;
 
