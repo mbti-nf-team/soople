@@ -35,16 +35,6 @@ describe('SignInModalContainer', () => {
     </InjectTestingRecoilState>
   ));
 
-  context('로그인한 사용자인 경우', () => {
-    given('user', () => 'user');
-
-    it('아무것도 렌더링되지 않아야 한다', () => {
-      const { container } = renderSignInModalContainer();
-
-      expect(container).toBeEmptyDOMElement();
-    });
-  });
-
   context('처음 가입한 사용자인 경우', () => {
     given('auth', () => 'auth');
 
