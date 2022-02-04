@@ -37,6 +37,14 @@ function MyGroups({
 export default MyGroups;
 
 const MyGroupLayout = styled(DetailLayout)`
+  & > :first-of-type {
+    padding-top : 40px;
+  }
+  
+  & > :not(div:first-of-type) {
+    padding-top: 24px;
+  }
+
   & > :not(div:last-of-type) {
     padding-bottom: 24px;
     border-bottom: 0.5px solid ${palette.accent2};
