@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import useGetUser from '@/hooks/api/auth/useGetUser';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
 import SignInModalContainer from './SignInModalContainer';
@@ -10,6 +10,8 @@ import SignInModalContainer from './SignInModalContainer';
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
+jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('SignInModalContainer', () => {
   const mockReplace = jest.fn();
@@ -17,11 +19,11 @@ describe('SignInModalContainer', () => {
   beforeEach(() => {
     mockReplace.mockClear();
 
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: given.user,
-        auth: given.auth,
-      },
+    (useGetUser as jest.Mock).mockImplementation(() => ({
+      data: given.auth,
+    }));
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
+      data: given.user,
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       replace: mockReplace,
@@ -37,21 +39,12 @@ describe('SignInModalContainer', () => {
 
   context('로그인한 사용자인 경우', () => {
     given('user', () => 'user');
+    given('auth', () => 'user');
 
     it('아무것도 렌더링되지 않아야 한다', () => {
       const { container } = renderSignInModalContainer();
 
       expect(container).toBeEmptyDOMElement();
-    });
-  });
-
-  context('처음 가입한 사용자인 경우', () => {
-    given('auth', () => 'auth');
-
-    it('signup 페이지로 replace가 호축되어야만 한다', () => {
-      renderSignInModalContainer();
-
-      expect(mockReplace).toBeCalledWith('/signup');
     });
   });
 

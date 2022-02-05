@@ -4,15 +4,14 @@ import React, {
 import { useUnmount } from 'react-use';
 
 import styled from '@emotion/styled';
-
-import { Profile } from '@/models/auth';
+import { User } from 'firebase/auth';
 
 import Button from './Button';
 import DropDown from './DropDown';
 import ProfileImage from './ProfileImage';
 
 interface Props {
-  user: Profile;
+  user: User;
   signOut: () => void;
 }
 
@@ -56,12 +55,12 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
       </Button>
       <div className="profile-dropdown-wrapper" ref={userIconRef}>
         <ProfileImage
-          src={user.image}
+          src={user.photoURL}
           onClick={() => setVisible(!isVisible)}
         />
         <DropDown
           signOut={signOut}
-          name={user.name}
+          name={user.displayName}
           email={user.email as string}
           isVisible={isVisible}
         />

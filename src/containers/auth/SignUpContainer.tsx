@@ -1,51 +1,43 @@
-import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
-import { useUnmount } from 'react-use';
+import React, { ReactElement, useCallback } from 'react';
 
-import { useRouter } from 'next/router';
+import { User } from 'firebase/auth';
 
 import SignUpForm from '@/components/auth/SignUpForm';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import useGetUser from '@/hooks/api/auth/useGetUser';
+import useSignUp from '@/hooks/api/auth/useSignUp';
 import { SignUpAdditionalForm } from '@/models/auth';
-import { clearAuth, requestUserProfile } from '@/reducers/authSlice';
-import { useAppDispatch } from '@/reducers/store';
-import { getAuth } from '@/utils/utils';
 
 function SignUpContainer(): ReactElement {
-  const user = useSelector(getAuth('user'));
-  const auth = useSelector(getAuth('auth'));
+  const { data: user } = useGetUser();
+  const { data: profile } = useFetchUserProfile();
+  const { mutate } = useSignUp();
 
-  const router = useRouter();
-  const dispatch = useAppDispatch();
+  const onSubmit = useCallback((formData: SignUpAdditionalForm) => {
+    const { email, uid, photoURL } = user as User;
 
-  useUnmount(() => dispatch(clearAuth()));
+    mutate({
+      email: email as string,
+      uid,
+      image: photoURL,
+      ...formData,
+    });
+  }, [user, mutate]);
 
-  if (user) {
+  if (profile) {
     return <div>이미 가입이 완료되었어요!</div>;
   }
 
-  if (!auth) {
+  if (!user) {
     return <div>로그인부터 진행해주세요!</div>;
   }
-
-  const onSubmit = (formData: SignUpAdditionalForm) => {
-    const { email, uid, image } = auth;
-
-    dispatch(requestUserProfile({
-      email,
-      uid,
-      image,
-      ...formData,
-    }));
-
-    router.replace('/');
-  };
 
   return (
     <>
       <h2>시작하기</h2>
       <h4>코너스를 시작하기 위해 정보를 입력해주세요.</h4>
       <SignUpForm
-        fields={auth}
+        fields={user}
         onSubmit={onSubmit}
       />
     </>

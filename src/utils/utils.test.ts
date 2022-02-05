@@ -1,10 +1,7 @@
-import { RootReducerState } from '@/reducers/rootReducer';
-
 import GROUP_FIXTURE from '../../fixtures/group';
 
 import {
   emptyAThenB,
-  getAuth,
   isCurrentTimeBeforeEndDate,
   isProdLevel,
   isRecruitCompletedAndManual,
@@ -30,28 +27,6 @@ describe('isProdLevel', () => {
       expect(result).toBeFalsy();
     });
   });
-});
-
-test('getAuth', () => {
-  const state = {
-    authReducer: {
-      auth: {
-        email: 'email',
-      },
-      authError: 'error',
-      user: {
-        email: 'email',
-      },
-    },
-  } as RootReducerState;
-
-  const user = getAuth('user');
-  const auth = getAuth('auth');
-  const authError = getAuth('authError');
-
-  expect(user(state)).toEqual({ email: 'email' });
-  expect(auth(state)).toEqual({ email: 'email' });
-  expect(authError(state)).toBe('error');
 });
 
 describe('stringToExcludeNull', () => {

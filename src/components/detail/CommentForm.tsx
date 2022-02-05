@@ -3,12 +3,13 @@ import React, { ChangeEvent, ReactElement, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { Profile } from '@/models/auth';
+import { CommentFields } from '@/models/group';
 
 import Button from '../common/Button';
 import Textarea from '../common/Textarea';
 
 interface Props {
-  onSubmit: (commentForm: { content: string, writer: Profile }) => void;
+  onSubmit: (commentForm: CommentFields) => void;
   user: Profile | null;
   onVisible: () => void;
 }

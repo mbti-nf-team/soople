@@ -1,9 +1,9 @@
 import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
+import { User } from 'firebase/auth';
 import Link from 'next/link';
 
-import { Profile } from '@/models/auth';
 import Layout from '@/styles/Layout';
 import palette from '@/styles/palette';
 import zIndexes from '@/styles/zIndexes';
@@ -14,7 +14,7 @@ import Button from './Button';
 import UserNavbar from './UserNavbar';
 
 interface Props {
-  user: Profile | null
+  user: User | null
   onClick: () => void;
   signOut: () => void;
   isScrollTop: boolean;

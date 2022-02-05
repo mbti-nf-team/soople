@@ -1,8 +1,7 @@
-import { useSelector } from 'react-redux';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
+import useGetUser from '@/hooks/api/auth/useGetUser';
 import useFetchUserRecruitedGroups from '@/hooks/api/group/useFetchUserRecruitedGroups';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
@@ -14,6 +13,7 @@ jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 jest.mock('@/hooks/api/group/useFetchUserRecruitedGroups');
+jest.mock('@/hooks/api/auth/useGetUser');
 
 describe('RecruitedGroupsContainer', () => {
   const mockPush = jest.fn();
@@ -28,10 +28,8 @@ describe('RecruitedGroupsContainer', () => {
     (useRouter as jest.Mock).mockImplementation(() => ({
       push: mockPush,
     }));
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: FIXTURE_PROFILE,
-      },
+    (useGetUser as jest.Mock).mockImplementation(() => ({
+      data: FIXTURE_PROFILE,
     }));
   });
 

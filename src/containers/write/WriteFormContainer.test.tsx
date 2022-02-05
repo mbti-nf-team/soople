@@ -1,19 +1,18 @@
-import { useSelector } from 'react-redux';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import useGetUser from '@/hooks/api/auth/useGetUser';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
 import WriteFormContainer from './WriteFormContainer';
+
+jest.mock('@/hooks/api/auth/useGetUser');
 
 describe('WriteFormContainer', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: given.user,
-      },
+    (useGetUser as jest.Mock).mockImplementation(() => ({
+      data: given.user,
     }));
   });
 

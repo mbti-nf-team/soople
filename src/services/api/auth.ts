@@ -1,23 +1,9 @@
-import {
-  getRedirectResult, signOut, updateProfile, User,
-} from 'firebase/auth';
+import { signOut, updateProfile, User } from 'firebase/auth';
 import { getDoc, setDoc } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
 
-import {
-  docRef, firebaseAuth,
-} from '../firebase';
-
-export const postSignIn = async () => {
-  const result = await getRedirectResult(firebaseAuth);
-
-  if (!result) {
-    return null;
-  }
-
-  return result.user;
-};
+import { docRef, firebaseAuth } from '../firebase';
 
 export const postUserProfile = async (profile: Profile) => {
   const { uid, name, image } = profile;
@@ -34,7 +20,11 @@ export const postUserProfile = async (profile: Profile) => {
   await setDoc(userRef, profile);
 };
 
-export const getUserProfile = async (uid: string): Promise<Profile> => {
+export const getUserProfile = async (uid?: string): Promise<Profile | null> => {
+  if (!uid) {
+    return null;
+  }
+
   const user = await getDoc(docRef('users', uid));
 
   return user.data() as Profile;
@@ -42,13 +32,4 @@ export const getUserProfile = async (uid: string): Promise<Profile> => {
 
 export const postSignOut = async () => {
   await signOut(firebaseAuth);
-};
-
-export const getUserToken = async () => {
-  console.log('refreshing token...');
-  const { currentUser } = firebaseAuth;
-
-  if (currentUser) {
-    await currentUser.getIdToken(true);
-  }
 };
