@@ -1,7 +1,6 @@
 import React, {
   ReactElement, useEffect, useState,
 } from 'react';
-import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
@@ -9,14 +8,15 @@ import { useRecoilState } from 'recoil';
 import SignInError from '@/components/auth/SignInError';
 import SignInModal from '@/components/auth/SignInModal';
 import SocialButtonGroup from '@/components/auth/SocialButtonGroup';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import useGetUser from '@/hooks/api/auth/useGetUser';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
-import { getAuth } from '@/utils/utils';
 
 function SignInModalContainer(): ReactElement | null {
   const { query, replace } = useRouter();
   const [isVisible, setSignInModalVisible] = useRecoilState(signInModalVisibleState);
-  const auth = useSelector(getAuth('auth'));
-  const user = useSelector(getAuth('user'));
+  const { data: profile } = useFetchUserProfile();
+  const { data: user } = useGetUser();
 
   const [error, setError] = useState<string>('');
 
@@ -33,13 +33,7 @@ function SignInModalContainer(): ReactElement | null {
     }
   }, [query]);
 
-  useEffect(() => {
-    if (auth) {
-      replace('/signup');
-    }
-  }, [auth]);
-
-  if (user) {
+  if (user && profile) {
     return null;
   }
 

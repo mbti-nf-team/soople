@@ -9,7 +9,7 @@ import {
 } from './fontStyles';
 import palette from './palette';
 
-const setGlobalStyles = (path: string) => css`
+export const setGlobalStyles = (path: string) => css`
   ${emotionNormalize}
 
   body {

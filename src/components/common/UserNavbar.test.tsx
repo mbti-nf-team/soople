@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { User } from 'firebase/auth';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
@@ -10,8 +11,9 @@ describe('UserNavbar', () => {
       signOut={jest.fn()}
       user={{
         ...PROFILE_FIXTURE,
-        image: '',
-      }}
+        photoURL: '',
+        displayName: PROFILE_FIXTURE.name as string,
+      } as User}
     />
   ));
 

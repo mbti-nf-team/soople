@@ -1,7 +1,6 @@
 import { ParsedUrlQuery } from 'querystring';
 
 import { QueryClient } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
@@ -14,6 +13,7 @@ import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useFetchComments from '@/hooks/api/comment/useFetchComments';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import { getGroupDetail } from '@/services/api/group';
+import InjectMockProviders from '@/test/InjectMockProviders';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import COMMENT_FIXTURE from '../../../fixtures/comment';
@@ -39,7 +39,6 @@ jest.mock('next/router', () => ({
 }));
 
 describe('DetailPage', () => {
-  const dispatch = jest.fn();
   const mutate = jest.fn();
 
   beforeEach(() => {
@@ -60,16 +59,12 @@ describe('DetailPage', () => {
     (useCancelApply as jest.Mock).mockImplementation(() => ({ mutate }));
     (useAddComment as jest.Mock).mockImplementation(() => ({ mutate }));
     (useDeleteComment as jest.Mock).mockImplementation(() => ({ mutate }));
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: '',
-      },
-    }));
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
   });
 
   const renderDetailPage = () => render((
-    <DetailPage />
+    <InjectMockProviders>
+      <DetailPage />
+    </InjectMockProviders>
   ));
 
   it('detail 페이지에 대한 내용이 나타나야만 한다', () => {

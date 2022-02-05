@@ -1,9 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 
+import useGetUser from '@/hooks/api/auth/useGetUser';
+import useSignOut from '@/hooks/api/auth/useSignOut';
 import palette from '@/styles/palette';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -14,25 +14,23 @@ jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 jest.mock('recoil');
+jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useSignOut');
 
 describe('HeaderContainer', () => {
-  const dispatch = jest.fn();
-  const replace = jest.fn();
+  const mutate = jest.fn();
   const setSignInModalVisible = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
 
+    (useSignOut as jest.Mock).mockImplementation(() => ({ mutate }));
     (useSetRecoilState as jest.Mock).mockImplementation(() => setSignInModalVisible);
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: given.user,
-      },
+    (useGetUser as jest.Mock).mockImplementation(() => ({
+      data: given.user,
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       pathname: '/',
-      replace,
     }));
   });
 
@@ -69,7 +67,8 @@ describe('HeaderContainer', () => {
   context('로그인한 경우', () => {
     given('user', () => ({
       ...PROFILE_FIXTURE,
-      image: '',
+      photoURL: '',
+      displayName: PROFILE_FIXTURE.name,
     }));
 
     it('"팀 모집하기" 버튼이 나타나야만 한다', () => {
@@ -79,14 +78,13 @@ describe('HeaderContainer', () => {
     });
 
     describe('"로그아웃" 버튼을 클릭한다', () => {
-      it('dispatch 액션이 호출되어야만 한다', () => {
+      it('signOut 액션이 호출되어야만 한다', () => {
         renderHeaderContainer();
 
         fireEvent.click(screen.getByTestId('default-profile-icon'));
         fireEvent.click(screen.getByText('로그아웃'));
 
-        expect(dispatch).toBeCalled();
-        expect(replace).toBeCalledWith('/');
+        expect(mutate).toBeCalled();
       });
     });
   });

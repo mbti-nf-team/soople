@@ -1,23 +1,24 @@
 import React, { ReactElement, useCallback } from 'react';
-import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 
 import CommentForm from '@/components/detail/CommentForm';
 import CommentsView from '@/components/detail/CommentsView';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import useGetUser from '@/hooks/api/auth/useGetUser';
 import useAddComment from '@/hooks/api/comment/useAddComment';
 import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useFetchComments from '@/hooks/api/comment/useFetchComments';
 import { GroupQuery } from '@/models';
 import { CommentFields } from '@/models/group';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
-import { getAuth } from '@/utils/utils';
 
 function CommentsContainer(): ReactElement {
   const router = useRouter();
   const { id: groupId } = router.query as GroupQuery;
-  const user = useSelector(getAuth('user'));
+  const { data: user } = useGetUser();
+  const { data: profile } = useFetchUserProfile();
   const setSignInModalVisible = useSetRecoilState(signInModalVisibleState);
   const { data: comments, isLoading } = useFetchComments();
   const { mutate: addCommentMutate } = useAddComment();
@@ -28,7 +29,7 @@ function CommentsContainer(): ReactElement {
   const onSubmit = useCallback((commentForm: CommentFields) => addCommentMutate({
     ...commentForm,
     groupId,
-  }), [groupId, addCommentMutate]);
+  }), [profile, groupId, addCommentMutate]);
 
   const onRemoveComment = useCallback((commentId: string) => deleteCommentMutate({
     commentId, groupId,
@@ -43,7 +44,7 @@ function CommentsContainer(): ReactElement {
         onRemove={onRemoveComment}
       />
       <CommentForm
-        user={user}
+        user={profile}
         onSubmit={onSubmit}
         onVisible={onVisibleSignInModal}
       />

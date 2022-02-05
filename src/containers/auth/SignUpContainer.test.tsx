@@ -1,32 +1,32 @@
 import { act } from 'react-dom/test-utils';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { fireEvent, render, screen } from '@testing-library/react';
-import { useRouter } from 'next/router';
+
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import useGetUser from '@/hooks/api/auth/useGetUser';
+import useSignUp from '@/hooks/api/auth/useSignUp';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import SignUpContainer from './SignUpContainer';
 
-jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
-}));
+jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useSignUp');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('SignUpContainer', () => {
-  const dispatch = jest.fn();
-  const mockReplace = jest.fn();
+  const mutate = jest.fn();
 
   beforeEach(() => {
-    dispatch.mockClear();
-    mockReplace.mockClear();
+    mutate.mockClear();
 
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: given.user,
-        auth: given.auth,
-      },
+    (useGetUser as jest.Mock).mockImplementation(() => ({
+      data: given.auth,
     }));
-    (useDispatch as jest.Mock).mockImplementation(() => dispatch);
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
+      data: given.user,
+    }));
+    (useSignUp as jest.Mock).mockImplementation(() => ({ mutate }));
   });
 
   afterEach(() => {
@@ -49,7 +49,11 @@ describe('SignUpContainer', () => {
 
   context('처음 가입한 사용자인 경우', () => {
     context('auth 정보가 존재하는 경우', () => {
-      given('auth', () => (PROFILE_FIXTURE));
+      given('auth', () => ({
+        ...PROFILE_FIXTURE,
+        displayName: PROFILE_FIXTURE.name,
+        photoURL: PROFILE_FIXTURE.image,
+      }));
 
       it('회원가입 페이지에 대한 정보 나타나야만 한다', () => {
         const { container } = renderSignUpContainer();
@@ -58,13 +62,7 @@ describe('SignUpContainer', () => {
       });
 
       describe('"확인" 버튼을 클릭한다', () => {
-        beforeEach(() => {
-          (useRouter as jest.Mock).mockImplementationOnce(() => ({
-            replace: mockReplace,
-          }));
-        });
-
-        it('dispatch 액션이 호출되어야만 한다', async () => {
+        it('submit 액션이 호출되어야만 한다', async () => {
           renderSignUpContainer();
 
           await act(async () => {
@@ -74,8 +72,11 @@ describe('SignUpContainer', () => {
             await fireEvent.submit(screen.getByText('확인'));
           });
 
-          expect(dispatch).toBeCalled();
-          expect(mockReplace).toBeCalledWith('/');
+          expect(mutate).toBeCalledWith({
+            ...PROFILE_FIXTURE,
+            portfolioUrl: '',
+            position: 'frontEnd',
+          });
         });
       });
     });

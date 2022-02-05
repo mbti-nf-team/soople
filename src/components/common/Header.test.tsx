@@ -72,9 +72,9 @@ describe('Header', () => {
   context('세션이 존재한 경우', () => {
     given('user', () => ({
       uid: '1',
-      name: 'test',
+      displayName: 'test',
       email: 'test@test.com',
-      image: 'http://image.com',
+      photoURL: 'http://image.com',
     }));
 
     it('"팀 모집하기" 링크가 나타나야만 한다', () => {

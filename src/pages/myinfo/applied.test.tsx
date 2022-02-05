@@ -1,7 +1,6 @@
-import { useSelector } from 'react-redux';
-
 import { render } from '@testing-library/react';
 
+import useGetUser from '@/hooks/api/auth/useGetUser';
 import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
@@ -9,17 +8,18 @@ import FIXTURE_GROUP from '../../../fixtures/group';
 import AppliedPage from './applied.page';
 
 jest.mock('@/hooks/api/group/useFetchUserAppliedGroups');
+jest.mock('@/hooks/api/auth/useGetUser');
 
 describe('AppliedPage', () => {
   beforeEach(() => {
+    (useGetUser as jest.Mock).mockImplementation(() => ({
+      data: {
+        uid: '1',
+      },
+    }));
     (useFetchUserAppliedGroups as jest.Mock).mockImplementation(() => ({
       data: [FIXTURE_GROUP],
       isLoading: false,
-    }));
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: null,
-      },
     }));
   });
 

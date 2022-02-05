@@ -2,16 +2,17 @@ import React, { ChangeEvent, ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { User } from 'firebase/auth';
 import * as yup from 'yup';
 
-import type { Profile, SignUpAdditionalForm } from '@/models/auth';
+import type { SignUpAdditionalForm } from '@/models/auth';
 import { stringToExcludeNull } from '@/utils/utils';
 
 import Select from '../common/Select';
 
 interface Props {
   onSubmit: (formData: SignUpAdditionalForm) => void;
-  fields: Profile;
+  fields: User;
 }
 
 const selectPositionOptions = {
@@ -30,7 +31,7 @@ const validationSchema = yup.object({
 
 function SignUpForm({ onSubmit, fields }: Props): ReactElement {
   const [isDirectValue, setIsDirectValue] = useState<boolean>(false);
-  const { name, email, image } = fields;
+  const { displayName, email, photoURL } = fields;
   const {
     register, handleSubmit, formState: { errors }, setValue, resetField, clearErrors,
   } = useForm<SignUpAdditionalForm>({
@@ -59,12 +60,12 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
 
   return (
     <div>
-      <img src={stringToExcludeNull(image)} alt={`${email}-thumbnail`} width="300px" height="300px" />
+      <img src={stringToExcludeNull(photoURL)} alt={`${email}-thumbnail`} width="300px" height="300px" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="name">
             닉네임
-            <input type="text" id="name" defaultValue={stringToExcludeNull(name)} placeholder="닉네임을 입력해주세요" {...register('name')} />
+            <input type="text" id="name" defaultValue={stringToExcludeNull(displayName)} placeholder="닉네임을 입력해주세요" {...register('name')} />
           </label>
           <div>{errors.name?.message}</div>
         </div>

@@ -1,17 +1,16 @@
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
 
 import EmptyStateArea from '@/components/common/EmptyStateArea';
 import MyGroups from '@/components/myInfo/MyGroups';
+import useGetUser from '@/hooks/api/auth/useGetUser';
 import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
 import { DetailLayout } from '@/styles/Layout';
-import { getAuth } from '@/utils/utils';
 
 function AppliedGroupsContainer(): ReactElement {
   const router = useRouter();
-  const user = useSelector(getAuth('user'));
+  const { data: user } = useGetUser();
   const { data: groups, isLoading } = useFetchUserAppliedGroups(user?.uid);
 
   const onClickGroup = (groupId: string) => router.push(`/detail/${groupId}`);

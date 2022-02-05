@@ -3,9 +3,9 @@ import React, { memo, ReactElement, useState } from 'react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { User } from 'firebase/auth';
 import * as R from 'ramda';
 
-import { Profile } from '@/models/auth';
 import { Comment } from '@/models/group';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
@@ -22,7 +22,7 @@ dayjs.extend(relativeTime);
 
 interface Props {
   comment: Comment;
-  user: Profile | null;
+  user: User | null;
   onRemove: (commentId: string) => void;
 }
 

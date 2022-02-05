@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react';
 
+import InjectMockProviders from '@/test/InjectMockProviders';
+
 import getMyInfoLayout from './MyInfoLayout';
 
 jest.mock('next/router', () => ({
@@ -15,7 +17,9 @@ describe('MyInfoLayout', () => {
   }
 
   const renderMyInfoLayout = () => render((
-    GetLayout(<MockComponent />)
+    <InjectMockProviders>
+      {GetLayout(<MockComponent />)}
+    </InjectMockProviders>
   ));
 
   it('MyInfo 레이아웃에 대한 내용이 보여야만 한다', () => {

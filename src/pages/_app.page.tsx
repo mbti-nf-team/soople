@@ -7,10 +7,8 @@ import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
 
-import AuthProvider from '@/components/common/AuthProvider';
 import Core from '@/components/common/Core';
 import SignInModalContainer from '@/containers/auth/SignInModalContainer';
-import wrapper from '@/reducers/store';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -31,20 +29,22 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     },
   }));
 
-  return getLayout((
+  return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <RecoilRoot>
-          <Core />
-          <AuthProvider>
-            <SignInModalContainer />
-            <Component {...pageProps} />
-          </AuthProvider>
+          {getLayout((
+            <>
+              <Core />
+              <SignInModalContainer />
+              <Component {...pageProps} />
+            </>
+          ))}
         </RecoilRoot>
         <ReactQueryDevtools initialIsOpen={false} />
       </Hydrate>
     </QueryClientProvider>
-  ));
+  );
 }
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;

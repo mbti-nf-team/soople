@@ -1,16 +1,32 @@
 import { useQuery } from 'react-query';
 
-import { AuthError } from 'firebase/auth';
+import { FirestoreError } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
 import { getUserProfile } from '@/services/api/auth';
+import { firebaseAuth } from '@/services/firebase';
 
-function useFetchUserProfile(userUid: string) {
-  const query = useQuery<Profile, AuthError>(['user', userUid], () => getUserProfile(userUid), {
-    enabled: !!userUid,
+import useCatchErrorWithToast from '../useCatchErrorWithToast';
+
+function useFetchUserProfile() {
+  const { currentUser } = firebaseAuth;
+
+  const query = useQuery<Profile | null, FirestoreError>(['profile'], () => getUserProfile(currentUser?.uid), {
+    enabled: !!currentUser?.uid,
   });
 
-  return query;
+  const { isError, error } = query;
+
+  useCatchErrorWithToast({
+    isError,
+    error,
+    defaultErrorMessage: '사용자의 정보를 불러오는데 실패했어요!',
+  });
+
+  return {
+    ...query,
+    data: query.data || null,
+  };
 }
 
 export default useFetchUserProfile;

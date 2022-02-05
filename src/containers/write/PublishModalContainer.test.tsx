@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
@@ -10,6 +9,7 @@ import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 import PublishModalContainer from './PublishModalContainer';
 
 jest.mock('@/hooks/api/group/usePublishNewGroup');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('PublishModalContainer', () => {
   const mutate = jest.fn();
@@ -17,14 +17,11 @@ describe('PublishModalContainer', () => {
   beforeEach(() => {
     mutate.mockClear();
 
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
+      data: 'user',
+    }));
     (usePublishNewGroup as jest.Mock).mockImplementation(() => ({
       mutate,
-    }));
-    (useDispatch as jest.Mock).mockImplementationOnce(() => mutate);
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: 'user',
-      },
     }));
   });
 

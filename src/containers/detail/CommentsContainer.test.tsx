@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useSetRecoilState } from 'recoil';
 
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import useGetUser from '@/hooks/api/auth/useGetUser';
 import useAddComment from '@/hooks/api/comment/useAddComment';
 import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useFetchComments from '@/hooks/api/comment/useFetchComments';
@@ -13,6 +13,8 @@ import CommentsContainer from './CommentsContainer';
 
 jest.mock('@/hooks/api/comment/useFetchComments');
 jest.mock('@/hooks/api/comment/useDeleteComment');
+jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/comment/useAddComment');
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
@@ -30,13 +32,11 @@ describe('CommentsContainer', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: given.user,
-      },
-      groupReducer: {
-        comments: [COMMENT_FIXTURE],
-      },
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
+      data: given.user,
+    }));
+    (useGetUser as jest.Mock).mockImplementation(() => ({
+      data: given.user,
     }));
     (useAddComment as jest.Mock).mockImplementation(() => ({
       mutate,

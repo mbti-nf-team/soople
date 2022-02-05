@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { User } from 'firebase/auth';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -11,7 +12,7 @@ describe('CommentsView', () => {
   const renderCommentsView = () => render((
     <CommentsView
       isLoading={given.isLoading}
-      user={PROFILE_FIXTURE}
+      user={PROFILE_FIXTURE as User}
       onRemove={handleRemove}
       comments={[COMMENT_FIXTURE]}
     />

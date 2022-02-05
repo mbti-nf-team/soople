@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-
 import {
   act, fireEvent, render, screen,
 } from '@testing-library/react';
@@ -8,6 +6,7 @@ import { useSetRecoilState } from 'recoil';
 import useApplyGroup from '@/hooks/api/applicant/useApplyGroup';
 import useCancelApply from '@/hooks/api/applicant/useCancelApply';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
@@ -20,6 +19,7 @@ jest.mock('@/hooks/api/applicant/useApplyGroup');
 jest.mock('@/hooks/api/applicant/useCancelApply');
 jest.mock('@/hooks/api/applicant/useFetchApplicants');
 jest.mock('@/hooks/api/group/useFetchGroup');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('recoil');
 
 describe('DetailHeaderContainer', () => {
@@ -43,10 +43,8 @@ describe('DetailHeaderContainer', () => {
       mutate,
     }));
     (useSetRecoilState as jest.Mock).mockImplementation(() => handleSetSignInModalVisible);
-    (useSelector as jest.Mock).mockImplementation((selector) => selector({
-      authReducer: {
-        user: given.user,
-      },
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
+      data: given.user,
     }));
   });
 
