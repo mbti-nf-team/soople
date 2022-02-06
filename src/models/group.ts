@@ -2,6 +2,7 @@ import { Profile } from './auth';
 
 export type Category = 'study' | 'project';
 export type RecruitmentEndSetting = 'manual' | 'automatic';
+export type Position = '프론트엔드' | '백엔드' | '학생' | '디자인';
 
 export const initialWriteFieldsState: WriteFields = {
   title: '',
