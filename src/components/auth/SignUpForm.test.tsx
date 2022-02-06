@@ -7,6 +7,11 @@ import SignUpForm from './SignUpForm';
 
 describe('SignUpForm', () => {
   const handleSubmit = jest.fn();
+
+  beforeEach(() => {
+    handleSubmit.mockClear();
+  });
+
   const userFields = {
     displayName: 'test',
     email: 'test@test.com',
@@ -29,39 +34,6 @@ describe('SignUpForm', () => {
     });
   });
 
-  context('포지션 "직접 입력" 상태일 때', () => {
-    it('포지션 직접 입력 input창이 나타나야만 한다', async () => {
-      renderSignUpForm(userFields);
-
-      await act(async () => {
-        await fireEvent.change(screen.getByDisplayValue(/포지션을 션택하세요/), {
-          target: { value: 'directInput' },
-        });
-      });
-
-      expect(screen.getByPlaceholderText('포지션을 입력해주세요.')).not.toBeNull();
-    });
-
-    describe('"X" 버튼을 클릭한다', () => {
-      it('포지션 입력 input창이 사라져야만 한다', async () => {
-        renderSignUpForm(userFields);
-
-        await act(async () => {
-          await fireEvent.change(screen.getByDisplayValue(/포지션을 션택하세요/), {
-            target: { value: 'directInput' },
-          });
-        });
-
-        fireEvent.change(screen.getByPlaceholderText('포지션을 입력해주세요.'), {
-          target: { value: 'test' },
-        });
-        fireEvent.click(screen.getByText('x'));
-
-        expect(screen.queryByPlaceholderText('포지션을 입력해주세요.')).toBeNull();
-      });
-    });
-  });
-
   describe('"확인" 버튼을 클릭한다', () => {
     context('submit 호출에 성공했을 때', () => {
       it('submit에 대한 액션이 호출된다', async () => {
@@ -71,11 +43,14 @@ describe('SignUpForm', () => {
 
         expect(button).not.toBeNull();
 
+        const input = screen.getByRole('combobox');
+
+        fireEvent.focus(input);
+        fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+        fireEvent.click(screen.getByText('백엔드'));
+
         await act(async () => {
-          await fireEvent.change(screen.getByDisplayValue(/포지션을 션택하세요/), {
-            target: { value: 'frontEnd' },
-          });
-          await fireEvent.submit(button);
+          fireEvent.submit(button);
         });
 
         expect(handleSubmit).toBeCalledTimes(1);
@@ -103,8 +78,8 @@ describe('SignUpForm', () => {
       });
 
       context('포지션을 선택하지 않은 경우', () => {
-        it('"포지션을 선택해주세요." 에러 메시지가 보여진다', async () => {
-          const { container } = renderSignUpForm(userFields);
+        it('submit 액션이 호출되지 않아야만 한다', async () => {
+          renderSignUpForm(userFields);
 
           const button = screen.getByText('확인');
 
@@ -114,7 +89,7 @@ describe('SignUpForm', () => {
             await fireEvent.submit(button);
           });
 
-          expect(container).toHaveTextContent('포지션을 선택해주세요.');
+          expect(handleSubmit).not.toBeCalled();
         });
       });
     });

@@ -1,67 +1,53 @@
-import React, { ChangeEvent, ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { User } from 'firebase/auth';
 import * as yup from 'yup';
 
+import { SelectOption } from '@/models';
 import type { SignUpAdditionalForm } from '@/models/auth';
+import { Position } from '@/models/group';
 import { stringToExcludeNull } from '@/utils/utils';
 
-import Select from '../common/Select';
+import CreatableSelectBox from '../common/CreatableSelectBox';
 
 interface Props {
   onSubmit: (formData: SignUpAdditionalForm) => void;
   fields: User;
 }
 
-const selectPositionOptions = {
-  frontEnd: '프론트엔드',
-  backEnd: '백엔드',
-  student: '학생',
-  design: '디자인',
-  directInput: '직접 입력',
-};
+const positionOption: SelectOption<Position>[] = [
+  { label: '프론트엔드', value: '프론트엔드' },
+  { label: '백엔드', value: '백엔드' },
+  { label: '학생', value: '학생' },
+  { label: '디자인', value: '디자인' },
+];
 
 const validationSchema = yup.object({
-  name: yup.string().required('닉네임을 입력해주세요.'),
-  position: yup.string().required('포지션을 선택해주세요.'),
-  portfolioUrl: yup.string().notRequired().nullable(),
+  name: yup.string().trim().required('닉네임을 입력해주세요.'),
+  portfolioUrl: yup.string().trim().notRequired().nullable(),
 }).required();
 
 function SignUpForm({ onSubmit, fields }: Props): ReactElement {
-  const [isDirectValue, setIsDirectValue] = useState<boolean>(false);
   const { displayName, email, photoURL } = fields;
-  const {
-    register, handleSubmit, formState: { errors }, setValue, resetField, clearErrors,
-  } = useForm<SignUpAdditionalForm>({
+  const { register, handleSubmit, formState: { errors } } = useForm<SignUpAdditionalForm>({
     resolver: yupResolver(validationSchema),
   });
+  const [position, setPosition] = useState<Position>();
 
-  const positionRegister = register('position');
-
-  const onChangeSelectBox = (e: ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value === 'directInput') {
-      setIsDirectValue(true);
-      resetField('position');
+  const handleSubmitAction = (formData: SignUpAdditionalForm) => {
+    if (!position) {
       return;
     }
 
-    positionRegister.onChange(e);
-  };
-
-  const onChangeDirectInput = (e: ChangeEvent<HTMLInputElement>) => setValue('position', e.target.value);
-
-  const onClickCloseDirectInput = () => {
-    setIsDirectValue(false);
-    resetField('position');
-    clearErrors('position');
+    onSubmit({ ...formData, position });
   };
 
   return (
     <div>
       <img src={stringToExcludeNull(photoURL)} alt={`${email}-thumbnail`} width="300px" height="300px" />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleSubmitAction)}>
         <div>
           <label htmlFor="name">
             닉네임
@@ -77,27 +63,14 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
           </label>
         </div>
 
-        <div>
-          <label htmlFor="position">
-            포지션
-            {isDirectValue && (
-              <>
-                <input type="text" placeholder="포지션을 입력해주세요." onChange={onChangeDirectInput} />
-                <button type="button" onClick={onClickCloseDirectInput}>x</button>
-              </>
-            )}
-            <Select
-              id="position"
-              isDirect={isDirectValue}
-              register={positionRegister}
-              onChange={onChangeSelectBox}
-              defaultOption="포지션을 션택하세요"
-              options={selectPositionOptions}
-            />
-          </label>
-          <div>{errors.position?.message}</div>
-        </div>
-
+        <CreatableSelectBox
+          id="position"
+          options={positionOption}
+          labelText="포지션"
+          onChange={setPosition}
+          placeholder="포지션을 선택하세요"
+          errorMessage="포지션을 선택하세요"
+        />
         <div>
           <label htmlFor="portfolioUrl">
             포트폴리오 URL (선택)

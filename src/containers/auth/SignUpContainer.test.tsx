@@ -65,17 +65,20 @@ describe('SignUpContainer', () => {
         it('submit 액션이 호출되어야만 한다', async () => {
           renderSignUpContainer();
 
+          const input = screen.getByRole('combobox');
+
+          fireEvent.focus(input);
+          fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+          fireEvent.click(screen.getByText('프론트엔드'));
+
           await act(async () => {
-            await fireEvent.change(screen.getByDisplayValue(/포지션을 션택하세요/), {
-              target: { value: 'frontEnd' },
-            });
             await fireEvent.submit(screen.getByText('확인'));
           });
 
           expect(mutate).toBeCalledWith({
             ...PROFILE_FIXTURE,
             portfolioUrl: '',
-            position: 'frontEnd',
+            position: '프론트엔드',
           });
         });
       });

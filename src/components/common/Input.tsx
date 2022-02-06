@@ -14,8 +14,11 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
+import { body1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
+
+import HelperMessage from './HelperMessage';
+import Label from './Label';
 
 interface Props extends DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>, HTMLInputElement
@@ -49,12 +52,12 @@ function Input({
 
   return (
     <InputWrapper isError={isError}>
-      <Label htmlFor={id} isError={isError}>
-        <span>
-          {labelText}
-          {labelOptionText && (<span className="option-span">{`(${labelOptionText})`}</span>)}
-        </span>
-      </Label>
+      <Label
+        htmlFor={id}
+        isError={isError}
+        labelText={labelText}
+        labelOptionText={labelOptionText}
+      />
       <InputFieldWrapper>
         <InputField
           id={id}
@@ -79,11 +82,10 @@ function Input({
           data-testid="clear-icon"
         />
       </InputFieldWrapper>
-      {message && (
-        <HelperText isError={isError}>
-          {message}
-        </HelperText>
-      )}
+      <HelperMessage
+        message={message}
+        isError={isError}
+      />
     </InputWrapper>
   );
 }
@@ -103,27 +105,6 @@ const InputWrapper = styled.div<{ isError?: boolean; }>`
         color: ${palette.success};
       `}
     }
-  }
-`;
-
-const Label = styled.label<{ isError?: boolean; }>`
-  & > span {
-    ${body2Font(true)}
-    display: inline-flex;
-    transition: color .2s ease-in-out;
-    margin: 0px 0px 6px 4px;
-
-    ${({ isError }) => (isError ? css`
-      color: ${palette.warning};
-    ` : css`
-      color: ${palette.accent6};
-    `)};
-  }
-
-  .option-span {
-    ${body2Font()};
-    color: ${palette.accent4};
-    margin-left: 4px;
   }
 `;
 
@@ -159,17 +140,6 @@ const InputField = styled.input<{ isError?: boolean; hasValue: boolean; }>`
     &:not(:read-only):not(:disabled):focus {
       border: 1px solid ${palette.success};
     }
-  `)};
-`;
-
-const HelperText = styled.small<{ isError?: boolean; }>`
-  ${subtitle1Font()}
-  margin: 6px 0px 0px 4px;
-
-  ${({ isError }) => (isError ? css`
-    color: ${palette.warning};
-  ` : css`
-    color: ${palette.accent5};
   `)};
 `;
 
