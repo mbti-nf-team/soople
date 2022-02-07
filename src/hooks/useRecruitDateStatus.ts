@@ -8,10 +8,13 @@ import { isCurrentTimeBeforeEndDate, isRecruitCompletedAndManual } from '@/utils
 
 import 'dayjs/locale/ko';
 
+import useCurrentTime from './useCurrentTime';
+
 dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
-const useRecruitDateStatus = (group: Group, time: number) => {
+const useRecruitDateStatus = (group: Group) => {
+  const currentTime = useCurrentTime(group);
   const { recruitmentEndDate, createdAt } = group;
   const createdDate = dayjs(createdAt).format('YYYY년 MM월 DD일');
   const [recruitDateStatus, setRecruitDateStatus] = useState<string>(createdDate);
@@ -22,13 +25,13 @@ const useRecruitDateStatus = (group: Group, time: number) => {
       return;
     }
 
-    if (isCurrentTimeBeforeEndDate(recruitmentEndDate, time)) {
-      setRecruitDateStatus(`${dayjs(time).to(dayjs(recruitmentEndDate))} 마감`);
+    if (isCurrentTimeBeforeEndDate(recruitmentEndDate, currentTime)) {
+      setRecruitDateStatus(`${dayjs(currentTime).to(dayjs(recruitmentEndDate))} 마감`);
       return;
     }
 
     setRecruitDateStatus(createdDate);
-  }, [group, createdDate, time]);
+  }, [group, createdDate, currentTime]);
 
   return recruitDateStatus;
 };

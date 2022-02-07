@@ -14,9 +14,7 @@ interface Props {
   onClickGroup: (groupId: string) => void;
 }
 
-function MyGroups({
-  groups, onClickGroup, children,
-}: PropsWithChildren<Props>): ReactElement {
+function MyGroups({ groups, onClickGroup, children }: PropsWithChildren<Props>): ReactElement {
   if (R.isEmpty(groups)) {
     return <>{children}</>;
   }

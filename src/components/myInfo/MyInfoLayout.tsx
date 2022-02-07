@@ -1,14 +1,13 @@
 import { ReactElement } from 'react';
 
 import HeaderContainer from '@/containers/common/HeaderContainer';
+import MyInfoTabContainer, { ActiveMyInfoTab } from '@/containers/myInfo/MyInfoTabContainer';
 
-import MyInfoTab, { MyInfoNavActive } from './MyInfoTab';
-
-const getMyInfoLayout = (active: MyInfoNavActive) => function GetLayout(page: ReactElement) {
+const getMyInfoLayout = (activeTab: ActiveMyInfoTab) => function GetLayout(page: ReactElement) {
   return (
     <>
       <HeaderContainer />
-      <MyInfoTab active={active} />
+      <MyInfoTabContainer activeTab={activeTab} />
       {page}
     </>
   );
