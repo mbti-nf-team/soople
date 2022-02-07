@@ -9,7 +9,6 @@ import useRecruitDateStatus from './useRecruitDateStatus';
 describe('useRecruitDateStatus', () => {
   const useRecruitDateStatusHook = () => renderHook(() => useRecruitDateStatus(
     given.group,
-    Date.now(),
   ));
 
   context('모집 종료를 수동이거나 모집 완료된 경우', () => {

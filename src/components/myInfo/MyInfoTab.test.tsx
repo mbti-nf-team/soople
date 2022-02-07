@@ -6,7 +6,7 @@ import MyInfoTab from './MyInfoTab';
 
 describe('MyInfoTab', () => {
   const renderMyInfoTab = () => render((
-    <MyInfoTab active="setting" />
+    <MyInfoTab activeTab="setting" />
   ));
 
   context('active 상태인 경우', () => {

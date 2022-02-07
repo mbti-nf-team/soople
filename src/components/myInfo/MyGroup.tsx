@@ -3,7 +3,6 @@ import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 
-import useCurrentTime from '@/hooks/useCurrentTime';
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
@@ -21,12 +20,11 @@ function MyGroup({ group, onClick }: Props): ReactElement {
   const {
     title, content, createdAt, groupId, numberApplicants,
   } = group;
-  const currentTime = useCurrentTime(group);
-  const recruitDateStatus = useRecruitDateStatus(group, currentTime);
+  const recruitDateStatus = useRecruitDateStatus(group);
 
   return (
     <MyGroupWrapper
-      role="menuitem"
+      role="listitem"
       onClick={() => onClick(groupId)}
       tabIndex={0}
     >
@@ -51,20 +49,20 @@ export default MyGroup;
 
 const MyGroupWrapper = styled.div`
   cursor: pointer;
-  `;
+`;
 
 const MyGroupContents = styled.div`
   padding-bottom: 16px;
 
-.group-title {
-  ${h3Font(true)};
-  padding-bottom: 4px;
-}
+  .group-title {
+    ${h3Font(true)};
+    padding-bottom: 4px;
+  }
 
-.group-content {
-  ${body1Font()};
-  color: ${palette.accent7};
-}
+  .group-content {
+    ${body1Font()};
+    color: ${palette.accent7};
+  }
 `;
 
 const GroupMetaData = styled.div`
@@ -75,11 +73,11 @@ const GroupMetaData = styled.div`
   color: ${palette.accent6};
 
   .date-status {
-  ${body2Font(true)};
-  color: ${palette.foreground};
+    ${body2Font(true)};
+    color: ${palette.foreground};
   }
 
   .number-applied {
-  color: ${palette.foreground};
+    color: ${palette.foreground};
   }
 `;

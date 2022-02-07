@@ -4,7 +4,6 @@ import { Eye as ViewsIcon } from 'react-feather';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 
-import useCurrentTime from '@/hooks/useCurrentTime';
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
@@ -26,9 +25,7 @@ function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): Rea
   const {
     writer, views, isCompleted, numberApplicants,
   } = group;
-
-  const currentTime = useCurrentTime(group);
-  const recruitDate = useRecruitDateStatus(group, currentTime);
+  const recruitDate = useRecruitDateStatus(group);
 
   return (
     <DetailHeaderSectionWrapper>

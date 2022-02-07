@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
-import useCurrentTime from '@/hooks/useCurrentTime';
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
@@ -27,8 +26,7 @@ function RecruitPost({ group }: Props): ReactElement {
   const {
     title, content, groupId, writer, views,
   } = group;
-  const currentTime = useCurrentTime(group);
-  const recruitDate = useRecruitDateStatus(group, currentTime);
+  const recruitDate = useRecruitDateStatus(group);
 
   return (
     <RecruitPostWrapper>
