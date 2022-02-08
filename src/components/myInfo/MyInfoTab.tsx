@@ -10,19 +10,21 @@ import palette from '@/styles/palette';
 
 interface Props {
   activeTab: ActiveMyInfoTab;
+  numberAppliedGroups: number;
+  numberRecruitedGroups: number;
 }
 
-function MyInfoTab({ activeTab }: Props): ReactElement {
+function MyInfoTab({ activeTab, numberAppliedGroups, numberRecruitedGroups }: Props): ReactElement {
   return (
     <MyInfoNav>
       <Link href="/myinfo/setting" passHref>
         <StyledLink pathName="setting" activeTab={activeTab}>내 정보 수정</StyledLink>
       </Link>
       <Link href="/myinfo/recruited" passHref>
-        <StyledLink pathName="recruited" activeTab={activeTab}>모집한 팀</StyledLink>
+        <StyledLink pathName="recruited" activeTab={activeTab}>{`모집한 팀 ${numberRecruitedGroups}`}</StyledLink>
       </Link>
       <Link href="/myinfo/applied" passHref>
-        <StyledLink pathName="applied" activeTab={activeTab}>신청한 팀</StyledLink>
+        <StyledLink pathName="applied" activeTab={activeTab}>{`신청한 팀 ${numberAppliedGroups}`}</StyledLink>
       </Link>
     </MyInfoNav>
   );
