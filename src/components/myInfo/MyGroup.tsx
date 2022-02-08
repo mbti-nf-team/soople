@@ -1,15 +1,23 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
-import { Group } from '@/models/group';
+import useCurrentTime from '@/hooks/useCurrentTime';
+import useGroupRecruitmentStatus from '@/hooks/useGroupRecruitmentStatus';
+import { Group, RecruitmentStatus } from '@/models/group';
 import Divider from '@/styles/Divider';
 import {
   body1Font, body2Font, h3Font,
 } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
+
+import 'dayjs/locale/ko';
+
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
 
 interface Props {
   group: Group;
@@ -18,9 +26,34 @@ interface Props {
 
 function MyGroup({ group, onClick }: Props): ReactElement {
   const {
-    title, content, createdAt, groupId, numberApplicants,
+    title, content, createdAt, groupId, numberApplicants, recruitmentEndDate, isCompleted,
   } = group;
-  const recruitDateStatus = useRecruitDateStatus(group);
+  const currentTime = useCurrentTime(group);
+  const status = useGroupRecruitmentStatus(group);
+  const [recruitDateStatus, setRecruitDateStatus] = useState<string>('');
+
+  useEffect(() => {
+    if (status === 'manualRecruiting') {
+      setRecruitDateStatus('모집 중');
+      return;
+    }
+
+    if (status === 'automaticAfterCompletedRecruitment' || status === 'automaticBeforeCompletedRecruitment' || status === 'manualCompletedRecruitment') {
+      setRecruitDateStatus('모집 완료');
+      return;
+    }
+
+    if (status === 'automaticCloseRecruitment') {
+      setRecruitDateStatus('모집 마감');
+      return;
+    }
+
+    if (status === 'automaticRecruiting') {
+      setRecruitDateStatus(`${dayjs(currentTime).to(dayjs(recruitmentEndDate))} 마감`);
+    }
+  }, [group, status]);
+
+  const numberApplied = isCompleted ? `${numberApplicants}명` : `${numberApplicants}명 신청 중`;
 
   return (
     <MyGroupWrapper
@@ -34,10 +67,10 @@ function MyGroup({ group, onClick }: Props): ReactElement {
           {content}
         </div>
       </MyGroupContents>
-      <GroupMetaData>
+      <GroupMetaData status={status}>
         <div className="date-status">{recruitDateStatus}</div>
         <Divider />
-        <div className="number-applied">{`${numberApplicants}명 신청 중`}</div>
+        <div className="number-applied">{numberApplied}</div>
         <Divider />
         <div>{dayjs(createdAt).format('YYYY년 MM월 DD일')}</div>
       </GroupMetaData>
@@ -65,7 +98,7 @@ const MyGroupContents = styled.div`
   }
 `;
 
-const GroupMetaData = styled.div`
+const GroupMetaData = styled.div<{ status: RecruitmentStatus; }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -75,6 +108,10 @@ const GroupMetaData = styled.div`
   .date-status {
     ${body2Font(true)};
     color: ${palette.foreground};
+
+    ${({ status }) => status === 'automaticCloseRecruitment' && css`
+      color: ${palette.accent6};
+    `}
   }
 
   .number-applied {
