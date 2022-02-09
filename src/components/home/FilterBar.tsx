@@ -1,27 +1,30 @@
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
-import Select from '../common/Select';
+import { SelectOption } from '@/models';
+
+import SelectBox from '../common/SelectBox';
 
 interface Props {
   onChange: (category: string) => void;
 }
 
-function FilterBar({ onChange }: Props): ReactElement {
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    onChange(e.target.value);
-  };
+type Filter = 'study' | 'project' | 'all';
 
+const filterOption: SelectOption<Filter>[] = [
+  { label: '전체', value: 'all' },
+  { label: '스터디', value: 'study' },
+  { label: '프로젝트', value: 'project' },
+];
+
+function FilterBar({ onChange }: Props): ReactElement {
   return (
     <div>
-      <Select
+      <SelectBox
         id="filter-post"
-        isDirect={false}
-        defaultOption="전체"
-        onChange={handleChange}
-        options={{
-          study: '스터디',
-          project: '프로젝트',
-        }}
+        defaultValue={filterOption[0]}
+        onChange={onChange}
+        options={filterOption}
+        size="medium"
       />
     </div>
   );

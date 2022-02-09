@@ -34,8 +34,13 @@ describe('StatusBarContainer', () => {
       it('"전체"가 보여야만 한다', () => {
         const { container } = renderStatusBarContainer();
 
-        fireEvent.change(screen.getByDisplayValue('전체'), {
-          target: { value: '' },
+        const input = screen.getByRole('combobox');
+
+        fireEvent.focus(input);
+        fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+
+        screen.getAllByText('전체').forEach((filter) => {
+          fireEvent.click(filter);
         });
 
         expect(container).toHaveTextContent('전체');
@@ -46,9 +51,11 @@ describe('StatusBarContainer', () => {
       it('"스터디"가 보여야만 한다', () => {
         const { container } = renderStatusBarContainer();
 
-        fireEvent.change(screen.getByDisplayValue('전체'), {
-          target: { value: 'study' },
-        });
+        const input = screen.getByRole('combobox');
+
+        fireEvent.focus(input);
+        fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+        fireEvent.click(screen.getByText('스터디'));
 
         expect(container).toHaveTextContent('스터디');
       });
