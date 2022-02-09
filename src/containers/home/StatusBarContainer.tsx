@@ -26,7 +26,7 @@ function StatusBarContainer(): ReactElement {
   }));
 
   const onChange = useCallback((category: string) => {
-    if (!category) {
+    if (category === 'all') {
       setGroupsCondition({ category: ['study', 'project'] });
       return;
     }

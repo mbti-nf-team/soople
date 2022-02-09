@@ -15,9 +15,11 @@ describe('FilterBar', () => {
     it('change 이벤트가 호출되어야만 한다', () => {
       renderFilterBar();
 
-      fireEvent.change(screen.getByDisplayValue('전체'), {
-        target: { value: 'study' },
-      });
+      const input = screen.getByRole('combobox');
+
+      fireEvent.focus(input);
+      fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+      fireEvent.click(screen.getByText('스터디'));
 
       expect(handleChange).toBeCalledWith('study');
     });
