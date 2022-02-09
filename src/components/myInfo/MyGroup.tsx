@@ -1,4 +1,6 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, {
+  ReactElement,
+} from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -30,30 +32,20 @@ function MyGroup({ group, onClick }: Props): ReactElement {
   } = group;
   const currentTime = useCurrentTime(group);
   const status = useGroupRecruitmentStatus(group);
-  const [recruitDateStatus, setRecruitDateStatus] = useState<string>('');
 
-  useEffect(() => {
-    if (status === 'manualRecruiting') {
-      setRecruitDateStatus('모집 중');
-      return;
-    }
-
-    if (status === 'automaticAfterCompletedRecruitment' || status === 'automaticBeforeCompletedRecruitment' || status === 'manualCompletedRecruitment') {
-      setRecruitDateStatus('모집 완료');
-      return;
-    }
-
-    if (status === 'automaticCloseRecruitment') {
-      setRecruitDateStatus('모집 마감');
-      return;
-    }
-
-    if (status === 'automaticRecruiting') {
-      setRecruitDateStatus(`${dayjs(currentTime).to(dayjs(recruitmentEndDate))} 마감`);
-    }
-  }, [group, status]);
+  const recruitStatus = (automaticRecruitingText: string): {
+    [K in RecruitmentStatus]: string;
+  } => ({
+    manualRecruiting: '모집 중',
+    automaticAfterCompletedRecruitment: '모집 완료',
+    automaticBeforeCompletedRecruitment: '모집 완료',
+    manualCompletedRecruitment: '모집 완료',
+    automaticCloseRecruitment: '모집 마감',
+    automaticRecruiting: automaticRecruitingText,
+  });
 
   const numberApplied = isCompleted ? `${numberApplicants}명` : `${numberApplicants}명 신청 중`;
+  const dateStatus = recruitStatus(`${dayjs(currentTime).to(dayjs(recruitmentEndDate))} 마감`)[status];
 
   return (
     <MyGroupWrapper
@@ -68,7 +60,7 @@ function MyGroup({ group, onClick }: Props): ReactElement {
         </div>
       </MyGroupContents>
       <GroupMetaData status={status}>
-        <div className="date-status">{recruitDateStatus}</div>
+        <div className="date-status" data-testid="date-status">{dateStatus}</div>
         <Divider />
         <div className="number-applied">{numberApplied}</div>
         <Divider />
