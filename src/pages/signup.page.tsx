@@ -1,13 +1,14 @@
 import { ReactElement } from 'react';
 
 import SignUpContainer from '@/containers/auth/SignUpContainer';
-import Layout from '@/styles/Layout';
+import HeaderContainer from '@/containers/common/HeaderContainer';
 
 function SignUpPage(): ReactElement {
   return (
-    <Layout>
+    <>
+      <HeaderContainer />
       <SignUpContainer />
-    </Layout>
+    </>
   );
 }
 

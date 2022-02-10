@@ -30,7 +30,7 @@ interface Props extends DetailedHTMLProps<
   isError?: boolean;
   message?: string | null;
   register?: UseFormRegisterReturn;
-  onClear: () => void;
+  onClear?: () => void;
 }
 
 function Input({
@@ -46,7 +46,7 @@ function Input({
   const onInput = (e: ChangeEvent<HTMLInputElement>) => setState(e.target.value);
 
   const handleClear = () => {
-    onClear();
+    onClear?.();
     setState('');
   };
 

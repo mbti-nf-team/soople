@@ -14,8 +14,19 @@ describe('Header', () => {
       user={given.user}
       onClick={handleClick}
       isHome={given.isHome}
+      isSignUp={given.isSignUp}
     />
   ));
+
+  context('signup 페이지인 경우', () => {
+    given('isSignUp', () => true);
+
+    it('signUp 헤더에 대한 정보가 나타나야만 한다', () => {
+      renderHeader();
+
+      expect(screen.getByTestId('signup-block')).toBeInTheDocument();
+    });
+  });
 
   describe('홈인지 아닌지에 따라서 배경색이 변경된다', () => {
     context('Home인 경우', () => {
