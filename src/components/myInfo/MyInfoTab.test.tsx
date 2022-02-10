@@ -6,7 +6,11 @@ import MyInfoTab from './MyInfoTab';
 
 describe('MyInfoTab', () => {
   const renderMyInfoTab = () => render((
-    <MyInfoTab activeTab="setting" />
+    <MyInfoTab
+      activeTab="setting"
+      numberAppliedGroups={3}
+      numberRecruitedGroups={3}
+    />
   ));
 
   context('active 상태인 경우', () => {
@@ -23,7 +27,7 @@ describe('MyInfoTab', () => {
     it('링크의 border color가 "transparent" 이어야만 한다', () => {
       renderMyInfoTab();
 
-      expect(screen.getByText('모집한 팀')).toHaveStyle({
+      expect(screen.getByText('모집한 팀 3')).toHaveStyle({
         'border-bottom': '2px solid transparent',
       });
     });
