@@ -35,6 +35,7 @@ function HeaderContainer(): ReactElement {
       onClick={onClickSignIn}
       user={user}
       isHome={pathname === '/'}
+      isSignUp={pathname === '/signup'}
     />
   );
 }

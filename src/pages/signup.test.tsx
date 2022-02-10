@@ -10,6 +10,11 @@ import SignUpPage from './signup.page';
 jest.mock('@/hooks/api/auth/useGetUser');
 jest.mock('@/hooks/api/auth/useSignUp');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    pathName: '/signup',
+  })),
+}));
 
 describe('SignUpPage', () => {
   const mutate = jest.fn();

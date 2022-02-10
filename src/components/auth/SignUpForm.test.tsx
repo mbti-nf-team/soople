@@ -25,12 +25,39 @@ describe('SignUpForm', () => {
     />
   ));
 
-  it('SignUp form에 대한 항목이 나타나야 한다', () => {
-    renderSignUpForm(userFields);
-    const labels = ['닉네임', '이메일', '포트폴리오 URL (선택)', '포지션'];
+  describe('닉네임 인풋의 clear 버튼을 클릭한다', () => {
+    it('닉네임 인풋의 값이 없어저야만 한다', async () => {
+      renderSignUpForm(userFields);
 
-    labels.forEach((label) => {
-      expect(screen.getByLabelText(label)).not.toBeNull();
+      const input = screen.getByPlaceholderText('닉네임을 입력해주세요');
+
+      await act(async () => {
+        screen.getAllByTestId('clear-icon').forEach((inputTag) => {
+          fireEvent.click(inputTag);
+        });
+      });
+
+      expect(input).toHaveValue('');
+    });
+  });
+
+  describe('포트폴리오 인풋의 clear 버튼을 클릭한다', () => {
+    it('포트폴리오 인풋의 값이 없어저야만 한다', async () => {
+      renderSignUpForm(userFields);
+
+      const input = screen.getByPlaceholderText('URL을 입력하세요');
+
+      await act(async () => {
+        await fireEvent.change(input, {
+          target: { value: 'Text' },
+        });
+
+        screen.getAllByTestId('clear-icon').forEach((inputTag) => {
+          fireEvent.click(inputTag);
+        });
+      });
+
+      expect(input).toHaveValue('');
     });
   });
 

@@ -19,11 +19,25 @@ interface Props {
   signOut: () => void;
   isScrollTop: boolean;
   isHome: boolean;
+  isSignUp: boolean;
 }
 
 function Header({
-  user, onClick, isScrollTop, signOut, isHome,
+  user, onClick, isScrollTop, signOut, isHome, isSignUp,
 }: Props): ReactElement {
+  if (isSignUp) {
+    return (
+      <>
+        <HeaderBlock isHome={isHome} isScrollTop={isScrollTop} data-testid="signup-block">
+          <HeaderWrapper>
+            <LogoIcon />
+          </HeaderWrapper>
+        </HeaderBlock>
+        <Spacer />
+      </>
+    );
+  }
+
   return (
     <>
       <HeaderBlock isHome={isHome} isScrollTop={isScrollTop} data-testid="header-block">

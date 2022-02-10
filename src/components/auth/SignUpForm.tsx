@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { User } from 'firebase/auth';
 import * as yup from 'yup';
@@ -10,7 +11,9 @@ import type { SignUpAdditionalForm } from '@/models/auth';
 import { Position } from '@/models/group';
 import { stringToExcludeNull } from '@/utils/utils';
 
+import Button from '../common/Button';
 import CreatableSelectBox from '../common/CreatableSelectBox';
+import Input from '../common/Input';
 
 interface Props {
   onSubmit: (formData: SignUpAdditionalForm) => void;
@@ -30,8 +33,12 @@ const validationSchema = yup.object({
 }).required();
 
 function SignUpForm({ onSubmit, fields }: Props): ReactElement {
-  const { displayName, email, photoURL } = fields;
-  const { register, handleSubmit, formState: { errors } } = useForm<SignUpAdditionalForm>({
+  const { displayName, email } = fields;
+  const {
+    register, handleSubmit, setValue, formState: {
+      errors,
+    },
+  } = useForm<SignUpAdditionalForm>({
     resolver: yupResolver(validationSchema),
   });
   const [position, setPosition] = useState<Position>();
@@ -45,45 +52,54 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
   };
 
   return (
-    <div>
-      <img src={stringToExcludeNull(photoURL)} alt={`${email}-thumbnail`} width="300px" height="300px" />
-      <form onSubmit={handleSubmit(handleSubmitAction)}>
-        <div>
-          <label htmlFor="name">
-            닉네임
-            <input type="text" id="name" defaultValue={stringToExcludeNull(displayName)} placeholder="닉네임을 입력해주세요" {...register('name')} />
-          </label>
-          <div>{errors.name?.message}</div>
-        </div>
-
-        <div>
-          <label htmlFor="email">
-            이메일
-            <input type="email" id="email" defaultValue={stringToExcludeNull(email)} disabled />
-          </label>
-        </div>
-
-        <CreatableSelectBox
-          id="position"
-          options={positionOption}
-          labelText="포지션"
-          onChange={setPosition}
-          placeholder="포지션을 선택하세요"
-          errorMessage="포지션을 선택하세요"
-        />
-        <div>
-          <label htmlFor="portfolioUrl">
-            포트폴리오 URL (선택)
-            <input type="url" id="portfolioUrl" placeholder="URL을 입력해주세요" {...register('portfolioUrl')} />
-          </label>
-        </div>
-
-        <div>
-          <button type="submit">확인</button>
-        </div>
-      </form>
-    </div>
+    <SignUpFormWrapper onSubmit={handleSubmit(handleSubmitAction)}>
+      <Input
+        id="name"
+        labelText="닉네임"
+        placeholder="닉네임을 입력해주세요"
+        register={register('name')}
+        onClear={() => setValue('name', '')}
+        defaultValue={stringToExcludeNull(displayName)}
+        isError={!!errors.name}
+        message={errors.name?.message}
+        type="text"
+      />
+      <Input
+        id="email"
+        labelText="이메일"
+        placeholder="이메일을 입력해주세요"
+        defaultValue={stringToExcludeNull(email)}
+        type="email"
+        disabled
+      />
+      <CreatableSelectBox
+        id="position"
+        options={positionOption}
+        labelText="포지션"
+        onChange={setPosition}
+        placeholder="포지션을 선택하세요"
+        errorMessage="포지션을 선택하세요"
+      />
+      <Input
+        id="portfolioUrl"
+        labelText="포트폴리오 URL"
+        labelOptionText="선택"
+        placeholder="URL을 입력하세요"
+        register={register('portfolioUrl')}
+        onClear={() => setValue('portfolioUrl', '')}
+        type="url"
+      />
+      <Button type="submit" color="primary" size="large">확인</Button>
+    </SignUpFormWrapper>
   );
 }
 
 export default SignUpForm;
+
+const SignUpFormWrapper = styled.form`
+  width: 100%;
+
+  & > :not(:last-child) {
+    margin-bottom: 20px;
+  }
+`;
