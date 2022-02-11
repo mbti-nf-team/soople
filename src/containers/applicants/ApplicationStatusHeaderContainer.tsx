@@ -11,6 +11,7 @@ import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import useUpdateCompletedApply from '@/hooks/api/group/useUpdateCompletedApply';
 import useCurrentTime from '@/hooks/useCurrentTime';
+import { AlarmType } from '@/models/alarm';
 import { isCurrentTimeBeforeEndDate } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
@@ -25,9 +26,22 @@ function ApplicationStatusHeaderContainer(): ReactElement {
   const { mutate } = useUpdateCompletedApply();
   const currentTime = useCurrentTime(group);
 
-  const onSubmit = useCallback((numberConfirmApplicants: number) => mutate({
-    groupId: group.groupId, numberConfirmApplicants,
-  }), [mutate, group.groupId]);
+  const onSubmit = useCallback((numberConfirmApplicants: number) => {
+    const { groupId } = group;
+
+    const alarmForms = applicants.map(({ applicant, isConfirm }) => ({
+      userUid: applicant.uid,
+      type: isConfirm ? 'confirmed' : 'rejected' as AlarmType,
+      applicant: null,
+      groupId,
+    }));
+
+    mutate({
+      groupId,
+      numberConfirmApplicants,
+      alarmForms,
+    });
+  }, [mutate, group, applicants]);
 
   const timeRemaining = useMemo(() => {
     if (!isCurrentTimeBeforeEndDate(group.recruitmentEndDate, currentTime)) {

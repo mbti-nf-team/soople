@@ -43,6 +43,6 @@ describe('usePublishNewGroup', () => {
 
     expect(postNewGroup).toBeCalledWith(PROFILE_FIXTURE, WRITE_FIELDS_FIXTURE);
     expect(result.current.isSuccess).toBeTruthy();
-    expect(replace).toBeCalledWith(`/detail/${'1'}`);
+    expect(replace).toBeCalledWith('/detail/1');
   });
 });

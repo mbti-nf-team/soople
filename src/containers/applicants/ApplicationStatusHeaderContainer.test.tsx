@@ -30,6 +30,8 @@ describe('ApplicationStatusHeaderContainer', () => {
       data: [{
         ...APPLICANT_FIXTURE,
         isConfirm: true,
+      }, {
+        ...APPLICANT_FIXTURE,
       }],
     }));
     (useFetchGroup as jest.Mock).mockImplementation(() => ({
@@ -49,6 +51,8 @@ describe('ApplicationStatusHeaderContainer', () => {
   ));
 
   context('모집완료가 되지 않은 글인 경우', () => {
+    given('isConfirm', () => true);
+
     context('현재 시간이 마감시간 전인 경우', () => {
       given('group', () => ({
         ...GROUP_FIXTURE,
@@ -68,11 +72,11 @@ describe('ApplicationStatusHeaderContainer', () => {
     context('현재 시간이 마감시간 후인 경우', () => {
       given('group', () => GROUP_FIXTURE);
 
-      describe('"1명의 신청현황"을 클릭한다', () => {
+      describe('"2명의 신청현황"을 클릭한다', () => {
         it('router.back이 호출되어야만 한다', () => {
           renderApplicationStatusHeaderContainer();
 
-          fireEvent.click(screen.getByText('1명의 신청현황'));
+          fireEvent.click(screen.getByText('2명의 신청현황'));
 
           expect(handleBack).toBeCalledTimes(1);
         });
@@ -88,6 +92,20 @@ describe('ApplicationStatusHeaderContainer', () => {
           expect(mutate).toBeCalledWith({
             groupId: GROUP_FIXTURE.groupId,
             numberConfirmApplicants: 1,
+            alarmForms: [
+              {
+                applicant: null,
+                groupId: GROUP_FIXTURE.groupId,
+                type: 'confirmed',
+                userUid: APPLICANT_FIXTURE.applicant.uid,
+              },
+              {
+                applicant: null,
+                groupId: GROUP_FIXTURE.groupId,
+                type: 'rejected',
+                userUid: APPLICANT_FIXTURE.applicant.uid,
+              },
+            ],
           });
         });
       });

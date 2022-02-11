@@ -5,7 +5,6 @@ import {
 import { AlarmForm } from '@/models/alarm';
 import { formatAlarm } from '@/utils/firestore';
 
-import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import { collectionRef } from '../firebase';
 
@@ -24,9 +23,10 @@ describe('alarm API', () => {
     const createdAt = '2021-11-11';
 
     const alarm: AlarmForm = {
-      group: GROUP_FIXTURE,
-      type: 'apply',
-      user: PROFILE_FIXTURE,
+      groupId: 'groupId',
+      type: 'applied',
+      userUid: 'userUid',
+      applicant: null,
     };
 
     beforeEach(() => {
