@@ -31,3 +31,13 @@ export const formatApplicant = (applicant: QueryDocumentSnapshot<DocumentData>) 
     createdAt: timestampToString(createdAt),
   };
 };
+
+export const formatAlarm = (alarm: QueryDocumentSnapshot<DocumentData>) => {
+  const { createdAt } = alarm.data();
+
+  return {
+    ...alarm.data(),
+    uid: alarm.id,
+    createdAt: timestampToString(createdAt),
+  };
+};
