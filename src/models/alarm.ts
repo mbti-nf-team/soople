@@ -1,19 +1,21 @@
 import { Profile } from './auth';
 import { Group } from './group';
 
-export type AlarmType = 'confirm' | 'reject' | 'apply';
+export type AlarmType = 'confirmed' | 'rejected' | 'applied';
 
 export interface Alarm {
   uid: string;
-  user: Profile;
+  userUid: string;
   group: Group;
   type: AlarmType;
+  applicant: Profile | null;
   isViewed: boolean;
   createdAt: string;
 }
 
 export interface AlarmForm {
-  user: Profile;
-  group: Group;
+  userUid: string;
+  applicant: Profile | null;
+  groupId: string;
   type: AlarmType;
 }

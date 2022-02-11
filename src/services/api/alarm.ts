@@ -22,8 +22,8 @@ export const postAddAlarm = async (form: AlarmForm) => {
 export const getUserAlarm = async (userUid: string) => {
   const getQuery = query(
     collectionRef(ALARMS),
-    where('user.uid', '==', userUid),
-    orderBy('createdAt', 'desc'),
+    where('userUid', '==', userUid),
+    orderBy('createdAt', 'asc'),
   );
 
   const response = await getDocs(getQuery);
