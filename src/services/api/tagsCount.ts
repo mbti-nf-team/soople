@@ -6,9 +6,11 @@ import { TagCount } from '@/models/group';
 
 import { collectionRef, docRef } from '../firebase';
 
+const TAGS_COUNT = 'tagsCount';
+
 export const getTagsCount = async () => {
   const getQuery = query(
-    collectionRef('tagsCount'),
+    collectionRef(TAGS_COUNT),
     orderBy('count', 'desc'),
     limit(10),
   );
@@ -19,7 +21,7 @@ export const getTagsCount = async () => {
 };
 
 export const updateTagCount = async (tagName: string) => {
-  const response = await getDoc(docRef('tagsCount', tagName));
+  const response = await getDoc(docRef(TAGS_COUNT, tagName));
 
   if (response.exists()) {
     const { count } = response.data() as { name: string; count: number; };
