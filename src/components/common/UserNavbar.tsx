@@ -1,10 +1,14 @@
 import React, {
   ReactElement, useCallback, useEffect, useRef, useState,
 } from 'react';
+import { Bell as AlarmIcon } from 'react-feather';
 import { useUnmount } from 'react-use';
 
 import styled from '@emotion/styled';
 import { User } from 'firebase/auth';
+import Link from 'next/link';
+
+import palette from '@/styles/palette';
 
 import Button from './Button';
 import DropDown from './DropDown';
@@ -53,6 +57,11 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
       >
         팀 모집하기
       </Button>
+      <Link href="/alarm" passHref>
+        <a className="alarm-icon">
+          <AlarmIcon color={palette.accent6} />
+        </a>
+      </Link>
       <div className="profile-dropdown-wrapper" ref={userIconRef}>
         <ProfileImage
           src={user.photoURL}
@@ -74,9 +83,10 @@ export default UserNavbar;
 const UserNavbarWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
 
-  & > a:first-of-type {
-    margin-right: 24px;
+  .alarm-icon {
+    margin: 0 22px;
   }
 
   .profile-dropdown-wrapper {
