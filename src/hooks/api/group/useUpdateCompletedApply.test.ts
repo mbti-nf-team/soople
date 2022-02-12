@@ -22,7 +22,6 @@ describe('useUpdateCompletedApply', () => {
         groupId: 'groupId',
         numberConfirmApplicants: 5,
         alarmForms: [{
-          applicant: null,
           groupId: 'groupId',
           type: 'confirmed',
           userUid: 'userUid',

@@ -33,7 +33,7 @@ function useUpdateCompletedApply() {
         isCompleted: true,
       }));
 
-      queryClient.invalidateQueries('alarm');
+      queryClient.invalidateQueries('alarms');
     },
   });
 

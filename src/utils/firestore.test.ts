@@ -1,9 +1,18 @@
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 
+import { getUserProfile } from '@/services/api/auth';
+import { getGroupDetail } from '@/services/api/group';
+
+import GROUP_FIXTURE from '../../fixtures/group';
+import PROFILE_FIXTURE from '../../fixtures/profile';
+
 import {
   formatAlarm,
   formatApplicant, formatComment, formatGroup, timestampToString,
 } from './firestore';
+
+jest.mock('@/services/api/group');
+jest.mock('@/services/api/auth');
 
 describe('timestampToString', () => {
   const timestamp = {
@@ -92,6 +101,11 @@ describe('formatApplicant', () => {
 });
 
 describe('formatAlarm', () => {
+  beforeEach(() => {
+    (getGroupDetail as jest.Mock).mockImplementation(() => (GROUP_FIXTURE));
+    (getUserProfile as jest.Mock).mockImplementation(() => (PROFILE_FIXTURE));
+  });
+
   const nowString = new Date().toString();
 
   const date = {
@@ -101,16 +115,24 @@ describe('formatAlarm', () => {
   const settings = {
     id: '1',
     data: () => ({
+      groupId: '1',
+      userUid: '2',
+      isViewed: false,
+      type: 'confirmed',
       createdAt: date,
     }),
   } as unknown as QueryDocumentSnapshot<DocumentData>;
 
-  it('포매팅된 알람 정보가 반환되어야만 한다', () => {
-    const result = formatAlarm(settings);
+  it('포매팅된 알람 정보가 반환되어야만 한다', async () => {
+    const result = await formatAlarm(settings);
 
     expect(result).toEqual({
       uid: '1',
       createdAt: nowString,
+      isViewed: false,
+      type: 'confirmed',
+      group: GROUP_FIXTURE,
+      user: PROFILE_FIXTURE,
     });
   });
 });

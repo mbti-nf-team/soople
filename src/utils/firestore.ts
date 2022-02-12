@@ -1,5 +1,12 @@
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 
+import { Alarm, AlarmResponse } from '@/models/alarm';
+import { Profile } from '@/models/auth';
+import { Group } from '@/models/group';
+import { getUserProfile } from '@/services/api/auth';
+// eslint-disable-next-line import/no-cycle
+import { getGroupDetail } from '@/services/api/group';
+
 export const timestampToString = (timestamp: any) => timestamp.toDate().toString();
 
 export const formatGroup = (group: QueryDocumentSnapshot<DocumentData>) => {
@@ -32,12 +39,20 @@ export const formatApplicant = (applicant: QueryDocumentSnapshot<DocumentData>) 
   };
 };
 
-export const formatAlarm = (alarm: QueryDocumentSnapshot<DocumentData>) => {
-  const { createdAt } = alarm.data();
+export const formatAlarm = async (alarm: QueryDocumentSnapshot<DocumentData>) => {
+  const {
+    createdAt, groupId, userUid, isViewed, type,
+  } = alarm.data() as AlarmResponse;
+
+  const group = await getGroupDetail(groupId) as Group;
+  const user = await getUserProfile(userUid) as Profile;
 
   return {
-    ...alarm.data(),
     uid: alarm.id,
+    user,
+    group,
+    type,
+    isViewed,
     createdAt: timestampToString(createdAt),
-  };
+  } as Alarm;
 };

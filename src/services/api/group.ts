@@ -13,6 +13,7 @@ import { Profile } from '@/models/auth';
 import {
   FilterGroupsCondition, Group, WriteFields,
 } from '@/models/group';
+// eslint-disable-next-line import/no-cycle
 import { formatGroup, timestampToString } from '@/utils/firestore';
 import { isRecruiting } from '@/utils/utils';
 

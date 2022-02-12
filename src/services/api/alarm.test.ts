@@ -5,7 +5,7 @@ import {
 import { AlarmForm } from '@/models/alarm';
 import { formatAlarm } from '@/utils/firestore';
 
-import PROFILE_FIXTURE from '../../../fixtures/profile';
+import ALARM_FIXTURE from '../../../fixtures/alarm';
 import { collectionRef } from '../firebase';
 
 import { getUserAlarm, postAddAlarm } from './alarm';
@@ -26,7 +26,6 @@ describe('alarm API', () => {
       groupId: 'groupId',
       type: 'applied',
       userUid: 'userUid',
-      applicant: null,
     };
 
     beforeEach(() => {
@@ -54,15 +53,15 @@ describe('alarm API', () => {
   describe('getUserAlarm', () => {
     beforeEach(() => {
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
-        docs: [PROFILE_FIXTURE],
+        docs: [ALARM_FIXTURE],
       }));
-      (formatAlarm as jest.Mock).mockReturnValueOnce(PROFILE_FIXTURE);
+      (formatAlarm as jest.Mock).mockResolvedValue(ALARM_FIXTURE);
     });
 
     it('알람 리스트가 반환되어야만 한다', async () => {
-      const response = await getUserAlarm('groupId');
+      const response = await getUserAlarm('userUid');
 
-      expect(response).toEqual([PROFILE_FIXTURE]);
+      expect(response).toEqual([ALARM_FIXTURE]);
       expect(getDocs).toBeCalledTimes(1);
     });
   });

@@ -94,13 +94,11 @@ describe('ApplicationStatusHeaderContainer', () => {
             numberConfirmApplicants: 1,
             alarmForms: [
               {
-                applicant: null,
                 groupId: GROUP_FIXTURE.groupId,
                 type: 'confirmed',
                 userUid: APPLICANT_FIXTURE.applicant.uid,
               },
               {
-                applicant: null,
                 groupId: GROUP_FIXTURE.groupId,
                 type: 'rejected',
                 userUid: APPLICANT_FIXTURE.applicant.uid,
