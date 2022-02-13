@@ -3,13 +3,14 @@ import { useMutation, useQueryClient } from 'react-query';
 import { FirestoreError } from 'firebase/firestore';
 
 import {
-  Applicant, ApplicantFields, Group,
+  Applicant, ApplyRequest, Group,
 } from '@/models/group';
+import { postAddAlarm } from '@/services/api/alarm';
 import { postAddApplicant } from '@/services/api/applicants';
 
 import useCatchErrorWithToast from '../useCatchErrorWithToast';
 
-type AddApplicantResponse = {
+type ApplyResponse = {
   uid: string;
   numberApplicants: number;
 }
@@ -17,13 +18,19 @@ type AddApplicantResponse = {
 function useApplyGroup() {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<AddApplicantResponse, FirestoreError, ApplicantFields>((
-    applicantForm,
-  ) => postAddApplicant(applicantForm), {
-    onSuccess: ({
-      uid, numberApplicants,
-    }: AddApplicantResponse, applicantForm: ApplicantFields) => {
-      const { groupId } = applicantForm;
+  const mutation = useMutation<[ApplyResponse, string], FirestoreError, ApplyRequest>((
+    applyForm,
+  ) => Promise.all([postAddApplicant(applyForm), postAddAlarm({
+    groupId: applyForm.groupId,
+    userUid: applyForm.writerUid,
+    type: 'applied',
+  })]), {
+    onSuccess: ([{ uid, numberApplicants }]: [ApplyResponse, string], {
+      groupId, applicant, introduce, portfolioUrl,
+    }: ApplyRequest) => {
+      const applicantForm = {
+        groupId, applicant, introduce, portfolioUrl,
+      };
 
       queryClient.setQueryData<Applicant[]>(['applicants', groupId], (applicants = []) => [
         ...applicants,
@@ -39,6 +46,8 @@ function useApplyGroup() {
         ...group as Group,
         numberApplicants,
       }));
+
+      queryClient.invalidateQueries('alarms');
     },
   });
 

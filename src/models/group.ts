@@ -96,6 +96,9 @@ export interface ApplicantFields {
   applicant: Profile;
 }
 
+export interface ApplyRequest extends ApplicantFields {
+  writerUid: string;
+}
 export interface ApplicantForm {
   portfolioUrl: string | null;
   introduce: string;

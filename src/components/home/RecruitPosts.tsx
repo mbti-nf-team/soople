@@ -27,5 +27,6 @@ export default memo(RecruitPosts);
 
 const RecruitPostsWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  margin: -0.625rem;
 `;
