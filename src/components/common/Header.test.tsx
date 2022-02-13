@@ -1,7 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import palette from '@/styles/palette';
-
 import Header from './Header';
 
 describe('Header', () => {
@@ -10,73 +8,21 @@ describe('Header', () => {
   const renderHeader = () => render((
     <Header
       signOut={jest.fn()}
-      isScrollTop={given.isScrollTop}
+      isScrollTop
       user={given.user}
       onClick={handleClick}
-      isHome={given.isHome}
-      isSignUp={given.isSignUp}
+      hasBackground
+      hasOnlyLogo={given.hasOnlyLogo}
     />
   ));
 
   context('signup 페이지인 경우', () => {
-    given('isSignUp', () => true);
+    given('hasOnlyLogo', () => true);
 
     it('signUp 헤더에 대한 정보가 나타나야만 한다', () => {
       renderHeader();
 
-      expect(screen.getByTestId('signup-block')).toBeInTheDocument();
-    });
-  });
-
-  describe('홈인지 아닌지에 따라서 배경색이 변경된다', () => {
-    context('Home인 경우', () => {
-      given('isHome', () => true);
-
-      it(`background 속성이 ${palette.accent1}이어야 한다`, () => {
-        renderHeader();
-
-        expect(screen.getByTestId('header-block')).toHaveStyle({
-          background: palette.accent1,
-        });
-      });
-    });
-
-    context('Home이 아닌 경우', () => {
-      given('isHome', () => false);
-
-      it(`background 속성이 ${palette.background}이어야 한다`, () => {
-        renderHeader();
-
-        expect(screen.getByTestId('header-block')).toHaveStyle({
-          background: palette.background,
-        });
-      });
-    });
-  });
-
-  describe('스크롤 위치에 따라서 스타일이 변경된다', () => {
-    context('scroll 위치가 최상단일 때', () => {
-      given('isScrollTop', () => true);
-
-      it('box-shadow 속성이 "transparent"이어야 한다', () => {
-        renderHeader();
-
-        expect(screen.getByTestId('header-block')).toHaveStyle({
-          'box-shadow': '0 1px 0 0 transparent',
-        });
-      });
-    });
-
-    context('scroll 위치가 최상단일 때', () => {
-      given('isScrollTop', () => false);
-
-      it(`box-shadow 속성이 ${palette.accent2} 이어야 한다`, () => {
-        renderHeader();
-
-        expect(screen.getByTestId('header-block')).toHaveStyle({
-          'box-shadow': `0 1px 0 0 ${palette.accent2}`,
-        });
-      });
+      expect(screen.getByTestId('only-logo-block')).toBeInTheDocument();
     });
   });
 
