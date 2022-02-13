@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
 import RecruitPosts from '@/components/home/RecruitPosts';
@@ -22,10 +23,17 @@ function RecruitPostsContainer(): ReactElement {
   }
 
   return (
-    <RecruitPosts
-      groups={groups}
-    />
+    <RecruitPostsWrapper>
+      <RecruitPosts
+        groups={groups}
+      />
+    </RecruitPostsWrapper>
   );
 }
 
 export default RecruitPostsContainer;
+
+const RecruitPostsWrapper = styled.main`
+  flex: 1 1 0%;
+  margin-bottom: 3rem;
+`;

@@ -29,8 +29,9 @@ function DetailHeaderContainer(): ReactElement {
   const onApply = useCallback((applyFields: ApplicantForm) => applyMutate({
     ...applyFields,
     groupId: group.groupId,
+    writerUid: group.writer.uid,
     applicant: profile as Profile,
-  }), [group.groupId, profile, applyMutate]);
+  }), [group, profile, applyMutate]);
 
   return (
     <DetailHeaderSection group={group}>

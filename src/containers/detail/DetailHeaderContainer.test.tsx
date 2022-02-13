@@ -95,6 +95,7 @@ describe('DetailHeaderContainer', () => {
             introduce: 'test',
             groupId: GROUP_FIXTURE.groupId,
             applicant: user,
+            writerUid: GROUP_FIXTURE.writer.uid,
           });
         });
       });
