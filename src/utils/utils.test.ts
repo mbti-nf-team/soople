@@ -2,6 +2,7 @@ import GROUP_FIXTURE from '../../fixtures/group';
 
 import {
   emptyAThenB,
+  hasBackground,
   isCurrentTimeBeforeEndDate,
   isProdLevel,
   isRecruitCompletedAndManual,
@@ -53,6 +54,24 @@ describe('stringToExcludeNull', () => {
       const result = stringToExcludeNull(value);
 
       expect(result).toBe(value);
+    });
+  });
+});
+
+describe('hasBackground', () => {
+  context('pathname이 "/"이거나 "/404"이거나 "/500"인 경우', () => {
+    it('true를 반환해야만 한다', () => {
+      const result = hasBackground('/404');
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  context('pathname이 "/"이거나 "/404"이거나 "/500" 아닌 경우', () => {
+    it('false를 반환해야만 한다', () => {
+      const result = hasBackground('/detail');
+
+      expect(result).toBeFalsy();
     });
   });
 });

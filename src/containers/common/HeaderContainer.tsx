@@ -34,8 +34,8 @@ function HeaderContainer(): ReactElement {
       isScrollTop={isScrollTop}
       onClick={onClickSignIn}
       user={user}
-      isHome={pathname === '/'}
-      isSignUp={pathname === '/signup'}
+      hasBackground={pathname === '/'}
+      hasOnlyLogo={pathname === '/signup'}
     />
   );
 }
