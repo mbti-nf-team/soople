@@ -6,9 +6,7 @@ import { useRouter } from 'next/router';
 
 import { hasBackground } from '@/utils/utils';
 
-import {
-  body2Font, h2Font, h3Font, h4Font,
-} from './fontStyles';
+import { h2Font, h3Font, h4Font } from './fontStyles';
 import palette from './palette';
 
 export const setGlobalStyles = (pathname: string) => css`
@@ -55,12 +53,6 @@ export const setGlobalStyles = (pathname: string) => css`
 
   input:read-only, textarea:read-only {
     pointer-events: none;
-  }
-
-  .toast-body {
-    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    color: ${palette.accent7};
-    ${body2Font()}
   }
 `;
 

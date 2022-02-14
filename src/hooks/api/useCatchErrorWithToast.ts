@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 import { FirestoreError, FirestoreErrorCode } from 'firebase/firestore';
+
+import { errorToast } from '@/utils/toast';
 
 interface Props {
   isError: boolean;
@@ -37,11 +38,11 @@ function useCatchErrorWithToast({ isError, error, defaultErrorMessage }: Props) 
     }
 
     if (isError && !error) {
-      toast.error(defaultErrorMessage);
+      errorToast(defaultErrorMessage);
       return;
     }
 
-    toast.error(firebaseErrorMessage[error?.code || 'unknown']);
+    errorToast(firebaseErrorMessage[error?.code || 'unknown']);
   }, [isError, error]);
 }
 

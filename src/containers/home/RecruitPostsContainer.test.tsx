@@ -1,9 +1,8 @@
-import { toast } from 'react-toastify';
-
 import { render } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import useFetchGroups from '@/hooks/api/group/useFetchGroups';
+import { errorToast } from '@/utils/toast';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 
@@ -13,11 +12,7 @@ jest.mock('@/hooks/api/group/useFetchGroups');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
-jest.mock('react-toastify', () => ({
-  toast: {
-    error: jest.fn(),
-  },
-}));
+jest.mock('@/utils/toast');
 
 describe('RecruitPostsContainer', () => {
   beforeEach(() => {
@@ -53,10 +48,10 @@ describe('RecruitPostsContainer', () => {
     context('query에 error가 "unauthenticated"인 경우', () => {
       given('error', () => ('unauthenticated'));
 
-      it('toast.error가 호출되어야만 한다', () => {
+      it('errorToast가 호출되어야만 한다', () => {
         renderRecruitPostsContainer();
 
-        expect(toast.error).toBeCalledWith('해당 페이지를 볼 수 있는 권한이 없어요!');
+        expect(errorToast).toBeCalledWith('접근 권한이 없는 페이지에요.');
       });
     });
   });

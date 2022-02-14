@@ -1,11 +1,11 @@
 import React, { ReactElement, useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
 import RecruitPosts from '@/components/home/RecruitPosts';
 import useFetchGroups from '@/hooks/api/group/useFetchGroups';
+import { errorToast } from '@/utils/toast';
 
 function RecruitPostsContainer(): ReactElement {
   const { query, replace } = useRouter();
@@ -13,7 +13,7 @@ function RecruitPostsContainer(): ReactElement {
 
   useEffect(() => {
     if (query.error === 'unauthenticated') {
-      toast.error('해당 페이지를 볼 수 있는 권한이 없어요!');
+      errorToast('접근 권한이 없는 페이지에요.');
       replace('/', undefined, { shallow: true });
     }
   }, [query]);
