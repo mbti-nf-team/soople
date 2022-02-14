@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 import { X as CloseIcon } from 'react-feather';
 import { Bounce } from 'react-toastify';
 
+import NextNProgress from 'nextjs-progressbar';
+
 import useGetUserToken from '@/hooks/api/auth/useGetUserToken';
 import GlobalStyles from '@/styles/GlobalStyles';
 import palette from '@/styles/palette';
@@ -14,6 +16,9 @@ function Core(): ReactElement {
 
   return (
     <>
+      <NextNProgress
+        color={palette.success}
+      />
       <GlobalStyles />
       <StyledToastContainer
         theme="light"
