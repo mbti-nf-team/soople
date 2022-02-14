@@ -10,6 +10,7 @@ jest.mock('next/router', () => ({
     pathName: '/',
   })),
 }));
+jest.mock('nextjs-progressbar');
 
 describe('Core', () => {
   const renderCore = () => render((
