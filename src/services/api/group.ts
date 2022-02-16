@@ -11,6 +11,7 @@ import {
 
 import { Profile } from '@/models/auth';
 import {
+  CompletedGroupForm,
   FilterGroupsCondition, Group, WriteFields,
 } from '@/models/group';
 // eslint-disable-next-line import/no-cycle
@@ -103,9 +104,9 @@ export const patchNumberApplicants = async ({
   return newNumberApplicants;
 };
 
-export const patchCompletedGroup = async (uid: string, count: number) => {
+export const patchCompletedGroup = async (uid: string, completedGroupForm: CompletedGroupForm) => {
   await updateDoc(docRef(GROUPS, uid), {
-    numberApplicants: count,
+    ...completedGroupForm,
     isCompleted: true,
   });
 };

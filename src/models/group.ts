@@ -65,6 +65,7 @@ export interface Group {
   isCompleted: boolean;
   views: number;
   numberApplicants: number;
+  message?: string;
   writer: Profile;
   createdAt: string;
 }
@@ -102,4 +103,9 @@ export interface ApplyRequest extends ApplicantFields {
 export interface ApplicantForm {
   portfolioUrl: string | null;
   introduce: string;
+}
+
+export interface CompletedGroupForm {
+  message: string;
+  numberConfirmApplicants: number;
 }

@@ -91,7 +91,10 @@ describe('ApplicationStatusHeaderContainer', () => {
 
           expect(mutate).toBeCalledWith({
             groupId: GROUP_FIXTURE.groupId,
-            numberConfirmApplicants: 1,
+            completedGroupForm: {
+              numberConfirmApplicants: 1,
+              message: '',
+            },
             alarmForms: [
               {
                 groupId: GROUP_FIXTURE.groupId,

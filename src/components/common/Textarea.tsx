@@ -9,32 +9,74 @@ import styled from '@emotion/styled';
 import { body1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
+import HelperMessage from './HelperMessage';
+import Label from './Label';
+
 interface Props extends DetailedHTMLProps<
   TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement
 > {
   height?: string;
   placeholder: string;
   isError?: boolean;
+  labelText?: string;
+  labelOptionText?: string;
+  message?: string;
 }
 
 function Textarea({
-  value, onChange, placeholder, disabled, isError, height, ...rest
+  value,
+  onChange,
+  placeholder,
+  disabled,
+  isError, height, id, labelText, labelOptionText, message, ...rest
 }: Props, ref: ForwardedRef<HTMLTextAreaElement>): ReactElement {
   return (
-    <TextareaBlock
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      disabled={disabled}
-      isError={isError}
-      height={height}
-      ref={ref}
-      {...rest}
-    />
+    <TextareaWrapper isError={isError}>
+      {labelText && (
+        <Label
+          htmlFor={id}
+          isError={isError}
+          labelText={labelText}
+          labelOptionText={labelOptionText}
+        />
+      )}
+      <TextareaBlock
+        id={id}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        disabled={disabled}
+        isError={isError}
+        height={height}
+        ref={ref}
+        {...rest}
+      />
+      <HelperMessage
+        message={message}
+        isError={isError}
+      />
+    </TextareaWrapper>
   );
 }
 
 export default forwardRef<HTMLTextAreaElement, Props>(Textarea);
+
+const TextareaWrapper = styled.div<{ isError?: boolean; }>`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+
+  &:focus-within {
+    & > label > span {
+      ${({ isError }) => !isError && css`
+        color: ${palette.success};
+      `}
+    }
+  }
+`;
 
 const TextareaBlock = styled.textarea<{isError?: boolean; height?: string }>`
   ${body1Font()};

@@ -1,18 +1,21 @@
-import React, { memo } from 'react';
-import { AlertCircle } from 'react-feather';
+import React, {
+  ChangeEvent, FormEvent, memo, useState,
+} from 'react';
 
 import styled from '@emotion/styled';
 
+import { CompletedGroupForm } from '@/models/group';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
+import AlertTriangleIcon from '../../assets/icons/alert_triangle.svg';
 import FormModal from '../common/FormModal';
 import Textarea from '../common/Textarea';
 
 interface Props {
   isVisible: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit: (completedGroupForm: CompletedGroupForm) => void;
   numberApplicant: number;
   timeRemaining: string | null;
 }
@@ -20,6 +23,19 @@ interface Props {
 function CompleteApplyFormModal({
   numberApplicant, isVisible, onClose, onSubmit, timeRemaining,
 }: Props) {
+  const [message, setMessage] = useState<string>('');
+
+  const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    onSubmit({
+      numberConfirmApplicants: numberApplicant,
+      message,
+    });
+  };
+
   return (
     <FormModal
       isVisible={isVisible}
@@ -27,17 +43,13 @@ function CompleteApplyFormModal({
       confirmButtonColor="success"
       confirmText="완료하기"
       onClose={onClose}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       size="540px"
     >
       <FormContentsWrapper>
         {timeRemaining && (
           <WarningRemainBlock>
-            <AlertCircle
-              size="16px"
-              fill={palette.warning}
-              color={palette.background}
-            />
+            <AlertTriangleIcon />
             <span>{`아직 모집 마감시간이 ${timeRemaining} 남아있어요.`}</span>
           </WarningRemainBlock>
         )}
@@ -47,13 +59,13 @@ function CompleteApplyFormModal({
           모집을 완료하시면 다시 되돌릴 수 없어요.
         </DescribeMessage>
         <MessageInputWrapper>
-          <label htmlFor="message">
-            메시지
-            <span>(선택)</span>
-          </label>
           <Textarea
+            labelText="메시지"
+            labelOptionText="선택"
             id="message"
             placeholder="팀 멤버들에게 보낼 메시지를 입력하세요"
+            onChange={onChangeMessage}
+            value={message}
             height="100px"
           />
           <small>

@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 
 import styled from '@emotion/styled';
 
-import { Applicant } from '@/models/group';
+import { Applicant, CompletedGroupForm } from '@/models/group';
 import { body2Font } from '@/styles/fontStyles';
 
 import Button from '../common/Button';
@@ -13,7 +13,7 @@ import CompleteApplyFormModal from './CompleteApplyFormModal';
 interface Props{
   goBack: () => void;
   applicants: Applicant[];
-  onSubmit: (numberConfirmApplicants: number) => void;
+  onSubmit: (completedGroupForm: CompletedGroupForm) => void;
   timeRemaining: string | null;
 }
 
@@ -24,8 +24,8 @@ function ApplicationStatusHeader({
   const numberConfirmApplicants = applicants.filter(({ isConfirm }) => isConfirm).length;
 
   const onClose = () => setIsVisible(false);
-  const handleSubmit = (numberApplicants: number) => {
-    onSubmit(numberApplicants);
+  const handleSubmit = (completedGroupForm: CompletedGroupForm) => {
+    onSubmit(completedGroupForm);
     onClose();
   };
 
@@ -52,7 +52,7 @@ function ApplicationStatusHeader({
       </SubHeader>
       <CompleteApplyFormModal
         onClose={onClose}
-        onSubmit={() => handleSubmit(numberConfirmApplicants)}
+        onSubmit={handleSubmit}
         isVisible={isVisible}
         numberApplicant={numberConfirmApplicants}
         timeRemaining={timeRemaining}
