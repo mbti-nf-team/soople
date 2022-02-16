@@ -12,6 +12,7 @@ describe('Textarea', () => {
       placeholder="test"
       value="test"
       isError={given.isError}
+      labelText="test"
       onChange={handleChange}
     />
   ));

@@ -8,8 +8,6 @@ import * as yup from 'yup';
 import FormModal from '@/components/common/FormModal';
 import Textarea from '@/components/common/Textarea';
 import { ApplicantForm } from '@/models/group';
-import { subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import { stringToExcludeNull } from '@/utils/utils';
 
 import Input from '../common/Input';
@@ -62,21 +60,15 @@ function ApplyFormModal({
           onClear={() => setValue('portfolioUrl', '')}
         />
 
-        <div>
-          <label htmlFor="introduce">
-            <span>
-              소개글
-            </span>
-            <Textarea
-              id="introduce"
-              isError={!!errors.introduce}
-              placeholder="간단한 소개글을 입력하세요"
-              height="128px"
-              {...register('introduce')}
-            />
-          </label>
-          <IntroduceErrorBlock>{errors.introduce?.message}</IntroduceErrorBlock>
-        </div>
+        <Textarea
+          id="introduce"
+          labelText="소개글"
+          isError={!!errors.introduce}
+          placeholder="간단한 소개글을 입력하세요"
+          height="128px"
+          message={errors.introduce?.message}
+          {...register('introduce')}
+        />
       </ContentsFormWrapper>
     </FormModal>
   );
@@ -90,11 +82,4 @@ const ContentsFormWrapper = styled.div`
   & > :not(div:first-of-type) {
     margin-top: 20px;
   }
-`;
-
-const IntroduceErrorBlock = styled.div`
-  ${subtitle1Font()};
-  color: ${palette.warning};
-  margin-top: 6px;
-  margin-left: 4px;
 `;

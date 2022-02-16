@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import CompleteApplyFormModal from './CompleteApplyFormModal';
 
@@ -15,6 +15,23 @@ describe('CompleteApplyFormModal', () => {
       timeRemaining={given.timeRemaining}
     />
   ));
+
+  describe('"완료하기" 버튼을 클릭한다', () => {
+    it('submit 이벤트가 발생해야만 한다', () => {
+      renderCompleteApplyFormModal();
+
+      fireEvent.change(screen.getByPlaceholderText('팀 멤버들에게 보낼 메시지를 입력하세요'), {
+        target: { value: 'test' },
+      });
+
+      fireEvent.submit(screen.getByText('완료하기'));
+
+      expect(handleSubmit).toBeCalledWith({
+        numberConfirmApplicants: 3,
+        message: 'test',
+      });
+    });
+  });
 
   context('남은 시간이 존재할 경우', () => {
     const timeRemaining = '11분';

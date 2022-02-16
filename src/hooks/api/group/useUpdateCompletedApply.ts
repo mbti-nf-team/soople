@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { FirestoreError } from 'firebase/firestore';
 
 import { AlarmForm } from '@/models/alarm';
-import { Group } from '@/models/group';
+import { CompletedGroupForm, Group } from '@/models/group';
 import { postAddAlarm } from '@/services/api/alarm';
 import { patchCompletedGroup } from '@/services/api/group';
 
@@ -11,7 +11,7 @@ import useCatchErrorWithToast from '../useCatchErrorWithToast';
 
 type CompletedGroupResponse = {
   groupId: string;
-  numberConfirmApplicants: number;
+  completedGroupForm: CompletedGroupForm;
   alarmForms: AlarmForm[];
 }
 
@@ -19,17 +19,17 @@ function useUpdateCompletedApply() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<[void, ...string[]], FirestoreError, CompletedGroupResponse>((
-    { groupId, numberConfirmApplicants, alarmForms },
+    { groupId, completedGroupForm, alarmForms },
   ) => Promise.all([
-    patchCompletedGroup(groupId, numberConfirmApplicants),
+    patchCompletedGroup(groupId, completedGroupForm),
     ...alarmForms.map(postAddAlarm),
   ]), {
     onSuccess: (_: [void, ...string[]], {
-      groupId, numberConfirmApplicants,
+      groupId, completedGroupForm,
     }: CompletedGroupResponse) => {
       queryClient.setQueryData<Group>(['group', groupId], (preGroup) => ({
         ...preGroup as Group,
-        numberApplicants: numberConfirmApplicants,
+        ...completedGroupForm,
         isCompleted: true,
       }));
 

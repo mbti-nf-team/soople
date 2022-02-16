@@ -1,5 +1,6 @@
-import React, { FormEvent, PropsWithChildren, ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 import { X as CloseSvg } from 'react-feather';
+import { useClickAway } from 'react-use';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -9,54 +10,54 @@ import palette from '@/styles/palette';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
-import type { ColorType as ButtonColorType } from './Button';
 import Button from './Button';
 
 interface Props {
   isVisible: boolean;
   title: string;
-  confirmText?: string;
   closeText?: string;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   onClose: () => void;
-  size?: string;
-  confirmButtonColor?: ButtonColorType;
+  size?: {
+    height?: string;
+    width?: string;
+  };
 }
 
-function FormModal({
-  isVisible, title, confirmText = '확인', closeText = '닫기', onSubmit, onClose, confirmButtonColor = 'success', children, size = '600px',
+function ModalWindow({
+  isVisible, title, closeText = '닫기', onClose, size, children,
 }: PropsWithChildren<Props>): ReactElement | null {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useClickAway(modalRef, onClose);
+
   if (!isVisible) {
     return null;
   }
 
   return (
-    <FormModalWrapper>
-      <FormModalBox size={size} isVisible={isVisible} data-testid="form-modal-box">
-        <form onSubmit={onSubmit}>
-          <HeaderWrapper>
-            <h4>{title}</h4>
-            <CloseIcon
-              size={24}
-              color={palette.accent6}
-              onClick={onClose}
-              data-testid="close-icon"
-            />
-          </HeaderWrapper>
-          {children}
-          <FooterWrapper>
-            <Button size="small" onClick={onClose} type="button">{closeText}</Button>
-            <Button size="small" color={confirmButtonColor} type="submit" data-testid="apply-button">{confirmText}</Button>
-          </FooterWrapper>
-        </form>
-      </FormModalBox>
-    </FormModalWrapper>
+    <ModalWindowWrapper>
+      <ModalWindowBox size={size} isVisible={isVisible} ref={modalRef} data-testid="modal-box">
+        <HeaderWrapper>
+          <h4>{title}</h4>
+          <CloseIcon
+            size={24}
+            color={palette.accent6}
+            onClick={onClose}
+            data-testid="close-icon"
+          />
+        </HeaderWrapper>
+        {children}
+        <FooterWrapper>
+          <Button size="small" onClick={onClose} type="button">{closeText}</Button>
+        </FooterWrapper>
+      </ModalWindowBox>
+    </ModalWindowWrapper>
   );
 }
 
-export default FormModal;
+export default ModalWindow;
 
-const FormModalWrapper = styled.div`
+const ModalWindowWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -69,11 +70,11 @@ const FormModalWrapper = styled.div`
   background: rgba(0, 0, 0, 0.25);
 `;
 
-const FormModalBox = styled.div<{ size: string; isVisible: boolean }>`
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
+const ModalWindowBox = styled.div<{ size?: { height?: string; width?: string; }; isVisible: boolean }>`
   background: ${palette.background};
   border-radius: 8px;
-  width: ${({ size }) => size};
+  width: ${({ size }) => size?.width || '540px'};
+  height: ${({ size }) => size?.height || '410px'};
 
   ${({ isVisible }) => (isVisible && css`
     animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;
@@ -86,7 +87,6 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   padding: 16px 20px;
   box-shadow: 0px 1px 0px ${palette.accent2};
-  margin-bottom: 20px;
 
   h4 {
     margin: 0px;

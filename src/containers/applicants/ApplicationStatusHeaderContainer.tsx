@@ -12,6 +12,7 @@ import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import useUpdateCompletedApply from '@/hooks/api/group/useUpdateCompletedApply';
 import useCurrentTime from '@/hooks/useCurrentTime';
 import { AlarmType } from '@/models/alarm';
+import { CompletedGroupForm } from '@/models/group';
 import { isCurrentTimeBeforeEndDate } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
@@ -26,7 +27,7 @@ function ApplicationStatusHeaderContainer(): ReactElement {
   const { mutate } = useUpdateCompletedApply();
   const currentTime = useCurrentTime(group);
 
-  const onSubmit = useCallback((numberConfirmApplicants: number) => {
+  const onSubmit = useCallback((completedGroupForm: CompletedGroupForm) => {
     const { groupId } = group;
 
     const alarmForms = applicants.map(({ applicant, isConfirm }) => ({
@@ -37,7 +38,7 @@ function ApplicationStatusHeaderContainer(): ReactElement {
 
     mutate({
       groupId,
-      numberConfirmApplicants,
+      completedGroupForm,
       alarmForms,
     });
   }, [mutate, group, applicants]);
