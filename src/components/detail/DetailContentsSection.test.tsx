@@ -11,6 +11,7 @@ describe('DetailContentsSection', () => {
         ...GROUP_FIXTURE,
         tags: ['javascript'],
       }}
+      isGroupMember={given.isGroupMember}
     />
   ));
 
@@ -19,5 +20,15 @@ describe('DetailContentsSection', () => {
 
     expect(container).toHaveTextContent('content');
     expect(container).toHaveTextContent('javascript');
+  });
+
+  context('isGroupMember가 true인 경우', () => {
+    given('isGroupMember', () => true);
+
+    it('"멤버들에게 보내는 메시지"가 나타나야만 한다', () => {
+      const { container } = renderDetailContentsSection();
+
+      expect(container).toHaveTextContent('멤버들에게 보내는 메시지');
+    });
   });
 });
