@@ -23,7 +23,6 @@ function CommentsView({
 
   return (
     <CommentsViewWrapper>
-      <h4>{`댓글 ${comments.length}`}</h4>
       {comments.map((comment) => (
         <CommentView
           key={comment.commentId}
@@ -39,11 +38,8 @@ function CommentsView({
 export default memo(CommentsView);
 
 const CommentsViewWrapper = styled.div`
-  h4 {
-    font-weight: 600;
-  }
-
   & > div:last-of-type {
     border-bottom: none;
+    margin-bottom: 50px;
   }
 `;

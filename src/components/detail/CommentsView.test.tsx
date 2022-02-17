@@ -36,9 +36,6 @@ describe('CommentsView', () => {
         renderCommentsView();
 
         fireEvent.click(screen.getByText('삭제'));
-        screen.getAllByText(/삭제하기/).forEach((button) => {
-          fireEvent.click(button);
-        });
 
         expect(handleRemove).toBeCalledWith(COMMENT_FIXTURE.commentId);
       });

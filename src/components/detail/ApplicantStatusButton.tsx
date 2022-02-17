@@ -5,6 +5,7 @@ import { Applicant, ApplicantForm } from '@/models/group';
 
 import Button from '../common/Button';
 
+import ApplicantsViewModal from './modal/ApplicantsViewModal';
 import AskApplyCancelModal from './modal/AskApplyCancelModal';
 import ApplyFormModal from './ApplyFormModal';
 
@@ -23,6 +24,7 @@ function ApplicantStatusButton({
 }: Props): ReactElement | null {
   const [isVisibleApplyModal, setIsVisibleApplyModal] = useState<boolean>(false);
   const [isVisibleCancelModal, setIsVisibleCancelModal] = useState<boolean>(false);
+  const [isVisibleApplicantsModal, setIsVisibleApplicantsModal] = useState<boolean>(false);
 
   const handleSubmit = (applyFields: ApplicantForm) => {
     onApply(applyFields);
@@ -40,9 +42,15 @@ function ApplicantStatusButton({
 
   if (isCompleted && applicant?.isConfirm) {
     return (
-      <Button color="primary">
-        팀원 보기
-      </Button>
+      <>
+        <Button color="primary" onClick={() => setIsVisibleApplicantsModal(true)}>
+          팀원 보기
+        </Button>
+        <ApplicantsViewModal
+          isVisible={isVisibleApplicantsModal}
+          onClose={() => setIsVisibleApplicantsModal(false)}
+        />
+      </>
     );
   }
 

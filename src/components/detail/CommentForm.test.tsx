@@ -6,18 +6,15 @@ import CommentForm from './CommentForm';
 
 describe('CommentForm', () => {
   const handleSubmit = jest.fn();
-  const handleVisible = jest.fn();
 
   beforeEach(() => {
     handleSubmit.mockClear();
-    handleVisible.mockClear();
   });
 
   const renderCommentForm = () => render((
     <CommentForm
       user={given.user}
       onSubmit={handleSubmit}
-      onVisible={handleVisible}
     />
   ));
 
@@ -86,14 +83,10 @@ describe('CommentForm', () => {
   context('사용자가 로그인하지 않은 경우', () => {
     given('user', () => null);
 
-    describe('"시작하기" 버튼을 클릭한다', () => {
-      it('클릭 이벤트가 호출되어야만 한다', () => {
-        renderCommentForm();
+    it('"댓글 남기기" 버튼이 보이지 않는다', () => {
+      const { container } = renderCommentForm();
 
-        fireEvent.click(screen.getByText('시작하기'));
-
-        expect(handleVisible).toBeCalledTimes(1);
-      });
+      expect(container).not.toHaveTextContent('댓글 남기기');
     });
   });
 });

@@ -22,7 +22,7 @@ interface StyledButtonProps {
 }
 
 function Button({
-  color = 'outlined', size = 'medium', href, children, ...rest
+  color = 'outlined', size = 'medium', href, children, type = 'button', ...rest
 }: PropsWithChildren<Props>): ReactElement {
   const htmlProps = rest as any;
 
@@ -44,6 +44,7 @@ function Button({
     <StyledButton
       color={color}
       size={size}
+      type={type}
       {...htmlProps}
     >
       {children}

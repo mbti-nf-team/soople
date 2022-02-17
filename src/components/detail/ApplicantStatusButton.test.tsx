@@ -2,10 +2,14 @@ import {
   act, fireEvent, render, screen,
 } from '@testing-library/react';
 
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import ApplicantStatusButton from './ApplicantStatusButton';
+
+jest.mock('@/hooks/api/applicant/useFetchApplicants');
 
 describe('ApplicantStatusButton', () => {
   const handleApply = jest.fn();
@@ -14,6 +18,13 @@ describe('ApplicantStatusButton', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    (useFetchApplicants as jest.Mock).mockImplementation(() => ({
+      data: [{
+        ...APPLICANT_FIXTURE,
+        isConfirm: true,
+      }],
+    }));
   });
 
   const renderApplicantStatusButton = () => render((
@@ -153,10 +164,25 @@ describe('ApplicantStatusButton', () => {
       isConfirm: true,
     }));
 
-    it('"팀원 보기"버튼이 보여야만 한다', () => {
-      const { container } = renderApplicantStatusButton();
+    describe('"팀원 보기" 버튼을 클릭한다', () => {
+      it('팀원보기 모달창이 나타나야만 한다', () => {
+        renderApplicantStatusButton();
 
-      expect(container).toHaveTextContent('팀원 보기');
+        fireEvent.click(screen.getByText('팀원 보기'));
+
+        expect(screen.getByTestId('modal-box')).toBeInTheDocument();
+      });
+    });
+
+    describe('팀원보기 모달창에서 닫기 버튼을 클릭한다', () => {
+      it('모달창이 사라져야만 한다', () => {
+        const { container } = renderApplicantStatusButton();
+
+        fireEvent.click(screen.getByText('팀원 보기'));
+        fireEvent.click(screen.getByTestId('close-icon'));
+
+        expect(container).not.toHaveTextContent('팀원 1명');
+      });
     });
   });
 });

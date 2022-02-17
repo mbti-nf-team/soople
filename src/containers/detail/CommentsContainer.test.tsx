@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { useSetRecoilState } from 'recoil';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useGetUser from '@/hooks/api/auth/useGetUser';
@@ -23,11 +22,9 @@ jest.mock('next/router', () => ({
     },
   })),
 }));
-jest.mock('recoil');
 
 describe('CommentsContainer', () => {
   const mutate = jest.fn();
-  const handleSetSignInModalVisible = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -48,7 +45,6 @@ describe('CommentsContainer', () => {
       data: [COMMENT_FIXTURE],
       isLoading: false,
     }));
-    (useSetRecoilState as jest.Mock).mockImplementation(() => handleSetSignInModalVisible);
   });
 
   const renderCommentsContainer = () => render((
@@ -84,32 +80,15 @@ describe('CommentsContainer', () => {
       });
 
       describe('삭제 모달창의 "삭제하기" 버튼을 클릭한다', () => {
-        it('dispatch 액션이 호출되어야만 한다', () => {
+        it('remove mutate 액션이 호출되어야만 한다', () => {
           renderCommentsContainer();
 
           fireEvent.click(screen.getByText('삭제'));
-          screen.getAllByText(/삭제하기/).forEach((button) => {
-            fireEvent.click(button);
-          });
 
           expect(mutate).toBeCalledWith({
             commentId: COMMENT_FIXTURE.commentId,
             groupId: '1',
           });
-        });
-      });
-    });
-
-    context('사용자가 비로그인 상태인 경우', () => {
-      given('user', () => (null));
-
-      describe('"시작하기" 버튼을 클릭한다', () => {
-        it('handleSetSignInModalVisible이 true와 함께 호출되어야만 한다', () => {
-          renderCommentsContainer();
-
-          fireEvent.click(screen.getByText('시작하기'));
-
-          expect(handleSetSignInModalVisible).toBeCalledWith(true);
         });
       });
     });
