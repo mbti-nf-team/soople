@@ -11,10 +11,9 @@ import Textarea from '../common/Textarea';
 interface Props {
   onSubmit: (commentForm: CommentFields) => void;
   user: Profile | null;
-  onVisible: () => void;
 }
 
-function CommentForm({ onSubmit, onVisible, user }: Props): ReactElement {
+function CommentForm({ onSubmit, user }: Props): ReactElement {
   const [content, setContent] = useState<string>('');
 
   const textareaPlaceholderText = user ? '댓글을 입력하세요' : '댓글을 남기려면 로그인이 필요합니다.';
@@ -36,13 +35,9 @@ function CommentForm({ onSubmit, onVisible, user }: Props): ReactElement {
         onChange={handleChange}
         disabled={!user}
       />
-      {user ? (
+      {user && (
         <Button color="primary" onClick={() => handleSubmit(user)} disabled={!content.trim()}>
           댓글 남기기
-        </Button>
-      ) : (
-        <Button color="success" onClick={onVisible}>
-          시작하기
         </Button>
       )}
     </CommentFormWrapper>
@@ -55,7 +50,7 @@ const CommentFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-bottom: 120px;
+  margin-bottom: 30px;
 
   textarea {
     margin-bottom: 18px;

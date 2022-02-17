@@ -8,6 +8,7 @@ import FIXTURE_COMMENT from '../../../../fixtures/comment';
 import useDeleteComment, { filteredRemoveComment } from './useDeleteComment';
 
 jest.mock('@/services/api/comment');
+jest.mock('@/hooks/useRenderSuccessToast');
 
 describe('useDeleteComment', () => {
   const useDeleteCommentHook = () => renderHook(() => useDeleteComment(), { wrapper });

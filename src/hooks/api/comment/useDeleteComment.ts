@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { FirestoreError } from 'firebase/firestore';
 
+import useRenderSuccessToast from '@/hooks/useRenderSuccessToast';
 import { Comment } from '@/models/group';
 import { deleteGroupComment } from '@/services/api/comment';
 
@@ -23,7 +24,9 @@ function useDeleteComment() {
     },
   });
 
-  const { isError, error } = mutation;
+  const { isError, error, isSuccess } = mutation;
+
+  useRenderSuccessToast(isSuccess, '댓글을 삭제했어요.');
 
   useCatchErrorWithToast({
     isError,

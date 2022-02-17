@@ -20,38 +20,10 @@ describe('CommentView', () => {
     given('user', () => PROFILE_FIXTURE);
 
     describe('삭제 버튼을 클릭한다', () => {
-      it('댓글 삭제 확인 모달창이 나타나야만 한다', () => {
-        const { container } = renderCommentView();
-
-        fireEvent.click(screen.getByText('삭제'));
-
-        expect(container).toHaveTextContent(/삭제하기/);
-      });
-    });
-
-    describe('모달창의 닫기 버튼을 클릭한다', () => {
-      it('모달창이 사라저야만 한다', () => {
-        const { container } = renderCommentView();
-
-        fireEvent.click(screen.getByText('삭제'));
-
-        expect(container).toHaveTextContent(/삭제하기/);
-
-        fireEvent.click(screen.getByText('닫기'));
-
-        expect(container).not.toHaveTextContent(/삭제하기/);
-      });
-    });
-
-    describe('댓글 삭제 확인 모달창에서 "삭제하기" 버튼을 클릭한다', () => {
-      it('삭제 클릭 이벤트가 호출되어야만 한다', () => {
+      it('클릭 이벤트가 발생해야만 한다', () => {
         renderCommentView();
 
         fireEvent.click(screen.getByText('삭제'));
-
-        screen.getAllByText(/삭제하기/).forEach((button) => {
-          fireEvent.click(button);
-        });
 
         expect(handleRemove).toBeCalledWith(COMMENT_FIXTURE.commentId);
       });
