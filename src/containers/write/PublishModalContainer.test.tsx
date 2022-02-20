@@ -1,3 +1,4 @@
+import { useHelpers, useRemirrorContext } from '@remirror/react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
@@ -10,6 +11,10 @@ import PublishModalContainer from './PublishModalContainer';
 
 jest.mock('@/hooks/api/group/usePublishNewGroup');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
+jest.mock('@remirror/react', () => ({
+  useRemirrorContext: jest.fn(),
+  useHelpers: jest.fn(),
+}));
 
 describe('PublishModalContainer', () => {
   const mutate = jest.fn();
@@ -22,6 +27,12 @@ describe('PublishModalContainer', () => {
     }));
     (usePublishNewGroup as jest.Mock).mockImplementation(() => ({
       mutate,
+    }));
+    (useRemirrorContext as jest.Mock).mockImplementation(() => ({
+      getState: jest.fn(),
+    }));
+    (useHelpers as jest.Mock).mockImplementation(() => ({
+      getHTML: jest.fn().mockReturnValue(WRITE_FIELDS_FIXTURE.content),
     }));
   });
 

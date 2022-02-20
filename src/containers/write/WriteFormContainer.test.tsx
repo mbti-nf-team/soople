@@ -6,6 +6,19 @@ import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 import WriteFormContainer from './WriteFormContainer';
 
 jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@remirror/react', () => ({
+  useChainedCommands: jest.fn().mockImplementation(() => ({
+    toggleBold: jest.fn().mockImplementation(() => ({
+      focus: jest.fn().mockImplementation(() => ({
+        run: jest.fn(),
+      })),
+    })),
+  })),
+  useActive: jest.fn().mockImplementation(() => ({
+    bold: jest.fn(),
+  })),
+  EditorComponent: () => <>mockComponent</>,
+}));
 
 describe('WriteFormContainer', () => {
   beforeEach(() => {
@@ -27,7 +40,6 @@ describe('WriteFormContainer', () => {
 
     const placeholderTexts = [
       '제목을 입력하세요',
-      '내용을 입력하세요',
     ];
 
     it('팀 모집하기 작성 폼에 대한 인풋 창이 나타나야만 한다', () => {

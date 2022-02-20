@@ -10,7 +10,7 @@ import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body2Font, h4Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
-import { emptyAThenB } from '@/utils/utils';
+import { emptyAThenB, removeAllHtml } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
 
@@ -37,7 +37,9 @@ function RecruitPost({ group }: Props): ReactElement {
               <StyledLink>{title}</StyledLink>
             </Link>
           </div>
-          <Content>{content}</Content>
+          <Content>
+            {removeAllHtml(content)}
+          </Content>
         </PostPreview>
         <PostMetaData>
           <ViewsIcon

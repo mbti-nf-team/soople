@@ -15,6 +15,7 @@ import {
   body1Font, body2Font, h3Font,
 } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
+import { removeAllHtml } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
 
@@ -56,7 +57,7 @@ function MyGroup({ group, onClick }: Props): ReactElement {
       <MyGroupContents>
         <div className="group-title">{title}</div>
         <div className="group-content">
-          {content}
+          {removeAllHtml(content)}
         </div>
       </MyGroupContents>
       <GroupMetaData status={status}>

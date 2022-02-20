@@ -7,6 +7,7 @@ import {
   isProdLevel,
   isRecruitCompletedAndManual,
   isRecruiting,
+  removeAllHtml,
   stringToExcludeNull,
   tomorrow,
   yesterday,
@@ -205,5 +206,13 @@ describe('isRecruitCompletedAndManual', () => {
 
       expect(result).toBeFalsy();
     });
+  });
+});
+
+describe('removeAllHtml', () => {
+  it('html 태그가 삭제된 후 반환해야만 한다', () => {
+    const result = removeAllHtml('<h1>test</h1><h2>11</h2>');
+
+    expect(result).toBe('test11');
   });
 });

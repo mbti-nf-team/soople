@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import sanitizeHtml from 'sanitize-html';
 
 import { Group } from '@/models/group';
 
@@ -52,3 +53,8 @@ export const isRecruitCompletedAndManual = (group: Group) => {
 
   return isCompleted || (!recruitmentEndDate && recruitmentEndSetting === 'manual');
 };
+
+export const removeAllHtml = (content: string) => sanitizeHtml(content, {
+  allowedTags: [],
+  allowedAttributes: {},
+});
