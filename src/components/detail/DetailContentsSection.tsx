@@ -26,9 +26,7 @@ function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
           </p>
         </MemberMessageBlock>
       )}
-      <DetailContentWrapper>
-        {content}
-      </DetailContentWrapper>
+      <DetailContentWrapper dangerouslySetInnerHTML={{ __html: content }} />
       <TagsWrapper>
         {tags.map((tag) => (
           <Tag

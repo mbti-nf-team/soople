@@ -1,6 +1,7 @@
 import React, { ReactElement, useCallback } from 'react';
 import { useUnmount } from 'react-use';
 
+import { useHelpers, useRemirrorContext } from '@remirror/react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import PublishModal from '@/components/write/PublishModal';
@@ -19,11 +20,19 @@ function PublishModalContainer(): ReactElement {
   const resetFields = useResetRecoilState(writeFieldsState);
   const { mutate } = usePublishNewGroup();
   const { data: profile } = useFetchUserProfile();
+  const { getState } = useRemirrorContext();
+  const { getHTML } = useHelpers();
 
   const onClose = () => setPublishModalVisible(false);
-  const onSubmit = useCallback(() => mutate({
-    profile: profile as Profile, writeFields,
-  }), [mutate, profile, writeFields]);
+  const onSubmit = useCallback(() => {
+    mutate({
+      profile: profile as Profile,
+      writeFields: {
+        ...writeFields,
+        content: getHTML(getState()),
+      },
+    });
+  }, [mutate, profile, writeFields, getHTML, getState]);
 
   const onChangeFields = useCallback((form: KeyPair<WriteFields>) => {
     changeFields((prevState) => ({ ...prevState, ...form }));

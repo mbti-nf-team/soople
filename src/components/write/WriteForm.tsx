@@ -6,6 +6,7 @@ import { KeyPair } from '@/models';
 import { WriteFields } from '@/models/group';
 
 import TagForm from './TagForm';
+import WriteEditor from './WriteEditor';
 
 interface Props {
   fields: WriteFields;
@@ -13,7 +14,7 @@ interface Props {
 }
 
 function WriteForm({ fields, onChange }: Props): ReactElement {
-  const { title, content, tags: initialTags } = fields;
+  const { title, tags: initialTags } = fields;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -32,14 +33,7 @@ function WriteForm({ fields, onChange }: Props): ReactElement {
         onChange={handleChange}
         placeholder="제목을 입력하세요"
       />
-      <textarea
-        name="content"
-        value={content}
-        rows={10}
-        cols={20}
-        onChange={handleChange}
-        placeholder="내용을 입력하세요"
-      />
+      <WriteEditor />
       <TagForm
         tags={initialTags}
         onChange={handleChangeTags}

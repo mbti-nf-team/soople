@@ -67,7 +67,9 @@
     "react-toggle": "^4.1.2",
     "react-use": "^17.3.1",
     "recoil": "^0.6.1",
+    "refractor": "^4.5.0",
     "remirror": "^1.0.66",
+    "sanitize-html": "^2.7.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -87,6 +89,8 @@
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.11",
     "@types/react-toggle": "^4.0.3",
+    "@types/refractor": "^3.0.2",
+    "@types/sanitize-html": "^2.6.2",
     "@types/testing-library__jest-dom": "^5",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
