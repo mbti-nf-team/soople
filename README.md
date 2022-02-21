@@ -24,6 +24,8 @@
   <img src="https://img.shields.io/github/repo-size/jennie-harang/Conners?logo=yarn&style=flat-square">
 </a>
 
+### 스터디와 프로젝트를 연결해주는 Connect + er + s Conners! 🎨
+
 ## 💻 Develop by
 
 <table>
@@ -32,6 +34,56 @@
     <td align="center"><a href="https://github.com/jooseyoung"><img src="./images/mock-profile.png" width="150px;" alt=""/><br /><p><b>Jennie</b></p></a><small>🎨 Product Designer</small></td>
   </tr>
 </table>
+
+
+## 🏗 Project Structure
+
+```
+📦 Conners
+ ┣ 📂 .github
+ ┣ 📂 .husky
+ ┣ 📂 @types
+ ┣ 📂 fixtures
+ ┣ 📂 public
+ ┣ 📂 src
+ ┃ ┣ 📂 assets
+ ┃ ┣ 📂 components
+ ┃ ┣ 📂 containers
+ ┃ ┣ 📂 hooks
+ ┃ ┃ ┣ 📂 api
+ ┃ ┣ 📂 models
+ ┃ ┣ 📂 pages
+ ┃ ┃ ┣ 📜 _app.page.tsx
+ ┃ ┃ ┣ 📜 _document.page.tsx
+ ┃ ┃ ┣ 📜 index.page.tsx
+ ┃ ┃ ┣ 📜 index.test.tsx
+ ┃ ┣ 📂 recoil
+ ┃ ┣ 📂 services
+ ┃ ┗ 📂 utils
+ ┣ 📜 .eslintrc.js
+ ┣ 📜 .gitignore
+ ┣ 📜 LICENSE
+ ┣ 📜 README.md
+ ┣ 📜 babel.config.js
+ ┣ 📜 cypress.json
+ ┣ 📜 jest.config.js
+ ┣ 📜 jest.setup.js
+ ┣ 📜 next-env.d.ts
+ ┣ 📜 next.config.js
+ ┣ 📜 package.json
+ ┣ 📜 tsconfig.json
+ ┗ 📜 yarn.lock
+```
+
+## 💻 Project Stack
+🚧 WIP
+- Next.js v.12
+- React v.17
+- react-query v.3
+- recoil v.0.6
+- firebase v.9
+- emotion v.11
+- jest v.27
 
 ## 🐛 Bug reporting
 [Issues](https://github.com/jennie-harang/Conners/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
