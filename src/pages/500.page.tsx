@@ -1,6 +1,9 @@
 import { ReactElement } from 'react';
 
+import EmptyStateArea from '@/components/common/EmptyStateArea';
 import HeaderWrapper from '@/components/common/HeaderWrapper';
+
+import UnknownErrorIcon from '../assets/icons/img_500.svg';
 
 function Custom500(): ReactElement {
   return (
@@ -9,7 +12,13 @@ function Custom500(): ReactElement {
         hasBackground
         isScrollTop
       />
-      <h1>500 - Server-side error occurred</h1>
+      <EmptyStateArea
+        svg={<UnknownErrorIcon />}
+        emptyText="알 수 없는 오류가 발생했어요."
+        buttonText="홈으로"
+        href="/"
+        marginTop="80px"
+      />
     </>
   );
 }
