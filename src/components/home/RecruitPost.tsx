@@ -19,7 +19,7 @@ import ProfileImage from '../common/ProfileImage';
 dayjs.locale('ko');
 
 interface Props {
-  group: Group
+  group: Group;
 }
 
 function RecruitPost({ group }: Props): ReactElement {
@@ -30,28 +30,24 @@ function RecruitPost({ group }: Props): ReactElement {
 
   return (
     <RecruitPostWrapper>
-      <RecruitPostContents>
-        <PostPreview>
-          <div>
-            <Link href={`/detail/${groupId}`} passHref>
-              <StyledLink>{title}</StyledLink>
-            </Link>
-          </div>
-          <Content>
-            {removeAllHtml(content)}
-          </Content>
-        </PostPreview>
-        <PostMetaData>
-          <ViewsIcon
-            size={16}
-            color={palette.background}
-            fill={palette.accent6}
-          />
-          <span>{views}</span>
-          <Divider />
-          <span>{recruitDate}</span>
-        </PostMetaData>
-      </RecruitPostContents>
+      <Link href={`/detail/${groupId}`} passHref>
+        <RecruitPostContents>
+          <PostPreview>
+            <Title>{title}</Title>
+            <Content>{removeAllHtml(content)}</Content>
+          </PostPreview>
+          <PostMetaData>
+            <ViewsIcon
+              size={16}
+              color={palette.background}
+              fill={palette.accent6}
+            />
+            <span>{views}</span>
+            <Divider />
+            <span>{recruitDate}</span>
+          </PostMetaData>
+        </RecruitPostContents>
+      </Link>
       <PostWriter>
         <ProfileImage
           size="24px"
@@ -75,15 +71,15 @@ const RecruitPostWrapper = styled.div`
   background-color: ${palette.background};
 `;
 
-const RecruitPostContents = styled.div`
+const RecruitPostContents = styled.a`
+  height: 100%; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 16px 16px 12px;
-  height: 298px; 
 `;
 
-const StyledLink = styled.a`
+const Title = styled.div`
   ${h4Font(true)};
 `;
 

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 
@@ -12,8 +12,8 @@ describe('RecruitPost', () => {
   ));
 
   it('모집글에 대한 정보가 나타나야만 한다', () => {
-    renderRecruitPost();
+    const { container } = renderRecruitPost();
 
-    expect(screen.getByText(GROUP_FIXTURE.title)).toHaveAttribute('href', `/detail/${GROUP_FIXTURE.groupId}`);
+    expect(container).toHaveTextContent(GROUP_FIXTURE.title);
   });
 });
