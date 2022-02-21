@@ -23,6 +23,7 @@ const SwitchButton = ({ onChange, defaultChecked }: Props) => (
     data-testid="switch-button"
   />
 );
+
 export default SwitchButton;
 
 const SwitchButtonWrapper = styled(Toggle)`

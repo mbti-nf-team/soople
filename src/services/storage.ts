@@ -5,14 +5,17 @@ export const saveItem = (key: string, value: any) => {
 };
 
 export const loadItem = (key: string) => {
-  const item = localStorage.getItem(key);
+  if (typeof window === 'undefined') {
+    return false;
+  }
 
   try {
+    const item = localStorage.getItem(key);
     const parsed = JSON.parse(item || '');
 
     return parsed;
   } catch (error) {
-    return null;
+    return false;
   }
 };
 
