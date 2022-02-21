@@ -1,6 +1,9 @@
 import { ReactElement } from 'react';
 
+import EmptyStateArea from '@/components/common/EmptyStateArea';
 import HeaderWrapper from '@/components/common/HeaderWrapper';
+
+import NotFoundIcon from '../assets/icons/img_404.svg';
 
 function Custom404(): ReactElement {
   return (
@@ -9,7 +12,13 @@ function Custom404(): ReactElement {
         hasBackground
         isScrollTop
       />
-      <h1>404 - Page Not Found</h1>
+      <EmptyStateArea
+        svg={<NotFoundIcon />}
+        emptyText="페이지가 존재하지 않아요."
+        buttonText="홈으로"
+        href="/"
+        marginTop="80px"
+      />
     </>
   );
 }
