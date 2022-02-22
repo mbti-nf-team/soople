@@ -12,7 +12,7 @@ interface Props {
   imageName?: string;
   svg?: ReactElement;
   emptyText: string;
-  buttonText: string;
+  buttonText?: string;
   onClick?: () => void;
   href?: string;
   marginTop?: string;
@@ -30,15 +30,17 @@ function EmptyStateArea({
       <EmptyStateText>
         {emptyText}
       </EmptyStateText>
-      <Button
-        color="primary"
-        size="medium"
-        type="button"
-        onClick={onClick}
-        href={href}
-      >
-        {buttonText}
-      </Button>
+      {buttonText && (
+        <Button
+          color="primary"
+          size="medium"
+          type="button"
+          onClick={onClick}
+          href={href}
+        >
+          {buttonText}
+        </Button>
+      )}
     </EmptyStateWrapper>
   );
 }

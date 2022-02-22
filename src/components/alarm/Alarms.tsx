@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 
+import styled from '@emotion/styled';
+
 import { Alarm } from '@/models/alarm';
 
 import EmptyStateArea from '../common/EmptyStateArea';
@@ -20,20 +22,24 @@ function Alarms({ alarms, isLoading }: Props): ReactElement {
     return (
       <EmptyStateArea
         emptyText="알림이 없어요."
-        buttonText="팀 살펴보기"
-        href="/"
         marginTop="80px"
       />
     );
   }
 
   return (
-    <>
+    <AlarmsWrapper>
       {alarms.map((alarm) => (
         <AlarmItem key={alarm.uid} alarm={alarm} />
       ))}
-    </>
+    </AlarmsWrapper>
   );
 }
 
 export default Alarms;
+
+const AlarmsWrapper = styled.div`
+  & > a:last-of-type {
+    border-bottom: none;
+  }
+`;
