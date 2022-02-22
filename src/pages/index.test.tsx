@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import InjectMockProviders from '@/test/InjectMockProviders';
@@ -25,9 +25,9 @@ describe('HomePage', () => {
     </InjectMockProviders>
   ));
 
-  it('홈에 대한 정보가 보여져야만 한다', () => {
+  it('홈에 대한 정보가 보여져야만 한다', async () => {
     const { container } = renderHome();
 
-    expect(container).toHaveTextContent('시작하기');
+    await waitFor(() => expect(container).toHaveTextContent('시작하기'));
   });
 });

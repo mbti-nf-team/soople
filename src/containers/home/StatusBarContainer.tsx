@@ -1,9 +1,10 @@
 import React, { ReactElement, useCallback } from 'react';
+import { useLocalStorage } from 'react-use';
 
 import styled from '@emotion/styled';
+import dynamic from 'next/dynamic';
 import { useRecoilState } from 'recoil';
 
-import SwitchButton from '@/components/common/SwitchButton';
 import FilterBar from '@/components/home/FilterBar';
 import TagsBar from '@/components/home/TagsBar';
 import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
@@ -12,12 +13,18 @@ import { groupsConditionState } from '@/recoil/group/atom';
 import Divider from '@/styles/Divider';
 import { body1Font } from '@/styles/fontStyles';
 
+const DynamicComponentWithNoSSR = dynamic(
+  () => import('@/components/common/SwitchButton'),
+  { ssr: false },
+);
+
 type FilterCondition = {
   [K in keyof FilterGroupsCondition]?: FilterGroupsCondition[K];
 };
 
 function StatusBarContainer(): ReactElement {
   const { data: tagsCount, isLoading } = useFetchTagsCount();
+  const [initFilterCompleted, toggleFilterCompleted] = useLocalStorage('isFilterCompleted', false);
   const [{ isFilterCompleted }, setCondition] = useRecoilState(groupsConditionState);
 
   const setGroupsCondition = (condition: FilterCondition) => setCondition((prevCondition) => ({
@@ -34,6 +41,11 @@ function StatusBarContainer(): ReactElement {
     setGroupsCondition({ category: [category] as Category[] });
   }, [setGroupsCondition]);
 
+  const onToggle = (isWithCompleted: boolean) => {
+    setGroupsCondition({ isFilterCompleted: isWithCompleted });
+    toggleFilterCompleted(isWithCompleted);
+  };
+
   return (
     <StatusBarWrapper>
       <div>
@@ -48,9 +60,9 @@ function StatusBarContainer(): ReactElement {
       </div>
       <RecruitmentDeadline>
         <span>모집 마감 안보기</span>
-        <SwitchButton
-          defaultChecked={isFilterCompleted}
-          onChange={() => setGroupsCondition({ isFilterCompleted: !isFilterCompleted })}
+        <DynamicComponentWithNoSSR
+          defaultChecked={!!initFilterCompleted}
+          onChange={() => onToggle(!isFilterCompleted)}
         />
       </RecruitmentDeadline>
     </StatusBarWrapper>
