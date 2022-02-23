@@ -112,27 +112,59 @@ describe('formatAlarm', () => {
     toDate: () => new Date(),
   };
 
-  const settings = {
-    id: '1',
-    data: () => ({
-      groupId: '1',
-      userUid: '2',
-      isViewed: false,
-      type: 'confirmed',
-      createdAt: date,
-    }),
-  } as unknown as QueryDocumentSnapshot<DocumentData>;
+  context('applicantUid가 null이 아닌 경우', () => {
+    const settings = {
+      id: '1',
+      data: () => ({
+        groupId: '1',
+        userUid: '2',
+        isViewed: false,
+        type: 'confirmed',
+        createdAt: date,
+        applicantUid: '3',
+      }),
+    } as unknown as QueryDocumentSnapshot<DocumentData>;
 
-  it('포매팅된 알람 정보가 반환되어야만 한다', async () => {
-    const result = await formatAlarm(settings);
+    it('포매팅된 알람 정보가 반환되어야만 한다', async () => {
+      const result = await formatAlarm(settings);
 
-    expect(result).toEqual({
-      uid: '1',
-      createdAt: nowString,
-      isViewed: false,
-      type: 'confirmed',
-      group: GROUP_FIXTURE,
-      user: PROFILE_FIXTURE,
+      expect(result).toEqual({
+        uid: '1',
+        createdAt: nowString,
+        isViewed: false,
+        type: 'confirmed',
+        group: GROUP_FIXTURE,
+        userUid: '2',
+        applicant: PROFILE_FIXTURE,
+      });
+    });
+  });
+
+  context('applicantUid가 null인 경우', () => {
+    const settings = {
+      id: '1',
+      data: () => ({
+        groupId: '1',
+        userUid: '2',
+        isViewed: false,
+        type: 'confirmed',
+        createdAt: date,
+        applicantUid: null,
+      }),
+    } as unknown as QueryDocumentSnapshot<DocumentData>;
+
+    it('포매팅된 알람 정보가 반환되어야만 한다', async () => {
+      const result = await formatAlarm(settings);
+
+      expect(result).toEqual({
+        uid: '1',
+        createdAt: nowString,
+        isViewed: false,
+        type: 'confirmed',
+        group: GROUP_FIXTURE,
+        userUid: '2',
+        applicant: null,
+      });
     });
   });
 });

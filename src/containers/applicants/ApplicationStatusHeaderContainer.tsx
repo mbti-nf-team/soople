@@ -31,6 +31,7 @@ function ApplicationStatusHeaderContainer(): ReactElement {
     const { groupId } = group;
 
     const alarmForms = applicants.map(({ applicant, isConfirm }) => ({
+      applicantUid: null,
       userUid: applicant.uid,
       type: isConfirm ? 'confirmed' : 'rejected' as AlarmType,
       groupId,

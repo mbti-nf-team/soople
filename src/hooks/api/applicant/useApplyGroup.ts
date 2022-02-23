@@ -18,12 +18,12 @@ type ApplyResponse = {
 function useApplyGroup() {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<[ApplyResponse, string], FirestoreError, ApplyRequest>((
-    applyForm,
-  ) => Promise.all([postAddApplicant(applyForm), postAddAlarm({
-    groupId: applyForm.groupId,
-    userUid: applyForm.writerUid,
-    type: 'applied',
+  const mutation = useMutation<[ApplyResponse, string], FirestoreError, ApplyRequest>(({
+    applicant, groupId, introduce, portfolioUrl, writerUid,
+  }) => Promise.all([postAddApplicant({
+    groupId, introduce, portfolioUrl, applicant,
+  }), postAddAlarm({
+    applicantUid: applicant.uid, groupId, userUid: writerUid, type: 'applied',
   })]), {
     onSuccess: ([{ uid, numberApplicants }]: [ApplyResponse, string], {
       groupId, applicant, introduce, portfolioUrl,
