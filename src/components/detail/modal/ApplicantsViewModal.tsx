@@ -2,8 +2,8 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 
-import ModalWindow from '@/components/common/ModalWindow';
 import ProfileImage from '@/components/common/ProfileImage';
+import ViewModalWindow from '@/components/common/ViewModalWindow';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import { emptyAThenB } from '@/utils/utils';
 
@@ -18,7 +18,7 @@ function ApplicantsViewModal({ isVisible, onClose }: Props) {
   const confirmedApplicants = applicants.filter(({ isConfirm }) => isConfirm);
 
   return (
-    <ModalWindow
+    <ViewModalWindow
       isVisible={isVisible}
       onClose={onClose}
       title={`팀원 ${confirmedApplicants.length}명`}
@@ -33,13 +33,13 @@ function ApplicantsViewModal({ isVisible, onClose }: Props) {
           </div>
         ))}
       </ApplicantsListWrapper>
-    </ModalWindow>
+    </ViewModalWindow>
   );
 }
 
 export default ApplicantsViewModal;
 
 const ApplicantsListWrapper = styled.div`
-  height: 286px;
+  height: 350px;
   overflow-y: auto;
 `;
