@@ -8,7 +8,7 @@ describe('Alarms', () => {
   const renderAlarms = () => render((
     <Alarms
       isLoading={given.isLoading}
-      alarms={[ALARM_FIXTURE]}
+      alarms={given.alarms}
     />
   ));
 
@@ -25,10 +25,24 @@ describe('Alarms', () => {
   context('로딩중이 아닌 경우', () => {
     given('isLoading', () => false);
 
-    it('알람에 대한 내용이 나타나야만 한다', () => {
-      const { container } = renderAlarms();
+    context('알람이 존재하는 경우', () => {
+      given('alarms', () => [ALARM_FIXTURE]);
 
-      expect(container).toHaveTextContent(ALARM_FIXTURE.group.title);
+      it('알람에 대한 내용이 나타나야만 한다', () => {
+        const { container } = renderAlarms();
+
+        expect(container).toHaveTextContent(ALARM_FIXTURE.group.title);
+      });
+    });
+
+    context('알람이 존재하지 않는 경우', () => {
+      given('alarms', () => []);
+
+      it('"알림이 없어요." 문구가 나타나야만 한다', () => {
+        const { container } = renderAlarms();
+
+        expect(container).toHaveTextContent('알림이 없어요.');
+      });
     });
   });
 });

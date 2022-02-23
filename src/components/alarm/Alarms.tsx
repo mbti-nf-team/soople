@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
+import { isEmpty } from 'ramda';
 
 import { Alarm } from '@/models/alarm';
 
@@ -18,7 +19,7 @@ function Alarms({ alarms, isLoading }: Props): ReactElement {
     return <>로딩중...</>;
   }
 
-  if (alarms.length === 0) {
+  if (isEmpty(alarms)) {
     return (
       <EmptyStateArea
         emptyText="알림이 없어요."

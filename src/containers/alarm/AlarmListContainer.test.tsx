@@ -12,6 +12,7 @@ describe('AlarmListContainer', () => {
   beforeEach(() => {
     (useFetchAlarms as jest.Mock).mockImplementation(() => ({
       isLoading: false,
+      isIdle: false,
       data: [ALARM_FIXTURE],
     }));
   });

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import * as R from 'ramda';
+import { isEmpty } from 'ramda';
 
 import { Applicant } from '@/models/group';
 import palette from '@/styles/palette';
@@ -17,7 +17,7 @@ interface Props {
 }
 
 function ApplicationStatus({ applicants, onToggleConfirm, goBack }: Props): ReactElement {
-  if (R.isEmpty(applicants)) {
+  if (isEmpty(applicants)) {
     return (
       <EmptyStateArea
         emptyText="신청한 사람이 없어요."
