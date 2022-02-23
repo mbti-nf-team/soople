@@ -10,12 +10,9 @@ import palette from '@/styles/palette';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
-import Button from './Button';
-
 interface Props {
   isVisible: boolean;
   title: string;
-  closeText?: string;
   onClose: () => void;
   size?: {
     height?: string;
@@ -23,8 +20,8 @@ interface Props {
   };
 }
 
-function ModalWindow({
-  isVisible, title, closeText = '닫기', onClose, size, children,
+function ViewModalWindow({
+  isVisible, title, onClose, size, children,
 }: PropsWithChildren<Props>): ReactElement | null {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -35,8 +32,8 @@ function ModalWindow({
   }
 
   return (
-    <ModalWindowWrapper>
-      <ModalWindowBox size={size} isVisible={isVisible} ref={modalRef} data-testid="modal-box">
+    <ViewModalWindowWrapper>
+      <ViewModalWindowBox size={size} isVisible={isVisible} ref={modalRef} data-testid="modal-box">
         <HeaderWrapper>
           <h4>{title}</h4>
           <CloseIcon
@@ -47,17 +44,14 @@ function ModalWindow({
           />
         </HeaderWrapper>
         {children}
-        <FooterWrapper>
-          <Button size="small" onClick={onClose} type="button">{closeText}</Button>
-        </FooterWrapper>
-      </ModalWindowBox>
-    </ModalWindowWrapper>
+      </ViewModalWindowBox>
+    </ViewModalWindowWrapper>
   );
 }
 
-export default ModalWindow;
+export default ViewModalWindow;
 
-const ModalWindowWrapper = styled.div`
+const ViewModalWindowWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -70,9 +64,10 @@ const ModalWindowWrapper = styled.div`
   background: rgba(0, 0, 0, 0.25);
 `;
 
-const ModalWindowBox = styled.div<{ size?: { height?: string; width?: string; }; isVisible: boolean }>`
+const ViewModalWindowBox = styled.div<{ size?: { height?: string; width?: string; }; isVisible: boolean }>`
   background: ${palette.background};
   border-radius: 8px;
+  overflow: hidden;
   width: ${({ size }) => size?.width || '540px'};
   height: ${({ size }) => size?.height || '410px'};
 
@@ -96,13 +91,4 @@ const HeaderWrapper = styled.div`
 
 const CloseIcon = styled(CloseSvg)`
   cursor: pointer;
-`;
-
-const FooterWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 16px 16px 20px;
-  box-shadow: inset 0px 1px 0px ${palette.accent2};
 `;

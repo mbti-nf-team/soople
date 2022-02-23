@@ -41,14 +41,14 @@ describe('WriterStatusButtons', () => {
       });
     });
 
-    describe('모달창이 열린 상태에서 "닫기" 버튼을 클릭한다', () => {
+    describe('모달창이 열린 상태에서 "X" 아이콘을 클릭한다', () => {
       it('모달창이 사라저야만 한다', () => {
         const { container } = renderWriterStatusButtons(true);
 
         fireEvent.click(screen.getByText('팀원 보기'));
-        fireEvent.click(screen.getByText('닫기'));
+        fireEvent.click(screen.getByTestId('close-icon'));
 
-        expect(container).not.toHaveTextContent('닫기');
+        expect(container).not.toHaveTextContent('팀원 0명');
       });
     });
   });
