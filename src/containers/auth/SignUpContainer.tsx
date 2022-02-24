@@ -13,8 +13,9 @@ import Layout from '@/styles/Layout';
 import palette from '@/styles/palette';
 
 function SignUpContainer(): ReactElement {
-  const { data: user } = useGetUser();
   const { data: profile } = useFetchUserProfile();
+  const { data: user } = useGetUser();
+
   const { mutate } = useSignUp();
 
   const onSubmit = useCallback((formData: SignUpAdditionalForm) => {

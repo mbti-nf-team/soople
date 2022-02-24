@@ -77,8 +77,8 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         options={positionOption}
         labelText="포지션"
         onChange={setPosition}
-        placeholder="포지션을 선택하세요"
-        errorMessage="포지션을 선택하세요"
+        placeholder="포지션을 입력 또는 선택해주세요."
+        errorMessage="포지션을 입력 또는 선택해주세요."
       />
       <Input
         id="portfolioUrl"

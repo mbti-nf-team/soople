@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import useFetchAlarms from '@/hooks/api/alarm/useFetchAlarms';
-import useGetUser from '@/hooks/api/auth/useGetUser';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useSignOut from '@/hooks/api/auth/useSignOut';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
@@ -11,7 +11,7 @@ import PROFILE_FIXTURE from '../../fixtures/profile';
 import AlarmPage from './alarm.page';
 
 jest.mock('@/hooks/api/alarm/useFetchAlarms');
-jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/auth/useSignOut');
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
@@ -21,7 +21,7 @@ jest.mock('next/router', () => ({
 
 describe('AlarmPage', () => {
   beforeEach(() => {
-    (useGetUser as jest.Mock).mockImplementation(() => ({
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: PROFILE_FIXTURE,
     }));
     (useSignOut as jest.Mock).mockImplementation(() => ({

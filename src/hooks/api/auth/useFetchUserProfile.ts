@@ -4,15 +4,16 @@ import { FirestoreError } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
 import { getUserProfile } from '@/services/api/auth';
-import { firebaseAuth } from '@/services/firebase';
 
 import useCatchErrorWithToast from '../useCatchErrorWithToast';
 
-function useFetchUserProfile() {
-  const { currentUser } = firebaseAuth;
+import useGetUser from './useGetUser';
 
-  const query = useQuery<Profile | null, FirestoreError>(['profile'], () => getUserProfile(currentUser?.uid), {
-    enabled: !!currentUser?.uid,
+function useFetchUserProfile() {
+  const { data: user } = useGetUser();
+
+  const query = useQuery<Profile | null, FirestoreError>(['profile'], () => getUserProfile(user?.uid), {
+    enabled: !!user?.uid,
   });
 
   const { isError, error } = query;

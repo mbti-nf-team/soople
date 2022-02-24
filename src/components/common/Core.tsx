@@ -8,12 +8,15 @@ import GlobalStyles from '@/styles/GlobalStyles';
 import palette from '@/styles/palette';
 import StyledToastContainer from '@/styles/StyledToastContainer';
 
+import useRefreshToken from '../../hooks/api/auth/useRefreshToken';
+
 import CloseButton from './CloseButton';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 function Core(): ReactElement {
   useGetUserToken();
+  useRefreshToken();
 
   return (
     <>

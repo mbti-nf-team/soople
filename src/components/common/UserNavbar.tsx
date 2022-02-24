@@ -5,9 +5,9 @@ import { Bell as AlarmIcon } from 'react-feather';
 import { useUnmount } from 'react-use';
 
 import styled from '@emotion/styled';
-import { User } from 'firebase/auth';
 import Link from 'next/link';
 
+import { Profile } from '@/models/auth';
 import palette from '@/styles/palette';
 
 import Button from './Button';
@@ -15,7 +15,7 @@ import DropDown from './DropDown';
 import ProfileImage from './ProfileImage';
 
 interface Props {
-  user: User;
+  user: Profile;
   signOut: () => void;
 }
 
@@ -64,12 +64,12 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
       </Link>
       <div className="profile-dropdown-wrapper" ref={userIconRef}>
         <ProfileImage
-          src={user.photoURL}
+          src={user.image}
           onClick={() => setVisible(!isVisible)}
         />
         <DropDown
           signOut={signOut}
-          name={user.displayName}
+          name={user.name}
           email={user.email as string}
           isVisible={isVisible}
         />

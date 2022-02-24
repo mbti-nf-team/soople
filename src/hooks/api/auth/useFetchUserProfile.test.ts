@@ -6,8 +6,10 @@ import wrapper from '@/test/ReactQueryWrapper';
 import FIXTURE_PROFILE from '../../../../fixtures/profile';
 
 import useFetchUserProfile from './useFetchUserProfile';
+import useGetUser from './useGetUser';
 
 jest.mock('@/services/api/auth');
+jest.mock('./useGetUser');
 jest.mock('@/services/firebase', () => ({
   firebaseAuth: {
     currentUser: {
@@ -24,6 +26,9 @@ describe('useFetchUserProfile', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
+    (useGetUser as jest.Mock).mockImplementation(() => ({
+      data: FIXTURE_PROFILE,
+    }));
     (getUserProfile as jest.Mock).mockImplementation(() => (given.user));
   });
 

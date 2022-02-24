@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
-import useGetUser from '@/hooks/api/auth/useGetUser';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
@@ -13,7 +13,7 @@ jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 jest.mock('@/hooks/api/group/useFetchUserAppliedGroups');
-jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('AppliedGroupsContainer', () => {
   const mockPush = jest.fn();
@@ -28,7 +28,7 @@ describe('AppliedGroupsContainer', () => {
     (useRouter as jest.Mock).mockImplementation(() => ({
       push: mockPush,
     }));
-    (useGetUser as jest.Mock).mockImplementation(() => ({
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: FIXTURE_PROFILE,
     }));
   });

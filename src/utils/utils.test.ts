@@ -1,3 +1,5 @@
+import { setCookie } from 'nookies';
+
 import GROUP_FIXTURE from '../../fixtures/group';
 
 import {
@@ -8,10 +10,16 @@ import {
   isRecruitCompletedAndManual,
   isRecruiting,
   removeAllHtml,
+  removeToken,
   stringToExcludeNull,
   tomorrow,
   yesterday,
 } from './utils';
+
+jest.mock('nookies', () => ({
+  setCookie: jest.fn(),
+  destroyCookie: jest.fn(),
+}));
 
 describe('isProdLevel', () => {
   context('production일 때', () => {
@@ -214,5 +222,13 @@ describe('removeAllHtml', () => {
     const result = removeAllHtml('<h1>test</h1><h2>11</h2>');
 
     expect(result).toBe('test11');
+  });
+});
+
+describe('removeToken', () => {
+  it('token이 삭제되어야만 한다', () => {
+    removeToken();
+
+    expect(setCookie).toBeCalledWith(null, 'token', '', { path: '/' });
   });
 });

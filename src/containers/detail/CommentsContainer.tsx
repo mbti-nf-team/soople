@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import CommentForm from '@/components/detail/CommentForm';
 import CommentsView from '@/components/detail/CommentsView';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useGetUser from '@/hooks/api/auth/useGetUser';
 import useAddComment from '@/hooks/api/comment/useAddComment';
 import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useFetchComments from '@/hooks/api/comment/useFetchComments';
@@ -17,8 +16,7 @@ import { h4Font } from '@/styles/fontStyles';
 function CommentsContainer(): ReactElement {
   const router = useRouter();
   const { id: groupId } = router.query as GroupQuery;
-  const { data: user } = useGetUser();
-  const { data: profile } = useFetchUserProfile();
+  const { data: user } = useFetchUserProfile();
   const { data: comments, isLoading } = useFetchComments();
   const { mutate: addCommentMutate } = useAddComment();
   const { mutate: deleteCommentMutate } = useDeleteComment();
@@ -26,7 +24,7 @@ function CommentsContainer(): ReactElement {
   const onSubmit = useCallback((commentForm: CommentFields) => addCommentMutate({
     ...commentForm,
     groupId,
-  }), [profile, groupId, addCommentMutate]);
+  }), [groupId, addCommentMutate]);
 
   const onRemoveComment = useCallback((commentId: string) => deleteCommentMutate({
     commentId, groupId,
@@ -36,7 +34,7 @@ function CommentsContainer(): ReactElement {
     <>
       <CommentCount>{`댓글 ${comments.length}`}</CommentCount>
       <CommentForm
-        user={profile}
+        user={user}
         onSubmit={onSubmit}
       />
       <CommentsView
