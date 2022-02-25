@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import useGetUser from '@/hooks/api/auth/useGetUser';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
@@ -8,11 +8,11 @@ import FIXTURE_GROUP from '../../../fixtures/group';
 import AppliedPage from './applied.page';
 
 jest.mock('@/hooks/api/group/useFetchUserAppliedGroups');
-jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('AppliedPage', () => {
   beforeEach(() => {
-    (useGetUser as jest.Mock).mockImplementation(() => ({
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: {
         uid: '1',
       },

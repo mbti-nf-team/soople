@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import MyInfoTab from '@/components/myInfo/MyInfoTab';
-import useGetUser from '@/hooks/api/auth/useGetUser';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
 import useFetchUserRecruitedGroups from '@/hooks/api/group/useFetchUserRecruitedGroups';
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 function MyInfoTabContainer({ activeTab }: Props): ReactElement {
-  const { data: user } = useGetUser();
+  const { data: user } = useFetchUserProfile();
   const { data: appliedGroups } = useFetchUserAppliedGroups(user?.uid);
   const { data: recruitedGroups } = useFetchUserRecruitedGroups(user?.uid);
 

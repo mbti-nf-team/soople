@@ -5,6 +5,7 @@ import useGetUserToken from '@/hooks/api/auth/useGetUserToken';
 import Core from './Core';
 
 jest.mock('@/hooks/api/auth/useGetUserToken');
+jest.mock('@/hooks/api/auth/useRefreshToken');
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
     pathName: '/',

@@ -5,11 +5,11 @@ import { FirestoreError } from 'firebase/firestore';
 import { Alarm } from '@/models/alarm';
 import { getUserAlarm } from '@/services/api/alarm';
 
-import useGetUser from '../auth/useGetUser';
+import useFetchUserProfile from '../auth/useFetchUserProfile';
 import useCatchErrorWithToast from '../useCatchErrorWithToast';
 
 function useFetchAlarms() {
-  const { data: user } = useGetUser();
+  const { data: user } = useFetchUserProfile();
 
   const query = useQuery<Alarm[], FirestoreError>(['alarms'], () => getUserAlarm(user?.uid as string), {
     enabled: !!user,

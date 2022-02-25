@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useGetUser from '@/hooks/api/auth/useGetUser';
 import useAddComment from '@/hooks/api/comment/useAddComment';
 import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useFetchComments from '@/hooks/api/comment/useFetchComments';
@@ -12,7 +11,6 @@ import CommentsContainer from './CommentsContainer';
 
 jest.mock('@/hooks/api/comment/useFetchComments');
 jest.mock('@/hooks/api/comment/useDeleteComment');
-jest.mock('@/hooks/api/auth/useGetUser');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/comment/useAddComment');
 jest.mock('next/router', () => ({
@@ -30,9 +28,6 @@ describe('CommentsContainer', () => {
     jest.clearAllMocks();
 
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
-      data: given.user,
-    }));
-    (useGetUser as jest.Mock).mockImplementation(() => ({
       data: given.user,
     }));
     (useAddComment as jest.Mock).mockImplementation(() => ({

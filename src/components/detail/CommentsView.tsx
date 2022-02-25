@@ -1,15 +1,15 @@
 import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { User } from 'firebase/auth';
 
+import { Profile } from '@/models/auth';
 import { Comment } from '@/models/group';
 
 import CommentView from './CommentView';
 
 interface Props {
   comments: Comment[];
-  user: User | null;
+  user: Profile | null;
   onRemove: (commentId: string) => void;
   isLoading: boolean;
 }

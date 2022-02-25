@@ -1,24 +1,26 @@
 import { useAuthIdToken } from '@react-query-firebase/auth';
 import { IdTokenResult } from 'firebase/auth';
-import nookies from 'nookies';
+import { destroyCookie, setCookie } from 'nookies';
 
 import { firebaseAuth } from '@/services/firebase';
+import { removeToken } from '@/utils/utils';
 
 function useGetUserToken() {
-  useAuthIdToken(['token'], firebaseAuth, {}, {
+  const query = useAuthIdToken(['token'], firebaseAuth, {}, {
     onSuccess: onGetTokenSuccess,
   });
+
+  return query;
 }
 
 export default useGetUserToken;
 
 export const onGetTokenSuccess = (result: IdTokenResult | null) => {
   if (!result) {
-    nookies.destroy(null, 'token');
-    nookies.set(null, 'token', '', { path: '/' });
+    removeToken();
     return;
   }
 
-  nookies.destroy(null, 'token');
-  nookies.set(null, 'token', result.token, { path: '/' });
+  destroyCookie(null, 'token');
+  setCookie(null, 'token', result.token, { path: '/' });
 };

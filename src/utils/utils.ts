@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { destroyCookie, setCookie } from 'nookies';
 import sanitizeHtml from 'sanitize-html';
 
 import { Group } from '@/models/group';
@@ -58,3 +59,8 @@ export const removeAllHtml = (content: string) => sanitizeHtml(content, {
   allowedTags: [],
   allowedAttributes: {},
 });
+
+export const removeToken = () => {
+  destroyCookie(null, 'token');
+  setCookie(null, 'token', '', { path: '/' });
+};

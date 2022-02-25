@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 
-import useGetUser from '@/hooks/api/auth/useGetUser';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useSignOut from '@/hooks/api/auth/useSignOut';
 import palette from '@/styles/palette';
 
@@ -14,7 +14,7 @@ jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 jest.mock('recoil');
-jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/auth/useSignOut');
 
 describe('HeaderContainer', () => {
@@ -26,7 +26,7 @@ describe('HeaderContainer', () => {
 
     (useSignOut as jest.Mock).mockImplementation(() => ({ mutate }));
     (useSetRecoilState as jest.Mock).mockImplementation(() => setSignInModalVisible);
-    (useGetUser as jest.Mock).mockImplementation(() => ({
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: given.user,
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
@@ -67,8 +67,7 @@ describe('HeaderContainer', () => {
   context('로그인한 경우', () => {
     given('user', () => ({
       ...PROFILE_FIXTURE,
-      photoURL: '',
-      displayName: PROFILE_FIXTURE.name,
+      image: '',
     }));
 
     it('"팀 모집하기" 버튼이 나타나야만 한다', () => {
