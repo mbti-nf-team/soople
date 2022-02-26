@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 
+import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useSignOut from '@/hooks/api/auth/useSignOut';
 import palette from '@/styles/palette';
@@ -16,7 +17,7 @@ jest.mock('next/router', () => ({
 jest.mock('recoil');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/auth/useSignOut');
-
+jest.mock('@/hooks/api/alarm/useFetchAlertAlarms');
 describe('HeaderContainer', () => {
   const mutate = jest.fn();
   const setSignInModalVisible = jest.fn();
@@ -31,6 +32,9 @@ describe('HeaderContainer', () => {
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       pathname: '/',
+    }));
+    (useFetchAlertAlarms as jest.Mock).mockImplementation(() => ({
+      data: [1, 2, 3],
     }));
   });
 
