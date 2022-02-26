@@ -2,8 +2,8 @@ import {
   addDoc, getDocs, orderBy, query, serverTimestamp, where,
 } from 'firebase/firestore';
 
-import { AlarmForm } from '@/models/alarm';
-import { formatAlarm } from '@/utils/firestore';
+import { AlarmForm, AlertAlarm } from '@/models/alarm';
+import { formatAlarm, formatCreatedAt } from '@/utils/firestore';
 
 import { collectionRef } from '../firebase';
 
@@ -31,4 +31,16 @@ export const getUserAlarm = async (userUid: string) => {
   const alarm = Promise.all([...response.docs.map(formatAlarm)]);
 
   return alarm;
+};
+
+export const getUserAlertAlarm = async (userUid: string) => {
+  const getQuery = query(
+    collectionRef(ALARMS),
+    where('userUid', '==', userUid),
+    where('isViewed', '==', false),
+  );
+
+  const response = await getDocs(getQuery);
+
+  return response.docs.map(formatCreatedAt) as AlertAlarm[];
 };
