@@ -1,11 +1,14 @@
-import { signOut } from 'firebase/auth';
+import { getRedirectResult, signOut } from 'firebase/auth';
 import { getDoc, setDoc } from 'firebase/firestore';
 
-import PROFILE_FIXTURE from '../../../fixtures/profile';
+import FIXTURE_PROFILE from '../../../fixtures/profile';
 import { docRef } from '../firebase';
 
 import {
-  getUserProfile, postSignOut, postUserProfile,
+  getAuthRedirectResult,
+  getUserProfile,
+  postSignOut,
+  postUserProfile,
 } from './auth';
 
 jest.mock('../firebase');
@@ -27,9 +30,9 @@ describe('auth API', () => {
     });
 
     it('updateDoc 함수가 호출되어야만 한다', async () => {
-      await postUserProfile(PROFILE_FIXTURE);
+      await postUserProfile(FIXTURE_PROFILE);
 
-      expect(setDoc).toBeCalledWith(userRef, PROFILE_FIXTURE);
+      expect(setDoc).toBeCalledWith(userRef, FIXTURE_PROFILE);
     });
   });
 
@@ -68,6 +71,21 @@ describe('auth API', () => {
       await postSignOut();
 
       expect(signOut).toBeCalled();
+    });
+  });
+
+  describe('getAuthRedirectResult', () => {
+    beforeEach(() => {
+      (getRedirectResult as jest.Mock).mockImplementation(() => ({
+        user: FIXTURE_PROFILE,
+      }));
+    });
+
+    it('"getRedirectResult"이 호출되어야만 한다', async () => {
+      const user = await getAuthRedirectResult();
+
+      expect(getRedirectResult).toBeCalled();
+      expect(user).toEqual(FIXTURE_PROFILE);
     });
   });
 });

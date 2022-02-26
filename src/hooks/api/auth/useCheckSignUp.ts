@@ -1,14 +1,15 @@
 import { useMutation, useQueryClient } from 'react-query';
+import { useEffectOnce } from 'react-use';
 
 import { AuthError, IdTokenResult, User } from 'firebase/auth';
 import { useRouter } from 'next/router';
 
-import { Profile } from '@/models/auth';
 import { postSignOut } from '@/services/api/auth';
+import { loadItem, removeItem } from '@/services/storage';
 import { removeToken } from '@/utils/utils';
 
-function useSignOut() {
-  const { replace } = useRouter();
+function useCheckSignUp() {
+  const { pathname } = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<void, AuthError, void>(() => postSignOut(), {
@@ -16,13 +17,19 @@ function useSignOut() {
       removeToken();
       queryClient.setQueryData<User | null>(['user'], () => null);
       queryClient.setQueryData<IdTokenResult | null>(['token'], () => null);
-      queryClient.setQueryData<Profile | null>(['profile'], () => null);
-      queryClient.setQueryData<User | null>(['authRedirectResult'], () => null);
-      replace('/');
+      removeItem('isSignUp');
     },
+  });
+
+  useEffectOnce(() => {
+    const isSignUp = loadItem<boolean>('isSignUp');
+
+    if (pathname !== '/signup' && isSignUp === false) {
+      mutation.mutate();
+    }
   });
 
   return mutation;
 }
 
-export default useSignOut;
+export default useCheckSignUp;
