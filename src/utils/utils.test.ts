@@ -13,6 +13,7 @@ import {
   removeToken,
   stringToExcludeNull,
   tomorrow,
+  trueOrFalse,
   yesterday,
 } from './utils';
 
@@ -230,5 +231,23 @@ describe('removeToken', () => {
     removeToken();
 
     expect(setCookie).toBeCalledWith(null, 'token', '', { path: '/' });
+  });
+});
+
+describe('trueOrFalse', () => {
+  context('falsy한 값이면', () => {
+    it('false를 반환해야만 한다', () => {
+      const result = trueOrFalse('');
+
+      expect(result).toBe(false);
+    });
+  });
+
+  context('truthy한 값이면', () => {
+    it('true를 반환해야만 한다', () => {
+      const result = trueOrFalse('test');
+
+      expect(result).toBe(true);
+    });
   });
 });

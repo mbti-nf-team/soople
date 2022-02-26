@@ -64,3 +64,11 @@ export const removeToken = () => {
   destroyCookie(null, 'token');
   setCookie(null, 'token', '', { path: '/' });
 };
+
+export const trueOrFalse = (value?: string | null | number | boolean): boolean => {
+  if (!value) {
+    return false;
+  }
+
+  return true;
+};

@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback } from 'react';
+import { useEffectOnce, useLocalStorage } from 'react-use';
 
 import styled from '@emotion/styled';
 import { User } from 'firebase/auth';
@@ -15,8 +16,10 @@ import palette from '@/styles/palette';
 function SignUpContainer(): ReactElement {
   const { data: profile } = useFetchUserProfile();
   const { data: user } = useGetUser();
-
   const { mutate } = useSignUp();
+  const [, setIsSignUp] = useLocalStorage('isSignUp', false, {
+    raw: true,
+  });
 
   const onSubmit = useCallback((formData: SignUpAdditionalForm) => {
     const { email, uid, photoURL } = user as User;
@@ -36,6 +39,8 @@ function SignUpContainer(): ReactElement {
   if (!user) {
     return <div>로그인부터 진행해주세요!</div>;
   }
+
+  useEffectOnce(() => setIsSignUp(false));
 
   return (
     <SignUpFormLayout>

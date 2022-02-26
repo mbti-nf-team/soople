@@ -1,4 +1,6 @@
-import { signOut, updateProfile, User } from 'firebase/auth';
+import {
+  getRedirectResult, signOut, updateProfile, User,
+} from 'firebase/auth';
 import { getDoc, setDoc } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
@@ -32,4 +34,10 @@ export const getUserProfile = async (uid?: string): Promise<Profile | null> => {
 
 export const postSignOut = async () => {
   await signOut(firebaseAuth);
+};
+
+export const getAuthRedirectResult = async (): Promise<User | undefined> => {
+  const user = await getRedirectResult(firebaseAuth);
+
+  return user?.user;
 };
