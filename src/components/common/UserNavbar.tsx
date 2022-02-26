@@ -38,7 +38,7 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
       </Button>
       <Link href="/alarm" passHref>
         <AlarmLink className="alarm-icon">
-          {!isEmpty(alertAlarms.length) && (
+          {!isEmpty(alertAlarms) && (
             <AlertAlarmStatus data-testid="alarm-status">
               {alertAlarms.length}
             </AlertAlarmStatus>
