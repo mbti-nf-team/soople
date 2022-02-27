@@ -4,6 +4,7 @@ const zIndexes = {
   ConfirmModal: 20,
   FormModal: 20,
   TopNavigation: 18,
+  MyInfoNavTab: 15,
 };
 
 export default zIndexes;

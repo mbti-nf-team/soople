@@ -10,7 +10,7 @@ describe('ProfileImage', () => {
   ));
 
   context('프로필 이미지가 존재하지 않는 경우', () => {
-    it('"이미지 없음"이 나타나야 한다', () => {
+    it('기본 프로필 이미지가 나타나야 한다', () => {
       renderProfileImage('');
 
       expect(screen.getByTestId('default-profile-icon')).not.toBeNull();
@@ -21,7 +21,7 @@ describe('ProfileImage', () => {
     it('작성자의 이미지가 나타나야 한다', () => {
       renderProfileImage('test.com');
 
-      expect(screen.getByAltText('profile')).not.toBeNull();
+      expect(screen.getByAltText('프로필 이미지')).not.toBeNull();
     });
   });
 });

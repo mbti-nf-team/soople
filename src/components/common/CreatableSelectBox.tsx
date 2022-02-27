@@ -96,7 +96,7 @@ function CreatableSelectBox<Option>({
         options={options}
         defaultValue={defaultValue}
         onChange={(newValue) => handleChange(newValue as SelectOption<Option>)}
-        formatCreateLabel={(inputValue) => `직접 입력 : ${inputValue}`}
+        formatCreateLabel={(inputValue) => `입력 : ${inputValue}`}
         components={{ ClearIndicator }}
         data-testid="select"
         placeholder={placeholder}

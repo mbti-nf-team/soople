@@ -131,7 +131,7 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
   `}
 
   ${color === 'ghost' && css`
-    color: ${palette.foreground};
+    color: ${palette.accent7};
     background-color: initial;
   `}
 

@@ -18,7 +18,7 @@ function useSignOut() {
       queryClient.setQueryData<IdTokenResult | null>(['token'], () => null);
       queryClient.setQueryData<Profile | null>(['profile'], () => null);
       queryClient.setQueryData<User | null>(['authRedirectResult'], () => null);
-      replace('/');
+      replace('/', undefined, { shallow: true });
     },
   });
 

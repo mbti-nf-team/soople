@@ -36,6 +36,6 @@ describe('useSignOut', () => {
 
     expect(postSignOut).toBeCalled();
     expect(result.current.isSuccess).toBeTruthy();
-    expect(replace).toBeCalledWith('/');
+    expect(replace).toBeCalledWith('/', undefined, { shallow: true });
   });
 });
