@@ -95,7 +95,7 @@ describe('Button', () => {
         renderButton({ color: 'ghost' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          color: palette.foreground,
+          color: palette.accent7,
         });
       });
     });

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import type { ActiveMyInfoTab } from '@/containers/myInfo/MyInfoTabContainer';
 import { h4Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
+import zIndexes from '@/styles/zIndexes';
 
 interface Props {
   activeTab: ActiveMyInfoTab;
@@ -43,11 +44,11 @@ const StyledLink = styled.a<{ pathName: ActiveMyInfoTab; activeTab: ActiveMyInfo
     border-bottom: 2px solid transparent;
     color: ${palette.accent6};
   `)};
-
 `;
 
 const MyInfoNav = styled.nav`
   position: sticky;
+  z-index: ${zIndexes.MyInfoNavTab};
   top: 64px;
   box-shadow: 0px 1px 0px ${palette.accent2};
   background: ${palette.background};

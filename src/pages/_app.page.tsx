@@ -33,12 +33,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <RecoilRoot>
+          <Core />
+          <SignInModalContainer />
           {getLayout((
-            <>
-              <Core />
-              <SignInModalContainer />
-              <Component {...pageProps} />
-            </>
+            <Component {...pageProps} />
           ))}
         </RecoilRoot>
         <ReactQueryDevtools initialIsOpen={false} />
