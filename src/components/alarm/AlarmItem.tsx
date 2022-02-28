@@ -30,22 +30,22 @@ const groupCategory: { [K in Category | string]: string; } = {
 
 function AlarmItem({ alarm }: Props): ReactElement {
   const {
-    group, createdAt, user, type,
+    group, createdAt, type, applicant,
   } = alarm;
 
   const alarmThumbnail = {
     confirmed: <AlarmConfirmedIcon />,
     rejected: <AlarmRejectedIcon />,
-    applied: <ProfileImage src={user.image} />,
+    applied: <ProfileImage src={applicant?.image} />,
   };
 
   const alarmMessage: { [K in AlarmType]: string; } = {
     confirmed: `축하드려요 🎉  ${groupCategory[group.category]}의 팀원이 되었어요. 지금 바로 팀장이 보낸 메시지를 확인해볼까요?`,
     rejected: `아쉽게도 ${groupCategory[group.category]}의 팀원이 되지 않았어요.`,
-    applied: `${user.name}님이 팀원을 신청했어요.`,
+    applied: `${applicant?.name}님이 팀원을 신청했어요.`,
   };
 
-  const alarmUrl = type === 'applied' ? `detail/${group.groupId}/applicants` : `detail/${group.groupId}`;
+  const alarmUrl = type === 'applied' ? `/detail/${group.groupId}/applicants` : `/detail/${group.groupId}`;
 
   return (
     <Link href={alarmUrl} passHref>

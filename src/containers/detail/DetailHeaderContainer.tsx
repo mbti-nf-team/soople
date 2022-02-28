@@ -14,7 +14,7 @@ import { ApplicantForm } from '@/models/group';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
 
 function DetailHeaderContainer(): ReactElement {
-  const { data: profile } = useFetchUserProfile();
+  const { data: user } = useFetchUserProfile();
   const setSignInModalVisible = useSetRecoilState(signInModalVisibleState);
   const { data: group } = useFetchGroup();
   const { data: applicants, isLoading } = useFetchApplicants();
@@ -30,13 +30,13 @@ function DetailHeaderContainer(): ReactElement {
     ...applyFields,
     groupId: group.groupId,
     writerUid: group.writer.uid,
-    applicant: profile as Profile,
-  }), [group, profile, applyMutate]);
+    applicant: user as Profile,
+  }), [group, user, applyMutate]);
 
   return (
     <DetailHeaderSection group={group}>
       <DetailStatusButton
-        user={profile}
+        user={user}
         group={group}
         onApply={onApply}
         applicants={applicants}

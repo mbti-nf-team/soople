@@ -41,18 +41,31 @@ export const formatCreatedAt = (applicant: QueryDocumentSnapshot<DocumentData>) 
 
 export const formatAlarm = async (alarm: QueryDocumentSnapshot<DocumentData>) => {
   const {
-    createdAt, groupId, userUid, isViewed, type,
+    createdAt, groupId, userUid, isViewed, type, applicantUid,
   } = alarm.data() as AlarmResponse;
 
   const group = await getGroupDetail(groupId) as Group;
-  const user = await getUserProfile(userUid) as Profile;
 
-  return {
+  const convertedAlarm = {
     uid: alarm.id,
-    user,
+    userUid,
     group,
     type,
     isViewed,
     createdAt: timestampToString(createdAt),
+  };
+
+  if (applicantUid) {
+    const applicant = await getUserProfile(applicantUid) as Profile;
+
+    return {
+      ...convertedAlarm,
+      applicant,
+    } as Alarm;
+  }
+
+  return {
+    ...convertedAlarm,
+    applicant: null,
   } as Alarm;
 };

@@ -100,11 +100,13 @@ describe('ApplicationStatusHeaderContainer', () => {
                 groupId: GROUP_FIXTURE.groupId,
                 type: 'confirmed',
                 userUid: APPLICANT_FIXTURE.applicant.uid,
+                applicantUid: null,
               },
               {
                 groupId: GROUP_FIXTURE.groupId,
                 type: 'rejected',
                 userUid: APPLICANT_FIXTURE.applicant.uid,
+                applicantUid: null,
               },
             ],
           });
