@@ -9,14 +9,12 @@ import SignInError from '@/components/auth/SignInError';
 import SignInModal from '@/components/auth/SignInModal';
 import SocialButtonGroup from '@/components/auth/SocialButtonGroup';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useGetUser from '@/hooks/api/auth/useGetUser';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
 
 function SignInModalContainer(): ReactElement | null {
   const { query, replace } = useRouter();
   const [isVisible, setSignInModalVisible] = useRecoilState(signInModalVisibleState);
   const { data: profile } = useFetchUserProfile();
-  const { data: user } = useGetUser();
 
   const [error, setError] = useState<string>('');
 
@@ -33,7 +31,7 @@ function SignInModalContainer(): ReactElement | null {
     }
   }, [query]);
 
-  if (user && profile) {
+  if (profile) {
     return null;
   }
 

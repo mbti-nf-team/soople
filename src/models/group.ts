@@ -1,4 +1,5 @@
 import { Profile } from './auth';
+import { SelectOption } from '.';
 
 export type Category = 'study' | 'project';
 export type RecruitmentEndSetting = 'manual' | 'automatic';
@@ -19,6 +20,13 @@ export const initialWriteFieldsState: WriteFields = {
   recruitmentEndDate: '',
   recruitmentEndSetting: 'automatic',
 };
+
+export const positionOption: SelectOption<Position>[] = [
+  { label: '프론트엔드', value: '프론트엔드' },
+  { label: '백엔드', value: '백엔드' },
+  { label: '학생', value: '학생' },
+  { label: '디자인', value: '디자인' },
+];
 
 export interface WriteFields {
   title: string;

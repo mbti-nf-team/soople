@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 
 import { Applicant, ApplicantFields, Group } from '@/models/group';
-import { formatApplicant } from '@/utils/firestore';
+import { formatCreatedAt } from '@/utils/firestore';
 
 import { collectionRef, docRef } from '../firebase';
 
@@ -47,7 +47,7 @@ export const getApplicants = async (groupId: string) => {
 
   const response = await getDocs(getQuery);
 
-  return response.docs.map(formatApplicant) as Applicant[];
+  return response.docs.map(formatCreatedAt) as Applicant[];
 };
 
 export const getUserAppliedGroups = async (userUid: string) => {

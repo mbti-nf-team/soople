@@ -6,9 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { User } from 'firebase/auth';
 import * as yup from 'yup';
 
-import { SelectOption } from '@/models';
 import type { SignUpAdditionalForm } from '@/models/auth';
-import { Position } from '@/models/group';
+import { Position, positionOption } from '@/models/group';
 import { stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
@@ -19,13 +18,6 @@ interface Props {
   onSubmit: (formData: SignUpAdditionalForm) => void;
   fields: User;
 }
-
-const positionOption: SelectOption<Position>[] = [
-  { label: '프론트엔드', value: '프론트엔드' },
-  { label: '백엔드', value: '백엔드' },
-  { label: '학생', value: '학생' },
-  { label: '디자인', value: '디자인' },
-];
 
 const validationSchema = yup.object({
   name: yup.string().trim().required('닉네임을 입력해주세요.'),
@@ -77,8 +69,8 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         options={positionOption}
         labelText="포지션"
         onChange={setPosition}
-        placeholder="포지션을 선택하세요"
-        errorMessage="포지션을 선택하세요"
+        placeholder="포지션을 입력 또는 선택해주세요."
+        errorMessage="포지션을 입력 또는 선택해주세요."
       />
       <Input
         id="portfolioUrl"

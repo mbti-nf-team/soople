@@ -5,12 +5,12 @@ import wrapper from '@/test/ReactQueryWrapper';
 
 import ALARM_FIXTURE from '../../../../fixtures/alarm';
 import PROFILE_FIXTURE from '../../../../fixtures/profile';
-import useGetUser from '../auth/useGetUser';
+import useFetchUserProfile from '../auth/useFetchUserProfile';
 
 import useFetchAlarms from './useFetchAlarms';
 
 jest.mock('@/services/api/alarm');
-jest.mock('../auth/useGetUser');
+jest.mock('../auth/useFetchUserProfile');
 
 describe('useFetchAlarms', () => {
   const useFetchAlarmsHook = () => renderHook(() => useFetchAlarms(), { wrapper });
@@ -18,7 +18,7 @@ describe('useFetchAlarms', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (useGetUser as jest.Mock).mockImplementation(() => ({
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: PROFILE_FIXTURE,
     }));
     (getUserAlarm as jest.Mock).mockImplementation(() => (given.alarms));

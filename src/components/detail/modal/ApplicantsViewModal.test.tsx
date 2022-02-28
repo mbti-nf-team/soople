@@ -31,7 +31,7 @@ describe('ApplicantsViewModal', () => {
     it('클릭 이벤트가 발생해야만 한다', () => {
       renderApplicantsViewModal();
 
-      fireEvent.click(screen.getByText('닫기'));
+      fireEvent.click(screen.getByTestId('close-icon'));
 
       expect(handleClose).toBeCalled();
     });

@@ -64,12 +64,12 @@ describe('storage', () => {
           windowSpy.mockRestore();
         });
 
-        it('false를 반환해야만 한다', () => {
+        it('null를 반환해야만 한다', () => {
           windowSpy.mockImplementation(() => undefined);
 
           const result = loadItem('key');
 
-          expect(result).toBeFalsy();
+          expect(result).toBeNull();
         });
       });
     });
@@ -81,7 +81,7 @@ describe('storage', () => {
         const result = loadItem('key');
 
         expect(spyOnParse).toBeCalled();
-        expect(result).toBeFalsy();
+        expect(result).toBeNull();
       });
     });
   });

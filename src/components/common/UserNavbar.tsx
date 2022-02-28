@@ -1,13 +1,15 @@
 import React, {
-  ReactElement, useCallback, useEffect, useRef, useState,
+  memo, ReactElement, useRef, useState,
 } from 'react';
 import { Bell as AlarmIcon } from 'react-feather';
-import { useUnmount } from 'react-use';
+import { useClickAway } from 'react-use';
 
 import styled from '@emotion/styled';
-import { User } from 'firebase/auth';
 import Link from 'next/link';
+import { isEmpty } from 'ramda';
 
+import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
+import { Profile } from '@/models/auth';
 import palette from '@/styles/palette';
 
 import Button from './Button';
@@ -15,39 +17,16 @@ import DropDown from './DropDown';
 import ProfileImage from './ProfileImage';
 
 interface Props {
-  user: User;
+  user: Profile;
   signOut: () => void;
 }
 
 function UserNavbar({ user, signOut }: Props): ReactElement {
+  const { data: alertAlarms } = useFetchAlertAlarms();
   const [isVisible, setVisible] = useState<boolean>(false);
   const userIconRef = useRef<HTMLDivElement>(null);
 
-  const handleDropdownOutside = useCallback((e) => {
-    if (!userIconRef.current) {
-      return;
-    }
-
-    if (userIconRef.current === e.target || userIconRef.current.contains(e.target)) {
-      return;
-    }
-
-    setVisible(false);
-  }, [userIconRef]);
-
-  const addEventDropdown = useCallback((event: keyof DocumentEventMap) => {
-    document.addEventListener(event, handleDropdownOutside);
-  }, [handleDropdownOutside]);
-
-  useEffect(() => {
-    addEventDropdown('scroll');
-    addEventDropdown('mousedown');
-  }, [addEventDropdown]);
-
-  useUnmount(() => {
-    addEventDropdown('scroll');
-    addEventDropdown('mousedown');
-  });
+  useClickAway(userIconRef, () => setVisible(false), ['mousedown', 'scroll', 'touchstart']);
 
   return (
     <UserNavbarWrapper>
@@ -58,18 +37,23 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
         팀 모집하기
       </Button>
       <Link href="/alarm" passHref>
-        <a className="alarm-icon">
+        <AlarmLink className="alarm-icon">
+          {!isEmpty(alertAlarms) && (
+            <AlertAlarmStatus data-testid="alarm-status">
+              {alertAlarms.length}
+            </AlertAlarmStatus>
+          )}
           <AlarmIcon color={palette.accent6} />
-        </a>
+        </AlarmLink>
       </Link>
       <div className="profile-dropdown-wrapper" ref={userIconRef}>
         <ProfileImage
-          src={user.photoURL}
+          src={user.image}
           onClick={() => setVisible(!isVisible)}
         />
         <DropDown
           signOut={signOut}
-          name={user.displayName}
+          name={user.name}
           email={user.email as string}
           isVisible={isVisible}
         />
@@ -78,7 +62,7 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
   );
 }
 
-export default UserNavbar;
+export default memo(UserNavbar);
 
 const UserNavbarWrapper = styled.div`
   display: flex;
@@ -92,4 +76,23 @@ const UserNavbarWrapper = styled.div`
   .profile-dropdown-wrapper {
     position: relative;
   }
+`;
+
+const AlarmLink = styled.a`
+  position: relative;
+`;
+
+const AlertAlarmStatus = styled.div`
+  position: absolute;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  background-color: ${palette.warning};
+  color: ${palette.background};
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
 `;

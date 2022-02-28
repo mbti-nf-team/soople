@@ -1,19 +1,23 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
+
 import Header from './Header';
 
 describe('Header', () => {
   const handleClick = jest.fn();
 
   const renderHeader = () => render((
-    <Header
-      signOut={jest.fn()}
-      isScrollTop
-      user={given.user}
-      onClick={handleClick}
-      hasBackground
-      hasOnlyLogo={given.hasOnlyLogo}
-    />
+    <ReactQueryWrapper>
+      <Header
+        signOut={jest.fn()}
+        isScrollTop
+        user={given.user}
+        onClick={handleClick}
+        hasBackground
+        hasOnlyLogo={given.hasOnlyLogo}
+      />
+    </ReactQueryWrapper>
   ));
 
   context('signup 페이지인 경우', () => {
@@ -29,9 +33,9 @@ describe('Header', () => {
   context('세션이 존재한 경우', () => {
     given('user', () => ({
       uid: '1',
-      displayName: 'test',
+      name: 'test',
       email: 'test@test.com',
-      photoURL: 'http://image.com',
+      image: 'http://image.com',
     }));
 
     it('"팀 모집하기" 링크가 나타나야만 한다', () => {

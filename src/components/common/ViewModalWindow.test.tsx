@@ -1,20 +1,20 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import ModalWindow from './ModalWindow';
+import ViewModalWindow from './ViewModalWindow';
 
-describe('ModalWindow', () => {
+describe('ViewModalWindow', () => {
   const handleClose = jest.fn();
   const MockComponent = () => <>Test</>;
 
-  const renderModalWindow = () => render((
-    <ModalWindow
+  const renderViewModalWindow = () => render((
+    <ViewModalWindow
       size={given.size}
       isVisible={given.isVisible}
       title="제목"
       onClose={handleClose}
     >
       <MockComponent />
-    </ModalWindow>
+    </ViewModalWindow>
   ));
 
   context('isVisible이 true인 경우', () => {
@@ -27,7 +27,7 @@ describe('ModalWindow', () => {
       }));
 
       it('지정한 width값이어야만 한다', () => {
-        renderModalWindow();
+        renderViewModalWindow();
 
         expect(screen.getByTestId('modal-box')).toHaveStyle({
           width: '500px',
@@ -39,7 +39,7 @@ describe('ModalWindow', () => {
       given('size', () => undefined);
 
       it('width값은 540px이어야만 한다', () => {
-        renderModalWindow();
+        renderViewModalWindow();
 
         expect(screen.getByTestId('modal-box')).toHaveStyle({
           width: '540px',
@@ -47,11 +47,11 @@ describe('ModalWindow', () => {
       });
     });
 
-    describe('닫기 버튼을 클릭한다', () => {
+    describe('"x" 아이콘을 클릭한다', () => {
       it('클릭 이벤트가 호출되어야만 한다', () => {
-        renderModalWindow();
+        renderViewModalWindow();
 
-        fireEvent.click(screen.getByText('닫기'));
+        fireEvent.click(screen.getByTestId('close-icon'));
 
         expect(handleClose).toBeCalledTimes(1);
       });
@@ -62,7 +62,7 @@ describe('ModalWindow', () => {
     given('isVisible', () => false);
 
     it('아무것도 나타나지 않아야만 한다', () => {
-      const { container } = renderModalWindow();
+      const { container } = renderViewModalWindow();
 
       expect(container).toBeEmptyDOMElement();
     });

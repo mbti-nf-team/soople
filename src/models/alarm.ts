@@ -29,3 +29,7 @@ export interface AlarmResponse {
   isViewed: boolean;
   createdAt: string;
 }
+
+export interface AlertAlarm extends AlarmResponse {
+  uid: string;
+}

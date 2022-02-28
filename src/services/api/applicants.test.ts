@@ -3,7 +3,7 @@ import {
 } from 'firebase/firestore';
 
 import { ApplicantFields } from '@/models/group';
-import { formatApplicant } from '@/utils/firestore';
+import { formatCreatedAt } from '@/utils/firestore';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import GROUP_FIXTURE from '../../../fixtures/group';
@@ -70,7 +70,7 @@ describe('applicants API', () => {
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
         docs: [APPLICANT_FIXTURE],
       }));
-      (formatApplicant as jest.Mock).mockReturnValueOnce(APPLICANT_FIXTURE);
+      (formatCreatedAt as jest.Mock).mockReturnValueOnce(APPLICANT_FIXTURE);
     });
 
     it('신청자 리스트가 반환되어야만 한다', async () => {

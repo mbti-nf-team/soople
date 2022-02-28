@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useGetUser from '@/hooks/api/auth/useGetUser';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
 import SignInModalContainer from './SignInModalContainer';
@@ -10,7 +9,6 @@ import SignInModalContainer from './SignInModalContainer';
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
-jest.mock('@/hooks/api/auth/useGetUser');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('SignInModalContainer', () => {
@@ -19,9 +17,6 @@ describe('SignInModalContainer', () => {
   beforeEach(() => {
     mockReplace.mockClear();
 
-    (useGetUser as jest.Mock).mockImplementation(() => ({
-      data: given.auth,
-    }));
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: given.user,
     }));
@@ -39,7 +34,6 @@ describe('SignInModalContainer', () => {
 
   context('로그인한 사용자인 경우', () => {
     given('user', () => 'user');
-    given('auth', () => 'user');
 
     it('아무것도 렌더링되지 않아야 한다', () => {
       const { container } = renderSignInModalContainer();

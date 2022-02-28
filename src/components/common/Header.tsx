@@ -1,13 +1,13 @@
 import React, { memo, ReactElement } from 'react';
 
-import { User } from 'firebase/auth';
+import { Profile } from '@/models/auth';
 
 import Button from './Button';
 import HeaderWrapper from './HeaderWrapper';
 import UserNavbar from './UserNavbar';
 
 interface Props {
-  user: User | null
+  user: Profile | null
   onClick: () => void;
   signOut: () => void;
   isScrollTop: boolean;

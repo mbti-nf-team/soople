@@ -29,7 +29,7 @@ export const formatComment = (comment: QueryDocumentSnapshot<DocumentData>) => {
   };
 };
 
-export const formatApplicant = (applicant: QueryDocumentSnapshot<DocumentData>) => {
+export const formatCreatedAt = (applicant: QueryDocumentSnapshot<DocumentData>) => {
   const { createdAt } = applicant.data();
 
   return {

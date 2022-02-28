@@ -1,11 +1,11 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import useGetUser from '@/hooks/api/auth/useGetUser';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
 import WriteFormContainer from './WriteFormContainer';
 
-jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@remirror/react', () => ({
   useChainedCommands: jest.fn().mockImplementation(() => ({
     toggleBold: jest.fn().mockImplementation(() => ({
@@ -24,7 +24,7 @@ describe('WriteFormContainer', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (useGetUser as jest.Mock).mockImplementation(() => ({
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: given.user,
     }));
   });

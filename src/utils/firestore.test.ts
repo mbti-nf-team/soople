@@ -8,7 +8,7 @@ import PROFILE_FIXTURE from '../../fixtures/profile';
 
 import {
   formatAlarm,
-  formatApplicant, formatComment, formatGroup, timestampToString,
+  formatComment, formatCreatedAt, formatGroup, timestampToString,
 } from './firestore';
 
 jest.mock('@/services/api/group');
@@ -76,7 +76,7 @@ describe('formatComment', () => {
   });
 });
 
-describe('formatApplicant', () => {
+describe('formatCreatedAt', () => {
   const nowString = new Date().toString();
 
   const date = {
@@ -91,7 +91,7 @@ describe('formatApplicant', () => {
   } as unknown as QueryDocumentSnapshot<DocumentData>;
 
   it('포매팅된 신청자 정보가 반환되어야만 한다', () => {
-    const result = formatApplicant(settings);
+    const result = formatCreatedAt(settings);
 
     expect(result).toEqual({
       uid: '1',

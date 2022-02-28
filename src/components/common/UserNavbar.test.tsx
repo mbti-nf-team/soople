@@ -1,19 +1,27 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { User } from 'firebase/auth';
+
+import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import UserNavbar from './UserNavbar';
 
+jest.mock('@/hooks/api/alarm/useFetchAlertAlarms');
+
 describe('UserNavbar', () => {
+  beforeEach(() => {
+    (useFetchAlertAlarms as jest.Mock).mockImplementation(() => ({
+      data: given.alertAlarms || [],
+    }));
+  });
+
   const renderUserNavbar = () => render((
     <UserNavbar
       signOut={jest.fn()}
       user={{
         ...PROFILE_FIXTURE,
-        photoURL: '',
-        displayName: PROFILE_FIXTURE.name as string,
-      } as User}
+        image: '',
+      }}
     />
   ));
 
@@ -21,6 +29,17 @@ describe('UserNavbar', () => {
     renderUserNavbar();
 
     expect(screen.getByText('팀 모집하기')).toHaveAttribute('href', '/write');
+  });
+
+  context('읽지 않은 알람이 존재하는 경우', () => {
+    given('alertAlarms', () => [1, 2, 3]);
+
+    it('알람 상태가 나타나야만 한다', () => {
+      const { container } = renderUserNavbar();
+
+      expect(container).toHaveTextContent('3');
+      expect(screen.getByTestId('alarm-status')).toBeInTheDocument();
+    });
   });
 
   context('dropdown 메뉴가 보이지 않는 경우', () => {
