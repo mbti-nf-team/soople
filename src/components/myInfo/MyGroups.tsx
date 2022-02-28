@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import * as R from 'ramda';
+import { isEmpty } from 'ramda';
 
 import { Group } from '@/models/group';
 import { DetailLayout } from '@/styles/Layout';
@@ -15,7 +15,7 @@ interface Props {
 }
 
 function MyGroups({ groups, onClickGroup, children }: PropsWithChildren<Props>): ReactElement {
-  if (R.isEmpty(groups)) {
+  if (isEmpty(groups)) {
     return <>{children}</>;
   }
 

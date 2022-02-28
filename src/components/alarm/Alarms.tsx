@@ -1,6 +1,11 @@
 import React, { ReactElement } from 'react';
 
+import styled from '@emotion/styled';
+import { isEmpty } from 'ramda';
+
 import { Alarm } from '@/models/alarm';
+
+import EmptyStateArea from '../common/EmptyStateArea';
 
 import AlarmItem from './AlarmItem';
 
@@ -14,13 +19,28 @@ function Alarms({ alarms, isLoading }: Props): ReactElement {
     return <>로딩중...</>;
   }
 
+  if (isEmpty(alarms)) {
+    return (
+      <EmptyStateArea
+        emptyText="알림이 없어요."
+        marginTop="80px"
+      />
+    );
+  }
+
   return (
-    <>
+    <AlarmsWrapper>
       {alarms.map((alarm) => (
         <AlarmItem key={alarm.uid} alarm={alarm} />
       ))}
-    </>
+    </AlarmsWrapper>
   );
 }
 
 export default Alarms;
+
+const AlarmsWrapper = styled.div`
+  & > a:last-of-type {
+    border-bottom: none;
+  }
+`;

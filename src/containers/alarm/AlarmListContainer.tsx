@@ -4,12 +4,12 @@ import Alarms from '@/components/alarm/Alarms';
 import useFetchAlarms from '@/hooks/api/alarm/useFetchAlarms';
 
 function AlarmListContainer(): ReactElement {
-  const { data: alarms, isLoading } = useFetchAlarms();
+  const { data: alarms, isLoading, isIdle } = useFetchAlarms();
 
   return (
     <Alarms
       alarms={alarms}
-      isLoading={isLoading}
+      isLoading={isLoading || isIdle}
     />
   );
 }
