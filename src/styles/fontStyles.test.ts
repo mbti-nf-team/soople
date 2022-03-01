@@ -1,5 +1,5 @@
 import {
-  body1Font, body2Font, h2Font, h3Font, h4Font, subtitle1Font,
+  body1Font, body2Font, h2Font, h3Font, h4Font, subtitle1Font, subtitle2Font,
 } from './fontStyles';
 
 describe('h2Font', () => {
@@ -67,5 +67,13 @@ describe('subtitle1Font', () => {
     const result = subtitle1Font();
 
     expect(result.styles).toContain('font-size:0.825rem;');
+  });
+});
+
+describe('subtitle2Font', () => {
+  it('font-size는 0.7rem이어야만 한다', () => {
+    const result = subtitle2Font();
+
+    expect(result.styles).toContain('font-size:0.7rem;');
   });
 });

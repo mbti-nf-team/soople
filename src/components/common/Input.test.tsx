@@ -68,7 +68,7 @@ describe('Input', () => {
       });
     });
 
-    context('input의 값이 존재하고 disabled이 아니거다 readOnly가 아닌 경우', () => {
+    context('input의 값이 존재하고 disabled이 아니거나 readOnly가 아닌 경우', () => {
       given('disabled', () => false);
       given('defaultValue', () => 'Test');
 

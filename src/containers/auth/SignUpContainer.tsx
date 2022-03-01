@@ -1,5 +1,6 @@
-import React, { ReactElement, useCallback } from 'react';
-import { useEffectOnce, useLocalStorage } from 'react-use';
+import React, {
+  ReactElement, useCallback, useMemo,
+} from 'react';
 
 import styled from '@emotion/styled';
 import { User } from 'firebase/auth';
@@ -14,15 +15,16 @@ import Layout from '@/styles/Layout';
 import palette from '@/styles/palette';
 
 function SignUpContainer(): ReactElement {
-  const { data: profile } = useFetchUserProfile();
-  const { data: user } = useGetUser();
+  const profile = useFetchUserProfile();
+  const user = useGetUser();
   const { mutate } = useSignUp();
-  const [, setIsSignUp] = useLocalStorage('isSignUp', false, {
-    raw: true,
-  });
+
+  const isAllLoading = useMemo(() => [profile, user].some(({
+    isLoading,
+  }) => isLoading), [profile, user]);
 
   const onSubmit = useCallback((formData: SignUpAdditionalForm) => {
-    const { email, uid, photoURL } = user as User;
+    const { email, uid, photoURL } = user.data as User;
 
     mutate({
       email: email as string,
@@ -32,22 +34,24 @@ function SignUpContainer(): ReactElement {
     });
   }, [user, mutate]);
 
-  if (profile) {
+  if (isAllLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (profile.data) {
     return <div>이미 가입이 완료되었어요!</div>;
   }
 
-  if (!user) {
+  if (!user.data) {
     return <div>로그인부터 진행해주세요!</div>;
   }
-
-  useEffectOnce(() => setIsSignUp(false));
 
   return (
     <SignUpFormLayout>
       <Title>시작하기</Title>
       <h4>코너스를 시작하기 위해 정보를 입력해주세요.</h4>
       <SignUpForm
-        fields={user}
+        fields={user.data}
         onSubmit={onSubmit}
       />
     </SignUpFormLayout>

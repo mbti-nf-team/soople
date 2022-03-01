@@ -22,9 +22,11 @@ describe('SignUpContainer', () => {
 
     (useGetUser as jest.Mock).mockImplementation(() => ({
       data: given.auth,
+      isLoading: given.isLoading,
     }));
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: given.user,
+      isLoading: given.isLoading,
     }));
     (useSignUp as jest.Mock).mockImplementation(() => ({ mutate }));
   });
@@ -36,6 +38,16 @@ describe('SignUpContainer', () => {
   const renderSignUpContainer = () => render((
     <SignUpContainer />
   ));
+
+  context('로딩중인 경우', () => {
+    given('isLoading', () => (true));
+
+    it('"로딩중..."문구가 나타나야만 한다', () => {
+      const { container } = renderSignUpContainer();
+
+      expect(container).toHaveTextContent('로딩중...');
+    });
+  });
 
   context('로그인한 사용자인 경우', () => {
     given('user', () => (PROFILE_FIXTURE));

@@ -113,6 +113,7 @@ const InputField = styled.input<{ isError?: boolean; hasValue: boolean; }>`
   width: 100%;
   height: 48px;
   outline: none;
+  color: ${palette.foreground};
   background-color: ${palette.background};
   border-radius: 8px;
   box-sizing: border-box;
@@ -124,11 +125,12 @@ const InputField = styled.input<{ isError?: boolean; hasValue: boolean; }>`
   }
 
   &:disabled {
+    color: ${palette.accent6};
     background: ${palette.accent1};
   }
 
   &:read-only {
-    color: ${palette.accent5};
+    color: ${palette.accent6};
     background: ${palette.accent1};
   }
 

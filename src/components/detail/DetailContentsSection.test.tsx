@@ -10,6 +10,7 @@ describe('DetailContentsSection', () => {
       group={{
         ...GROUP_FIXTURE,
         tags: ['javascript'],
+        message: given.message,
       }}
       isGroupMember={given.isGroupMember}
     />
@@ -25,10 +26,24 @@ describe('DetailContentsSection', () => {
   context('isGroupMember가 true인 경우', () => {
     given('isGroupMember', () => true);
 
-    it('"멤버들에게 보내는 메시지"가 나타나야만 한다', () => {
-      const { container } = renderDetailContentsSection();
+    context('메시지가 존재하는 경우', () => {
+      given('message', () => '메시지');
 
-      expect(container).toHaveTextContent('멤버들에게 보내는 메시지');
+      it('"멤버들에게 보내는 메시지"가 나타나야만 한다', () => {
+        const { container } = renderDetailContentsSection();
+
+        expect(container).toHaveTextContent('멤버들에게 보내는 메시지');
+      });
+    });
+
+    context('메시지가 존재하지 않는 경우', () => {
+      given('message', () => '');
+
+      it('"멤버들에게 보내는 메시지가 없어요."가 나타나야만 한다', () => {
+        const { container } = renderDetailContentsSection();
+
+        expect(container).toHaveTextContent('멤버들에게 보내는 메시지가 없어요.');
+      });
     });
   });
 });

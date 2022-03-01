@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { SelectOption } from '@/models';
 import { Profile } from '@/models/auth';
 import { Position, positionOption } from '@/models/group';
+import palette from '@/styles/palette';
 import { stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
@@ -53,7 +54,7 @@ function SettingForm({ user }: Props): ReactElement {
         placeholder="URL을 입력하세요"
         defaultValue={stringToExcludeNull(user?.portfolioUrl)}
       />
-      <Button color="primary" size="large">
+      <Button color="success" size="large">
         저장하기
       </Button>
       <WithdrawalButton color="ghost" size="medium">
@@ -66,5 +67,6 @@ function SettingForm({ user }: Props): ReactElement {
 export default SettingForm;
 
 const WithdrawalButton = styled(Button)`
+  color: ${palette.accent6};
   margin-top: 12px;
 `;
