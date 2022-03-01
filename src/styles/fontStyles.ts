@@ -39,3 +39,9 @@ export const subtitle1Font = (isBold = false) => css`
   font-size: 0.825rem;
   line-height: 1.25rem;
 `;
+
+export const subtitle2Font = (isBold = false) => css`
+  ${fontWeight(isBold)};
+  font-size: 0.7rem;
+  line-height: 1rem;
+`;

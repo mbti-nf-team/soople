@@ -81,7 +81,7 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         onClear={() => setValue('portfolioUrl', '')}
         type="url"
       />
-      <Button type="submit" color="primary" size="large">확인</Button>
+      <Button type="submit" color="success" size="large">확인</Button>
     </SignUpFormWrapper>
   );
 }

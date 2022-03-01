@@ -10,6 +10,7 @@ import { isEmpty } from 'ramda';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 import { Profile } from '@/models/auth';
+import { subtitle2Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
 import Button from './Button';
@@ -54,8 +55,9 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
         <DropDown
           signOut={signOut}
           name={user.name}
-          email={user.email as string}
+          email={user.email}
           isVisible={isVisible}
+          numberAlertAlarms={alertAlarms.length}
         />
       </div>
     </UserNavbarWrapper>
@@ -83,10 +85,8 @@ const AlarmLink = styled.a`
 `;
 
 const AlertAlarmStatus = styled.div`
+  ${subtitle2Font(true)}
   position: absolute;
-  font-weight: 600;
-  font-size: 11px;
-  line-height: 16px;
   text-align: center;
   background-color: ${palette.warning};
   color: ${palette.background};

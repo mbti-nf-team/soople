@@ -11,6 +11,7 @@ describe('DropDown', () => {
     <DropDown
       name="test"
       email="test@test.com"
+      numberAlertAlarms={given.numberAlertAlarms}
       isVisible={given.isVisible}
       signOut={handleSignOut}
     />
@@ -26,6 +27,17 @@ describe('DropDown', () => {
         fireEvent.click(screen.getByText('로그아웃'));
 
         expect(handleSignOut).toBeCalledTimes(1);
+      });
+    });
+
+    context('읽지 않은 알람이 존재하는 경우', () => {
+      given('numberAlertAlarms', () => 3);
+
+      it('알람 상태가 나타나야만 한다', () => {
+        const { container } = renderDropDown();
+
+        expect(container).toHaveTextContent('3');
+        expect(screen.getByTestId('dropdown-alarm-status')).toBeInTheDocument();
       });
     });
   });
