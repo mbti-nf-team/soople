@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useEffectOnce, useLocalStorage } from 'react-use';
 
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
@@ -27,13 +28,14 @@ const validationSchema = yup.object({
 function SignUpForm({ onSubmit, fields }: Props): ReactElement {
   const { displayName, email } = fields;
   const {
-    register, handleSubmit, setValue, formState: {
-      errors,
-    },
-  } = useForm<SignUpAdditionalForm>({
-    resolver: yupResolver(validationSchema),
+    register, handleSubmit, setValue, formState: { errors },
+  } = useForm<SignUpAdditionalForm>({ resolver: yupResolver(validationSchema) });
+  const [, setIsSignUp] = useLocalStorage('isSignUp', false, {
+    raw: true,
   });
   const [position, setPosition] = useState<Position>();
+
+  useEffectOnce(() => setIsSignUp(false));
 
   const handleSubmitAction = (formData: SignUpAdditionalForm) => {
     if (!position) {
