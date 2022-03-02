@@ -27,11 +27,11 @@ describe('EditorToolbar', () => {
     <EditorToolbar />
   ));
 
-  describe('"B" 버튼을 클릭한다', () => {
+  describe('bold 버튼을 클릭한다', () => {
     it('클릭이벤트가 발생해야만 한다', () => {
       renderEditorToolbar();
 
-      fireEvent.click(screen.getByText('B'));
+      fireEvent.click(screen.getByTestId('bold-button'));
 
       expect(useChainedCommands).toBeCalledTimes(1);
     });
@@ -40,11 +40,11 @@ describe('EditorToolbar', () => {
   context('active.bold가 true인 경우', () => {
     given('isBold', () => true);
 
-    it('"B" 버튼의 fontWeight가 "bold"가 되어야만 한다', () => {
+    it('bold 버튼의 배경색이 "rgba(0, 0, 0, 0.1)"가 되어야만 한다', () => {
       renderEditorToolbar();
 
-      expect(screen.getByText('B')).toHaveStyle({
-        'font-weight': 'bold',
+      expect(screen.getByTestId('bold-button')).toHaveStyle({
+        background: 'rgba(0, 0, 0, 0.1)',
       });
     });
   });
