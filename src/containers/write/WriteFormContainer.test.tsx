@@ -6,19 +6,7 @@ import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 import WriteFormContainer from './WriteFormContainer';
 
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
-jest.mock('@remirror/react', () => ({
-  useChainedCommands: jest.fn().mockImplementation(() => ({
-    toggleBold: jest.fn().mockImplementation(() => ({
-      focus: jest.fn().mockImplementation(() => ({
-        run: jest.fn(),
-      })),
-    })),
-  })),
-  useActive: jest.fn().mockImplementation(() => ({
-    bold: jest.fn(),
-  })),
-  EditorComponent: () => <>mockComponent</>,
-}));
+jest.mock('@remirror/react');
 
 describe('WriteFormContainer', () => {
   beforeEach(() => {
