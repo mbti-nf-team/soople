@@ -4,19 +4,7 @@ import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 
 import WriteForm from './WriteForm';
 
-jest.mock('@remirror/react', () => ({
-  useChainedCommands: jest.fn().mockImplementation(() => ({
-    toggleBold: jest.fn().mockImplementation(() => ({
-      focus: jest.fn().mockImplementation(() => ({
-        run: jest.fn(),
-      })),
-    })),
-  })),
-  useActive: jest.fn().mockImplementation(() => ({
-    bold: jest.fn(),
-  })),
-  EditorComponent: () => <>mockComponent</>,
-}));
+jest.mock('@remirror/react');
 
 describe('WriteForm', () => {
   const handleChange = jest.fn();

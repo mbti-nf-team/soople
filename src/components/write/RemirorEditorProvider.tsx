@@ -12,6 +12,7 @@ import {
   AnnotationExtension,
   BlockquoteExtension,
   BoldExtension,
+  BulletListExtension,
   CodeBlockExtension,
   CodeExtension,
   DropCursorExtension,
@@ -20,7 +21,9 @@ import {
   ImageExtension,
   ItalicExtension,
   LinkExtension,
+  OrderedListExtension,
   StrikeExtension,
+  UnderlineExtension,
   WhitespaceExtension,
 } from 'remirror/extensions';
 
@@ -39,12 +42,15 @@ const extensions = () => [
   new ImageExtension({ enableResizing: true }),
   new DropCursorExtension({ color: palette.success }),
   new BlockquoteExtension(),
+  new BulletListExtension(),
+  new OrderedListExtension(),
   new CodeBlockExtension({
     supportedLanguages: [css, javascript, json, markdown, typescript, java],
     syntaxTheme: 'dracula',
   }),
   new HorizontalRuleExtension(),
   new CodeExtension(),
+  new UnderlineExtension(),
 ];
 
 function RemirorEditorProvider({ children }: PropsWithChildren<unknown>): ReactElement {
