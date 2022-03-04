@@ -4,6 +4,12 @@ const fontWeight = (isBold: boolean) => css`
   font-weight: ${isBold ? '600' : 'normal'};
 `;
 
+export const h1Font = (isBold = false) => css`
+  font-weight: ${isBold ? 'bold' : 'normal'};
+  font-size: 2.5rem;
+  line-height: 3.5rem;
+`;
+
 export const h2Font = (isBold = false) => css`
   font-weight: ${isBold ? 'bold' : 'normal'};
   font-size: 2rem;

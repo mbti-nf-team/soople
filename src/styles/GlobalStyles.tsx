@@ -6,7 +6,9 @@ import { useRouter } from 'next/router';
 
 import { hasBackground } from '@/utils/utils';
 
-import { h2Font, h3Font, h4Font } from './fontStyles';
+import {
+  h1Font, h2Font, h3Font, h4Font,
+} from './fontStyles';
 import palette from './palette';
 
 export const setGlobalStyles = (pathname: string) => css`
@@ -35,6 +37,10 @@ export const setGlobalStyles = (pathname: string) => css`
     }
   }
 
+  code {
+    font-family: Menlo, Monaco, Consolas, monospace;
+  }
+
   h4 {
     ${h4Font()};
   }
@@ -45,6 +51,10 @@ export const setGlobalStyles = (pathname: string) => css`
 
   h2 {
     ${h2Font(true)};
+  }
+
+  h1 {
+    ${h1Font(true)};
   }
 
   :disabled {

@@ -86,6 +86,13 @@ const Title = styled.div`
 const Content = styled.div`
   ${body2Font()};
   color: ${palette.accent7};
+  word-break: break-all;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 const PostMetaData = styled.div`

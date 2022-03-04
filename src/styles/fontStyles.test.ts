@@ -1,6 +1,24 @@
 import {
-  body1Font, body2Font, h2Font, h3Font, h4Font, subtitle1Font, subtitle2Font,
+  body1Font, body2Font, h1Font, h2Font, h3Font, h4Font, subtitle1Font, subtitle2Font,
 } from './fontStyles';
+
+describe('h1Font', () => {
+  context('true인 경우', () => {
+    it('"font-weight" 속성은 bold여야만 한다', () => {
+      const result = h1Font(true);
+
+      expect(result.styles).toContain('font-weight:bold;');
+    });
+  });
+
+  context('false인 경우', () => {
+    it('"font-weight" 속성은 normal여야만 한다', () => {
+      const result = h1Font();
+
+      expect(result.styles).toContain('font-weight:normal;');
+    });
+  });
+});
 
 describe('h2Font', () => {
   context('true인 경우', () => {
