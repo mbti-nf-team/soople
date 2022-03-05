@@ -1,10 +1,20 @@
 import { render } from '@testing-library/react';
 
+import { filteredWithSanitizeHtml } from '@/utils/filter';
+
 import GROUP_FIXTURE from '../../../fixtures/group';
 
 import DetailContentsSection from './DetailContentsSection';
 
+jest.mock('@/utils/filter');
+
 describe('DetailContentsSection', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    (filteredWithSanitizeHtml as jest.Mock).mockImplementation(() => GROUP_FIXTURE.content);
+  });
+
   const renderDetailContentsSection = () => render((
     <DetailContentsSection
       group={{

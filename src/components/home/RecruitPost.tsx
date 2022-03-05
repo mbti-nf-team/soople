@@ -10,7 +10,8 @@ import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body2Font, h4Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
-import { emptyAThenB, removeAllHtml } from '@/utils/utils';
+import { removeAllHtml } from '@/utils/filter';
+import { emptyAThenB } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
 

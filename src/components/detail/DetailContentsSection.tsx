@@ -1,10 +1,15 @@
 import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
+import rehypeParse from 'rehype-parse';
+import rehypeStringify from 'rehype-stringify';
+import { unified } from 'unified';
 
 import { Group } from '@/models/group';
 import { body2Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
+import { filteredWithSanitizeHtml } from '@/utils/filter';
+import rehypePrism from '@/utils/rehypePrism';
 
 import AlertIcon from '../../assets/icons/alert.svg';
 import Tag from '../common/Tag';
@@ -16,6 +21,13 @@ interface Props {
 
 function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
   const { content, tags } = group;
+
+  const convertedCleanHtml = filteredWithSanitizeHtml(unified()
+    .use(rehypeParse)
+    .use(rehypePrism)
+    .use(rehypeStringify)
+    .processSync(content)
+    .toString());
 
   return (
     <DetailContentsWrapper>
@@ -38,7 +50,7 @@ function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
             )}
         </MemberMessageBlock>
       )}
-      <DetailContentWrapper dangerouslySetInnerHTML={{ __html: content }} />
+      <DetailContentWrapper dangerouslySetInnerHTML={{ __html: convertedCleanHtml }} />
       <TagsWrapper>
         {tags.map((tag) => (
           <Tag

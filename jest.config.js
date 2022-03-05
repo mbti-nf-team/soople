@@ -12,6 +12,7 @@ module.exports = {
     '<rootDir>.*/public',
     '<rootDir>/.next/',
     'cypress',
+    'rehypePrism.js',
   ],
   testEnvironment: 'jsdom',
 };
