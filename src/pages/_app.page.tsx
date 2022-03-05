@@ -10,6 +10,8 @@ import { RecoilRoot } from 'recoil';
 import Core from '@/components/common/Core';
 import SignInModalContainer from '@/containers/auth/SignInModalContainer';
 
+import '../assets/css/dracula-prism.min.css';
+
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
 }

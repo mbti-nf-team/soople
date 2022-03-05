@@ -14,6 +14,7 @@ import useFetchComments from '@/hooks/api/comment/useFetchComments';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import { getGroupDetail } from '@/services/api/group';
 import InjectMockProviders from '@/test/InjectMockProviders';
+import { filteredWithSanitizeHtml } from '@/utils/filter';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import COMMENT_FIXTURE from '../../../fixtures/comment';
@@ -29,6 +30,7 @@ jest.mock('@/hooks/api/comment/useAddComment');
 jest.mock('@/hooks/api/comment/useDeleteComment');
 jest.mock('@/hooks/api/comment/useFetchComments');
 jest.mock('@/hooks/api/group/useFetchGroup');
+jest.mock('@/utils/filter');
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
@@ -43,6 +45,8 @@ describe('DetailPage', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    (filteredWithSanitizeHtml as jest.Mock).mockImplementation(() => GROUP_FIXTURE.content);
 
     (useFetchComments as jest.Mock).mockImplementation(() => ({
       data: [COMMENT_FIXTURE],

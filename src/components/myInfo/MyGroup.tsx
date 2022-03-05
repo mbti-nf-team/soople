@@ -15,7 +15,7 @@ import {
   body1Font, body2Font, h3Font,
 } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
-import { removeAllHtml } from '@/utils/utils';
+import { removeAllHtml } from '@/utils/filter';
 
 import 'dayjs/locale/ko';
 
