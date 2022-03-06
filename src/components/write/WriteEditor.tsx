@@ -1,8 +1,17 @@
 import React, { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { EditorComponent } from '@remirror/react';
-import { AllStyledComponent } from '@remirror/styles/emotion';
+import { EditorComponent, EmojiPopupComponent } from '@remirror/react';
+import {
+  CoreStyledComponent,
+  extensionEmojiStyledCss,
+  extensionGapCursorStyledCss,
+  extensionImageStyledCss,
+  extensionListStyledCss,
+  extensionPlaceholderStyledCss,
+  extensionPositionerStyledCss,
+  extensionWhitespaceStyledCss,
+} from '@remirror/styles/emotion';
 
 import EditorToolbar from '@/components/write/EditorToolbar';
 import { body1Font } from '@/styles/fontStyles';
@@ -13,6 +22,7 @@ function WriteEditor(): ReactElement {
     <>
       <EditorToolbar />
       <RemirrorEditorWrapper>
+        <EmojiPopupComponent />
         <EditorComponent />
       </RemirrorEditorWrapper>
     </>
@@ -21,7 +31,14 @@ function WriteEditor(): ReactElement {
 
 export default WriteEditor;
 
-const RemirrorEditorWrapper = styled(AllStyledComponent)`
+const RemirrorEditorWrapper = styled(CoreStyledComponent)`
+  ${extensionListStyledCss}
+  ${extensionGapCursorStyledCss}
+  ${extensionImageStyledCss}
+  ${extensionPlaceholderStyledCss}
+  ${extensionEmojiStyledCss}
+  ${extensionWhitespaceStyledCss}
+  ${extensionPositionerStyledCss}
   border-bottom: 1px solid ${palette.accent2};
   margin-bottom: 24px;
 
@@ -50,9 +67,14 @@ const RemirrorEditorWrapper = styled(AllStyledComponent)`
   }
 
   .ProseMirror blockquote {
-    border-left: 4px solid ${palette.accent3} !important;
-    font-style: normal !important;
-    padding-left: 15px !important;
+    border-left: 4px solid ${palette.accent3};
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 15px;
+
+    & p {
+      color: ${palette.accent5}
+    }
   }
 
   .ProseMirror ::selection {
@@ -67,6 +89,10 @@ const RemirrorEditorWrapper = styled(AllStyledComponent)`
     ${body1Font()}
     font-style: normal;
     color: ${palette.accent4};
+  }
+
+  .remirror-emoji-popup-highlight {
+    background-color: ${palette.accent1};
   }
 
   & >.remirror-editor-wrapper {

@@ -6,6 +6,7 @@ import { Applicant } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
+import styledAnchor from '@/styles/styledAnchor';
 import { emptyAThenB, stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
@@ -100,19 +101,10 @@ const ApplicantTextWrapper = styled.div`
 `;
 
 const MetadataWrapper = styled.div`
+  ${styledAnchor}
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  & > a {
-    color: ${palette.success10};
-    transition: color 0.1s ease-in-out;
-
-    &:hover {
-      color: ${palette.success};
-      text-decoration: underline;
-    }
-  }
 `;
 
 const IntroduceBlock = styled.div`

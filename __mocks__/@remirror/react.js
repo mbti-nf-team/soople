@@ -55,3 +55,5 @@ export const useActive = jest.fn().mockImplementation(() => ({
 }));
 
 export const EditorComponent = () => <>mockComponent</>;
+
+export const EmojiPopupComponent = () => <>mockComponent</>;
