@@ -7,6 +7,10 @@ describe('FormModal', () => {
   const handleClose = jest.fn();
   const MockComponent = () => <>Test</>;
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const renderFormModal = () => render((
     <FormModal
       size={given.size}
@@ -63,6 +67,16 @@ describe('FormModal', () => {
         fireEvent.submit(screen.getByText('확인'));
 
         expect(handleSubmit).toBeCalledTimes(1);
+      });
+    });
+
+    context('Enter 키로 submit 했을 경우', () => {
+      it('submit 이벤트가 호출되지 않아야만 한다', async () => {
+        renderFormModal();
+
+        fireEvent.keyDown(screen.getByText('확인'), { key: 'Enter', code: 'Enter', charCode: 13 });
+
+        expect(handleSubmit).not.toBeCalled();
       });
     });
   });

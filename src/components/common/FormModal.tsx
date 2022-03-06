@@ -1,4 +1,7 @@
-import React, { FormEvent, PropsWithChildren, ReactElement } from 'react';
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import React, {
+  FormEvent, KeyboardEvent, PropsWithChildren, ReactElement,
+} from 'react';
 import { X as CloseSvg } from 'react-feather';
 
 import { css } from '@emotion/react';
@@ -30,10 +33,12 @@ function FormModal({
     return null;
   }
 
+  const checkKeyDown = (e: KeyboardEvent<HTMLFormElement>) => e.code === 'Enter' && e.preventDefault();
+
   return (
     <FormModalWrapper>
       <FormModalBox size={size} isVisible={isVisible} data-testid="form-modal-box">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} onKeyDown={checkKeyDown}>
           <HeaderWrapper>
             <h4>{title}</h4>
             <CloseIcon

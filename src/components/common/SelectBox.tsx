@@ -53,7 +53,6 @@ function SelectBox<Option>({
         />
       )}
       <StyledSelect
-        id={id}
         instanceId={id}
         inputId={id}
         classNamePrefix="select"

@@ -1,26 +1,71 @@
 import React, {
-  ChangeEvent, ReactElement, useEffect, useState,
+  ChangeEvent, FormEvent, ReactElement, useEffect, useState,
 } from 'react';
 
-import { KeyPair } from '@/models';
-import { WriteFields } from '@/models/group';
+import styled from '@emotion/styled';
+
+import { KeyPair, SelectOption } from '@/models';
+import {
+  Category, RecruitmentEndSetting, WriteFields,
+} from '@/models/group';
+import { subtitle1Font } from '@/styles/fontStyles';
+import palette from '@/styles/palette';
 import { stringToExcludeNull } from '@/utils/utils';
 
-import Select from '../common/Select';
+import FormModal from '../common/FormModal';
+import Input from '../common/Input';
+import SelectBox from '../common/SelectBox';
+import Textarea from '../common/Textarea';
+
+import ThumbnailUpload from './ThumbnailUpload';
 
 interface Props {
   fields: WriteFields;
   onChangeFields: (form: KeyPair<WriteFields>) => void;
+  onSubmit: () => void;
+  isVisible: boolean;
+  onClose: () => void;
 }
 
-function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
-  const [isEndDateDisabled, setEndDateDisabled] = useState<boolean>(false);
-  const { category, recruitmentEndSetting, recruitmentEndDate } = fields;
+const categoryOption: SelectOption<Category>[] = [
+  { label: '스터디', value: 'study' },
+  { label: '프로젝트', value: 'project' },
+];
 
-  const handleChangeFields = (e: ChangeEvent<HTMLInputElement| HTMLSelectElement>) => {
+const recruitmentEndSettingOption: SelectOption<RecruitmentEndSetting>[] = [
+  { label: '입력한 시간에 자동으로 종료', value: 'automatic' },
+  { label: '수동으로 마감', value: 'manual' },
+];
+
+function PublishModalForm({
+  fields, onChangeFields, onSubmit, onClose, isVisible,
+}: Props): ReactElement {
+  const [isEndDateDisabled, setEndDateDisabled] = useState<boolean>(false);
+  const {
+    recruitmentEndSetting, recruitmentEndDate, title, shortDescription,
+  } = fields;
+
+  const defaultRecruitmentEndSetting = recruitmentEndSettingOption.find(({
+    value,
+  }) => value === recruitmentEndSetting);
+
+  const handleChangeFields = (e: ChangeEvent<HTMLInputElement| HTMLTextAreaElement>) => {
     const { value, name } = e.target;
 
     onChangeFields({ [name]: value });
+  };
+
+  const handleCategoryChange = (selectedCategory: Category) => onChangeFields({
+    category: selectedCategory,
+  });
+
+  const handleSettingChange = (selectedSetting: RecruitmentEndSetting) => onChangeFields({
+    recruitmentEndSetting: selectedSetting,
+  });
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit();
   };
 
   useEffect(() => {
@@ -34,55 +79,104 @@ function PublishModalForm({ fields, onChangeFields }: Props): ReactElement {
   }, [recruitmentEndSetting]);
 
   return (
-    <div>
-      <div>
-        <label htmlFor="category">
-          분류
-          <Select
+    <FormModal
+      isVisible={isVisible}
+      onClose={onClose}
+      title={`${title} 등록`}
+      onSubmit={handleSubmit}
+      confirmText="등록하기"
+    >
+      <PublishModalFormWrapper>
+        <DescriptionWrapper>
+          <ThumbnailUpload />
+
+          <Textarea
+            id="shortDescription"
+            name="shortDescription"
+            placeholder="짧은 소개글을 입력하세요"
+            labelText="소개글"
+            height="128px"
+            onChange={handleChangeFields}
+            value={shortDescription}
+          />
+          <div className="short-description-length">{`${shortDescription.length} / 100`}</div>
+        </DescriptionWrapper>
+
+        <PublishFormWrapper>
+          <SelectBox
             id="category"
-            value={category}
-            isDirect={false}
-            onChange={handleChangeFields}
-            defaultOption="분류를 선택해주세요."
-            options={{
-              study: '스터디',
-              project: '프로젝트',
-            }}
+            labelText="분류"
+            placeholder="분류를 선택해주세요."
+            options={categoryOption}
+            onChange={handleCategoryChange}
           />
-        </label>
-      </div>
 
-      <div>
-        <label htmlFor="recruitmentEndSetting">
-          모집 종료 설정
-          <Select
+          <SelectBox
             id="recruitmentEndSetting"
-            value={recruitmentEndSetting}
-            isDirect={false}
-            onChange={handleChangeFields}
-            options={{
-              automatic: '입력한 시간에 자동으로 종료',
-              manual: '수동으로 종료',
-            }}
+            labelText="모집 종료 설정"
+            placeholder="모집 종료 설정을 선택해주세요"
+            options={recruitmentEndSettingOption}
+            defaultValue={defaultRecruitmentEndSetting}
+            onChange={handleSettingChange}
           />
-        </label>
-      </div>
 
-      <div>
-        <label htmlFor="recruitmentEndDate">
-          모집 종료일시
-          <input
+          <RecruitmentEndDateInput
             id="recruitmentEndDate"
             name="recruitmentEndDate"
+            labelText="모집 마감일시"
+            placeholder="모집 마감일시를 입력하세요"
             type="datetime-local"
             onChange={handleChangeFields}
             value={stringToExcludeNull(recruitmentEndDate)}
             disabled={isEndDateDisabled}
           />
-        </label>
-      </div>
-    </div>
+        </PublishFormWrapper>
+      </PublishModalFormWrapper>
+    </FormModal>
   );
 }
 
 export default PublishModalForm;
+
+const PublishModalFormWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-column-gap: 20px;
+  padding: 0px 24px 40px 24px;
+`;
+
+const DescriptionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  .short-description-length {
+    ${subtitle1Font()}
+    color: ${palette.accent5};
+    text-align: right;
+    margin-top: 6px;
+  }
+`;
+
+const RecruitmentEndDateInput = styled(Input)`
+  position: relative;
+  padding: 11px 7px 11px 16px;
+
+  &:focus-within {
+    border: 1px solid ${palette.success};
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    position: absolute;
+    right: 14px;
+  }
+`;
+
+const PublishFormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  & > div:not(div:last-of-type) {
+    margin-bottom: 20px;
+  }
+`;
