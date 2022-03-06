@@ -8,59 +8,137 @@ import PublishModalForm from './PublishModalForm';
 
 describe('PublishModalForm', () => {
   const handleChangeFields = jest.fn();
+  const handleClose = jest.fn();
+  const handleSubmit = jest.fn();
 
   beforeEach(() => {
-    handleChangeFields.mockClear();
+    jest.clearAllMocks();
   });
 
   const renderPublishModalForm = (fields: WriteFields) => render((
     <PublishModalForm
+      isVisible={given.isVisible}
+      onClose={handleClose}
+      onSubmit={handleSubmit}
       fields={fields}
       onChangeFields={handleChangeFields}
     />
   ));
 
-  it('등록하기 폼 항목이 나타나야만 한다', () => {
-    const labels = ['분류', '모집 종료 설정', '모집 종료일시'];
+  context('isVisible이 true인 경우', () => {
+    given('isVisible', () => true);
 
-    renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+    it('모달 타이틀이 나타나야만 한다', () => {
+      const title = '제목입니다';
 
-    labels.forEach((label) => {
-      expect(screen.getByLabelText(label)).not.toBeNull();
+      const { container } = renderPublishModalForm({
+        ...WRITE_FIELDS_FIXTURE,
+        title,
+      });
+
+      expect(container).toHaveTextContent(`${title} 등록`);
     });
-  });
 
-  describe('분류를 선택한다', () => {
-    it('changeFields 이벤트가 발생해야만 한다', () => {
+    it('등록하기 폼 항목이 나타나야만 한다', () => {
+      const labels = ['분류', '모집 종료 설정', '모집 마감일시', '소개글'];
+
       renderPublishModalForm(WRITE_FIELDS_FIXTURE);
 
-      fireEvent.change(screen.getByDisplayValue('분류를 선택해주세요.'), {
-        target: { value: 'study' },
+      labels.forEach((label) => {
+        expect(screen.getByLabelText(label)).not.toBeNull();
+      });
+    });
+
+    describe('분류를 선택한다', () => {
+      it('changeFields 이벤트가 발생해야만 한다', () => {
+        renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+        const input = screen.getAllByRole('combobox')[0];
+
+        fireEvent.focus(input);
+        fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+        fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+
+        expect(handleChangeFields).toBeCalledWith({ category: 'study' });
+      });
+    });
+
+    describe('소개글을 입력한다', () => {
+      const shortDescription = '소개합니다.';
+
+      it('changeFields 이벤트가 발생해야만 한다', () => {
+        renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+        fireEvent.change(screen.getByLabelText('소개글'), { target: { value: shortDescription } });
+
+        expect(handleChangeFields).toBeCalledWith({ shortDescription });
+      });
+    });
+
+    context('모집 종료 설정을 선택한다', () => {
+      it('changeFields 이벤트가 발생해야만 한다', () => {
+        renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+        const input = screen.getAllByRole('combobox')[1];
+
+        fireEvent.focus(input);
+        fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+        fireEvent.click(screen.getByText('수동으로 마감'));
+
+        expect(handleChangeFields).toBeCalledWith({ recruitmentEndSetting: 'manual' });
+      });
+    });
+
+    describe('모집 종료 설정에 따라 모집 종료일시 상태가 변경된다', () => {
+      context('모집 종료 설정이 "입력한 시간에 자동으로 종료"인 경우', () => {
+        it('모집 마감일시는 "disabled" 속성이 없어야만 한다', () => {
+          renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+          expect(screen.getByLabelText('모집 마감일시')).not.toHaveAttribute('disabled');
+        });
       });
 
-      expect(handleChangeFields).toBeCalledWith({ category: 'study' });
+      context('모집 종료 설정이 "수동으로 종료"인 경우', () => {
+        it('모집 마감일시는 "disabled" 속성이 있어야하고, changeFields 이벤트가 발생해야만 한다', () => {
+          renderPublishModalForm({
+            ...WRITE_FIELDS_FIXTURE,
+            recruitmentEndSetting: 'manual',
+          });
+
+          expect(screen.getByLabelText('모집 마감일시')).toHaveAttribute('disabled');
+          expect(handleChangeFields).toBeCalledWith({ recruitmentEndDate: '' });
+        });
+      });
+    });
+
+    describe('닫기 버튼을 누른다', () => {
+      it('클릭 이벤트가 발생해야만 한다', () => {
+        renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+        fireEvent.click(screen.getByText('닫기'));
+
+        expect(handleClose).toBeCalled();
+      });
+    });
+
+    describe('"등록하기" 버튼을 누른다', () => {
+      it('클릭 이벤트가 발생해야만 한다', () => {
+        renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+        fireEvent.click(screen.getByText('등록하기'));
+
+        expect(handleSubmit).toBeCalled();
+      });
     });
   });
 
-  describe('모집 종료 설정에 따라 모집 종료일시 상태가 변경된다', () => {
-    context('모집 종료 설정이 "입력한 시간에 자동으로 종료"인 경우', () => {
-      it('모집 종료일시는 "disabled" 속성이 없어야만 한다', () => {
-        renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+  context('isVisible이 false인 경우', () => {
+    given('isVisible', () => false);
 
-        expect(screen.getByLabelText('모집 종료일시')).not.toHaveAttribute('disabled');
-      });
-    });
+    it('아무것도 렌더링되지 않아야 한다', () => {
+      const { container } = renderPublishModalForm(WRITE_FIELDS_FIXTURE);
 
-    context('모집 종료 설정이 "수동으로 종료"인 경우', () => {
-      it('모집 종료일시는 "disabled" 속성이 있어야하고, changeFields 이벤트가 발생해야만 한다', () => {
-        renderPublishModalForm({
-          ...WRITE_FIELDS_FIXTURE,
-          recruitmentEndSetting: 'manual',
-        });
-
-        expect(screen.getByLabelText('모집 종료일시')).toHaveAttribute('disabled');
-        expect(handleChangeFields).toBeCalledWith({ recruitmentEndDate: '' });
-      });
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });

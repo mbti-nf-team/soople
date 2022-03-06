@@ -4,7 +4,6 @@ import { useUnmount } from 'react-use';
 import { useHelpers, useRemirrorContext } from '@remirror/react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
-import PublishModal from '@/components/write/PublishModal';
 import PublishModalForm from '@/components/write/PublishModalForm';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
@@ -24,6 +23,7 @@ function PublishModalContainer(): ReactElement {
   const { getHTML } = useHelpers();
 
   const onClose = () => setPublishModalVisible(false);
+
   const onSubmit = useCallback(() => {
     mutate({
       profile: profile as Profile,
@@ -41,17 +41,13 @@ function PublishModalContainer(): ReactElement {
   useUnmount(resetFields);
 
   return (
-    <PublishModal
-      title={writeFields.title}
+    <PublishModalForm
+      fields={writeFields}
       isVisible={isVisible}
       onClose={onClose}
       onSubmit={onSubmit}
-    >
-      <PublishModalForm
-        fields={writeFields}
-        onChangeFields={onChangeFields}
-      />
-    </PublishModal>
+      onChangeFields={onChangeFields}
+    />
   );
 }
 

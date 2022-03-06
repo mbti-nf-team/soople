@@ -3,7 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
+import { writeFieldsState } from '@/recoil/group/atom';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+import RecoilObserver from '@/test/RecoilObserver';
 
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 
@@ -18,9 +20,10 @@ jest.mock('@remirror/react', () => ({
 
 describe('PublishModalContainer', () => {
   const mutate = jest.fn();
+  const handleChangeWriteFields = jest.fn();
 
   beforeEach(() => {
-    mutate.mockClear();
+    jest.clearAllMocks();
 
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: 'user',
@@ -41,7 +44,10 @@ describe('PublishModalContainer', () => {
       publishModalVisible={given.isVisible}
       writeFields={given.writeFields}
     >
-      <PublishModalContainer />
+      <>
+        <RecoilObserver node={writeFieldsState} onChange={handleChangeWriteFields} />
+        <PublishModalContainer />
+      </>
     </InjectTestingRecoilState>
   ));
 
@@ -86,15 +92,19 @@ describe('PublishModalContainer', () => {
       });
     });
 
-    describe('분류를 선택한다', () => {
-      it('분류의 select가 "스터디"로 변경되어야만 한다', () => {
-        const { container } = renderPublishModalContainer();
+    describe('소개글을 입력한다', () => {
+      const shortDescription = '소개합니다.';
 
-        fireEvent.change(screen.getByDisplayValue('분류를 선택해주세요.'), {
-          target: { value: 'study' },
+      it('change 이벤트가 호출되어야만 한다', () => {
+        renderPublishModalContainer();
+
+        fireEvent.change(screen.getByLabelText('소개글'), { target: { value: shortDescription } });
+
+        expect(handleChangeWriteFields).toBeCalledWith({
+          ...WRITE_FIELDS_FIXTURE,
+          title,
+          shortDescription,
         });
-
-        expect(container).toHaveTextContent('스터디');
       });
     });
   });

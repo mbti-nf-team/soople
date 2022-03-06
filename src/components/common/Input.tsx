@@ -73,14 +73,16 @@ function Input({
           {...register}
           {...rest}
         />
-        <ClearIcon
-          size="20px"
-          color={palette.background}
-          fill={palette.accent5}
-          onClick={handleClear}
-          display={(!state || disabled || readOnly) ? 'none' : 'block'}
-          data-testid="clear-icon"
-        />
+        {onClear && (
+          <ClearIcon
+            size="20px"
+            color={palette.background}
+            fill={palette.accent5}
+            onClick={handleClear}
+            display={(!state || disabled || readOnly) ? 'none' : 'block'}
+            data-testid="clear-icon"
+          />
+        )}
       </InputFieldWrapper>
       <HelperMessage
         message={message}
