@@ -1,13 +1,15 @@
 import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
+import { extensionEmojiStyledCss } from '@remirror/styles/emotion';
 import rehypeParse from 'rehype-parse';
 import rehypeStringify from 'rehype-stringify';
 import { unified } from 'unified';
 
 import { Group } from '@/models/group';
-import { body2Font } from '@/styles/fontStyles';
+import { body1Font, body2Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
+import styledAnchor from '@/styles/styledAnchor';
 import { filteredWithSanitizeHtml } from '@/utils/filter';
 import rehypePrism from '@/utils/rehypePrism';
 
@@ -76,7 +78,37 @@ const TagsWrapper = styled.div`
 `;
 
 const DetailContentWrapper = styled.div`
+  ${extensionEmojiStyledCss}
   margin-bottom: 36px;
+
+  p {
+    ${body1Font()}
+    ${styledAnchor}
+    margin: 0;
+
+    & > code {
+      padding: 0.2em 0.4em;
+      margin: 0;
+      font-size: 85%;
+      background-color: ${palette.accent2};
+      border-radius: 6px;
+    }
+  }
+
+  hr {
+    border: .5px solid ${palette.accent4}
+  }
+
+  blockquote {
+    border-left: 4px solid ${palette.accent3};
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 15px;
+
+    & p {
+      color: ${palette.accent5}
+    }
+  }
 `;
 
 const DetailContentsWrapper = styled.div`
