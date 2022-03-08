@@ -18,9 +18,7 @@ function ThumbnailUpload(): ReactElement {
   const { data: user } = useFetchUserProfile();
   const [images, setImages] = useState<ImageListType>([]);
 
-  const handleChange = (imageList: ImageListType) => {
-    setImages(imageList);
-  };
+  const handleChange = (imageList: ImageListType) => setImages(imageList);
 
   useEffect(() => {
     if (!isEmpty(images) && images[0].file) {
@@ -38,16 +36,15 @@ function ThumbnailUpload(): ReactElement {
         acceptType={['jpg', 'gif', 'png', 'jpeg']}
         value={images}
         onChange={handleChange}
+        inputProps={{ alt: 'upload-thumbnail-input' }}
       >
         {({
           imageList,
           onImageUpload,
-          isDragging,
           dragProps,
         }) => (
           <ThumbnailUploadBox
             onClick={onImageUpload}
-            isDragging={isDragging}
             {...dragProps}
           >
             {isEmpty(imageList) ? (
@@ -87,7 +84,7 @@ const ThumbnailFromWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const ThumbnailUploadBox = styled.div<{ isDragging: boolean; }>`
+const ThumbnailUploadBox = styled.div`
   cursor: pointer;
   overflow: hidden;
   display: flex;
@@ -96,7 +93,6 @@ const ThumbnailUploadBox = styled.div<{ isDragging: boolean; }>`
   align-items: center;
   width: 100%;
   height: 144px;
-  background-color: ${({ isDragging }) => isDragging && palette.accent1};
   border: 1px solid ${palette.accent2};
   box-sizing: border-box;
   border-radius: 8px;
