@@ -20,6 +20,7 @@ export const initialWriteFieldsState: WriteFields = {
   recruitmentEndDate: '',
   recruitmentEndSetting: 'automatic',
   shortDescription: '',
+  thumbnail: null,
 };
 
 export const positionOption: SelectOption<Position>[] = [
@@ -37,6 +38,7 @@ export interface WriteFields {
   recruitmentEndSetting: RecruitmentEndSetting;
   recruitmentEndDate: string | null;
   shortDescription: string;
+  thumbnail: string | null;
 }
 
 export interface PublishModalFields {
@@ -84,6 +86,7 @@ export interface Group {
   numberApplicants: number;
   message?: string;
   shortDescription?: string;
+  thumbnail?: string | null;
   writer: Profile;
   createdAt: string;
 }

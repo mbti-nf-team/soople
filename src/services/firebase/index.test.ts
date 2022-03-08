@@ -1,8 +1,10 @@
 import { signInWithRedirect } from 'firebase/auth';
 import { collection, doc } from 'firebase/firestore';
+import { ref } from 'firebase/storage';
 
 import {
   collectionRef, docRef, googleProvider, signInRedirectOAuth,
+  storageRef,
 } from '.';
 
 describe('firebase', () => {
@@ -27,6 +29,16 @@ describe('firebase', () => {
       signInRedirectOAuth(googleProvider);
 
       expect(signInWithRedirect).toBeCalledWith({ languageCode: 'ko' }, googleProvider);
+    });
+  });
+
+  describe('storageRef', () => {
+    const url = 'www.test.com';
+
+    it('ref가 호출되어야만 한다', () => {
+      storageRef(url);
+
+      expect(ref).toBeCalledWith(undefined, url);
     });
   });
 });

@@ -25,7 +25,7 @@ interface Props {
 
 function RecruitPost({ group }: Props): ReactElement {
   const {
-    title, content, groupId, writer, views,
+    title, content, groupId, writer, views, shortDescription, thumbnail,
   } = group;
   const recruitDate = useRecruitDateStatus(group);
 
@@ -34,8 +34,11 @@ function RecruitPost({ group }: Props): ReactElement {
       <Link href={`/detail/${groupId}`} passHref>
         <RecruitPostContents>
           <PostPreview>
+            {thumbnail && (
+              <Thumbnail src={thumbnail} alt="thumbnail" />
+            )}
             <Title>{title}</Title>
-            <Content>{removeAllHtml(content)}</Content>
+            <Content>{shortDescription || removeAllHtml(content)}</Content>
           </PostPreview>
           <PostMetaData>
             <ViewsIcon
@@ -65,6 +68,7 @@ export default memo(RecruitPost);
 const RecruitPostWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   width: 245px;
   height: 346px; 
   margin: 0.625rem;
@@ -125,4 +129,10 @@ const PostWriter = styled.div`
   & > :first-of-type {
     margin-right : 8px;
   }
+`;
+
+const Thumbnail = styled.img`
+  width: 245px;
+  height: 136px;
+  margin: -16px -16px 16px -16px !important;
 `;

@@ -52,6 +52,11 @@ function PublishModalForm({
   const handleChangeFields = (e: ChangeEvent<HTMLInputElement| HTMLTextAreaElement>) => {
     const { value, name } = e.target;
 
+    if (name === 'shortDescription') {
+      onChangeFields({ [name]: value.slice(0, 100) });
+      return;
+    }
+
     onChangeFields({ [name]: value });
   };
 
@@ -98,8 +103,11 @@ function PublishModalForm({
             height="128px"
             onChange={handleChangeFields}
             value={shortDescription}
+            isError={shortDescription.length === 100}
           />
-          <div className="short-description-length">{`${shortDescription.length} / 100`}</div>
+          <ShortDescriptionLength isError={shortDescription.length === 100} data-testid="short-description-length">
+            {`${shortDescription.length} / 100`}
+          </ShortDescriptionLength>
         </DescriptionWrapper>
 
         <PublishFormWrapper>
@@ -148,13 +156,6 @@ const PublishModalFormWrapper = styled.div`
 const DescriptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
-  .short-description-length {
-    ${subtitle1Font()}
-    color: ${palette.accent5};
-    text-align: right;
-    margin-top: 6px;
-  }
 `;
 
 const RecruitmentEndDateInput = styled(Input)`
@@ -179,4 +180,11 @@ const PublishFormWrapper = styled.div`
   & > div:not(div:last-of-type) {
     margin-bottom: 20px;
   }
+`;
+
+const ShortDescriptionLength = styled.div<{ isError: boolean; }>`
+  ${subtitle1Font()}
+  color: ${({ isError }) => (isError ? palette.warning : palette.accent5)};
+  text-align: right;
+  margin-top: 6px;
 `;

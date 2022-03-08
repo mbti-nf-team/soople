@@ -1,18 +1,33 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
 import { WriteFields } from '@/models/group';
+import palette from '@/styles/palette';
 
+import FIXTURE_PROFILE from '../../../fixtures/profile';
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 
 import PublishModalForm from './PublishModalForm';
+
+jest.mock('@/hooks/api/storage/useUploadGroupThumbnail');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('PublishModalForm', () => {
   const handleChangeFields = jest.fn();
   const handleClose = jest.fn();
   const handleSubmit = jest.fn();
+  const mutate = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
+      data: FIXTURE_PROFILE,
+    }));
+    (useUploadGroupThumbnail as jest.Mock).mockImplementation(() => ({
+      mutate,
+    }));
   });
 
   const renderPublishModalForm = (fields: WriteFields) => render((
@@ -64,14 +79,55 @@ describe('PublishModalForm', () => {
     });
 
     describe('소개글을 입력한다', () => {
-      const shortDescription = '소개합니다.';
+      context('소개글이 100자 이하인 경우', () => {
+        const shortDescription = '소개합니다.';
+
+        it('changeFields 이벤트가 발생해야만 한다', () => {
+          renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+          fireEvent.change(screen.getByLabelText('소개글'), { target: { value: shortDescription } });
+
+          expect(handleChangeFields).toBeCalledWith({ shortDescription });
+        });
+      });
+
+      context('소개글이 100자 이상인 경우', () => {
+        const shortDescription = '소개합니다.'.repeat(50);
+
+        it('100자로 잘린 소개글이 changeFields 이벤트가 발생해야만 한다', () => {
+          renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+          fireEvent.change(screen.getByLabelText('소개글'), { target: { value: shortDescription } });
+
+          expect(handleChangeFields).toBeCalledWith({ shortDescription: '소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니' });
+        });
+
+        it(`폰트 색상이 ${palette.warning}이어야만 한다`, () => {
+          renderPublishModalForm({
+            ...WRITE_FIELDS_FIXTURE,
+            shortDescription: '소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니',
+          });
+
+          expect(screen.getByTestId('short-description-length')).toHaveStyle({
+            color: palette.warning,
+          });
+        });
+      });
+    });
+
+    describe('모집 마감일시를 입력한다', () => {
+      const recruitmentEndDate = '2021-11-11';
 
       it('changeFields 이벤트가 발생해야만 한다', () => {
-        renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+        renderPublishModalForm({
+          ...WRITE_FIELDS_FIXTURE,
+          recruitmentEndSetting: 'automatic',
+          recruitmentEndDate: '2022-11-11',
+        });
 
-        fireEvent.change(screen.getByLabelText('소개글'), { target: { value: shortDescription } });
+        fireEvent.change(screen.getByPlaceholderText('모집 마감일시를 입력하세요'), { target: { value: recruitmentEndDate } });
 
-        expect(handleChangeFields).toBeCalledWith({ shortDescription });
+        expect(handleChangeFields).toBeCalledWith({ recruitmentEndDate: '' });
       });
     });
 
