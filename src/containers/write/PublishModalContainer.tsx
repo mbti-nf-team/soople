@@ -34,9 +34,9 @@ function PublishModalContainer(): ReactElement {
     });
   }, [mutate, profile, writeFields, getHTML, getState]);
 
-  const onChangeFields = useCallback((form: KeyPair<WriteFields>) => {
-    changeFields((prevState) => ({ ...prevState, ...form }));
-  }, [changeFields]);
+  const onChangeFields = useCallback((form: KeyPair<WriteFields>) => changeFields((prevState) => ({
+    ...prevState, ...form,
+  })), [changeFields]);
 
   useUnmount(resetFields);
 

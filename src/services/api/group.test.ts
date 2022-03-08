@@ -35,6 +35,8 @@ describe('group API', () => {
       category: '',
       recruitmentEndDate: '',
       recruitmentEndSetting: 'automatic',
+      shortDescription: '',
+      thumbnail: '',
     };
 
     beforeEach(() => {
@@ -201,7 +203,7 @@ describe('group API', () => {
 
   describe('patchCompletedGroup', () => {
     it('"updateDoc"이 호출되어야만 한다', async () => {
-      await patchCompletedGroup('groupId', 3);
+      await patchCompletedGroup('groupId', { message: 'test', numberConfirmApplicants: 3 });
 
       expect(updateDoc).toBeCalledTimes(1);
     });

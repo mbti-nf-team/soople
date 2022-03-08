@@ -8,6 +8,7 @@ const writeFields: WriteFields = {
   recruitmentEndDate: '',
   recruitmentEndSetting: 'automatic',
   shortDescription: '',
+  thumbnail: '',
 };
 
 export default writeFields;

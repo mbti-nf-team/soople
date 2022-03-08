@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
+import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
 import { writeFieldsState } from '@/recoil/group/atom';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 import RecoilObserver from '@/test/RecoilObserver';
@@ -13,6 +14,7 @@ import PublishModalContainer from './PublishModalContainer';
 
 jest.mock('@/hooks/api/group/usePublishNewGroup');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
+jest.mock('@/hooks/api/storage/useUploadGroupThumbnail');
 jest.mock('@remirror/react', () => ({
   useRemirrorContext: jest.fn(),
   useHelpers: jest.fn(),
@@ -36,6 +38,9 @@ describe('PublishModalContainer', () => {
     }));
     (useHelpers as jest.Mock).mockImplementation(() => ({
       getHTML: jest.fn().mockReturnValue(WRITE_FIELDS_FIXTURE.content),
+    }));
+    (useUploadGroupThumbnail as jest.Mock).mockImplementation(() => ({
+      mutate,
     }));
   });
 

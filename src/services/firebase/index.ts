@@ -8,6 +8,7 @@ import {
   signInWithRedirect,
 } from 'firebase/auth';
 import { collection, doc, getFirestore } from 'firebase/firestore';
+import { getStorage, ref } from 'firebase/storage';
 
 import firebaseConfig from './firebaseConfig';
 
@@ -26,9 +27,13 @@ export const firebaseAuth = getAuth();
 
 firebaseAuth.languageCode = 'ko';
 
+export const storage = getStorage();
+
 export const googleProvider = new GoogleAuthProvider();
 export const githubProvider = new GithubAuthProvider();
 
 export const signInRedirectOAuth = (
   authProvider: AuthProvider,
 ) => signInWithRedirect(firebaseAuth, authProvider);
+
+export const storageRef = (url: string) => ref(storage, url);
