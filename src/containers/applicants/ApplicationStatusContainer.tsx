@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -7,16 +7,29 @@ import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';
 import { Applicant } from '@/models/group';
 import { DetailLayout } from '@/styles/Layout';
+import { errorToast } from '@/utils/toast';
 
 function ApplicationStatusContainer(): ReactElement {
-  const { back } = useRouter();
-  const { data: applicants, isLoading } = useFetchApplicants();
+  const { query, back } = useRouter();
+  const { data: applicants, isLoading, isSuccess } = useFetchApplicants();
   const { mutate } = useUpdateApplicant();
 
   const onToggleConfirm = useCallback((applicant: Applicant) => mutate({
     ...applicant,
     isConfirm: !applicant.isConfirm,
   }), [mutate]);
+
+  useEffect(() => {
+    if (!query?.applicant || isLoading || !isSuccess) {
+      return;
+    }
+
+    const isApplicant = applicants.some(({ applicant }) => applicant.uid === query.applicant);
+
+    if (!isApplicant) {
+      errorToast('신청을 취소한 사용자에요.');
+    }
+  }, [query, applicants, isLoading, isSuccess]);
 
   if (isLoading) {
     return <DetailLayout>로딩중...</DetailLayout>;
