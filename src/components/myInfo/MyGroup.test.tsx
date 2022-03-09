@@ -17,6 +17,21 @@ describe('MyGroup', () => {
     />
   ));
 
+  context('썸네일과 짧은 소개글이 존재하는 경우', () => {
+    given('group', () => ({
+      ...FIXTURE_GROUP,
+      thumbnail: 'www.test.com',
+      shortDescription: '짧은 소개글',
+    }));
+
+    it('썸네일과 짧은 소개글이 나타나야만 한다', () => {
+      const { container } = renderMyGroup();
+
+      expect(screen.getByAltText('thumbnail')).toBeInTheDocument();
+      expect(container).toHaveTextContent('짧은 소개글');
+    });
+  });
+
   context('isCompleted가 true일 경우', () => {
     given('group', () => ({
       ...FIXTURE_GROUP,
