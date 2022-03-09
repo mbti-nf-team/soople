@@ -45,7 +45,7 @@ function AlarmItem({ alarm }: Props): ReactElement {
     applied: `${applicant?.name}님이 팀원을 신청했어요.`,
   };
 
-  const alarmUrl = type === 'applied' ? `/detail/${group.groupId}/applicants` : `/detail/${group.groupId}`;
+  const alarmUrl = type === 'applied' ? `/detail/${group.groupId}/applicants?applicant=${applicant?.uid}` : `/detail/${group.groupId}`;
 
   return (
     <Link href={alarmUrl} passHref>
