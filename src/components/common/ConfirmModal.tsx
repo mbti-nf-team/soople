@@ -46,7 +46,14 @@ function ConfirmModal({
         </Description>
         <FooterWrapper>
           <Button size="small" onClick={onClose}>{closeText}</Button>
-          <Button size="small" color={confirmButtonColor} onClick={onConfirm}>{confirmText}</Button>
+          <Button
+            size="small"
+            color={confirmButtonColor}
+            onClick={onConfirm}
+            data-testid="confirm-button"
+          >
+            {confirmText}
+          </Button>
         </FooterWrapper>
       </ConfirmModalBox>
     </ConfirmModalWrapper>

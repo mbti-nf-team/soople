@@ -11,3 +11,5 @@ export const getUserRecruitedGroups = jest.fn();
 export const patchNumberApplicants = jest.fn();
 
 export const getFilteredGroups = jest.fn();
+
+export const deleteGroup = jest.fn();

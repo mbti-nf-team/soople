@@ -1,13 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import AskDeleteCommentModal from './AskDeleteCommentModal';
+import AskRemoveGroupModal from './AskRemoveGroupModal';
 
-describe('AskDeleteCommentModal', () => {
+describe('AskRemoveGroupModal', () => {
   const handleConfirm = jest.fn();
   const handleClose = jest.fn();
 
-  const renderAskDeleteCommentModal = () => render((
-    <AskDeleteCommentModal
+  const renderAskRemoveGroupModal = () => render((
+    <AskRemoveGroupModal
       isVisible={given.isVisible}
       onClose={handleClose}
       onConfirm={handleConfirm}
@@ -19,7 +19,7 @@ describe('AskDeleteCommentModal', () => {
 
     describe('닫기 버튼을 클릭한다', () => {
       it('클릭 이벤트가 호출되어야만 한다', () => {
-        renderAskDeleteCommentModal();
+        renderAskRemoveGroupModal();
 
         fireEvent.click(screen.getByText('닫기'));
 
@@ -29,7 +29,7 @@ describe('AskDeleteCommentModal', () => {
 
     describe('삭제하기 버튼을 클릭한다', () => {
       it('클릭 이벤트가 호출되어야만 한다', () => {
-        renderAskDeleteCommentModal();
+        renderAskRemoveGroupModal();
 
         screen.getAllByText('삭제하기').forEach((button) => {
           fireEvent.click(button);
@@ -44,7 +44,7 @@ describe('AskDeleteCommentModal', () => {
     given('isVisible', () => false);
 
     it('아무것도 나타나지 않아야만 한다', () => {
-      const { container } = renderAskDeleteCommentModal();
+      const { container } = renderAskRemoveGroupModal();
 
       expect(container).toBeEmptyDOMElement();
     });

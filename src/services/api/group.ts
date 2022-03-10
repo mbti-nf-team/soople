@@ -1,5 +1,6 @@
 import {
   addDoc,
+  deleteDoc,
   getDoc,
   getDocs,
   orderBy,
@@ -22,6 +23,11 @@ import { collectionRef, docRef } from '../firebase';
 import { getGroupsQuery } from '../firebase/getQuery';
 
 const GROUPS = 'groups';
+
+const getQueryWithGroup = (groupId: string) => (collectionId: string) => query(
+  collectionRef(collectionId),
+  where('groupId', '==', groupId),
+);
 
 export const postNewGroup = async (profile: Profile, fields: WriteFields) => {
   const { id } = await addDoc(collectionRef(GROUPS), {
@@ -109,4 +115,19 @@ export const patchCompletedGroup = async (uid: string, completedGroupForm: Compl
     ...completedGroupForm,
     isCompleted: true,
   });
+};
+
+export const deleteGroup = async (groupId: string) => {
+  const getQuery = getQueryWithGroup(groupId);
+
+  const [comments, applicants] = await Promise.all([
+    getDocs(getQuery('comments')),
+    getDocs(getQuery('applicants')),
+  ]);
+
+  await Promise.all([
+    deleteDoc(docRef(GROUPS, groupId)),
+    ...comments.docs.map((doc) => deleteDoc(doc.ref)),
+    ...applicants.docs.map((doc) => deleteDoc(doc.ref)),
+  ]);
 };

@@ -1,5 +1,5 @@
 import {
-  getDoc, getDocs, limit, orderBy, query, setDoc, updateDoc,
+  deleteDoc, getDoc, getDocs, limit, orderBy, query, setDoc, updateDoc,
 } from 'firebase/firestore';
 
 import { TagCount } from '@/models/group';
@@ -35,5 +35,24 @@ export const updateTagCount = async (tagName: string) => {
   await setDoc(response.ref, {
     name: tagName,
     count: 1,
+  });
+};
+
+export const deleteTagCount = async (tagName: string) => {
+  const response = await getDoc(docRef(TAGS_COUNT, tagName));
+
+  if (!response.exists()) {
+    return;
+  }
+
+  const { count } = response.data() as { name: string; count: number; };
+
+  if (count === 0) {
+    await deleteDoc(response.ref);
+    return;
+  }
+
+  await updateDoc(response.ref, {
+    count: count - 1,
   });
 };

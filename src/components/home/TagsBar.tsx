@@ -31,6 +31,9 @@ function TagsBar({ tags, isLoading }: Props): ReactElement {
 export default memo(TagsBar);
 
 const TagsWrapper = styled.div`
+  height: 36px;
+  overflow: hidden;
+
   div {
     margin-right: 8px;
 

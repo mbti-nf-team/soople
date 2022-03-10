@@ -1,9 +1,17 @@
 import { render } from '@testing-library/react';
 
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
+
 import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import DetailStatusButton from './DetailStatusButton';
+
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    replace: jest.fn(),
+  })),
+}));
 
 describe('DetailStatusButton', () => {
   const handleApply = jest.fn();
@@ -11,15 +19,17 @@ describe('DetailStatusButton', () => {
   const handleCancelApply = jest.fn();
 
   const renderDetailStatusButton = (group = GROUP_FIXTURE) => render((
-    <DetailStatusButton
-      user={PROFILE_FIXTURE}
-      group={group}
-      applicants={[]}
-      isApplicantsLoading={given.isApplicantsLoading}
-      onVisibleSignInModal={handleVisibleSignInModal}
-      onApply={handleApply}
-      onCancelApply={handleCancelApply}
-    />
+    <ReactQueryWrapper>
+      <DetailStatusButton
+        user={PROFILE_FIXTURE}
+        group={group}
+        applicants={[]}
+        isApplicantsLoading={given.isApplicantsLoading}
+        onVisibleSignInModal={handleVisibleSignInModal}
+        onApply={handleApply}
+        onCancelApply={handleCancelApply}
+      />
+    </ReactQueryWrapper>
   ));
 
   context('작성자인 경우', () => {
