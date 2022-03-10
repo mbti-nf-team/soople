@@ -8,12 +8,12 @@ interface Props {
   onConfirm: () => void;
 }
 
-function AskDeleteCommentModal({ isVisible, onClose, onConfirm }: Props): ReactElement {
+function AskRemoveGroupModal({ isVisible, onClose, onConfirm }: Props): ReactElement {
   return (
     <ConfirmModal
       isVisible={isVisible}
       title="삭제하기"
-      description="이 댓글을 정말 삭제하시겠습니까? 삭제하시면 다시 되돌릴 수 없습니다."
+      description="이 글을 정말 삭제하시겠습니까? 삭제하시면 다시 되돌릴 수 없습니다."
       confirmText="삭제하기"
       confirmButtonColor="warning"
       onClose={onClose}
@@ -22,4 +22,4 @@ function AskDeleteCommentModal({ isVisible, onClose, onConfirm }: Props): ReactE
   );
 }
 
-export default AskDeleteCommentModal;
+export default AskRemoveGroupModal;

@@ -20,11 +20,15 @@ describe('useUpdateCompletedApply', () => {
     await act(async () => {
       await result.current.mutate({
         groupId: 'groupId',
-        numberConfirmApplicants: 5,
+        completedGroupForm: {
+          message: 'message',
+          numberConfirmApplicants: 1,
+        },
         alarmForms: [{
           groupId: 'groupId',
           type: 'confirmed',
           userUid: 'userUid',
+          applicantUid: 'applicantUid',
         }],
       });
     });

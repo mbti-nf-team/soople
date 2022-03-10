@@ -1,9 +1,10 @@
 import {
-  addDoc, getDoc, getDocs, serverTimestamp, updateDoc,
+  addDoc, deleteDoc, getDoc, getDocs, serverTimestamp, updateDoc,
 } from 'firebase/firestore';
 
 import { WriteFields } from '@/models/group';
 import {
+  deleteGroup,
   getFilteredGroups,
   getGroupDetail,
   getGroups,
@@ -206,6 +207,20 @@ describe('group API', () => {
       await patchCompletedGroup('groupId', { message: 'test', numberConfirmApplicants: 3 });
 
       expect(updateDoc).toBeCalledTimes(1);
+    });
+  });
+
+  describe('deleteGroup', () => {
+    (getDocs as jest.Mock).mockImplementation(() => ({
+      docs: [{
+        ref: 'ref',
+      }],
+    }));
+
+    it('"deleteDoc"이 호출되어야만 한다', async () => {
+      await deleteGroup('groupId');
+
+      expect(deleteDoc).toBeCalledTimes(3);
     });
   });
 });

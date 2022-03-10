@@ -1,8 +1,8 @@
-import { getDownloadURL, uploadBytes } from 'firebase/storage';
+import { deleteObject, getDownloadURL, uploadBytes } from 'firebase/storage';
 
 import { storageRef } from '../firebase';
 
-import { uploadGroupThumbnail } from './storage';
+import { deleteGroupThumbnail, uploadGroupThumbnail } from './storage';
 
 jest.mock('../firebase');
 jest.mock('nanoid', () => ({
@@ -28,6 +28,18 @@ describe('storage API', () => {
       });
 
       expect(response).toBe(thumbnailUrl);
+    });
+  });
+
+  describe('deleteGroupThumbnail', () => {
+    beforeEach(() => {
+      (storageRef as jest.Mock).mockImplementationOnce(() => (thumbnailUrl));
+    });
+
+    it('deleteObject가 호출되어야만 한다', async () => {
+      await deleteGroupThumbnail(thumbnailUrl);
+
+      expect(deleteObject).toBeCalledWith(thumbnailUrl);
     });
   });
 });

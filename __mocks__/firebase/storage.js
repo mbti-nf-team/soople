@@ -5,3 +5,5 @@ export const uploadBytes = jest.fn();
 export const getStorage = jest.fn();
 
 export const ref = jest.fn();
+
+export const deleteObject = jest.fn();

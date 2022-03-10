@@ -87,13 +87,14 @@ const StatusBarWrapper = styled.div`
 `;
 
 const RecruitmentDeadline = styled.div`
+  min-width: 171px;
   display: flex;
   flex-direction: row;
   align-items: center;
 
   & > span {
     ${body1Font()}
-    margin-right: 12px;
+    margin: 0 12px;
   }
 `;
 
