@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
+import { X as CloseIcon } from 'react-feather';
 
 import styled from '@emotion/styled';
 import { EditorComponent, EmojiPopupComponent } from '@remirror/react';
@@ -14,13 +15,37 @@ import {
 } from '@remirror/styles/emotion';
 
 import EditorToolbar from '@/components/write/EditorToolbar';
-import { body1Font } from '@/styles/fontStyles';
+import { body1Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
+import AlertTriangleIcon from '../../assets/icons/alert_triangle.svg';
+
 function WriteEditor(): ReactElement {
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+
   return (
     <>
       <EditorToolbar />
+      {isVisible && (
+        <WarningMessage>
+          <div>
+            <AlertTriangleIcon />
+            <div>
+              글 내용에 오픈 채팅방 또는 메신저 URL이 포함되지 않았는지 확인해주세요.
+              <br />
+              모집 완료 후 같은 팀 멤버들에게만 오픈 채팅방 URL을 보낼 수 있어요.
+            </div>
+          </div>
+          <CloseIcon
+            width={16}
+            height={16}
+            color={palette.accent5}
+            cursor="pointer"
+            onClick={() => setIsVisible(false)}
+            data-testid="close-icon"
+          />
+        </WarningMessage>
+      )}
       <RemirrorEditorWrapper>
         <EmojiPopupComponent />
         <EditorComponent />
@@ -30,6 +55,30 @@ function WriteEditor(): ReactElement {
 }
 
 export default WriteEditor;
+
+const WarningMessage = styled.div`
+  ${subtitle1Font()};
+  background: ${palette.accent1};
+  color: ${palette.foreground};
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    & > svg {
+      margin-right: 12px;
+      margin-top: 4px;
+    }
+  }
+`;
 
 const RemirrorEditorWrapper = styled(CoreStyledComponent)`
   ${extensionListStyledCss}
