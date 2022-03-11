@@ -39,6 +39,11 @@ export const useChainedCommands = jest.fn().mockImplementation(() => ({
       run: jest.fn(),
     })),
   })),
+  toggleBlockquote: jest.fn().mockImplementation(() => ({
+    focus: jest.fn().mockImplementation(() => ({
+      run: jest.fn(),
+    })),
+  })),
 }));
 
 export const useActive = jest.fn().mockImplementation(() => ({
@@ -52,6 +57,7 @@ export const useActive = jest.fn().mockImplementation(() => ({
   orderedList: jest.fn(),
   link: jest.fn(),
   image: jest.fn(),
+  blockquote: jest.fn(),
 }));
 
 export const EditorComponent = () => <>mockComponent</>;

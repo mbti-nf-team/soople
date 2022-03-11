@@ -6,6 +6,7 @@ import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
 import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
 import { writeFieldsState } from '@/recoil/group/atom';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import RecoilObserver from '@/test/RecoilObserver';
 
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
@@ -45,15 +46,17 @@ describe('PublishModalContainer', () => {
   });
 
   const renderPublishModalContainer = () => render((
-    <InjectTestingRecoilState
-      publishModalVisible={given.isVisible}
-      writeFields={given.writeFields}
-    >
-      <>
-        <RecoilObserver node={writeFieldsState} onChange={handleChangeWriteFields} />
-        <PublishModalContainer />
-      </>
-    </InjectTestingRecoilState>
+    <ReactQueryWrapper>
+      <InjectTestingRecoilState
+        publishModalVisible={given.isVisible}
+        writeFields={given.writeFields}
+      >
+        <>
+          <RecoilObserver node={writeFieldsState} onChange={handleChangeWriteFields} />
+          <PublishModalContainer />
+        </>
+      </InjectTestingRecoilState>
+    </ReactQueryWrapper>
   ));
 
   context('모달창이 보이는 경우', () => {

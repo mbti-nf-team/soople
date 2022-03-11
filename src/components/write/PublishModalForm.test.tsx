@@ -4,6 +4,7 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
 import { WriteFields } from '@/models/group';
 import palette from '@/styles/palette';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
@@ -31,13 +32,15 @@ describe('PublishModalForm', () => {
   });
 
   const renderPublishModalForm = (fields: WriteFields) => render((
-    <PublishModalForm
-      isVisible={given.isVisible}
-      onClose={handleClose}
-      onSubmit={handleSubmit}
-      fields={fields}
-      onChangeFields={handleChangeFields}
-    />
+    <ReactQueryWrapper>
+      <PublishModalForm
+        isVisible={given.isVisible}
+        onClose={handleClose}
+        onSubmit={handleSubmit}
+        fields={fields}
+        onChangeFields={handleChangeFields}
+      />
+    </ReactQueryWrapper>
   ));
 
   context('isVisible이 true인 경우', () => {

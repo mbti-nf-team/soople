@@ -1,6 +1,8 @@
 import { useActive, useChainedCommands } from '@remirror/react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import palette from '@/styles/palette';
+
 import EditorToolbar from './EditorToolbar';
 
 jest.mock('@remirror/react');
@@ -20,6 +22,7 @@ describe('EditorToolbar', () => {
       orderedList: jest.fn(),
       link: jest.fn(),
       image: jest.fn(),
+      blockquote: jest.fn(),
     }));
   });
 
@@ -97,6 +100,16 @@ describe('EditorToolbar', () => {
     });
   });
 
+  describe('blockquote 버튼을 클릭한다', () => {
+    it('클릭이벤트가 발생해야만 한다', () => {
+      renderEditorToolbar();
+
+      fireEvent.click(screen.getByTestId('blockquote-button'));
+
+      expect(useChainedCommands).toBeCalledTimes(1);
+    });
+  });
+
   describe('코드 블록 버튼을 클릭한다', () => {
     it('클릭이벤트가 발생해야만 한다', () => {
       renderEditorToolbar();
@@ -130,11 +143,11 @@ describe('EditorToolbar', () => {
   context('active.bold가 true인 경우', () => {
     given('isBold', () => true);
 
-    it('bold 버튼의 배경색이 "rgba(0, 0, 0, 0.1)"가 되어야만 한다', () => {
+    it(`bold 버튼의 배경색이 ${palette.background}가 되어야만 한다`, () => {
       renderEditorToolbar();
 
       expect(screen.getByTestId('bold-button')).toHaveStyle({
-        background: 'rgba(0, 0, 0, 0.1)',
+        background: palette.background,
       });
     });
   });

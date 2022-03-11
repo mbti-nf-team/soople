@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useActive, useChainedCommands } from '@remirror/react';
 
@@ -7,6 +8,7 @@ import Divider from '@/styles/Divider';
 import palette from '@/styles/palette';
 
 import BoldIcon from '../../assets/icons/editor_b.svg';
+import BlockquoteIcon from '../../assets/icons/editor_blockquote.svg';
 import BulletListIcon from '../../assets/icons/editor_bulleted_list.svg';
 import CodeBlockIcon from '../../assets/icons/editor_code.svg';
 import StrikeIcon from '../../assets/icons/editor_del.svg';
@@ -22,7 +24,7 @@ import UnderlineIcon from '../../assets/icons/editor_underline.svg';
 function EditorToolbar(): ReactElement {
   const active = useActive();
   const {
-    toggleBold, toggleHeading, toggleItalic, toggleStrike,
+    toggleBold, toggleHeading, toggleItalic, toggleStrike, toggleBlockquote,
     toggleCodeBlock, toggleBulletList, toggleOrderedList, toggleUnderline,
   } = useChainedCommands();
 
@@ -35,6 +37,8 @@ function EditorToolbar(): ReactElement {
   const handleUnderlineClick = () => toggleUnderline().focus().run();
 
   const handleStrikeClick = () => toggleStrike().focus().run();
+
+  const handleBlockquoteClick = () => toggleBlockquote().focus().run();
 
   const handleCodeBlockClick = () => toggleCodeBlock({ language: 'typescript' }).focus().run();
 
@@ -113,6 +117,15 @@ function EditorToolbar(): ReactElement {
 
       <ToolbarItemButton
         type="button"
+        onClick={handleBlockquoteClick}
+        active={active.blockquote()}
+        data-testid="blockquote-button"
+      >
+        <BlockquoteIcon className="blockquote-icon" />
+      </ToolbarItemButton>
+
+      <ToolbarItemButton
+        type="button"
         onClick={handleCodeBlockClick}
         active={active.codeBlock()}
         data-testid="code-block-button"
@@ -181,15 +194,15 @@ const ToolbarItemButton = styled.button<{ active: boolean; }>`
   justify-content: center;
   border-radius: 4px;
   transition: background-color .1s ease-in-out;
-  background: ${({ active }) => (active ? 'rgba(0, 0, 0, 0.1)' : palette.background)};
+  background: ${palette.background};
 
-  &:focus, :hover {
+  ${({ active }) => active && css`
     & >.toolbar-icon > path {
-      transition: stroke .1s ease-in-out;
-      stroke: ${palette.success};
-    }
+        transition: stroke .1s ease-in-out;
+        stroke: ${palette.success};
+      }
 
-    & >.strike-icon > path {
+    & >.strike-icon > path, >.blockquote-icon > path  {
       transition: fill .1s ease-in-out;
       fill: ${palette.success};
     }
@@ -217,6 +230,10 @@ const ToolbarItemButton = styled.button<{ active: boolean; }>`
         fill: ${palette.success};
       }
     }
+  `}
+
+  &:focus, :hover {
+    background: rgba(0, 0, 0, 0.1);
   }
 `;
 
