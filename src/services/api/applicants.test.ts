@@ -6,7 +6,7 @@ import { ApplicantFields } from '@/models/group';
 import { formatCreatedAt } from '@/utils/firestore';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
-import GROUP_FIXTURE from '../../../fixtures/group';
+import FIXTURE_GROUP from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import { collectionRef } from '../firebase';
 
@@ -34,7 +34,7 @@ describe('applicants API', () => {
     const createdAt = '2021-11-11';
 
     const applicant: ApplicantFields = {
-      groupId: '1',
+      groupId: 'groupId',
       introduce: 'introduce',
       portfolioUrl: 'https://test.test',
       applicant: PROFILE_FIXTURE,
@@ -91,7 +91,7 @@ describe('applicants API', () => {
     } as unknown as QueryDocumentSnapshot<DocumentData>;
 
     beforeEach(() => {
-      (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
+      (getGroupDetail as jest.Mock).mockResolvedValue(FIXTURE_GROUP);
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
         docs: [doc],
       }));
@@ -100,7 +100,7 @@ describe('applicants API', () => {
     it('그룹 리스트가 반환되어야만 한다', async () => {
       const response = await getUserAppliedGroups('userUid');
 
-      expect(response).toEqual([GROUP_FIXTURE]);
+      expect(response).toEqual([FIXTURE_GROUP]);
     });
   });
 
@@ -141,13 +141,13 @@ describe('applicants API', () => {
     } as unknown as QueryDocumentSnapshot<DocumentData>;
 
     beforeEach(() => {
-      (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
+      (getGroupDetail as jest.Mock).mockResolvedValue(FIXTURE_GROUP);
     });
 
     it('그룹을 반환되어야만 한다', async () => {
       const response = await getAppliedGroups(doc);
 
-      expect(response).toEqual(GROUP_FIXTURE);
+      expect(response).toEqual(FIXTURE_GROUP);
       expect(getGroupDetail).toBeCalledWith(groupId);
     });
   });

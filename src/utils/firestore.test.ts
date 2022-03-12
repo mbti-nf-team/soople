@@ -1,7 +1,6 @@
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 
 import { getUserProfile } from '@/services/api/auth';
-import { getGroupDetail } from '@/services/api/group';
 
 import GROUP_FIXTURE from '../../fixtures/group';
 import PROFILE_FIXTURE from '../../fixtures/profile';
@@ -102,7 +101,6 @@ describe('formatCreatedAt', () => {
 
 describe('formatAlarm', () => {
   beforeEach(() => {
-    (getGroupDetail as jest.Mock).mockImplementation(() => (GROUP_FIXTURE));
     (getUserProfile as jest.Mock).mockImplementation(() => (PROFILE_FIXTURE));
   });
 
@@ -116,7 +114,7 @@ describe('formatAlarm', () => {
     const settings = {
       id: '1',
       data: () => ({
-        groupId: '1',
+        group: GROUP_FIXTURE,
         userUid: '2',
         isViewed: false,
         type: 'confirmed',
@@ -144,7 +142,7 @@ describe('formatAlarm', () => {
     const settings = {
       id: '1',
       data: () => ({
-        groupId: '1',
+        group: GROUP_FIXTURE,
         userUid: '2',
         isViewed: false,
         type: 'confirmed',

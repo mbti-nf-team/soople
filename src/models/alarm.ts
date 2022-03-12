@@ -17,13 +17,13 @@ export interface Alarm {
 export interface AlarmForm {
   userUid: string;
   applicantUid: string | null;
-  groupId: string;
+  group: Group;
   type: AlarmType;
 }
 
 export interface AlarmResponse {
   userUid: string;
-  groupId: string;
+  group: Group;
   applicantUid: string | null;
   type: AlarmType;
   isViewed: boolean;
