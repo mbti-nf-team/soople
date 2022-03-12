@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -21,6 +22,7 @@ dayjs.extend(relativeTime);
 
 interface Props {
   alarm: Alarm;
+  onClick: (alarmUid: string) => void;
 }
 
 const groupCategory: { [K in Category | string]: string; } = {
@@ -28,10 +30,18 @@ const groupCategory: { [K in Category | string]: string; } = {
   project: '프로젝트',
 };
 
-function AlarmItem({ alarm }: Props): ReactElement {
+function AlarmItem({ alarm, onClick }: Props): ReactElement {
   const {
-    group, createdAt, type, applicant,
+    group, createdAt, type, applicant, isViewed, uid,
   } = alarm;
+
+  const handleClick = () => {
+    if (isViewed) {
+      return;
+    }
+
+    onClick(uid);
+  };
 
   const alarmThumbnail = {
     confirmed: <AlarmConfirmedIcon />,
@@ -40,7 +50,7 @@ function AlarmItem({ alarm }: Props): ReactElement {
   };
 
   const alarmMessage: { [K in AlarmType]: string; } = {
-    confirmed: `축하드려요 🎉  ${groupCategory[group.category]}의 팀원이 되었어요. 지금 바로 팀장이 보낸 메시지를 확인해볼까요?`,
+    confirmed: `축하드려요 🎉 ${groupCategory[group.category]}의 팀원이 되었어요. 지금 바로 팀장이 보낸 메시지를 확인해볼까요?`,
     rejected: `아쉽게도 ${groupCategory[group.category]}의 팀원이 되지 않았어요.`,
     applied: `${applicant?.name}님이 팀원을 신청했어요.`,
   };
@@ -49,7 +59,7 @@ function AlarmItem({ alarm }: Props): ReactElement {
 
   return (
     <Link href={alarmUrl} passHref>
-      <AlarmItemWrapper>
+      <AlarmItemWrapper isViewed={isViewed} onClick={handleClick}>
         <AlarmItemThumbnail>
           {alarmThumbnail[type]}
         </AlarmItemThumbnail>
@@ -71,11 +81,14 @@ function AlarmItem({ alarm }: Props): ReactElement {
 
 export default AlarmItem;
 
-const AlarmItemWrapper = styled.a`
+const AlarmItemWrapper = styled.a<{ isViewed: boolean; }>`
   display: flex;
   flex-direction: row;
-  padding: 24px 0px 24px 0px;
+  padding: 24px 16px 24px 16px;
   border-bottom: 0.5px solid ${palette.accent2};
+  ${({ isViewed }) => !isViewed && css`
+    background-color: rgba(73, 157, 223, 0.08);
+  `}
 `;
 
 const AlarmItemThumbnail = styled.div`

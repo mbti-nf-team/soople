@@ -28,17 +28,15 @@ function ApplicationStatusHeaderContainer(): ReactElement {
   const currentTime = useCurrentTime(group);
 
   const onSubmit = useCallback((completedGroupForm: CompletedGroupForm) => {
-    const { groupId } = group;
-
     const alarmForms = applicants.map(({ applicant, isConfirm }) => ({
       applicantUid: null,
       userUid: applicant.uid,
       type: isConfirm ? 'confirmed' : 'rejected' as AlarmType,
-      groupId,
+      group,
     }));
 
     mutate({
-      groupId,
+      groupId: group.groupId,
       completedGroupForm,
       alarmForms,
     });

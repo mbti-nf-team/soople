@@ -19,20 +19,20 @@ function useApplyGroup() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<[ApplyResponse, string], FirestoreError, ApplyRequest>(({
-    applicant, groupId, introduce, portfolioUrl, writerUid,
+    applicant, group, introduce, portfolioUrl,
   }) => Promise.all([postAddApplicant({
-    groupId, introduce, portfolioUrl, applicant,
+    groupId: group.groupId, introduce, portfolioUrl, applicant,
   }), postAddAlarm({
-    applicantUid: applicant.uid, groupId, userUid: writerUid, type: 'applied',
+    applicantUid: applicant.uid, group, userUid: group.writer.uid, type: 'applied',
   })]), {
     onSuccess: ([{ uid, numberApplicants }]: [ApplyResponse, string], {
-      groupId, applicant, introduce, portfolioUrl,
+      group, applicant, introduce, portfolioUrl,
     }: ApplyRequest) => {
       const applicantForm = {
-        groupId, applicant, introduce, portfolioUrl,
+        groupId: group.groupId, applicant, introduce, portfolioUrl,
       };
 
-      queryClient.setQueryData<Applicant[]>(['applicants', groupId], (applicants = []) => [
+      queryClient.setQueryData<Applicant[]>(['applicants', group.groupId], (applicants = []) => [
         ...applicants,
         {
           ...applicantForm,
@@ -42,8 +42,8 @@ function useApplyGroup() {
         },
       ]);
 
-      queryClient.setQueryData<Group | undefined>(['group', groupId], (group) => ({
-        ...group as Group,
+      queryClient.setQueryData<Group | undefined>(['group', group.groupId], (prevGroup) => ({
+        ...prevGroup as Group,
         numberApplicants,
       }));
 

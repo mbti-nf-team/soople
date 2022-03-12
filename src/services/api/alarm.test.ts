@@ -1,14 +1,17 @@
 import {
-  addDoc, getDocs, serverTimestamp,
+  addDoc, getDocs, serverTimestamp, updateDoc,
 } from 'firebase/firestore';
 
 import { AlarmForm } from '@/models/alarm';
 import { formatAlarm, formatCreatedAt } from '@/utils/firestore';
 
 import ALARM_FIXTURE from '../../../fixtures/alarm';
+import FIXTURE_GROUP from '../../../fixtures/group';
 import { collectionRef } from '../firebase';
 
-import { getUserAlarm, getUserAlertAlarm, postAddAlarm } from './alarm';
+import {
+  getUserAlarm, getUserAlertAlarm, patchAlarmViewed, postAddAlarm,
+} from './alarm';
 
 jest.mock('../firebase');
 jest.mock('@/utils/firestore');
@@ -23,9 +26,10 @@ describe('alarm API', () => {
     const createdAt = '2021-11-11';
 
     const alarm: AlarmForm = {
-      groupId: 'groupId',
+      group: FIXTURE_GROUP,
       type: 'applied',
       userUid: 'userUid',
+      applicantUid: 'applicantUid',
     };
 
     beforeEach(() => {
@@ -79,6 +83,16 @@ describe('alarm API', () => {
 
       expect(response).toEqual([ALARM_FIXTURE]);
       expect(getDocs).toBeCalledTimes(1);
+    });
+  });
+
+  describe('patchAlarmViewed', () => {
+    it('updateDoc가 호출되어야만 한다', async () => {
+      await patchAlarmViewed('alarmUid');
+
+      expect(updateDoc).toBeCalledWith(undefined, {
+        isViewed: true,
+      });
     });
   });
 });

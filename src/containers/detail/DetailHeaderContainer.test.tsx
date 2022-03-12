@@ -93,9 +93,8 @@ describe('DetailHeaderContainer', () => {
           expect(mutate).toBeCalledWith({
             portfolioUrl: PROFILE_FIXTURE.portfolioUrl,
             introduce: 'test',
-            groupId: GROUP_FIXTURE.groupId,
+            group: GROUP_FIXTURE,
             applicant: user,
-            writerUid: GROUP_FIXTURE.writer.uid,
           });
         });
       });

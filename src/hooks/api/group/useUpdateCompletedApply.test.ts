@@ -4,6 +4,8 @@ import { postAddAlarm } from '@/services/api/alarm';
 import { patchCompletedGroup } from '@/services/api/group';
 import wrapper from '@/test/ReactQueryWrapper';
 
+import FIXTURE_GROUP from '../../../../fixtures/group';
+
 import useUpdateCompletedApply from './useUpdateCompletedApply';
 
 jest.mock('@/services/api/group');
@@ -25,7 +27,7 @@ describe('useUpdateCompletedApply', () => {
           numberConfirmApplicants: 1,
         },
         alarmForms: [{
-          groupId: 'groupId',
+          group: FIXTURE_GROUP,
           type: 'confirmed',
           userUid: 'userUid',
           applicantUid: 'applicantUid',

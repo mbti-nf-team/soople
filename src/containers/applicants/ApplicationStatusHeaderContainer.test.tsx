@@ -97,13 +97,13 @@ describe('ApplicationStatusHeaderContainer', () => {
             },
             alarmForms: [
               {
-                groupId: GROUP_FIXTURE.groupId,
+                group: GROUP_FIXTURE,
                 type: 'confirmed',
                 userUid: APPLICANT_FIXTURE.applicant.uid,
                 applicantUid: null,
               },
               {
-                groupId: GROUP_FIXTURE.groupId,
+                group: GROUP_FIXTURE,
                 type: 'rejected',
                 userUid: APPLICANT_FIXTURE.applicant.uid,
                 applicantUid: null,

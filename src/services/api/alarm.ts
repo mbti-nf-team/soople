@@ -1,11 +1,11 @@
 import {
-  addDoc, getDocs, orderBy, query, serverTimestamp, where,
+  addDoc, getDocs, orderBy, query, serverTimestamp, updateDoc, where,
 } from 'firebase/firestore';
 
 import { AlarmForm, AlertAlarm } from '@/models/alarm';
 import { formatAlarm, formatCreatedAt } from '@/utils/firestore';
 
-import { collectionRef } from '../firebase';
+import { collectionRef, docRef } from '../firebase';
 
 const ALARMS = 'alarms';
 
@@ -43,4 +43,10 @@ export const getUserAlertAlarm = async (userUid: string) => {
   const response = await getDocs(getQuery);
 
   return response.docs.map(formatCreatedAt) as AlertAlarm[];
+};
+
+export const patchAlarmViewed = async (uid: string) => {
+  await updateDoc(docRef(ALARMS, uid), {
+    isViewed: true,
+  });
 };

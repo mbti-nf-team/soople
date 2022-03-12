@@ -11,14 +11,10 @@ import AlarmItem from './AlarmItem';
 
 interface Props {
   alarms: Alarm[];
-  isLoading: boolean;
+  onClickAlarm: (alarmUid: string) => void;
 }
 
-function Alarms({ alarms, isLoading }: Props): ReactElement {
-  if (isLoading) {
-    return <>로딩중...</>;
-  }
-
+function Alarms({ alarms, onClickAlarm }: Props): ReactElement {
   if (isEmpty(alarms)) {
     return (
       <EmptyStateArea
@@ -31,7 +27,11 @@ function Alarms({ alarms, isLoading }: Props): ReactElement {
   return (
     <AlarmsWrapper>
       {alarms.map((alarm) => (
-        <AlarmItem key={alarm.uid} alarm={alarm} />
+        <AlarmItem
+          key={alarm.uid}
+          alarm={alarm}
+          onClick={onClickAlarm}
+        />
       ))}
     </AlarmsWrapper>
   );

@@ -5,6 +5,7 @@ import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useSignOut from '@/hooks/api/auth/useSignOut';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 
 import ALARM_FIXTURE from '../../fixtures/alarm';
 import PROFILE_FIXTURE from '../../fixtures/profile';
@@ -38,9 +39,11 @@ describe('AlarmPage', () => {
   });
 
   const renderAlarmPage = () => render((
-    <InjectTestingRecoilState>
-      <AlarmPage />
-    </InjectTestingRecoilState>
+    <ReactQueryWrapper>
+      <InjectTestingRecoilState>
+        <AlarmPage />
+      </InjectTestingRecoilState>
+    </ReactQueryWrapper>
   ));
 
   it('알람에 대한 정보가 나타나야만 한다', () => {

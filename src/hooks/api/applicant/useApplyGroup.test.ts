@@ -5,6 +5,7 @@ import { postAddApplicant } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
 
 import ALARM_FIXTURE from '../../../../fixtures/alarm';
+import FIXTURE_GROUP from '../../../../fixtures/group';
 import FIXTURE_PROFILE from '../../../../fixtures/profile';
 
 import useApplyGroup from './useApplyGroup';
@@ -33,9 +34,8 @@ describe('useApplyGroup', () => {
       await result.current.mutate({
         portfolioUrl: null,
         introduce: 'introduce',
-        groupId: '1',
+        group: FIXTURE_GROUP,
         applicant: FIXTURE_PROFILE,
-        writerUid: '2',
       });
     });
 
