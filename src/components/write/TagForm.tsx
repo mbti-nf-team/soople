@@ -101,12 +101,19 @@ const TagFormWrapper = styled.div`
     ${body2Font(true)};
     margin-left: 4px;
     color: ${palette.accent6};
+    transition: color 0.1s ease-in-out;
   }
 
   .tag-tip {
     ${subtitle1Font()};
     margin-left: 4px;
     color: ${palette.accent5};
+  }
+
+  &:focus-within {
+    & > .title {
+      color: ${palette.success};
+    }
   }
 `;
 
@@ -124,6 +131,11 @@ const TagsWrapper = styled.div<{isHaveTag: boolean }>`
   box-sizing: border-box;
   border-radius: 8px;
   margin: 6px 0;
+  transition: border-color 0.1s ease-in-out;
+
+  &:focus-within {
+    border: 1px solid ${palette.success};
+  }
 
   div {
     margin-right: 6px;

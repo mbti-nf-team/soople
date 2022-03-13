@@ -10,6 +10,7 @@ import {
   getGroups,
   getUserRecruitedGroups,
   patchCompletedGroup,
+  patchEditGroup,
   patchNumberApplicants,
   postNewGroup,
 } from '@/services/api/group';
@@ -207,6 +208,25 @@ describe('group API', () => {
       await patchCompletedGroup('groupId', { message: 'test', numberConfirmApplicants: 3 });
 
       expect(updateDoc).toBeCalledTimes(1);
+    });
+  });
+
+  describe('patchEditGroup', () => {
+    const writeFields: WriteFields = {
+      title: 'title',
+      content: 'content',
+      tags: [],
+      category: '',
+      recruitmentEndDate: '',
+      recruitmentEndSetting: 'automatic',
+      shortDescription: '',
+      thumbnail: '',
+    };
+
+    it('"updateDoc"이 호출되어야만 한다', async () => {
+      await patchEditGroup('groupId', writeFields);
+
+      expect(updateDoc).toBeCalledWith(undefined, writeFields);
     });
   });
 

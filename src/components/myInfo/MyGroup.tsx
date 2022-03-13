@@ -33,7 +33,7 @@ function MyGroup({ group, onClick }: Props): ReactElement {
     recruitmentEndDate, isCompleted, thumbnail, shortDescription,
   } = group;
   const currentTime = useCurrentTime(group);
-  const status = useGroupRecruitmentStatus(group);
+  const status = useGroupRecruitmentStatus(group) as RecruitmentStatus;
 
   const recruitStatus = (automaticRecruitingText: string): {
     [K in RecruitmentStatus]: string;

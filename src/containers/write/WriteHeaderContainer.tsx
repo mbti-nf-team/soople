@@ -1,4 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, {
+  ReactElement, useEffect, useState,
+} from 'react';
 
 import { useRouter } from 'next/router';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -12,22 +14,29 @@ function WriteHeaderContainer(): ReactElement {
   const router = useRouter();
   const setPublishModalVisible = useSetRecoilState(publishModalVisibleState);
   const { title } = useRecoilValue(writeFieldsState);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const onSubmit = () => setPublishModalVisible(true);
+
+  useEffect(() => {
+    if (router.query?.id) {
+      setIsEdit(true);
+    }
+  }, [router.query]);
 
   return (
     <SubHeader
       goBack={() => router.back()}
-      previousText="팀 모집하기"
+      previousText={isEdit ? '글 수정하기' : '팀 모집하기'}
     >
       <Button
         type="button"
         size="small"
         color="success"
-        disabled={!title}
+        disabled={!title.trim()}
         onClick={onSubmit}
       >
-        등록하기
+        {isEdit ? '저장하기' : '등록하기'}
       </Button>
     </SubHeader>
   );

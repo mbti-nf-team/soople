@@ -18,6 +18,22 @@ describe('useCurrentTime', () => {
     jest.clearAllTimers();
   });
 
+  context('group이 존재하지 않는 경우', () => {
+    given('group', () => (undefined));
+
+    it('딜레이가 없는 시간이 반환되어야 한다', async () => {
+      const { result: { current } } = useCurrentTimeHook();
+
+      const now = Date.now();
+
+      await act(async () => {
+        jest.advanceTimersByTime(1000);
+      });
+
+      expect((current / 100).toFixed(0)).toBe((now / 100).toFixed(0));
+    });
+  });
+
   context('"isRecruitCompletedAndManual" 반환값이 true인 경우', () => {
     given('group', () => (GROUP_FIXTURE));
 

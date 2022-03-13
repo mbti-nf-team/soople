@@ -1,10 +1,14 @@
 import React, { ReactElement, useCallback, useState } from 'react';
 
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
 
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
 import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
 import { Group } from '@/models/group';
+import { writeFieldsState } from '@/recoil/group/atom';
+import { stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
 
@@ -17,8 +21,11 @@ interface Props {
 }
 
 function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
+  const router = useRouter();
   const { mutate: removeGroupMutate } = useRemoveGroup();
   const { mutate: removeGroupThumbnailMutate } = useRemoveGroupThumbnail();
+
+  const setWriteFields = useSetRecoilState(writeFieldsState);
 
   const [isVisibleApplicantsModal, setIsVisibleApplicantsModal] = useState<boolean>(false);
   const [isVisibleAskRemoveGroupModal, setIsVisibleAskRemoveGroupModal] = useState<boolean>(false);
@@ -31,9 +38,32 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
     }
   }, [group, removeGroupMutate, removeGroupThumbnailMutate]);
 
+  const onClickEdit = (initialWriteFields: Group) => {
+    const {
+      category, content, tags, title, recruitmentEndDate, recruitmentEndSetting, groupId,
+    } = initialWriteFields;
+
+    setWriteFields({
+      category,
+      content,
+      tags,
+      title,
+      recruitmentEndDate,
+      recruitmentEndSetting,
+      thumbnail: stringToExcludeNull(initialWriteFields.thumbnail),
+      shortDescription: stringToExcludeNull(initialWriteFields.shortDescription),
+    });
+    router.push(`/write?id=${groupId}`);
+  };
+
   return (
     <WriterButtonWrapper>
-      <Button>수정</Button>
+      <Button
+        type="button"
+        onClick={() => onClickEdit(group)}
+      >
+        수정
+      </Button>
       <Button
         type="button"
         onClick={() => setIsVisibleAskRemoveGroupModal(true)}

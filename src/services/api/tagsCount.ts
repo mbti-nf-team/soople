@@ -47,12 +47,22 @@ export const deleteTagCount = async (tagName: string) => {
 
   const { count } = response.data() as { name: string; count: number; };
 
-  if (count === 0) {
+  const nextCount = count - 1;
+
+  if (nextCount < 0) {
     await deleteDoc(response.ref);
     return;
   }
 
   await updateDoc(response.ref, {
-    count: count - 1,
+    count: nextCount,
   });
+};
+
+export const editTagsCount = async (updateTags: string[], deleteTags: string[]) => {
+  const filteredUpdateTags = updateTags.filter((tag) => !deleteTags.includes(tag));
+  const filteredDeleteTags = deleteTags.filter((tag) => !updateTags.includes(tag));
+
+  await filteredUpdateTags.map(updateTagCount);
+  await filteredDeleteTags.map(deleteTagCount);
 };

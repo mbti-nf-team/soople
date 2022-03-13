@@ -74,7 +74,7 @@ const FormModalWrapper = styled.div`
   background: rgba(0, 0, 0, 0.25);
 `;
 
-const FormModalBox = styled.div<{ size: string; isVisible: boolean }>`
+const FormModalBox = styled.div<{ size: string; isVisible: boolean; }>`
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
   background: ${palette.background};
   border-radius: 8px;

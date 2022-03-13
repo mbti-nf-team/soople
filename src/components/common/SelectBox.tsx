@@ -24,6 +24,7 @@ interface Props<T> {
   labelOptionText?: string;
   errorMessage?: string;
   helperMessage?: string;
+  disabled?: boolean;
 }
 
 function SelectBox<Option>({
@@ -37,6 +38,7 @@ function SelectBox<Option>({
   helperMessage,
   labelText,
   labelOptionText,
+  disabled = false,
 }: Props<Option>): ReactElement {
   const handleChange = (newValue: SelectOption<Option>) => {
     onChange(newValue?.value);
@@ -63,6 +65,7 @@ function SelectBox<Option>({
         size={size}
         isSearchable={false}
         isError={!!errorMessage}
+        isDisabled={disabled}
         data-testid="select"
       />
       <HelperMessage
@@ -124,6 +127,18 @@ const StyledSelect = styled(Select)<{ size: Size; isError: boolean; }>`
     ` : css`
       border: 1px solid ${palette.accent2};
     `)}
+  }
+
+  &.select--is-disabled {
+    & > .select__control--is-disabled {
+      background-color: ${palette.accent1};
+
+      & > .select__value-container--has-value {
+        & > .select__single-value--is-disabled {
+          color: ${palette.accent6};
+        }
+      }
+    }
   }
 
   & .select__control--is-focused {

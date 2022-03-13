@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, ReactElement } from 'react';
 
 import { Remirror, useRemirror } from '@remirror/react';
+import { useRecoilValue } from 'recoil';
 import css from 'refractor/lang/css';
 import java from 'refractor/lang/java';
 import javascript from 'refractor/lang/javascript';
@@ -29,6 +30,7 @@ import {
 } from 'remirror/extensions';
 import emojiData from 'svgmoji/emoji.json';
 
+import { writeFieldsState } from '@/recoil/group/atom';
 import palette from '@/styles/palette';
 
 const extensions = () => [
@@ -57,9 +59,11 @@ const extensions = () => [
 ];
 
 function RemirorEditorProvider({ children }: PropsWithChildren<unknown>): ReactElement {
+  const writeFields = useRecoilValue(writeFieldsState);
+
   const { manager, state, onChange } = useRemirror({
     extensions,
-    content: '',
+    content: writeFields.content,
     selection: 'start',
     stringHandler: htmlToProsemirrorNode,
   });

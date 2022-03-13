@@ -4,7 +4,7 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
 import { WriteFields } from '@/models/group';
 import palette from '@/styles/palette';
-import ReactQueryWrapper from '@/test/ReactQueryWrapper';
+import InjectMockProviders from '@/test/InjectMockProviders';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
@@ -32,25 +32,50 @@ describe('PublishModalForm', () => {
   });
 
   const renderPublishModalForm = (fields: WriteFields) => render((
-    <ReactQueryWrapper>
+    <InjectMockProviders>
       <PublishModalForm
+        isEdit={given.isEdit}
+        isRecruiting
         isVisible={given.isVisible}
         onClose={handleClose}
         onSubmit={handleSubmit}
         fields={fields}
         onChangeFields={handleChangeFields}
       />
-    </ReactQueryWrapper>
+    </InjectMockProviders>
   ));
 
   context('isVisible이 true인 경우', () => {
     given('isVisible', () => true);
+
+    describe('isEdit에 따라서 모달 버튼이 다르게 나타난다', () => {
+      context('isEdit이 true인 경우', () => {
+        given('isEdit', () => true);
+
+        it('"저장하기"가 보여야만 한다', () => {
+          const { container } = renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+          expect(container).toHaveTextContent('저장하기');
+        });
+      });
+
+      context('isEdit이 false인 경우', () => {
+        given('isEdit', () => false);
+
+        it('"등록하기"가 보여야만 한다', () => {
+          const { container } = renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+
+          expect(container).toHaveTextContent('등록하기');
+        });
+      });
+    });
 
     it('모달 타이틀이 나타나야만 한다', () => {
       const title = '제목입니다';
 
       const { container } = renderPublishModalForm({
         ...WRITE_FIELDS_FIXTURE,
+        category: 'study',
         title,
       });
 

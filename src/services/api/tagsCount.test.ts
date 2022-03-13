@@ -3,7 +3,9 @@ import {
   getDoc, getDocs, setDoc, updateDoc,
 } from 'firebase/firestore';
 
-import { deleteTagCount, getTagsCount, updateTagCount } from './tagsCount';
+import {
+  deleteTagCount, editTagsCount, getTagsCount, updateTagCount,
+} from './tagsCount';
 
 jest.mock('../firebase');
 
@@ -103,7 +105,7 @@ describe('tagsCount API', () => {
         });
       });
 
-      context('count가 0인 경우', () => {
+      context('count가 0이하인 경우', () => {
         beforeEach(() => {
           (getDoc as jest.Mock).mockImplementationOnce(() => ({
             exists: jest.fn().mockReturnValueOnce(true),
@@ -136,6 +138,28 @@ describe('tagsCount API', () => {
         expect(deleteDoc).not.toBeCalled();
         expect(updateDoc).not.toBeCalled();
       });
+    });
+  });
+
+  describe('editTagsCount', () => {
+    const mockResponse = {
+      name: 'test',
+      count: 1,
+    };
+    const ref = 'ref';
+
+    beforeEach(() => {
+      (getDoc as jest.Mock).mockImplementation(() => ({
+        exists: jest.fn().mockReturnValue(true),
+        data: jest.fn().mockReturnValue(mockResponse),
+        ref,
+      }));
+    });
+
+    it('updateDoc이 호출되어야만 한다', async () => {
+      await editTagsCount(['test'], ['test2']);
+
+      expect(updateDoc).toBeCalled();
     });
   });
 });

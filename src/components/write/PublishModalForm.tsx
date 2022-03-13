@@ -24,6 +24,8 @@ interface Props {
   onChangeFields: (form: KeyPair<WriteFields>) => void;
   onSubmit: () => void;
   isVisible: boolean;
+  isRecruiting: boolean;
+  isEdit: boolean;
   onClose: () => void;
 }
 
@@ -38,11 +40,12 @@ const recruitmentEndSettingOption: SelectOption<RecruitmentEndSetting>[] = [
 ];
 
 function PublishModalForm({
-  fields, onChangeFields, onSubmit, onClose, isVisible,
+  fields, onChangeFields, onSubmit, onClose, isVisible, isEdit, isRecruiting,
 }: Props): ReactElement {
   const [isEndDateDisabled, setEndDateDisabled] = useState<boolean>(false);
+  const [defaultCategory, setDefaultCategory] = useState<SelectOption<Category>>();
   const {
-    recruitmentEndSetting, recruitmentEndDate, title, shortDescription,
+    recruitmentEndSetting, recruitmentEndDate, title, shortDescription, category,
   } = fields;
 
   const defaultRecruitmentEndSetting = recruitmentEndSettingOption.find(({
@@ -83,13 +86,21 @@ function PublishModalForm({
     setEndDateDisabled(false);
   }, [recruitmentEndSetting]);
 
+  useEffect(() => {
+    if (category) {
+      const initialCategory = categoryOption.find(({ value }) => value === category);
+
+      setDefaultCategory(initialCategory);
+    }
+  }, [category]);
+
   return (
     <FormModal
       isVisible={isVisible}
       onClose={onClose}
-      title={`${title} 등록`}
+      title={`${title} ${isEdit ? '수정' : '등록'}`}
       onSubmit={handleSubmit}
-      confirmText="등록하기"
+      confirmText={`${isEdit ? '저장' : '등록'}하기`}
     >
       <PublishModalFormWrapper>
         <DescriptionWrapper>
@@ -116,7 +127,9 @@ function PublishModalForm({
             labelText="분류"
             placeholder="분류를 선택해주세요."
             options={categoryOption}
+            defaultValue={defaultCategory}
             onChange={handleCategoryChange}
+            disabled={!isRecruiting}
           />
 
           <SelectBox
@@ -126,6 +139,7 @@ function PublishModalForm({
             options={recruitmentEndSettingOption}
             defaultValue={defaultRecruitmentEndSetting}
             onChange={handleSettingChange}
+            disabled={!isRecruiting}
           />
 
           <RecruitmentEndDateInput
@@ -136,7 +150,7 @@ function PublishModalForm({
             type="datetime-local"
             onChange={handleChangeFields}
             value={stringToExcludeNull(recruitmentEndDate)}
-            disabled={isEndDateDisabled}
+            disabled={isEndDateDisabled || !isRecruiting}
           />
         </PublishFormWrapper>
       </PublishModalFormWrapper>
