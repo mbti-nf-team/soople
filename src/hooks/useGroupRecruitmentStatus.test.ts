@@ -11,6 +11,16 @@ describe('useGroupRecruitmentStatus', () => {
     given.group,
   ));
 
+  context('group이 존재하지 않는 경우', () => {
+    given('group', () => (undefined));
+
+    it('null을 반환되어야만 한다', () => {
+      const { result: { current } } = useGroupRecruitmentStatusHook();
+
+      expect(current).toBeNull();
+    });
+  });
+
   context('모집 완료 상태이고 manual(수동) 상태일 경우', () => {
     given('group', () => ({
       ...GROUP_FIXTURE,

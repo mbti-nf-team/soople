@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { useRouter } from 'next/router';
 
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
 import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
@@ -11,20 +12,24 @@ import WriterStatusButtons from './WriterStatusButtons';
 jest.mock('@/hooks/api/group/useRemoveGroup');
 jest.mock('@/hooks/api/storage/useRemoveGroupThumbnail');
 jest.mock('next/router', () => ({
-  useRouter: jest.fn().mockImplementation(() => ({
-    query: {
-      id: '/',
-    },
-  })),
+  useRouter: jest.fn(),
 }));
 
 describe('WriterStatusButtons', () => {
   const groupId = 'groupId';
   const removeGroupMutate = jest.fn();
   const removeGroupThumbnailMutate = jest.fn();
+  const mockPush = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      query: {
+        id: '/',
+      },
+      push: mockPush,
+    }));
 
     (useRemoveGroup as jest.Mock).mockImplementation(() => ({
       mutate: removeGroupMutate,
@@ -43,6 +48,18 @@ describe('WriterStatusButtons', () => {
       />
     </InjectMockProviders>
   ));
+
+  describe('수정 버튼을 클릭한다', () => {
+    given('group', () => (FIXTURE_GROUP));
+
+    it('router.push가 호출되어야만 한다', () => {
+      renderWriterStatusButtons();
+
+      fireEvent.click(screen.getByText('수정'));
+
+      expect(mockPush).toBeCalledWith(`/write?id=${FIXTURE_GROUP.groupId}`);
+    });
+  });
 
   describe('삭제 버튼을 클릭한다', () => {
     given('group', () => (FIXTURE_GROUP));

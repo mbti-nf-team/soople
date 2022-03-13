@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import {
   act,
   fireEvent, render, screen, waitFor,
@@ -7,6 +6,8 @@ import {
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
 import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
+import { initialWriteFieldsState } from '@/models/group';
+import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
@@ -28,7 +29,6 @@ describe('ThumbnailUpload', () => {
     }));
     (useUploadGroupThumbnail as jest.Mock).mockImplementation(() => ({
       mutate,
-      data: given.thumbnailUrl,
     }));
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: FIXTURE_PROFILE,
@@ -36,7 +36,13 @@ describe('ThumbnailUpload', () => {
   });
 
   const renderThumbnailUpload = () => render((
-    <ThumbnailUpload />
+    <InjectTestingRecoilState writeFields={{
+      ...initialWriteFieldsState,
+      thumbnail: given.thumbnail,
+    }}
+    >
+      <ThumbnailUpload />
+    </InjectTestingRecoilState>
   ));
 
   it('썸네일 등록 폼에 대한 내용이 나타나야만 한다', () => {
@@ -66,10 +72,10 @@ describe('ThumbnailUpload', () => {
   describe('썸네일 upload를 삭제한다', () => {
     const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
 
-    context('thumbnailUrl이 존재하는 경우', () => {
+    context('thumbnail이 존재하는 경우', () => {
       const thumbnailUrl = 'www.test.com';
 
-      given('thumbnailUrl', () => thumbnailUrl);
+      given('thumbnail', () => thumbnailUrl);
 
       it('remove mutate 액션이 발생해야만 한다', async () => {
         renderThumbnailUpload();
@@ -92,8 +98,8 @@ describe('ThumbnailUpload', () => {
       });
     });
 
-    context('thumbnailUrl이 존재하지 않는 경우', () => {
-      given('thumbnailUrl', () => null);
+    context('thumbnail이 존재하지 않는 경우', () => {
+      given('thumbnail', () => null);
 
       it('remove mutate 액션이 발생하지 않아야만 한다', async () => {
         renderThumbnailUpload();

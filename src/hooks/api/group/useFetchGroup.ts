@@ -14,7 +14,9 @@ function useFetchGroup() {
 
   const { id } = router.query as GroupQuery;
 
-  const query = useQuery<Group | null, FirestoreError>(['group', id], () => getGroupDetail(id));
+  const query = useQuery<Group | null, FirestoreError>(['group', id], () => getGroupDetail(id), {
+    enabled: !!id,
+  });
 
   const { isError, error, data } = query;
 

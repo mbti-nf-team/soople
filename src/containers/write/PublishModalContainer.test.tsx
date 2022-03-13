@@ -1,24 +1,35 @@
 import { useHelpers, useRemirrorContext } from '@remirror/react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { useRouter } from 'next/router';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import useEditGroup from '@/hooks/api/group/useEditGroup';
+import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
 import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
+import useGroupRecruitmentStatus from '@/hooks/useGroupRecruitmentStatus';
 import { writeFieldsState } from '@/recoil/group/atom';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import RecoilObserver from '@/test/RecoilObserver';
 
+import FIXTURE_GROUP from '../../../fixtures/group';
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 
 import PublishModalContainer from './PublishModalContainer';
 
 jest.mock('@/hooks/api/group/usePublishNewGroup');
+jest.mock('@/hooks/api/group/useFetchGroup');
+jest.mock('@/hooks/api/group/useEditGroup');
+jest.mock('@/hooks/useGroupRecruitmentStatus');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/storage/useUploadGroupThumbnail');
 jest.mock('@remirror/react', () => ({
   useRemirrorContext: jest.fn(),
   useHelpers: jest.fn(),
+}));
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
 }));
 
 describe('PublishModalContainer', () => {
@@ -28,6 +39,16 @@ describe('PublishModalContainer', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      query: given.query,
+    }));
+    (useGroupRecruitmentStatus as jest.Mock).mockImplementation(() => given.recruitmentStatus);
+    (useFetchGroup as jest.Mock).mockImplementation(() => ({
+      data: FIXTURE_GROUP,
+    }));
+    (useEditGroup as jest.Mock).mockImplementation(() => ({
+      mutate,
+    }));
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: 'user',
     }));
@@ -84,18 +105,52 @@ describe('PublishModalContainer', () => {
       });
     });
 
-    describe('"등록하기" 버튼을 클릭한다', () => {
-      it('mutate 액션이 호출되어야만 한다', () => {
-        renderPublishModalContainer();
+    describe('submit 버튼을 클릭한다', () => {
+      context('router.query가 존재하지 않는 경우', () => {
+        given('query', () => ({
+          id: null,
+        }));
 
-        fireEvent.click(screen.getByText('등록하기'));
+        it('등록 mutate 액션이 호출되어야만 한다', () => {
+          renderPublishModalContainer();
 
-        expect(mutate).toBeCalledWith({
-          writeFields: {
-            ...WRITE_FIELDS_FIXTURE,
-            title,
-          },
-          profile: 'user',
+          fireEvent.click(screen.getByText('등록하기'));
+
+          expect(mutate).toBeCalledWith({
+            writeFields: {
+              ...WRITE_FIELDS_FIXTURE,
+              title,
+            },
+            profile: 'user',
+          });
+        });
+      });
+
+      context('router.query가 존재하는 경우', () => {
+        given('query', () => ({
+          id: 'id',
+        }));
+        given('writeFields', () => ({
+          ...WRITE_FIELDS_FIXTURE,
+          title,
+          tags: ['test'],
+        }));
+        given('recruitmentStatus', () => ('automaticBeforeCompletedRecruitment'));
+
+        it('수정 mutate 액션이 호출되어야만 한다', () => {
+          renderPublishModalContainer();
+
+          fireEvent.click(screen.getByText('저장하기'));
+
+          expect(mutate).toBeCalledWith({
+            writeFields: {
+              ...WRITE_FIELDS_FIXTURE,
+              title,
+              tags: ['test'],
+            },
+            deleteTags: ['test'],
+            groupId: FIXTURE_GROUP.groupId,
+          });
         });
       });
     });

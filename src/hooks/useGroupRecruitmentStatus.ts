@@ -1,15 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Group, RecruitmentStatus } from '@/models/group';
 import { isCurrentTimeBeforeEndDate } from '@/utils/utils';
 
 import useCurrentTime from './useCurrentTime';
 
-const useGroupRecruitmentStatus = (group: Group) => {
+const useGroupRecruitmentStatus = (group?: Group) => {
   const currentTime = useCurrentTime(group);
-  const [groupRecruitmentStatus, setRecruitmentStatus] = useState<RecruitmentStatus>('manualRecruiting');
+  const [groupRecruitmentStatus, setRecruitmentStatus] = useState<RecruitmentStatus | null>('manualRecruiting');
 
   useEffect(() => {
+    if (!group) {
+      setRecruitmentStatus(null);
+      return;
+    }
+
     const { isCompleted, recruitmentEndSetting, recruitmentEndDate } = group;
 
     if (isCompleted && recruitmentEndSetting === 'manual') {
@@ -37,7 +42,7 @@ const useGroupRecruitmentStatus = (group: Group) => {
     setRecruitmentStatus('automaticCloseRecruitment');
   }, [group, currentTime]);
 
-  return groupRecruitmentStatus;
+  return useMemo(() => groupRecruitmentStatus, [groupRecruitmentStatus]);
 };
 
 export default useGroupRecruitmentStatus;

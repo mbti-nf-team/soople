@@ -4,10 +4,14 @@ import { useInterval } from 'react-use';
 import { Group } from '@/models/group';
 import { isCurrentTimeBeforeEndDate, isRecruitCompletedAndManual } from '@/utils/utils';
 
-const useCurrentTime = (group: Group) => {
+const useCurrentTime = (group?: Group) => {
   const [currentTime, setCurrentTime] = useState<number>(Date.now());
 
   const delay = useMemo(() => {
+    if (!group) {
+      return null;
+    }
+
     if (isRecruitCompletedAndManual(group)) {
       return null;
     }
@@ -21,7 +25,7 @@ const useCurrentTime = (group: Group) => {
 
   useInterval(() => setCurrentTime(Date.now()), delay);
 
-  return currentTime;
+  return useMemo(() => currentTime, [currentTime]);
 };
 
 export default useCurrentTime;

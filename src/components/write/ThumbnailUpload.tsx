@@ -4,22 +4,26 @@ import React, {
 } from 'react';
 import { PlusCircle, X as CloseSvg } from 'react-feather';
 import ReactImageUploading, { ImageListType } from 'react-images-uploading';
+import { useEffectOnce } from 'react-use';
 
 import styled from '@emotion/styled';
 import { isEmpty } from 'ramda';
+import { useRecoilValue } from 'recoil';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
 import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
+import { writeFieldsState } from '@/recoil/group/atom';
 import { body2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
 import Label from '../common/Label';
 
 function ThumbnailUpload(): ReactElement {
-  const { mutate: onUploadThumbnail, data: thumbnailUrl } = useUploadGroupThumbnail();
+  const { mutate: onUploadThumbnail } = useUploadGroupThumbnail();
   const { mutate: onRemoveThumbnail } = useRemoveGroupThumbnail();
   const { data: user } = useFetchUserProfile();
+  const { thumbnail } = useRecoilValue(writeFieldsState);
   const [images, setImages] = useState<ImageListType>([]);
 
   const handleChange = (imageList: ImageListType) => setImages(imageList);
@@ -30,18 +34,24 @@ function ThumbnailUpload(): ReactElement {
   ) => {
     e.stopPropagation();
 
-    if (thumbnailUrl) {
-      onRemoveThumbnail(thumbnailUrl);
+    if (thumbnail) {
+      onRemoveThumbnail(thumbnail);
     }
 
     onImageRemove();
-  }, [thumbnailUrl, onRemoveThumbnail]);
+  }, [thumbnail, onRemoveThumbnail]);
 
   useEffect(() => {
     if (!isEmpty(images) && images[0].file) {
       onUploadThumbnail({ userUid: user?.uid as string, thumbnail: images[0].file });
     }
   }, [user, images]);
+
+  useEffectOnce(() => {
+    if (thumbnail) {
+      setImages([{ dataURL: thumbnail }]);
+    }
+  });
 
   return (
     <ThumbnailFromWrapper>
@@ -83,7 +93,7 @@ function ThumbnailUpload(): ReactElement {
             ) : (
               <>
                 {imageList.map((image, index) => (
-                  <ThumbnailImageWrapper key={image.file?.name}>
+                  <ThumbnailImageWrapper key={image.dataURL}>
                     <CloseIcon
                       width={16}
                       height={16}

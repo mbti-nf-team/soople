@@ -15,7 +15,6 @@ import {
   CompletedGroupForm,
   FilterGroupsCondition, Group, WriteFields,
 } from '@/models/group';
-// eslint-disable-next-line import/no-cycle
 import { formatGroup, timestampToString } from '@/utils/firestore';
 import { isRecruiting } from '@/utils/utils';
 
@@ -114,6 +113,12 @@ export const patchCompletedGroup = async (uid: string, completedGroupForm: Compl
   await updateDoc(docRef(GROUPS, uid), {
     ...completedGroupForm,
     isCompleted: true,
+  });
+};
+
+export const patchEditGroup = async (groupId: string, form: WriteFields) => {
+  await updateDoc(docRef(GROUPS, groupId), {
+    ...form,
   });
 };
 
