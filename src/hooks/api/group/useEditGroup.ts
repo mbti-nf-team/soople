@@ -8,6 +8,7 @@ import { WriteFields } from '@/models/group';
 import { publishModalVisibleState } from '@/recoil/modal/atom';
 import { patchEditGroup } from '@/services/api/group';
 import { editTagsCount } from '@/services/api/tagsCount';
+import { successToast } from '@/utils/toast';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -29,6 +30,7 @@ function useEditGroup() {
     onSuccess: (_, { groupId }) => {
       closePublishModal(false);
       replace(`/detail/${groupId}`);
+      successToast('글을 수정했어요.');
     },
   });
 

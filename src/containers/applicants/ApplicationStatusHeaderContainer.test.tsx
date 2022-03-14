@@ -114,17 +114,4 @@ describe('ApplicationStatusHeaderContainer', () => {
       });
     });
   });
-
-  context('모집완료된 글인 경우', () => {
-    given('group', () => ({
-      ...GROUP_FIXTURE,
-      isCompleted: true,
-    }));
-
-    it('router.replace가 호출되어야만 한다', () => {
-      renderApplicationStatusHeaderContainer();
-
-      expect(handleReplace).toBeCalledTimes(1);
-    });
-  });
 });

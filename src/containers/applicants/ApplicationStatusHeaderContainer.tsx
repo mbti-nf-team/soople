@@ -1,5 +1,5 @@
 import React, {
-  ReactElement, useCallback, useEffect, useMemo,
+  ReactElement, useCallback, useMemo,
 } from 'react';
 
 import dayjs from 'dayjs';
@@ -21,7 +21,7 @@ dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
 function ApplicationStatusHeaderContainer(): ReactElement {
-  const { back, replace } = useRouter();
+  const { back } = useRouter();
   const { data: applicants } = useFetchApplicants();
   const { data: group } = useFetchGroup();
   const { mutate } = useUpdateCompletedApply();
@@ -49,14 +49,6 @@ function ApplicationStatusHeaderContainer(): ReactElement {
 
     return dayjs(currentTime).to(dayjs(group.recruitmentEndDate), true);
   }, [currentTime, group.recruitmentEndDate]);
-
-  useEffect(() => {
-    const { isCompleted, groupId } = group;
-
-    if (isCompleted) {
-      replace(`/detail/${groupId}`);
-    }
-  }, [group]);
 
   return (
     <ApplicationStatusHeader

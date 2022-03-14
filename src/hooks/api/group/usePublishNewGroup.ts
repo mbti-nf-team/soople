@@ -9,6 +9,7 @@ import { WriteFields } from '@/models/group';
 import { publishModalVisibleState } from '@/recoil/modal/atom';
 import { postNewGroup } from '@/services/api/group';
 import { updateTagCount } from '@/services/api/tagsCount';
+import { successToast } from '@/utils/toast';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -27,6 +28,7 @@ function usePublishNewGroup() {
     onSuccess: ([groupId]: [string, ...void[]]) => {
       closePublishModal(false);
       replace(`/detail/${groupId}`);
+      successToast('새로운 글을 등록했어요.');
     },
   });
 
