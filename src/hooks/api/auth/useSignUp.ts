@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { Profile } from '@/models/auth';
 import { postUserProfile } from '@/services/api/auth';
 import { removeItem } from '@/services/storage';
+import { successToast } from '@/utils/toast';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -18,6 +19,7 @@ function useSignUp() {
     onSuccess: () => {
       removeItem('isSignUp');
       replace('/');
+      successToast('회원가입을 완료했어요.');
     },
   });
 

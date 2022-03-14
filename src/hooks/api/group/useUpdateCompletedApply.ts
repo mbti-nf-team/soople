@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient } from 'react-query';
 
 import { FirestoreError } from 'firebase/firestore';
+import { useRouter } from 'next/router';
 
 import { AlarmForm } from '@/models/alarm';
 import { CompletedGroupForm, Group } from '@/models/group';
 import { postAddAlarm } from '@/services/api/alarm';
 import { patchCompletedGroup } from '@/services/api/group';
+import { successToast } from '@/utils/toast';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -17,6 +19,7 @@ type CompletedGroupResponse = {
 
 function useUpdateCompletedApply() {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const mutation = useMutation<[void, ...string[]], FirestoreError, CompletedGroupResponse>((
     { groupId, completedGroupForm, alarmForms },
@@ -34,6 +37,9 @@ function useUpdateCompletedApply() {
       }));
 
       queryClient.invalidateQueries('alarms');
+
+      router.replace(`/detail/${groupId}`);
+      successToast('팀 모집을 완료했어요.');
     },
   });
 

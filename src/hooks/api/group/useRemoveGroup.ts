@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { Group } from '@/models/group';
 import { deleteGroup } from '@/services/api/group';
 import { deleteTagCount } from '@/services/api/tagsCount';
+import { successToast } from '@/utils/toast';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -20,6 +21,7 @@ function useRemoveGroup() {
       replace('/');
       queryClient.invalidateQueries('tagsCount');
       queryClient.invalidateQueries(['groups']);
+      successToast('글을 삭제했어요.');
     },
   });
 

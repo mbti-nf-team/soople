@@ -8,6 +8,7 @@ import useCancelApply from '@/hooks/api/applicant/useCancelApply';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
+import { successToast } from '@/utils/toast';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import GROUP_FIXTURE from '../../../fixtures/group';
@@ -20,6 +21,7 @@ jest.mock('@/hooks/api/applicant/useCancelApply');
 jest.mock('@/hooks/api/applicant/useFetchApplicants');
 jest.mock('@/hooks/api/group/useFetchGroup');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
+jest.mock('@/utils/toast');
 jest.mock('recoil');
 
 describe('DetailHeaderContainer', () => {
@@ -38,9 +40,11 @@ describe('DetailHeaderContainer', () => {
     }));
     (useApplyGroup as jest.Mock).mockImplementation(() => ({
       mutate,
+      isSuccess: given.isSuccessApply,
     }));
     (useCancelApply as jest.Mock).mockImplementation(() => ({
       mutate,
+      isSuccess: given.isSuccessCancelApply,
     }));
     (useSetRecoilState as jest.Mock).mockImplementation(() => handleSetSignInModalVisible);
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
@@ -98,6 +102,16 @@ describe('DetailHeaderContainer', () => {
           });
         });
       });
+
+      context('신청에 성공한 경우', () => {
+        given('isSuccessApply', () => true);
+
+        it('successToast가 "팀 신청을 완료했어요."와 함께 호출되어야만 한다', () => {
+          renderDetailHeaderContainer();
+
+          expect(successToast).toBeCalledWith('팀 신청을 완료했어요.');
+        });
+      });
     });
 
     context('신청한 사용자인 경우', () => {
@@ -117,6 +131,16 @@ describe('DetailHeaderContainer', () => {
           fireEvent.click(screen.getByText('취소하기'));
 
           expect(mutate).toBeCalledWith(APPLICANT_FIXTURE.uid);
+        });
+      });
+
+      context('신청을 취소한 경우', () => {
+        given('isSuccessCancelApply', () => true);
+
+        it('successToast가 "신청을 취소했어요."와 함께 호출되어야만 한다', () => {
+          renderDetailHeaderContainer();
+
+          expect(successToast).toBeCalledWith('신청을 취소했어요.');
         });
       });
     });
