@@ -7,7 +7,7 @@ import { Profile } from '@/models/auth';
 import { postUserProfile } from '@/services/api/auth';
 import { removeItem } from '@/services/storage';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useSignUp() {
   const { replace } = useRouter();
@@ -23,7 +23,7 @@ function useSignUp() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '사용자의 정보를 저장하는데 실패했어요! 잠시 후 다시 시도해주세요.',

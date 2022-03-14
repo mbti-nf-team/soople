@@ -7,7 +7,7 @@ import { GroupQuery } from '@/models';
 import { Applicant, Group } from '@/models/group';
 import { deleteApplicant } from '@/services/api/applicants';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useCancelApply() {
   const queryClient = useQueryClient();
@@ -28,7 +28,7 @@ function useCancelApply() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '신청 취소에 실패했어요! 잠시 후 다시 시도해주세요.',

@@ -10,7 +10,7 @@ import { publishModalVisibleState } from '@/recoil/modal/atom';
 import { postNewGroup } from '@/services/api/group';
 import { updateTagCount } from '@/services/api/tagsCount';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 type PublishNewGroupRequest = {
   profile: Profile;
@@ -32,7 +32,7 @@ function usePublishNewGroup() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '글 작성에 실패했어요! 짐시 후 다시 시도해주세요.',

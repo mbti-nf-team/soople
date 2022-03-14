@@ -7,7 +7,7 @@ import { GroupQuery } from '@/models';
 import { Group } from '@/models/group';
 import { getGroupDetail } from '@/services/api/group';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useFetchGroup() {
   const router = useRouter();
@@ -20,7 +20,7 @@ function useFetchGroup() {
 
   const { isError, error, data } = query;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '해당 팀 상세글을 조회하는데 실패했어요!',

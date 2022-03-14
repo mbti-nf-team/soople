@@ -5,7 +5,7 @@ import { FirestoreError } from 'firebase/firestore';
 import { Group } from '@/models/group';
 import { getUserRecruitedGroups } from '@/services/api/group';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useFetchUserRecruitedGroups(userUid?: string) {
   const query = useQuery<Group[], FirestoreError>(['recruitedGroups', userUid], () => getUserRecruitedGroups(userUid as string), {
@@ -14,7 +14,7 @@ function useFetchUserRecruitedGroups(userUid?: string) {
 
   const { error, isError, data } = query;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     error,
     isError,
     defaultErrorMessage: '모집한 팀을 불러오는데 실패했어요!',

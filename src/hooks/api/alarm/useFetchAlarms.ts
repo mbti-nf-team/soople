@@ -6,7 +6,7 @@ import { Alarm } from '@/models/alarm';
 import { getUserAlarm } from '@/services/api/alarm';
 
 import useFetchUserProfile from '../auth/useFetchUserProfile';
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useFetchAlarms() {
   const { data: user } = useFetchUserProfile();
@@ -17,7 +17,7 @@ function useFetchAlarms() {
 
   const { isError, error, data } = query;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '알람을 불러오는데 실패했어요!',

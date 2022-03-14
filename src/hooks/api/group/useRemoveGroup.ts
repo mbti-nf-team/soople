@@ -7,7 +7,7 @@ import { Group } from '@/models/group';
 import { deleteGroup } from '@/services/api/group';
 import { deleteTagCount } from '@/services/api/tagsCount';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useRemoveGroup() {
   const { replace } = useRouter();
@@ -25,7 +25,7 @@ function useRemoveGroup() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '글 삭제에 실패했어요! 짐시 후 다시 시도해주세요.',

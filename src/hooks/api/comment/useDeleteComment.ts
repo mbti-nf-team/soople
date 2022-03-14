@@ -6,7 +6,7 @@ import useRenderSuccessToast from '@/hooks/useRenderSuccessToast';
 import { Comment } from '@/models/group';
 import { deleteGroupComment } from '@/services/api/comment';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 type DeleteCommentForm = {
   commentId: string;
@@ -28,7 +28,7 @@ function useDeleteComment() {
 
   useRenderSuccessToast(isSuccess, '댓글을 삭제했어요.');
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '댓글 삭제에 실패했어요! 잠시 후 다시 시도해주세요.',

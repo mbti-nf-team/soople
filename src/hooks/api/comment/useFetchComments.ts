@@ -7,7 +7,7 @@ import { GroupQuery } from '@/models';
 import { Comment } from '@/models/group';
 import { getGroupComments } from '@/services/api/comment';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useFetchComments() {
   const router = useRouter();
@@ -20,7 +20,7 @@ function useFetchComments() {
 
   const { isError, error, data } = query;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '해당 글의 댓글을 불러오는데 실패하였습니다.',

@@ -5,7 +5,7 @@ import { FirestoreError } from 'firebase/firestore';
 import { Applicant } from '@/models/group';
 import { putApplicant } from '@/services/api/applicants';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useUpdateApplicant() {
   const queryClient = useQueryClient();
@@ -20,7 +20,7 @@ function useUpdateApplicant() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '신청자 정보 변경에 실패했어요! 짐시 후 다시 시도해주세요.',
