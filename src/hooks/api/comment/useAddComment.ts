@@ -5,7 +5,7 @@ import { FirestoreError } from 'firebase/firestore';
 import { Comment, CommentForm } from '@/models/group';
 import { postGroupComment } from '@/services/api/comment';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useAddComment() {
   const queryClient = useQueryClient();
@@ -27,7 +27,7 @@ function useAddComment() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '댓글 작성에 실패했어요! 짐시 후 다시 시도해주세요.',

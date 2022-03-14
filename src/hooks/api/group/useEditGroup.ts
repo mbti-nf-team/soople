@@ -9,7 +9,7 @@ import { publishModalVisibleState } from '@/recoil/modal/atom';
 import { patchEditGroup } from '@/services/api/group';
 import { editTagsCount } from '@/services/api/tagsCount';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 type EditGroupRequest = {
   groupId: string;
@@ -34,7 +34,7 @@ function useEditGroup() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '글 수정에 실패했어요! 짐시 후 다시 시도해주세요.',

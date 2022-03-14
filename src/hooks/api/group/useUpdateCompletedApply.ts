@@ -7,7 +7,7 @@ import { CompletedGroupForm, Group } from '@/models/group';
 import { postAddAlarm } from '@/services/api/alarm';
 import { patchCompletedGroup } from '@/services/api/group';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 type CompletedGroupResponse = {
   groupId: string;
@@ -39,7 +39,7 @@ function useUpdateCompletedApply() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '모집 완료에 실패했어요! 짐시 후 다시 시도해주세요.',

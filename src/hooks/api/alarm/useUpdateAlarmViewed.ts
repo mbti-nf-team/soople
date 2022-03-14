@@ -5,7 +5,7 @@ import { FirestoreError } from 'firebase/firestore';
 import { Alarm } from '@/models/alarm';
 import { patchAlarmViewed } from '@/services/api/alarm';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useUpdateAlarmViewed() {
   const queryClient = useQueryClient();
@@ -20,7 +20,7 @@ function useUpdateAlarmViewed() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '알람 상태를 업데이트하는데 실패했어요! 잠시 후 다시 시도해주세요.',

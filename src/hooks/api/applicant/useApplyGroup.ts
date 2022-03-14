@@ -8,7 +8,7 @@ import {
 import { postAddAlarm } from '@/services/api/alarm';
 import { postAddApplicant } from '@/services/api/applicants';
 
-import useCatchErrorWithToast from '../useCatchErrorWithToast';
+import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 type ApplyResponse = {
   uid: string;
@@ -53,7 +53,7 @@ function useApplyGroup() {
 
   const { isError, error } = mutation;
 
-  useCatchErrorWithToast({
+  useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '신청에 실패했어요! 짐시 후 다시 시도해주세요.',

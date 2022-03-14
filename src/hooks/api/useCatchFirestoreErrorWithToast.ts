@@ -10,7 +10,7 @@ interface Props {
   defaultErrorMessage: string;
 }
 
-function useCatchErrorWithToast({ isError, error, defaultErrorMessage }: Props) {
+function useCatchFirestoreErrorWithToast({ isError, error, defaultErrorMessage }: Props) {
   const firebaseErrorMessage: {
     [K in FirestoreErrorCode]: string;
   } = {
@@ -46,4 +46,4 @@ function useCatchErrorWithToast({ isError, error, defaultErrorMessage }: Props) 
   }, [isError, error]);
 }
 
-export default useCatchErrorWithToast;
+export default useCatchFirestoreErrorWithToast;

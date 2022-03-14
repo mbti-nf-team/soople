@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 
 import { errorToast } from '@/utils/toast';
 
-import useCatchErrorWithToast from './useCatchErrorWithToast';
+import useCatchStorageErrorWithToast from './useCatchStorageErrorWithToast';
 
 jest.mock('react-toastify', () => ({
   toast: {
@@ -11,14 +11,16 @@ jest.mock('react-toastify', () => ({
 }));
 jest.mock('@/utils/toast');
 
-describe('useCatchErrorWithToast', () => {
+describe('useCatchStorageErrorWithToast', () => {
   const defaultErrorMessage = 'defaultErrorMessage';
 
-  const useCatchErrorWithToastHook = () => renderHook(() => useCatchErrorWithToast({
-    error: given.error,
-    isError: given.isError,
-    defaultErrorMessage,
-  }));
+  const useCatchStorageErrorWithToastHook = () => renderHook(
+    () => useCatchStorageErrorWithToast({
+      error: given.error,
+      isError: given.isError,
+      defaultErrorMessage,
+    }),
+  );
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -29,7 +31,7 @@ describe('useCatchErrorWithToast', () => {
     given('error', () => null);
 
     it('errorToast는 호출되지 않아야만 한다', () => {
-      useCatchErrorWithToastHook();
+      useCatchStorageErrorWithToastHook();
 
       expect(errorToast).not.toBeCalled();
     });
@@ -40,7 +42,7 @@ describe('useCatchErrorWithToast', () => {
     given('error', () => null);
 
     it('errorToast는 기본 에러 메시지와 함께 호출되어야만 한다', () => {
-      useCatchErrorWithToastHook();
+      useCatchStorageErrorWithToastHook();
 
       expect(errorToast).toBeCalledWith(defaultErrorMessage);
     });
@@ -53,7 +55,7 @@ describe('useCatchErrorWithToast', () => {
       given('error', () => ('error'));
 
       it('errorToast는 "알 수 없는 오류가 발생했습니다."와 함께 호출되어야만 한다', () => {
-        useCatchErrorWithToastHook();
+        useCatchStorageErrorWithToastHook();
 
         expect(errorToast).toBeCalledWith('알 수 없는 오류가 발생했습니다.');
       });
@@ -65,9 +67,9 @@ describe('useCatchErrorWithToast', () => {
       }));
 
       it('errorToast는 code의 error 메시지와 함께 호출되어야만 한다', () => {
-        useCatchErrorWithToastHook();
+        useCatchStorageErrorWithToastHook();
 
-        expect(errorToast).toBeCalledWith('작업을 수행할 권한이 없습니다.');
+        expect(errorToast).toBeCalledWith('해당 이미지를 불러올 권한이 없습니다.');
       });
     });
   });
