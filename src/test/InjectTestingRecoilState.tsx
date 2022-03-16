@@ -4,7 +4,7 @@ import { MutableSnapshot, RecoilRoot } from 'recoil';
 
 import { FilterGroupsCondition, initialWriteFieldsState, WriteFields } from '@/models/group';
 import { groupsConditionState, writeFieldsState } from '@/recoil/group/atom';
-import { publishModalVisibleState, signInModalVisibleState } from '@/recoil/modal/atom';
+import { publishModalVisibleState, recruitCompleteModalVisibleState, signInModalVisibleState } from '@/recoil/modal/atom';
 
 const initialGroupsCondition: FilterGroupsCondition = {
   category: ['project', 'study'],
@@ -15,6 +15,7 @@ interface Props {
   groupsCondition?: FilterGroupsCondition;
   signInModalVisible?: boolean;
   publishModalVisible?: boolean;
+  recruitCompleteModalVisible?: boolean;
   writeFields?: WriteFields;
   children: ReactChild;
 }
@@ -23,6 +24,7 @@ function InjectTestingRecoilState({
   groupsCondition = initialGroupsCondition,
   signInModalVisible = false,
   publishModalVisible = false,
+  recruitCompleteModalVisible = false,
   writeFields = initialWriteFieldsState,
   children,
 }: Props): ReactElement {
@@ -32,6 +34,7 @@ function InjectTestingRecoilState({
         set(groupsConditionState, groupsCondition);
         set(signInModalVisibleState, signInModalVisible);
         set(publishModalVisibleState, publishModalVisible);
+        set(recruitCompleteModalVisibleState, recruitCompleteModalVisible);
         set(writeFieldsState, writeFields);
       }}
     >
