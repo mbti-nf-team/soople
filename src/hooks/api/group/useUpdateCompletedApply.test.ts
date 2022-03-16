@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { postAddAlarm } from '@/services/api/alarm';
 import { patchCompletedGroup } from '@/services/api/group';
-import wrapper from '@/test/ReactQueryWrapper';
+import wrapper from '@/test/InjectMockProviders';
 
 import FIXTURE_GROUP from '../../../../fixtures/group';
 

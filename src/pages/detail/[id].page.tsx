@@ -4,6 +4,8 @@ import { dehydrate, QueryClient } from 'react-query';
 import { FirebaseError } from 'firebase/app';
 import { GetServerSideProps } from 'next';
 
+import RecruitCompleteModal from '@/components/detail/modal/RecruitCompleteModal';
+import RecruitCompleteCanvasConfetti from '@/components/detail/RecruitCompleteCanvasConfetti';
 import HeaderContainer from '@/containers/common/HeaderContainer';
 import CommentsContainer from '@/containers/detail/CommentsContainer';
 import DetailContentsContainer from '@/containers/detail/DetailContentsContainer';
@@ -48,6 +50,8 @@ function DetailPage(): ReactElement {
         <DetailHeaderContainer />
         <DetailContentsContainer />
         <CommentsContainer />
+        <RecruitCompleteModal />
+        <RecruitCompleteCanvasConfetti />
       </DetailLayout>
     </>
   );

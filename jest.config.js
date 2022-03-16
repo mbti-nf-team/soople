@@ -12,7 +12,9 @@ module.exports = {
     '<rootDir>.*/public',
     '<rootDir>/.next/',
     'cypress',
-    'rehypePrism.js',
+  ],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/components/detail/RecruitCompleteCanvasConfetti.tsx',
   ],
   testEnvironment: 'jsdom',
 };
