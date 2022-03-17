@@ -2,7 +2,7 @@
 import React, {
   MouseEvent, ReactElement, useCallback, useEffect, useState,
 } from 'react';
-import { PlusCircle, X as CloseSvg } from 'react-feather';
+import { PlusCircle } from 'react-feather';
 import ReactImageUploading, { ImageListType } from 'react-images-uploading';
 import { useEffectOnce } from 'react-use';
 
@@ -17,6 +17,8 @@ import { writeFieldsState } from '@/recoil/group/atom';
 import { body2Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
+import CloseSvg from '../../assets/icons/close.svg';
+import HelperMessage from '../common/HelperMessage';
 import Label from '../common/Label';
 
 function ThumbnailUpload(): ReactElement {
@@ -25,6 +27,7 @@ function ThumbnailUpload(): ReactElement {
   const { data: user } = useFetchUserProfile();
   const { thumbnail } = useRecoilValue(writeFieldsState);
   const [images, setImages] = useState<ImageListType>([]);
+  const [isError, setIsError] = useState<boolean>();
 
   const handleChange = (imageList: ImageListType) => setImages(imageList);
 
@@ -44,6 +47,7 @@ function ThumbnailUpload(): ReactElement {
   useEffect(() => {
     if (!isEmpty(images) && images[0].file) {
       onUploadThumbnail({ userUid: user?.uid as string, thumbnail: images[0].file });
+      setIsError(false);
     }
   }, [user, images]);
 
@@ -58,11 +62,14 @@ function ThumbnailUpload(): ReactElement {
       <Label
         htmlFor="thumbnail"
         labelText="썸네일"
+        isError={isError}
       />
       <ReactImageUploading
         acceptType={['jpg', 'gif', 'png', 'jpeg']}
         value={images}
         onChange={handleChange}
+        maxFileSize={10000000}
+        onError={(error) => setIsError(error?.maxFileSize)}
         inputProps={{ alt: 'upload-thumbnail-input' }}
       >
         {({
@@ -73,10 +80,11 @@ function ThumbnailUpload(): ReactElement {
         }) => (
           <ThumbnailUploadBox
             onClick={onImageUpload}
+            isError={isError}
             {...dragProps}
           >
             {isEmpty(imageList) ? (
-              <>
+              <EmptyBox>
                 <PlusCircle
                   fill={palette.accent6}
                   color={palette.background}
@@ -89,16 +97,15 @@ function ThumbnailUpload(): ReactElement {
                 <div>
                   JPG, JPEG, PNG, GIF
                 </div>
-              </>
+              </EmptyBox>
             ) : (
               <>
                 {imageList.map((image, index) => (
                   <ThumbnailImageWrapper key={image.dataURL}>
                     <CloseIcon
-                      width={16}
-                      height={16}
-                      color={palette.accent7}
-                      onClick={(e) => handleRemoveThumbnail(e, () => onImageRemove(index))}
+                      onClick={(
+                        e: MouseEvent<SVGElement>,
+                      ) => handleRemoveThumbnail(e, () => onImageRemove(index))}
                       data-testid="close-icon"
                     />
                     <ThumbnailImage src={image.dataURL} alt="thumbnail" />
@@ -109,6 +116,7 @@ function ThumbnailUpload(): ReactElement {
           </ThumbnailUploadBox>
         )}
       </ReactImageUploading>
+      <HelperMessage isError={isError} message={isError ? '10MB 이하의 이미지만 등록할 수 있어요.' : ''} />
     </ThumbnailFromWrapper>
   );
 }
@@ -121,18 +129,16 @@ const ThumbnailFromWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const ThumbnailUploadBox = styled.div`
-  cursor: pointer;
-  overflow: hidden;
+const EmptyBox = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 144px;
-  border: 1px solid ${palette.accent2};
-  box-sizing: border-box;
-  border-radius: 8px;
 
   & > div:first-of-type {
     ${body2Font(true)}
@@ -145,15 +151,30 @@ const ThumbnailUploadBox = styled.div`
   }
 `;
 
+const ThumbnailUploadBox = styled.div<{ isError?: boolean; }>`
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 144px;
+  border: 1px solid ${({ isError }) => (isError ? palette.warning : palette.accent2)};
+  box-sizing: border-box;
+  border-radius: 8px;
+`;
+
 const ThumbnailImage = styled.img`
   width: 100%;
   height: 100%;
+  display: block;
+  object-fit: cover;
 `;
 
 const ThumbnailImageWrapper = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
+  left: 0px;
+  top: 0px;
 `;
 
 const CloseIcon = styled(CloseSvg)`
