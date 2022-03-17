@@ -71,7 +71,9 @@ function MyGroup({ group, onClick }: Props): ReactElement {
         </GroupMetaData>
       </div>
       {thumbnail && (
-        <Thumbnail src={thumbnail} alt="thumbnail" />
+        <ThumbnailWrapper>
+          <Thumbnail src={thumbnail} alt="thumbnail" />
+        </ThumbnailWrapper>
       )}
     </MyGroupWrapper>
   );
@@ -131,8 +133,18 @@ const GroupMetaData = styled.div<{ status: RecruitmentStatus; }>`
 `;
 
 const Thumbnail = styled.img`
-  width: 174px;
-  height: 96px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
   border-radius: 8px;
-  margin-left: 24px;
+`;
+
+const ThumbnailWrapper = styled.div`
+  position: relative;
+  padding-top: 96px;
+  width: 174px;
 `;

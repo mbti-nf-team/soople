@@ -35,7 +35,9 @@ function RecruitPost({ group }: Props): ReactElement {
         <RecruitPostContents>
           <PostPreview>
             {thumbnail && (
-              <Thumbnail src={thumbnail} alt="thumbnail" />
+              <ThumbnailWrapper>
+                <Thumbnail src={thumbnail} alt="thumbnail" />
+              </ThumbnailWrapper>
             )}
             <Title>{title}</Title>
             <Content>{shortDescription || removeAllHtml(content)}</Content>
@@ -132,7 +134,17 @@ const PostWriter = styled.div`
 `;
 
 const Thumbnail = styled.img`
-  width: 245px;
-  height: 136px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+`;
+
+const ThumbnailWrapper = styled.div`
   margin: -16px -16px 16px -16px !important;
+  position: relative;
+  padding-top: 136px;
 `;

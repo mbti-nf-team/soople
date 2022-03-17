@@ -52,20 +52,39 @@ describe('ThumbnailUpload', () => {
   });
 
   describe('썸네일 upload를 한다', () => {
-    const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
+    context('10MB 이상의 크기의 이미지인 경우', () => {
+      const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
+      Object.defineProperty(file, 'size', { value: 100000000 });
 
-    it('upload mutate 액션이 발생해야만 한다', async () => {
-      renderThumbnailUpload();
+      it('upload mutate 액션이 발생해야만 한다', async () => {
+        const { container } = renderThumbnailUpload();
 
-      act(() => {
-        fireEvent.change(screen.getByAltText('upload-thumbnail-input'), {
-          target: { files: [file] },
+        act(() => {
+          fireEvent.change(screen.getByAltText('upload-thumbnail-input'), {
+            target: { files: [file] },
+          });
         });
-      });
 
-      await waitFor(async () => expect(mutate).toBeCalledWith({
-        userUid: FIXTURE_PROFILE.uid, thumbnail: file,
-      }));
+        await waitFor(async () => expect(container).toHaveTextContent('10MB 이하의 이미지만 등록할 수 있어요.'));
+      });
+    });
+
+    context('10MB 이하의 크기의 이미지인 경우', () => {
+      const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
+
+      it('upload mutate 액션이 발생해야만 한다', async () => {
+        renderThumbnailUpload();
+
+        act(() => {
+          fireEvent.change(screen.getByAltText('upload-thumbnail-input'), {
+            target: { files: [file] },
+          });
+        });
+
+        await waitFor(async () => expect(mutate).toBeCalledWith({
+          userUid: FIXTURE_PROFILE.uid, thumbnail: file,
+        }));
+      });
     });
   });
 

@@ -14,6 +14,10 @@ jest.mock('@/utils/toast');
 describe('useCatchStorageErrorWithToast', () => {
   const defaultErrorMessage = 'defaultErrorMessage';
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const useCatchStorageErrorWithToastHook = () => renderHook(
     () => useCatchStorageErrorWithToast({
       error: given.error,
@@ -21,10 +25,6 @@ describe('useCatchStorageErrorWithToast', () => {
       defaultErrorMessage,
     }),
   );
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
 
   context('isError가 false이고 error가 존재하지 않을 경우', () => {
     given('isError', () => false);
@@ -63,7 +63,7 @@ describe('useCatchStorageErrorWithToast', () => {
 
     context('error의 code가 존재하는 경우', () => {
       given('error', () => ({
-        code: 'unauthenticated',
+        code: 'storage/unauthenticated',
       }));
 
       it('errorToast는 code의 error 메시지와 함께 호출되어야만 한다', () => {
