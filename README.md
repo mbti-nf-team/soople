@@ -35,7 +35,6 @@
   </tr>
 </table>
 
-
 ## 🏗 Project Structure
 
 ```
