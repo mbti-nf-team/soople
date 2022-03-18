@@ -4,11 +4,11 @@ import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 
 import FIXTURE_APPLICANT from '../../../../fixtures/applicant';
 
-import ApplicantsViewModal from './ApplicantsViewModal';
+import MembersViewModal from './MembersViewModal';
 
 jest.mock('@/hooks/api/applicant/useFetchApplicants');
 
-describe('ApplicantsViewModal', () => {
+describe('MembersViewModal', () => {
   const handleClose = jest.fn();
 
   beforeEach(() => {
@@ -20,8 +20,8 @@ describe('ApplicantsViewModal', () => {
     }));
   });
 
-  const renderApplicantsViewModal = () => render((
-    <ApplicantsViewModal
+  const renderMembersViewModal = () => render((
+    <MembersViewModal
       isVisible
       onClose={handleClose}
     />
@@ -29,7 +29,7 @@ describe('ApplicantsViewModal', () => {
 
   describe('닫기 버튼을 클릭한다', () => {
     it('클릭 이벤트가 발생해야만 한다', () => {
-      renderApplicantsViewModal();
+      renderMembersViewModal();
 
       fireEvent.click(screen.getByTestId('close-icon'));
 
@@ -38,7 +38,7 @@ describe('ApplicantsViewModal', () => {
   });
 
   it('팀원에 대한 정보가 나타나야만 한다', () => {
-    const { container } = renderApplicantsViewModal();
+    const { container } = renderMembersViewModal();
 
     expect(container).toHaveTextContent('팀원 1명');
   });

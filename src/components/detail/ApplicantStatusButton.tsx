@@ -5,8 +5,8 @@ import { Applicant, ApplicantForm } from '@/models/group';
 
 import Button from '../common/Button';
 
-import ApplicantsViewModal from './modal/ApplicantsViewModal';
 import AskApplyCancelModal from './modal/AskApplyCancelModal';
+import MembersViewModal from './modal/MembersViewModal';
 import ApplyFormModal from './ApplyFormModal';
 
 interface Props {
@@ -46,7 +46,7 @@ function ApplicantStatusButton({
         <Button color="primary" onClick={() => setIsVisibleApplicantsModal(true)}>
           팀원 보기
         </Button>
-        <ApplicantsViewModal
+        <MembersViewModal
           isVisible={isVisibleApplicantsModal}
           onClose={() => setIsVisibleApplicantsModal(false)}
         />

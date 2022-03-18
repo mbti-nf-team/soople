@@ -12,8 +12,8 @@ import { stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
 
-import ApplicantsViewModal from './modal/ApplicantsViewModal';
 import AskRemoveGroupModal from './modal/AskRemoveGroupModal';
+import MembersViewModal from './modal/MembersViewModal';
 
 interface Props {
   isCompleted: boolean;
@@ -83,7 +83,7 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
           >
             팀원 보기
           </Button>
-          <ApplicantsViewModal
+          <MembersViewModal
             isVisible={isVisibleApplicantsModal}
             onClose={() => setIsVisibleApplicantsModal(false)}
           />
