@@ -1,9 +1,10 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useEffectOnce } from 'react-use';
 
 import { FirestoreError } from 'firebase/firestore';
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
 
+import { Group } from '@/models/group';
 import { patchIncreaseView } from '@/services/api/group';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
@@ -18,6 +19,7 @@ interface RequestForm {
 
 function useIncreaseView() {
   const { data: group } = useFetchGroup();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation<{
     isAlreadyRead: boolean; viewedIds: string;
@@ -26,8 +28,13 @@ function useIncreaseView() {
     groupId,
     views,
   }, viewedIds), {
-    onSuccess: ({ isAlreadyRead, viewedIds }) => {
+    onSuccess: ({ isAlreadyRead, viewedIds }, { groupId, views }) => {
       if (!isAlreadyRead) {
+        queryClient.setQueryData<Group>(['group', groupId], (prevGroup) => ({
+          ...prevGroup as Group,
+          views: views + 1,
+        }));
+
         const expiredDate = new Date();
         expiredDate.setUTCHours(24, 0, 0, 0);
         expiredDate.setUTCDate(expiredDate.getUTCDate() + 1);
