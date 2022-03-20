@@ -53,7 +53,7 @@
     "emotion-normalize": "^11.0.1",
     "facepaint": "^1.2.1",
     "firebase": "9.1.2",
-    "firebase-admin": "^10.0.1",
+    "firebase-admin": "^10.0.2",
     "hast-util-to-string": "^2.0.0",
     "nanoid": "^3.3.1",
     "next": "^12.0.3",

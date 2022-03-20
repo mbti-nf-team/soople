@@ -11,6 +11,7 @@ import {
   getUserRecruitedGroups,
   patchCompletedGroup,
   patchEditGroup,
+  patchIncreaseView,
   patchNumberApplicants,
   postNewGroup,
 } from '@/services/api/group';
@@ -227,6 +228,64 @@ describe('group API', () => {
       await patchEditGroup('groupId', writeFields);
 
       expect(updateDoc).toBeCalledWith(undefined, writeFields);
+    });
+  });
+
+  describe('patchIncreaseView', () => {
+    const groupId = 'groupId';
+    const views = 1;
+
+    context('viewedIds가 존재하지 않는 경우', () => {
+      it('"updateDoc"이 호출되어야만 한다', async () => {
+        const result = await patchIncreaseView({
+          groupId,
+          views,
+        });
+
+        expect(updateDoc).toBeCalledWith(undefined, {
+          views: views + 1,
+        });
+        expect(result).toEqual({
+          viewedIds: groupId,
+          isAlreadyRead: false,
+        });
+      });
+    });
+
+    context('viewedIds에 groupId가 존재하지 않는 경우', () => {
+      const viewedIds = 'test';
+
+      it('"updateDoc"이 호출되어야만 한다', async () => {
+        const result = await patchIncreaseView({
+          groupId,
+          views,
+        }, viewedIds);
+
+        expect(updateDoc).toBeCalledWith(undefined, {
+          views: views + 1,
+        });
+        expect(result).toEqual({
+          viewedIds: `${viewedIds}|${groupId}`,
+          isAlreadyRead: false,
+        });
+      });
+    });
+
+    context('viewedIds에 groupId가 존재하는 경우', () => {
+      const viewedIds = 'groupId';
+
+      it('"updateDoc"이 호출되지 않아야만 한다', async () => {
+        const result = await patchIncreaseView({
+          groupId,
+          views,
+        }, viewedIds);
+
+        expect(updateDoc).not.toBeCalled();
+        expect(result).toEqual({
+          viewedIds,
+          isAlreadyRead: true,
+        });
+      });
     });
   });
 
