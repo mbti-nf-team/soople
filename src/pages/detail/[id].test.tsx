@@ -31,6 +31,7 @@ jest.mock('@/hooks/api/comment/useDeleteComment');
 jest.mock('@/hooks/api/comment/useFetchComments');
 jest.mock('@/hooks/api/group/useFetchGroup');
 jest.mock('@/utils/filter');
+jest.mock('@/hooks/api/group/useIncreaseView');
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({

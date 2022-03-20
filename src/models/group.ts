@@ -134,3 +134,8 @@ export interface CompletedGroupForm {
   message: string;
   numberConfirmApplicants: number;
 }
+
+export interface IncreaseViewRequestForm {
+  groupId: string;
+  views: number;
+}

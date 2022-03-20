@@ -13,7 +13,7 @@ import {
 import { Profile } from '@/models/auth';
 import {
   CompletedGroupForm,
-  FilterGroupsCondition, Group, WriteFields,
+  FilterGroupsCondition, Group, IncreaseViewRequestForm, WriteFields,
 } from '@/models/group';
 import { formatGroup, timestampToString } from '@/utils/firestore';
 import { isRecruiting } from '@/utils/utils';
@@ -120,6 +120,42 @@ export const patchEditGroup = async (groupId: string, form: WriteFields) => {
   await updateDoc(docRef(GROUPS, groupId), {
     ...form,
   });
+};
+
+export const patchIncreaseView = async (
+  requestForm: IncreaseViewRequestForm,
+  viewedIds?: string,
+) => {
+  const { groupId, views } = requestForm;
+
+  if (!viewedIds) {
+    await updateDoc(docRef(GROUPS, groupId), {
+      views: views + 1,
+    });
+
+    return {
+      viewedIds: groupId,
+      isAlreadyRead: false,
+    };
+  }
+
+  const regExp = new RegExp(groupId, 'g');
+
+  if (!regExp.test(viewedIds)) {
+    await updateDoc(docRef(GROUPS, groupId), {
+      views: views + 1,
+    });
+
+    return {
+      viewedIds: `${viewedIds}|${groupId}`,
+      isAlreadyRead: false,
+    };
+  }
+
+  return {
+    viewedIds,
+    isAlreadyRead: true,
+  };
 };
 
 export const deleteGroup = async (groupId: string) => {

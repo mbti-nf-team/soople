@@ -15,3 +15,5 @@ export const getFilteredGroups = jest.fn();
 export const deleteGroup = jest.fn();
 
 export const patchEditGroup = jest.fn();
+
+export const patchIncreaseView = jest.fn();

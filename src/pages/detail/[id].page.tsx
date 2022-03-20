@@ -10,6 +10,7 @@ import HeaderContainer from '@/containers/common/HeaderContainer';
 import CommentsContainer from '@/containers/detail/CommentsContainer';
 import DetailContentsContainer from '@/containers/detail/DetailContentsContainer';
 import DetailHeaderContainer from '@/containers/detail/DetailHeaderContainer';
+import useIncreaseView from '@/hooks/api/group/useIncreaseView';
 import { GroupQuery } from '@/models';
 import { Group } from '@/models/group';
 import { getGroupDetail } from '@/services/api/group';
@@ -43,6 +44,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function DetailPage(): ReactElement {
+  useIncreaseView();
+
   return (
     <>
       <HeaderContainer />
