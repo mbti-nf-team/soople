@@ -1,9 +1,11 @@
 import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
+import { nanoid } from 'nanoid';
 
 import { TagCount } from '@/models/group';
 
+import SkeletonItem from '../common/SkeletonItem';
 import Tag from '../common/Tag';
 
 interface Props {
@@ -13,7 +15,13 @@ interface Props {
 
 function TagsBar({ tags, isLoading }: Props): ReactElement {
   if (isLoading) {
-    return <div>로딩중...</div>;
+    return (
+      <TagsWrapper title="loading..." data-testid="loading-skeleton">
+        {['80px', '120px', '80px', '80px', '120px', '64px'].map((width) => (
+          <SkeletonItem key={nanoid()} height="36px" width={width} borderRadius="6px" />
+        ))}
+      </TagsWrapper>
+    );
   }
 
   return (
@@ -34,11 +42,7 @@ const TagsWrapper = styled.div`
   height: 36px;
   overflow: hidden;
 
-  div {
+  & > :not(:last-of-type) {
     margin-right: 8px;
-
-    &:last-of-type {
-      margin-right: 0;
-    }
   }
 `;

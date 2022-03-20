@@ -2313,10 +2313,10 @@
     css-in-js-utils "^3.1.0"
     min-document "^2.19.0"
 
-"@remirror/core@^1.3.6":
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/@remirror/core/-/core-1.3.6.tgz#b02a7f583dc49ae0768788fe2178706a74b407c4"
-  integrity sha512-LXuklGgPfrF2oU6RIRXQJrSW/taNBWnoMzn/emPcLcyBuDNlzvQx5lajcOmafP3lvLMJKKnzG8kmmKHvNii/Pg==
+"@remirror/core@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@remirror/core/-/core-1.4.0.tgz#f0a0a7f2057a32b8c4199adeff9a3d4508bb3c54"
+  integrity sha512-tRN0rlyeQxsONK4QEshQvmnPGoNIZLQ8dhU7RoGW9vaMti5q3qwHYjtYBUWIrCIVUQxM5oAjA/Xcti2G2QtKLg==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@linaria/core" "3.0.0-beta.13"
@@ -2330,159 +2330,159 @@
     nanoevents "^5.1.13"
     tiny-warning "^1.0.3"
 
-"@remirror/dom@^1.0.21":
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/@remirror/dom/-/dom-1.0.21.tgz#16f78f70ee5b505061152010217c03b828629fff"
-  integrity sha512-92WhOBSJTOdw6gr8ts4ETHLxunwXXMSk3vc2/Kup3A2awCrlwy9D5RKAXjAJ7EtjQL+Oyb2gmQD3UcIQPWrSYA==
+"@remirror/dom@^1.0.24":
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/@remirror/dom/-/dom-1.0.24.tgz#c9d87628a3d7d78b68739843188d9fae0ff9a666"
+  integrity sha512-Wp5r0t/d7dTn7hcwDXoj+0/bd8TQfrf2tMZY1W+/HTHt1NtkmK7udUjQaehcjUpIwdC/un68EFSIdFiCe0pCdA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/preset-core" "^1.0.21"
+    "@remirror/core" "^1.4.0"
+    "@remirror/preset-core" "^1.0.23"
 
-"@remirror/extension-annotation@^1.1.16":
-  version "1.1.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-annotation/-/extension-annotation-1.1.16.tgz#9f381b4d742c218c452378cf5d0a662c6ce3aee1"
-  integrity sha512-YeuAfpp6BfTKKJdDGFq0sgJDSFrLrAkEy+Vx0MxgaBK1hC9MsjiIpIu96H/cBSRvWh294q/M26t0JWUfhrat9A==
+"@remirror/extension-annotation@^1.1.18":
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-annotation/-/extension-annotation-1.1.18.tgz#c068438ed78c704f5258ba3baa365c56b6a768b5"
+  integrity sha512-QuKrhWGpyf1GYWm/7/AHOCrlJphTNg6ZXjMyBok9wkNmWJFgDBUOFEMH9RewpD5HjFTBZuD8C0TbtF2gT/M/7A==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-positioner" "^1.1.18"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-positioner" "^1.2.1"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-bidi@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-bidi/-/extension-bidi-1.0.16.tgz#c579035f7ee5e9da87e6a639392d3075f55ae195"
-  integrity sha512-TdwZWP5b4XjfgIUbPFVCACQoN/NrzyOTVJ01vBTtDerXiJILsb8pNvZaUicuk36/slkvr93P/L5KKQn/xPr++A==
+"@remirror/extension-bidi@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-bidi/-/extension-bidi-1.0.17.tgz#3a4929fb01fe42c4a079eeb0eab5cd0b9fc8c2ad"
+  integrity sha512-YWclqu/TZvj9rwGUAwVzWaWHdu7t7oZ44oS0jCPO1GpohKXNxS43kz64BCcqgRK5JQ62zV1oIy/ueMBK0fJpNw==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@types/direction" "^1.0.0"
     direction "^1.0.4"
 
-"@remirror/extension-blockquote@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-blockquote/-/extension-blockquote-1.0.19.tgz#fcbc5472b56f273c04afb6b09fa6e262c5f8b461"
-  integrity sha512-1JUsKxIfHAUAvR6N/HIbZT22voM6cJC8stwbPqV8fboQ+f/ABuE4FyAwdGKT7C0rHbBChfQsz1DeeeDvpU3v8A==
+"@remirror/extension-blockquote@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-blockquote/-/extension-blockquote-1.0.20.tgz#d63402c2486b9112d640544768d9177f8b8b47ba"
+  integrity sha512-fJAq9b0UgMDfpeFlmlJ5+NncyoyZvIYgbBOO3USVm2EVK+6+3ncpp8ob+sV8JBe58Q6ZoFwKAbz2bSVzP1nVlg==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
 
-"@remirror/extension-bold@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-bold/-/extension-bold-1.0.16.tgz#65cf2a7d680e5e3f75e49f4ec4a44ab94c9f2831"
-  integrity sha512-LlqBtVIYdiQOJUMLdDsoQF1zQ8UleaO4GQxzy0lKp3IHJjLl7qjdoSY3XcS03JgMKUAg6pObqPDZBC0XSxTNUw==
+"@remirror/extension-bold@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-bold/-/extension-bold-1.0.17.tgz#fb86ad1a546803cbbcf82ab6d91d8f27a3388b1f"
+  integrity sha512-zABGUDztZxSM8tt1ylMAOCPVulkLcRLC4/NFqL8MbxwpkTtIQFdbbdxuHyXU9boNBMAs4BzY1HQrrdt46Y2gHQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-callout@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-callout/-/extension-callout-1.0.19.tgz#d94ca85702238b60c4135317efcb7370434f3e63"
-  integrity sha512-hety/MGY9jsjX3gVB2xSxUFNiLa9daLccIUPihmCDwoGfMfVhbARHmPNe6reDGgh5JhwyEU+qZ4e2ydCHkcRbg==
+"@remirror/extension-callout@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-callout/-/extension-callout-1.0.20.tgz#3356f3f444457c099a097d18f8233839089d180a"
+  integrity sha512-UtqywgYAa+wILa4GoJuDJEK7oSzpIONrwJ64hHmg460KBz6a0duq4X8sWkVlgZr5qhmtPef+W8BwnN1wEO50Nw==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
 
-"@remirror/extension-code-block@^1.0.22":
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-code-block/-/extension-code-block-1.0.22.tgz#7cab38479c0acbbb058ccdcad861e84275b261a0"
-  integrity sha512-LdFdLlEBLQd3S36bQllyRI7otk+W9WmGZUVtM6qz3/0iIfx5Ysrr9BTlAXOFCnG7Iz2lrFF9nl6/zUhOzbeuqQ==
+"@remirror/extension-code-block@^1.0.23":
+  version "1.0.23"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-code-block/-/extension-code-block-1.0.23.tgz#7977aa62d8382fe33a0a9582f2fb3484cc133cce"
+  integrity sha512-/8QtmwBShphRyryVVFPcltpCKcukayV2l2lDN5Z63NaWTl0s21lUnwMsdDocMUaS5q7WZ3yUT/ZNy4kAODwb+g==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
     "@types/refractor" "^3.0.2"
     refractor "^3.3.1"
 
-"@remirror/extension-code@^1.0.17":
+"@remirror/extension-code@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-code/-/extension-code-1.0.18.tgz#8e17fd6428db6b6f97f6191fccd1e449d613087b"
+  integrity sha512-r7FhWGWLm1mt8R2WgU8z/DOiW9S9eIbJW9ZR/+ZvSbDM8TP8jEZ/+E6Lhb8Kqdx1L7Q60+eTYB2FPcEy3tW3qw==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-codemirror5@^1.0.17":
   version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-code/-/extension-code-1.0.17.tgz#4922bcb6e00876dda3c57250e0d7aa8992c41541"
-  integrity sha512-f1imyvjlaz4sQw/uTIOTKPqBDVFTDy95vFCrPdU09J0zp4eGdqKktsJIQ6bAKrAz0v7A5Gpi4P5QihKfftHaBg==
+  resolved "https://registry.yarnpkg.com/@remirror/extension-codemirror5/-/extension-codemirror5-1.0.17.tgz#75d4ebc2ece4f5c4119677e3829870c303021649"
+  integrity sha512-nUOtcizIz5bTl4auDD9whcMXzCjAHnW2xV5uSjDY9ZvroidfwZ7WrlbndRNZL6whz3grrjuHYkwxcnNex/IPqw==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-codemirror5@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-codemirror5/-/extension-codemirror5-1.0.16.tgz#53cb1ad043176e2e5b133dba932b4da943dcd814"
-  integrity sha512-kEFREn0Y2YaT7x6nZbaZ6PEY/nN+smNx04347UI2SlfaF3yndJhIOQfX8wnuMA/SIeTISva06g1+Ay/3B9ymLw==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-collaboration@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-collaboration/-/extension-collaboration-1.0.16.tgz#9319023926bc613228f79246021b4b0bcbf05c25"
-  integrity sha512-sGjdnHKYntpMhzd7n4tXiHp5epbxCSkSETT4OkDScFOXLYUF9SaOyYO7VQCirSXdDWGU7JhWqTRiCHbLw/2pVA==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-columns@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-columns/-/extension-columns-1.0.16.tgz#59b81503c16e0265117ef2c8515bc7f3bfdea62c"
-  integrity sha512-EK3ovQlq49i0WEHQXxDrbeiGetZ1gGhYXk6vjDZqDNbQbmDlLnkn9r7YZWu7mt6Uee12xp1Qn/ymccSdFMkC4A==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-diff@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-diff/-/extension-diff-1.0.16.tgz#ac0d084e1d21eb81e27406038b15a32c23ca0f7b"
-  integrity sha512-F17CfbiCP08xFuzcJcIeZAlcKL7hyfqIbrB/tvGLc2Def9Il/3Ehfi1YqeMXGGg2VBjejNd9C/3gcwF/XdXJWw==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-doc@^1.0.17":
+"@remirror/extension-collaboration@^1.0.17":
   version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-doc/-/extension-doc-1.0.17.tgz#a5d57aaab69e61e0946cc8095df5f041ff1f5fb1"
-  integrity sha512-gkvGbWxE1GA2CM9y5NZjNzxPPqwL24k6mJGtZRDGZqo7rt2Vqf8KJdM5NcD1iUOf/LSBhtSCu/3FKRSOtU29Fw==
+  resolved "https://registry.yarnpkg.com/@remirror/extension-collaboration/-/extension-collaboration-1.0.17.tgz#c672b64b407cea41aa7b12164df6c21c17dff048"
+  integrity sha512-IHIZzdE+yTzUY2ozKk6+wu95gYyxhrgNIIDcx0vn3TzZ1Aj5Wj0kZtPqwutWMAIeeiONKj+Ag0dot6uZVjBadA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-drop-cursor@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-drop-cursor/-/extension-drop-cursor-1.0.16.tgz#9ef20e47386160f071e76d3b430e5a6867911ece"
-  integrity sha512-NtHjUxoRmgtyRNRo8rib8aA/ddrDW0p0hF1UGXudsrc+YKzpGo9IRwIOZavo4y7NJE4v63kR9fvvSK/wOmVvtw==
+"@remirror/extension-columns@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-columns/-/extension-columns-1.0.17.tgz#2cfc7cd73ded3098960509d9a189e1c54b804f07"
+  integrity sha512-2A/gxRSYU5Sak78pmYQ+ghNZ+SIBIQehsFpuyWq0mhibO5q01i3wTXbemX2fKZPY996oAdeuAuOyXRcWUcTFOQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-embed@^1.1.21":
-  version "1.1.21"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-embed/-/extension-embed-1.1.21.tgz#63ecafac9f7d92f56aa1fa9ff01ed1c8906af869"
-  integrity sha512-baBL29+YmK0yMz0jSA1EX0QXnGTdpKIn99N2FN8iGeCjajv4g5YgFRxETAe+Xe4fWAQ+hRyVMhnzV6LrxjYRBg==
+"@remirror/extension-diff@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-diff/-/extension-diff-1.0.17.tgz#ad8ba5e61ea8b2d80f1a5e1794de89793a2c4f51"
+  integrity sha512-iJitG4Z7r3Gloakqj+8q0lzqj8i7x3BiQAyIP81b0psDxAFa6kujN2Nf1ZLZHjQmKgO42gqmFzmQhfiMJA/QNg==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-doc@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-doc/-/extension-doc-1.0.18.tgz#fa2ed72512f88973920f443b5462ba7e0e956e30"
+  integrity sha512-TmJ7wWe4r1ZvkRmQDZFcR0JRrrCnIj4l+qDcaa+beDg3crAc3WDNL34LCW1z7B9oNLrtufEo+ii838TxC7cNRw==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-drop-cursor@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-drop-cursor/-/extension-drop-cursor-1.0.17.tgz#9b473f41dbcf545b334db2e158f6d908ae1180a5"
+  integrity sha512-Ik7Sr9X3juDOFT2vDRocNxUdrsQ4FqcVKpKrE/6/GN1mfa1ThNlxpzOk2OrvJ8vda/tjgEoCeJBr9Es8Ns2FnQ==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-embed@^1.1.22":
+  version "1.1.22"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-embed/-/extension-embed-1.1.22.tgz#6707fb2c62de53ddda4fa42bd14bd393b7722034"
+  integrity sha512-i0CwvZMbyuhWOEl6W2SDqy5apZavGsfl1aA8NwQem1UoZTmNfcfZU3J4iugFrg0SymjjrE2wczHdmc3KKoeTjg==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@types/querystringify" "^2.0.0"
     prosemirror-resizable-view "^1.1.11"
     querystringify "^2.2.0"
 
-"@remirror/extension-emoji@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-emoji/-/extension-emoji-1.0.19.tgz#001aedaeacf57c3dce868333969bf8795ae8de0f"
-  integrity sha512-U8ChMCFhfPzHxo4YzFIOpha1YNAfx4p278zRxIhYEHmC1FZdXHiwN/V06joYU4cSafOWVKNjWlckMhSUvlLBEg==
+"@remirror/extension-emoji@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-emoji/-/extension-emoji-1.0.20.tgz#50814eac6307904ac0f57a63d008b47631bbf2be"
+  integrity sha512-rrn5AKfM26QSgJNomJIc2c3xwW7pJBvEebXvaA/7dxZ/muFYXnWjYYNiNjlWEWUCN+LR8qFZQCgFQ+1U6gjXpg==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
     emojibase "^6.0.0"
@@ -2491,136 +2491,136 @@
     escape-string-regexp "^4.0.0"
     svgmoji "^3.2.0"
 
-"@remirror/extension-epic-mode@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-epic-mode/-/extension-epic-mode-1.0.16.tgz#0a539779646a85f37cd34b6c5f1c4f9258b532e3"
-  integrity sha512-SQ2zP/tYayc21try99Z0ExzWAHHkW3Aa7htK6JYcgJqIkXZ/gCqq0vLpYdNZJPFkfFG1czyzw9Glu1V653uncA==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-events@^1.0.17":
+"@remirror/extension-epic-mode@^1.0.17":
   version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-events/-/extension-events-1.0.17.tgz#6e4ad86ca05998d55acd808e708debcf31d0a136"
-  integrity sha512-Rs7wk+bF6Z1vs5qLV5eK59sgoIDHqka912sCvXkiEmh/V0PKq8R2Ch9sJQeZBk9vJtTd7/jqNHiBlvoJHJKUhg==
+  resolved "https://registry.yarnpkg.com/@remirror/extension-epic-mode/-/extension-epic-mode-1.0.17.tgz#d5424214aa966dfd673c4e97ec1ddd2ec8aecb5d"
+  integrity sha512-xfJaLcYAIN7LCc+//qeg5i213EL/g/nVwKg+qvMsH8REiVAMNMEyt27oCEpygNnw+ZhPSRbI7jb9+EpBlMvzVg==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-font-family@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-font-family/-/extension-font-family-1.0.16.tgz#96c55ffa15d075424782d4c888490e030e8069d2"
-  integrity sha512-B/yMf3QgKJh3OXsu/4QlXjMSKAN2Dy1smsa0p67Dv6bLGcB2GfVUBSrEG/fNKnl2HeBnQzzpuje2hn9PJvERIg==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-font-size@^1.0.18":
+"@remirror/extension-events@^1.0.18":
   version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-font-size/-/extension-font-size-1.0.18.tgz#6ce94b7826964c721a58760cecaa8dcd8b8f307a"
-  integrity sha512-tAKYNUPZtJA9W9cq06WKrog8+TBNCe9b2H7O1LGhDKZuZIKBjOpOT/ZWzbw+SNgVcYbCxaxdsjZgzAtVaTTg1w==
+  resolved "https://registry.yarnpkg.com/@remirror/extension-events/-/extension-events-1.0.18.tgz#5097253eb9cc8c5f22f51138f87171fd30fe0b24"
+  integrity sha512-5MeQR+T6bszHf60/yKrfQdEQ5j3df6bx++I85nh4JfZev04btxwfbikqhXDVYN4mOu9nkzxT/W38wyTbsQ8i5w==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-font-family@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-font-family/-/extension-font-family-1.0.17.tgz#43b74e7e3ca7a80f45abb94aa6c00b267e80195e"
+  integrity sha512-kNyf1b0jTDijrfCfn6EvWq9noCtL2sO+GhRUo+7RvUmZsNahbjhWRuTPr0DwM1g8MSpHF3YGxPkO/EBRnOzJAA==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-font-size@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-font-size/-/extension-font-size-1.0.19.tgz#bcc4b377c7bcb34485df8e7bf2c5bbb04500721a"
+  integrity sha512-osEQSDNi19xJdGVO21katf+3YU3T3yzdBGE4vLnygTuElCP5DSXGMdo0pG1k7QEQ7Z+7NFWBc4RSA31Ap7Ztig==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     round "^2.0.1"
 
-"@remirror/extension-gap-cursor@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-gap-cursor/-/extension-gap-cursor-1.0.16.tgz#6d9427274ca002336b5ac6eda5e48718ed780b84"
-  integrity sha512-d60HRBgOgclTWX08H78sCwMxcnSFr/uesd1OGYJJSfXl7lH3tMZJSoJMFLuFH4r+du/FOztvNLeh7TnNppexvg==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-hard-break@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-hard-break/-/extension-hard-break-1.0.16.tgz#2feb4bdc75d4bccaad209129fefb85ff3aa708d9"
-  integrity sha512-iCb9bwXi5Y+wwzpL1OC05JiwniRexNXj+Bs6bh4XR+aaQZ6jePvBRqgtcqaFjbWpGwtIKngYiCbEL+mEpfC7TQ==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-heading@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-heading/-/extension-heading-1.0.16.tgz#0531db31fb3c10bee3aae512839247fe37e87a7f"
-  integrity sha512-yEHQba3OVAUD4bVyJLd8GN3CmdXmbQNXpFYVUlX9k+jpRDFGHUo//4krFhayDUyCZ+3gdCuaE1cloSDMbwSCDQ==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-history@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-history/-/extension-history-1.0.16.tgz#003774de7468fd494b2bd1af7a00aa9ce42387aa"
-  integrity sha512-XdmvpdqTX1oFcvDp2C1+FxbajydCCF9IkM6Sv5jdr43AFW6wv4F2uhvSJRn44b5rmVwNMIw8ovKcmCFQ+EpCRA==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/messages" "^1.0.6"
-
-"@remirror/extension-horizontal-rule@^1.0.17":
+"@remirror/extension-gap-cursor@^1.0.17":
   version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-horizontal-rule/-/extension-horizontal-rule-1.0.17.tgz#f6eaf7db9fb0c0f43bcbe68f31a914e6ce7c63ce"
-  integrity sha512-wU+9oYjupy7Mqe24XrUf6y9zESSwOCqZp5k0w9qP5bRMhW/POIGuEyZwz7pCAkeQ9bOIOvOXH9zkXrbWwJvjWw==
+  resolved "https://registry.yarnpkg.com/@remirror/extension-gap-cursor/-/extension-gap-cursor-1.0.17.tgz#07e132595e0552131ce07a8ef3613b9f4a4c2369"
+  integrity sha512-HXaAFE91ySfjKj9MBZV8awbfN6OYPoW0aIIeCaBkOGoO97ieJ8BUCsA4p/gBvcM+i5OjHjTiQDf3tIH5gUnFeA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-image@^1.0.27":
-  version "1.0.27"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-image/-/extension-image-1.0.27.tgz#b0f4edf213121b294856fc314e41c5c6a6a4fc56"
-  integrity sha512-LxyaLhbhFvf4RnaPTp2UC+FgC1KTlIZaHipBp395aKJm0xM8xAEqHGqiaFfzmRnc4CO0s7lSAocGEMdhSOsxBA==
+"@remirror/extension-hard-break@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-hard-break/-/extension-hard-break-1.0.17.tgz#ef4c622c6cf57e208bab5e2957cbe1155ec72e74"
+  integrity sha512-jkFR0c4lBnbi9l3xRRS6aMHoKjEhVdf8JL+mtE3x2BCTGLoogy081P8zcz8qmIMa1RAl2Ms3FV6tSVAvA5Lhaw==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-heading@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-heading/-/extension-heading-1.0.17.tgz#e182f0328b7e5897c498b4252d0253b3713c1c84"
+  integrity sha512-ilogpkNOCq2GySVgn//YNT07dtZ1ptPchFAPvMBtQFY0bGgntp/ecuAlrR6pPq4Kiwtxl5mtRYIq3U7C9jAB8Q==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-history@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-history/-/extension-history-1.0.17.tgz#c681d23bdcb9a5dc38e6c5110edb07700193bb2c"
+  integrity sha512-DmlQ2dGTRZnNJTFFCEuJ+TbagFnCfQuuYRv+CYsO62xt0jF1+HHF+sIpwziVBxT7vsZcFa1UMsF4gCLDQ3Cgwg==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-horizontal-rule@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-horizontal-rule/-/extension-horizontal-rule-1.0.18.tgz#a9f7a6423d4c5658bd72d776c2425a1b12345ee3"
+  integrity sha512-6FAYCjpmy97W9AGk/0QPXCnaEUf0bzfDVVhFvgSU0WcXuYIu0dfRQnfsIQ17PbW9XD3FDf55uDIKfigNKv3TLQ==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
+    "@remirror/messages" "^1.0.6"
+
+"@remirror/extension-image@^1.0.28":
+  version "1.0.28"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-image/-/extension-image-1.0.28.tgz#35c5b4437ad3c0804dac4cfa5b908534963b5d06"
+  integrity sha512-FSPwtRMewejcdObifSy2KPkqBLA/xtixvwcy9h4hjqp1WEaQV41hd5cf0zuHmHJvu+coB9MQcKs+OUsKFO4DXg==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
     prosemirror-resizable-view "^1.1.11"
 
-"@remirror/extension-italic@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-italic/-/extension-italic-1.0.16.tgz#7f4f499eddf8646fee8f71149a72525636937e29"
-  integrity sha512-qst402WhwJR2Bo8odVU5MWJLHUj3UckvDh9KyYX2jKEb4jmtY608FcQ4qkZbTEbIxlZ+dctxBdqNI5dzh5CiHw==
+"@remirror/extension-italic@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-italic/-/extension-italic-1.0.17.tgz#ae969816bdfbebcadb3e222b056af13d90a50d9d"
+  integrity sha512-fIEM+mATsooTaCxn8Y0s9f6JCVvPHnSheKyEKdBrmbg2VEOMvGCIxC2tSdEBg8rp5lJpVK2ErHpGBhYakto5Jg==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-link@^1.1.15":
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-link/-/extension-link-1.1.15.tgz#eeb0d1b47d3800e7c8fd342860eb818fc319eb62"
-  integrity sha512-JT0oN+Z3U47vkpqw1wp7h8r+SDi4I+wW7EJNVBYr/7BjXfAs26HG9Jzvh5rxM1taK8yFp9Orf7r2tud0zj4nCA==
+"@remirror/extension-link@^1.1.16":
+  version "1.1.16"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-link/-/extension-link-1.1.16.tgz#fe8cf19f8c4f9c57c4f4042d5c8427b245fbebc3"
+  integrity sha512-5slE/BghB0TmvID73H1xfLbe8ZTsTrC9JZe9CuKraC0yVFYikPYj0Zjvc7yvkaVdZCl/zbgXHmD+/Q0EWDmkcA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-events" "^1.0.17"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-events" "^1.0.18"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-list@^1.2.17":
-  version "1.2.17"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-list/-/extension-list-1.2.17.tgz#17dfaf5cb901025a4a1166b190359164d4d0ff9e"
-  integrity sha512-YF6tiZlHgM/6TC5wPDn7wDTy/5c1BI+TtoLcsypxYo+U/oaZ5BFrCM8bhI7lwcvlA3c9zwqdEDSYx5HkoyvfQQ==
+"@remirror/extension-list@^1.2.19":
+  version "1.2.19"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-list/-/extension-list-1.2.19.tgz#93e7e14077aabc7722a17744c352de59ba802e09"
+  integrity sha512-jKmrAXD46LensYsC4F0Pq7sR43jzQ07nqfGhqvdHi1FzjclUdGdbcl/+oPyUHdSG52FyxbyhdK+ve/U2Xbxgaw==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-events" "^1.0.17"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-events" "^1.0.18"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
 
-"@remirror/extension-markdown@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-markdown/-/extension-markdown-1.0.16.tgz#8476180b7a0236cd1c8aff006b75ec3aaf66ebe4"
-  integrity sha512-2tvzBt4DuCIUf1fy76R/ujNWpF0OTRQHv/WUhgUtdphPnHzuCkFDzG1KAof4QGwUWN9uQCb5vC7TbeGk2WAp2g==
+"@remirror/extension-markdown@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-markdown/-/extension-markdown-1.0.17.tgz#10ca6be19a93c350c9d313f9c1f3464a0073abf1"
+  integrity sha512-dNQWsoFFQQJGu7NRzlD1yVNpDB0RulGjJ6eYLIIWtMZz+a0dvlBN/yWaJR72ngLPBxa0IECFG11b/fP4l7/3gw==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@types/marked" "^4.0.2"
     "@types/turndown" "^5.0.1"
@@ -2628,240 +2628,240 @@
     turndown "^7.1.1"
     turndown-plugin-gfm "^1.0.2"
 
-"@remirror/extension-mention-atom@^1.0.20":
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-mention-atom/-/extension-mention-atom-1.0.20.tgz#e8a29747a8776a164c8e05f2cad404dd898120e2"
-  integrity sha512-KBRGVb71tve5r0g7FTejDdMQ/AUOX891KNNtvEQ23+xZ0PdtAY5q7N35lusu7ISJWYmAbrRlO9STHzPbKMGdtQ==
+"@remirror/extension-mention-atom@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-mention-atom/-/extension-mention-atom-1.0.21.tgz#021b6f21795eb1f1f54106f741da37194eb5bb57"
+  integrity sha512-2t5yJHXV3XHdMIhkbdMAGztWHsnK9UDz3D3l1qA+hTVbTqVjFibYH/GEovxwDFvMnxwmRk8xqTeS6xMfQfa0yA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-events" "^1.0.17"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-events" "^1.0.18"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
 
-"@remirror/extension-mention@^1.0.17":
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-mention/-/extension-mention-1.0.17.tgz#72fe1fa7aba4324de8aed7fbbc3fc381d656b7df"
-  integrity sha512-NR0L3Ym1q0i3KJc8jC5Fg43g264EUeGFLhu1YWSJrmtJ0JlvkfA0B1kNHKoXSiJ36ysYz0xW7Bnk0nIGW8MQDg==
+"@remirror/extension-mention@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-mention/-/extension-mention-1.0.18.tgz#c65cd718f85ee631d6e09cb91e27f7a599b49bf8"
+  integrity sha512-a2Ox1eOjV8AAWBZTwYTyldaNsg8zFha6iZCqoLavr7dee4Yc05gsE36he1N9h+87mR9bGvjYc+btkupIjte7Cg==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-events" "^1.0.17"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-events" "^1.0.18"
     "@remirror/messages" "^1.0.6"
     escape-string-regexp "^4.0.0"
 
-"@remirror/extension-node-formatting@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-node-formatting/-/extension-node-formatting-1.0.19.tgz#a5056290d7349601361cccf2883e0a277cd926c3"
-  integrity sha512-3OgAp9DBpGwC4+vpEgxru4JvXIrlDVxT3Giq3/Kynglz9PpIUcY8eM/GHvkunBgRqhV3Zc88X1uScPnK5EWKug==
+"@remirror/extension-node-formatting@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-node-formatting/-/extension-node-formatting-1.0.20.tgz#cabac8c495f0d81b3319f45135a90bd18d76ed6f"
+  integrity sha512-5KYheOBfUAXvkUzOu0SegYzAOwHJ1h1vpEVAPynNPkmd5VExExb7mBpEpqBMN1YvJJPJGvinyyfU6uByrQ9thw==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-paragraph@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-paragraph/-/extension-paragraph-1.0.16.tgz#9ddb83c0a3c8068692544cb1dd7342eba6b620f1"
-  integrity sha512-hPQENTwTZsLZdQq14Bq7LUxO0EGiFqvD8LlL8bSqFjy4FG0SEXbX91TXKu20viZ9WJdRZOtE86O/UIwEaRaRug==
+"@remirror/extension-paragraph@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-paragraph/-/extension-paragraph-1.0.17.tgz#ca4ff85f6b53d7e52f0ff765da3c58e5ed195f2e"
+  integrity sha512-X40XpNxiPtWq8w2zA4GBiuun5NhwKvFlNC3ebUrZLyAxo7fRBXRVQEDZgVYaYSMyQ9fJM8CHjKAfRvVgkLWSxA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-placeholder@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-placeholder/-/extension-placeholder-1.0.19.tgz#6b937ed007db406804436cb42771d2823abc7db7"
-  integrity sha512-5AQOaX4POeb4iNdvyrTrKNtIEP3kPK8t/KbeOTL/3izA1bPquc0u2y5+quxomCcMAM9Qy5uwwcICIAJsZv5mnQ==
+"@remirror/extension-placeholder@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-placeholder/-/extension-placeholder-1.0.20.tgz#e73832167915e5867eb23a4c13ccf121f8081e4c"
+  integrity sha512-6aLbXFfcCDjmDaEFI6i8f0x+E5/dx9iEv1Tv/XxmPhsK1F7EaV3TxP8ympy4o2ffwE9UtF1IKAZxc7xP1VY4IQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
 
-"@remirror/extension-positioner@^1.1.18":
-  version "1.1.18"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-positioner/-/extension-positioner-1.1.18.tgz#062b4439524fab3c6b4b048bd051c1739954ac28"
-  integrity sha512-YbavqR0fI899lKVcTgw0p6lPKdbg90o3Ou8sxwjBSeJ7bb1nuuSM/LSkValD3MIcD/F1BF22QQX7AnKhcFdIcg==
+"@remirror/extension-positioner@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-positioner/-/extension-positioner-1.2.1.tgz#5a388302cab8fa0b28eb5604eb59f7651fd41222"
+  integrity sha512-lss8lqOBqcrof0nsGixRCwuQbJEdHoh5KTkzjAEN5O/vNEXlQeObxUp3CK5OWYb3Np/P6uNqWeilCBfGwtaEhQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-events" "^1.0.17"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-events" "^1.0.18"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
     nanoevents "^5.1.13"
 
-"@remirror/extension-react-component@^1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-react-component/-/extension-react-component-1.1.7.tgz#8b39b760ef3bcfb441bd25ef9531685ad87e419a"
-  integrity sha512-F19/48fnyVi9o8ZIeh7v8jkMXZcFwCu1H0Nv6it9SiHtS6Cp9AuYde2VKIX3/ES3txz01DRU8S2aybS+oBtzVQ==
+"@remirror/extension-react-component@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-react-component/-/extension-react-component-1.1.8.tgz#b55dc71dc6481c7ffe5d3c4bb2df0237b3f5f325"
+  integrity sha512-JJOdT5IEcKajeng+7slw47pT/c0GYmkRXFQ1rYiSeji+RSXfQUPe6XzKHd0THmyruMht6AEoEYJdOTN6Kc3NiQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     nanoevents "^5.1.13"
 
-"@remirror/extension-react-ssr@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-react-ssr/-/extension-react-ssr-1.0.18.tgz#c053b54d921c0990279cb4ca65f25dec7a0fe747"
-  integrity sha512-JQ1hJ4mio118rgD1AhKIMsgBzv/x6xm2HLau7PaupuuV1Gbr76mZvOCFSEdTnm2wablCpOs2sPvGpvHyqwOXrQ==
+"@remirror/extension-react-ssr@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-react-ssr/-/extension-react-ssr-1.0.19.tgz#bb037d63605e768d0c9d96265c5ffdc79ab030a4"
+  integrity sha512-zvuTy8Cw4+Rmj0TyPrfo46XmdSPjU5d1AQgwwWWRWVnUAxQddSaWz40W3gcxFtEOgQvdPUwYqPTbNUoagV9gYA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-react-component" "^1.1.7"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-react-component" "^1.1.8"
     "@remirror/messages" "^1.0.6"
     "@remirror/react-utils" "^1.0.6"
 
-"@remirror/extension-react-tables@^1.0.25":
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-react-tables/-/extension-react-tables-1.0.25.tgz#13f9e821b78c207f7ad5520bc86a6680362b189f"
-  integrity sha512-4k7OLA+5h3YCogAEXcR4TZ1ncT5E8DcDLq8XacuPeDrzLecA/cT2AiH/g3TE1BtuMrTZHFKB74JJdi2JJMpunA==
+"@remirror/extension-react-tables@^1.0.28":
+  version "1.0.28"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-react-tables/-/extension-react-tables-1.0.28.tgz#71dc06e603426c45265b884a2a1d4030e37b22e8"
+  integrity sha512-aTQs7Krm8OCBPzNfsTntucVkEJbnuON2k5zRs+y5+kSj4i8MeRNICvxAwyXpokQ0/64ql7Jex/Hg0J8m9U9JtA==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@emotion/css" "^11.1.3"
     "@linaria/core" "3.0.0-beta.13"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/core-utils" "^1.1.7"
-    "@remirror/extension-positioner" "^1.1.18"
-    "@remirror/extension-tables" "^1.0.19"
+    "@remirror/extension-positioner" "^1.2.1"
+    "@remirror/extension-tables" "^1.0.20"
     "@remirror/icons" "^1.0.7"
     "@remirror/messages" "^1.0.6"
-    "@remirror/preset-core" "^1.0.21"
-    "@remirror/react-components" "^1.0.24"
-    "@remirror/react-core" "^1.0.23"
-    "@remirror/react-hooks" "^1.0.24"
+    "@remirror/preset-core" "^1.0.23"
+    "@remirror/react-components" "^1.0.27"
+    "@remirror/react-core" "^1.1.0"
+    "@remirror/react-hooks" "^1.0.27"
     "@remirror/theme" "^1.2.1"
     jsx-dom "^6.4.23"
 
-"@remirror/extension-search@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-search/-/extension-search-1.0.16.tgz#ee7d736e3fe95d7a25e65ffc875c9e8e29e24982"
-  integrity sha512-wJscgCCOBOr1Kth6Wg1WqmrAkCX4yguAIZAzm2G0dc8iMjVgWtJV0IDRbbVFcURIXPmK2KIrYipWUMM2vg4nYg==
+"@remirror/extension-search@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-search/-/extension-search-1.0.17.tgz#e9d9b2702a65cd6e73f3822720eaa9ca901df82d"
+  integrity sha512-xX7mZcQWtpVdLZbkjO4T7AAOkWMgHJOELTmUVaDoWQcsizuoniMfKJTCIwAjVTWh8D3DxwMASSgoSP4jhUzcNA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     escape-string-regexp "^4.0.0"
 
-"@remirror/extension-shortcuts@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-shortcuts/-/extension-shortcuts-1.1.5.tgz#0e5d866867d51497ebeef7caebf8fab37b0d04b2"
-  integrity sha512-G1IvVlrctwkafdGsQo21AtaHzW5hZvxdr520oV8vvpQXFuv0jLdtT4U6SsutJk3ekOZnAsNTLCm4hgNx9aBURg==
+"@remirror/extension-shortcuts@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-shortcuts/-/extension-shortcuts-1.1.6.tgz#c11e9b2457ccaf21a6151fb883f91a4089e73bca"
+  integrity sha512-RWODNPayW5oZXT0UgLjtf8ei2QzUDfKFPA3NFnXzBFR5MlZjSL0jdjpLU5NhZMN4yuhwV1qUY2fUlekrEyMJyg==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
 
-"@remirror/extension-strike@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-strike/-/extension-strike-1.0.16.tgz#5da729fb761c11356f87c8fbd76760fdb8ac2d7d"
-  integrity sha512-jO4/f+8M70H3GvLLLMD+edX6mWDlLxhc1PdNb9TILKU6cUL9t7pzSe4gE5s8zAZu9hZcUE76Ko1sZCnzLrhntQ==
+"@remirror/extension-strike@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-strike/-/extension-strike-1.0.17.tgz#005c12e4f0c9a3892c37abb1e37a689315504ac6"
+  integrity sha512-evDK9AYLU9gV9gxZWy+jQjfj8LsdK4Ct0iixkB5C+tclLGmuKQ8TxFr/4YE+liS+kdh2PNlbgH4DF0SXXFgwag==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-sub@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-sub/-/extension-sub-1.0.16.tgz#e094dc8dbaa2d44ddee70087c24ae044b4212d35"
-  integrity sha512-QBixX70VglK03F6/NmijiUKsgBvdt4dZs5AW8tw8evUWIqE/OrSzUmqzK+ygU/k89U44m5XhX3EiVd5B6D65sA==
+"@remirror/extension-sub@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-sub/-/extension-sub-1.0.17.tgz#dce5cccef8de01a5325c4538a31b2da322f9489e"
+  integrity sha512-F9WAmM8AKH4p6xzs296/A9antz0B+aekKdS3TC3tlS6A6IFZMUuurSMqpwvtLz/rJxKsnKjFdFmf7XVaHm7kWQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-sup@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-sup/-/extension-sup-1.0.16.tgz#6b98328a5370dba360c28c1eb26358055fcba632"
-  integrity sha512-2AcO/BdHq4dkYPWTSr7HmgGsLariSBg+ul1/UYJxtIZqUjGFenY5M+EWrAVczSXfGnJ5KME+sjT+bQnfLVR4/Q==
+"@remirror/extension-sup@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-sup/-/extension-sup-1.0.17.tgz#4cb4ee1dddc75c7f5baffdc1fa78b01ad09c164d"
+  integrity sha512-wDmSwJkGG70ONgI/6+TzQczuiQULAIwIvdB+pM6TE7z3zkz4AaI9VYu53YiSfIkuyU7BNzUj9zGWaeOcHaH4Xw==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-tables@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-tables/-/extension-tables-1.0.19.tgz#932141e4f2d6130ff2bb04e7d3fe027a58f445cb"
-  integrity sha512-1hJckHSJJXAYOtIlGjpKEzJO5qIh41NmFWmamnPvXjvvtfKzLjWWLI0Rv2g/mGeKgOqWiqJqh2ZniSG0zbyxtw==
+"@remirror/extension-tables@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-tables/-/extension-tables-1.0.20.tgz#1dc8ddb761cac56813032d0549f8123c55176cdf"
+  integrity sha512-4XiCBw+Kv5jK3nPhYqf01MT6kr1Vic3O/Zj/Ie6BNT7CPmgB9LAhot4EaJD8TykDw/Zu9Mv6VhYJllft4iXCfA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
 
-"@remirror/extension-text-case@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-text-case/-/extension-text-case-1.0.16.tgz#145f615f4efd8c38723faa771eec0e9b34512983"
-  integrity sha512-Og4uUCsF/G4fDY5BsEi5e+m9bcWmHNEX9lNUFQ9YSE0F0mSa3+mQcz4hFJkyuEymgrKuLNrfdXAt5U5z2Xfw6g==
+"@remirror/extension-text-case@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-text-case/-/extension-text-case-1.0.17.tgz#6924e17b26d7cfc59e144a77c7c0a6f046c8304f"
+  integrity sha512-R7PbTLzpBKSu7QR+iW521Qo9ynl6dUfsKs9yjiO79f+2TsDViMcEm5L/4qdFH5/OUBaW8ac/m5nV/b/7MMMu/A==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-text-color@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-text-color/-/extension-text-color-1.0.19.tgz#bf383c1ad9f5d370708959b9a063fd9dde4e092e"
-  integrity sha512-zvCpmsCALjkxGL7dFeR7EmTXTpecHpTG3lYv6r3v0BUfZnUmopTqUDOAq9YCuUm6nvJRDJBYja57y8N8gAXT3w==
+"@remirror/extension-text-color@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-text-color/-/extension-text-color-1.0.20.tgz#233da257c9a32bcc83076af8a983f0e4b732a41b"
+  integrity sha512-2hWDGyYenW2Lj0ByK585LTRAVbwDSQLFWLV79q8/roQZViC1ApJvsyYxDJT0AMCxShUusGg4ZtN0cunmRaJeow==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/i18n" "^1.0.8"
     "@remirror/messages" "^1.0.6"
     "@remirror/theme" "^1.2.1"
     color2k "^1.2.4"
 
-"@remirror/extension-text-highlight@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-text-highlight/-/extension-text-highlight-1.0.19.tgz#fb2263ec26d9b734d1cc8335030da9ebe030fee7"
-  integrity sha512-t8KUB4SFxsFhrv48aznVQcIOtl6AIZYoyY2z5ZiMpwlDkpbpGRlQo905gHaje+EhOBbrmNnbDpfz3rxllmVwyw==
+"@remirror/extension-text-highlight@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-text-highlight/-/extension-text-highlight-1.0.20.tgz#8ca0769b4b4c80d046f758c8dda894e9078193b4"
+  integrity sha512-YiTDNLcqGs7mMU0bwGfBXTX/2USv/nNcTOM33NQhNj3AdaGAHJc+zBLU4KF2N/hZ4RRTiLKcwilhRLbTm8j24g==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-text-color" "^1.0.19"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-text-color" "^1.0.20"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-text@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-text/-/extension-text-1.0.16.tgz#e92e571cd3b2b712e0ab123a9532976d7d83807d"
-  integrity sha512-puO8+TXAIMM2YINbc4xD9XWl5ixOuvRARzIH01DRXbRi7bgX9Xr5761J3ltxx7qe6mX6tbPi9CAEKk9TMhdpiw==
+"@remirror/extension-text@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-text/-/extension-text-1.0.17.tgz#bc8d086282cbc976e51f67361e48ac8198998414"
+  integrity sha512-IRb8a8KUX6NemKempIxnzELg3zFb/wbVxEGew2jDH8pB+1KDUaSD9Tzjx1kIaPxIff7eJE9LzjNfGlCJiLQE3A==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-trailing-node@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-trailing-node/-/extension-trailing-node-1.0.16.tgz#8cab54ff735e52fae33afeee7a1e53ca56dff8bc"
-  integrity sha512-MOG+tkB3+2gFgioRGqD4YwqLks2szdJDvEP+1jGHeEsd3LAnhJd4i6LJKM/7gjFV3wFxdNKdpTSkXoQiS6ioOQ==
+"@remirror/extension-trailing-node@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-trailing-node/-/extension-trailing-node-1.0.17.tgz#687d4ab0ceaf19deba02c4b0ba460f7aa08b6b7a"
+  integrity sha512-Jm/MdHVtFAxsBTtJ6GwSaCPxq3AmpsIdYp3e3O30uXV+BMu/iBEDLceskZS+eMueK1BO79TZuydlcVAhjxU25w==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-underline@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-underline/-/extension-underline-1.0.16.tgz#87cdcc573335c2bf9b62dfe54d8c1a707f44a1bf"
-  integrity sha512-duq9nrPomGk6KAtYJa6iIiTwTnEdCKxteWj7HLklb4E+UlaJE9cNrArsvzrQJ9cC6gwxFdkgR2bfuIK9oR9v6w==
+"@remirror/extension-underline@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-underline/-/extension-underline-1.0.17.tgz#07c2283210060f7456f6dbe764938561b813086f"
+  integrity sha512-w+n+bTcoUvKWepsLdg0cpenkdNCT7ZrKH+GGXDPnqPCbmQoNH6m8Ja7HK7JagHiNdQlsahA6aYne09dyl4Y7fQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-whitespace@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-whitespace/-/extension-whitespace-1.0.16.tgz#5ee0ec81d0e4a1a430d4e21f196d44279a530668"
-  integrity sha512-Zg/54SSUoVKbO8ez25ZSmWABg4jJkSIujve8PgMrcmlV9j4K8QO4SETUutUjBJZ9Cj+tNYqVwGb71xUNPm/XbQ==
+"@remirror/extension-whitespace@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-whitespace/-/extension-whitespace-1.0.17.tgz#3e1942dcaeede4287bd6b3698d09a8ea9c1dd12e"
+  integrity sha512-6ptt32X5W1ddUsardjhFv0+w3WL3fbfeSp4TiDRAPAf8n9yOfBeq0Tl7TfMMkqm5dX1pwv7mX0212oHeYDkTzA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/messages" "^1.0.6"
 
-"@remirror/extension-yjs@^1.0.25":
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/@remirror/extension-yjs/-/extension-yjs-1.0.25.tgz#58c8b41f3bf3b92ad47d93558d710abd0d591a18"
-  integrity sha512-GCzjwN8b0E8jagcs7t5/mq+VhNP+8eakrkgdKp5pZ/UbIvlVJdyIi2F1MjrHdaWbGbWek3M5xwMu53oMbAk6Tg==
+"@remirror/extension-yjs@^1.0.27":
+  version "1.0.27"
+  resolved "https://registry.yarnpkg.com/@remirror/extension-yjs/-/extension-yjs-1.0.27.tgz#c43210815c90ca389fd2c3659f80510de66583af"
+  integrity sha512-3LEEaFmxHd5GuqJws5vVHaq4xnhg8YHQPhovGFXyZlxOSvx2qX352hasIKZyB4tr5eBtdsM9sdywf5wFHJkeZQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-annotation" "^1.1.16"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-annotation" "^1.1.18"
     "@remirror/messages" "^1.0.6"
     y-prosemirror "^1.0.14"
     y-protocols "^1.0.5"
@@ -2894,10 +2894,10 @@
     "@lingui/core" "^3.10.4"
     "@remirror/core-helpers" "^1.0.5"
 
-"@remirror/pm@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@remirror/pm/-/pm-1.0.11.tgz#4ec3fb57ff50227f11157041392212841e5e9005"
-  integrity sha512-rEK2xO/X1wT/YP7qmz1uSIDyRNNNksQWn337QVEbfkXl3PxTf0wvjfoWS4gocy6HbBWWvIwpf31o0xOhdzAlRw==
+"@remirror/pm@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@remirror/pm/-/pm-1.0.14.tgz#173d1ad6f6613fe8af2f1c70a4bbdf868c143e4e"
+  integrity sha512-ktUoTTdPHF335WruOFYnVfNfxAOvyCqkW7gBrYjRQ7p56tWN+m1z16Qf9/7pJInQh8lC+shBbGDm+U7SfR3T3w==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@remirror/core-constants" "^1.0.2"
@@ -2922,109 +2922,109 @@
     prosemirror-inputrules "^1.1.3"
     prosemirror-keymap "^1.1.5"
     prosemirror-model "^1.16.1"
-    prosemirror-paste-rules "^1.0.7"
+    prosemirror-paste-rules "^1.0.9"
     prosemirror-schema-list "^1.1.6"
     prosemirror-state "^1.3.4"
-    prosemirror-suggest "^1.0.7"
+    prosemirror-suggest "^1.0.8"
     prosemirror-tables "^1.1.1"
     prosemirror-trailing-node "^1.0.7"
     prosemirror-transform "^1.3.3"
     prosemirror-view "^1.23.6"
 
-"@remirror/preset-core@^1.0.21":
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/@remirror/preset-core/-/preset-core-1.0.21.tgz#31c6bfb39717c912e87888f1ff731aeb852d48e9"
-  integrity sha512-3XYZTPt4Ql7ZdXC9Lzk7sEfUIVMMEdjyt/MsrrBX7jRDy6noLq3M1QRyhcfnxk4w7ZUQYxXaEihRYDIqENY1kQ==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-doc" "^1.0.17"
-    "@remirror/extension-events" "^1.0.17"
-    "@remirror/extension-gap-cursor" "^1.0.16"
-    "@remirror/extension-history" "^1.0.16"
-    "@remirror/extension-paragraph" "^1.0.16"
-    "@remirror/extension-positioner" "^1.1.18"
-    "@remirror/extension-text" "^1.0.16"
-
-"@remirror/preset-formatting@^1.0.23":
+"@remirror/preset-core@^1.0.23":
   version "1.0.23"
-  resolved "https://registry.yarnpkg.com/@remirror/preset-formatting/-/preset-formatting-1.0.23.tgz#58aacb8962ecda74e1137af9a29ed316c56166db"
-  integrity sha512-gnpyVrr2TLCZTqC7vtVUR/zDrmTOEWEw/zmMoxF5f39HHwAD1lCCdUexBaz9zQmrDRc8Y5skBVJR3hoIMvfgrw==
+  resolved "https://registry.yarnpkg.com/@remirror/preset-core/-/preset-core-1.0.23.tgz#a89829afaef0b582ea4fae1487602883f78eeb84"
+  integrity sha512-nbTUn8syQ/rsoEgI1BVSP6UdVh/fRrTinr90JV+PpNyH2afMA5XgVjcNUzopNhZ82Blv1UyunyAtxCiDReQpSQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-bold" "^1.0.16"
-    "@remirror/extension-columns" "^1.0.16"
-    "@remirror/extension-font-size" "^1.0.18"
-    "@remirror/extension-heading" "^1.0.16"
-    "@remirror/extension-italic" "^1.0.16"
-    "@remirror/extension-node-formatting" "^1.0.19"
-    "@remirror/extension-strike" "^1.0.16"
-    "@remirror/extension-sub" "^1.0.16"
-    "@remirror/extension-sup" "^1.0.16"
-    "@remirror/extension-text-case" "^1.0.16"
-    "@remirror/extension-text-color" "^1.0.19"
-    "@remirror/extension-text-highlight" "^1.0.19"
-    "@remirror/extension-underline" "^1.0.16"
-    "@remirror/extension-whitespace" "^1.0.16"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-doc" "^1.0.18"
+    "@remirror/extension-events" "^1.0.18"
+    "@remirror/extension-gap-cursor" "^1.0.17"
+    "@remirror/extension-history" "^1.0.17"
+    "@remirror/extension-paragraph" "^1.0.17"
+    "@remirror/extension-positioner" "^1.2.1"
+    "@remirror/extension-text" "^1.0.17"
 
-"@remirror/preset-react@^1.0.20":
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/@remirror/preset-react/-/preset-react-1.0.20.tgz#c7a8c1a549fd0dc4de895902f1ea593de14278ba"
-  integrity sha512-e67nrGnHHZbycRNVzaSzRe6hV0Fs5dG0cvGpuhPqsU1erNTkE5PDNop+0r8lgRosUbVCx18VJl5i9li5LjI72A==
+"@remirror/preset-formatting@^1.0.24":
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/@remirror/preset-formatting/-/preset-formatting-1.0.24.tgz#a5c81b9274ec26280fa6b08b79369fe2f0868ec8"
+  integrity sha512-9wcCHEnzVaBwgjPZgZ0L/wdIzB6V4ITBCqIY2EKYCWm321TT3EdfIOTRrW+70fBZ61PxkwVkClh84ECWay8OIg==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-placeholder" "^1.0.19"
-    "@remirror/extension-react-component" "^1.1.7"
-    "@remirror/extension-react-ssr" "^1.0.18"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-bold" "^1.0.17"
+    "@remirror/extension-columns" "^1.0.17"
+    "@remirror/extension-font-size" "^1.0.19"
+    "@remirror/extension-heading" "^1.0.17"
+    "@remirror/extension-italic" "^1.0.17"
+    "@remirror/extension-node-formatting" "^1.0.20"
+    "@remirror/extension-strike" "^1.0.17"
+    "@remirror/extension-sub" "^1.0.17"
+    "@remirror/extension-sup" "^1.0.17"
+    "@remirror/extension-text-case" "^1.0.17"
+    "@remirror/extension-text-color" "^1.0.20"
+    "@remirror/extension-text-highlight" "^1.0.20"
+    "@remirror/extension-underline" "^1.0.17"
+    "@remirror/extension-whitespace" "^1.0.17"
+
+"@remirror/preset-react@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@remirror/preset-react/-/preset-react-1.0.21.tgz#60099fe963c90690aee485606f1b95bb2494fb5a"
+  integrity sha512-Xc2bZ6m1C/JR06SITgdWPKoNANwB5fasNEK3lJ2zLGMv6UxMISqqleEfPDBgkknLyDsB0VUyIxrPeI1uN1V5KA==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-placeholder" "^1.0.20"
+    "@remirror/extension-react-component" "^1.1.8"
+    "@remirror/extension-react-ssr" "^1.0.19"
     "@remirror/react-utils" "^1.0.6"
 
-"@remirror/preset-wysiwyg@^1.1.40":
-  version "1.1.40"
-  resolved "https://registry.yarnpkg.com/@remirror/preset-wysiwyg/-/preset-wysiwyg-1.1.40.tgz#5a4ab872041721ac1923c01bd80fca81de4a2f60"
-  integrity sha512-UE3Sx+xIrzxAfXIc0khEIWlA0mp+dvQm4sUZCdyU8psFP+/v3hrCE0kkEdSy1O4F3hFRqenJFKwx8y+cQuZ1og==
+"@remirror/preset-wysiwyg@^1.1.43":
+  version "1.1.43"
+  resolved "https://registry.yarnpkg.com/@remirror/preset-wysiwyg/-/preset-wysiwyg-1.1.43.tgz#7e963e15a02863b3fc827f2b939a54ba750b0e32"
+  integrity sha512-AO+kzJ6DUpPVMT8t0o9/exzu4XPg09Q/grm6qQZwMOYJG0ZI1ZLy8iQ8LwxvATp5173t0HjPyAZFGhEO6vxPaA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-bidi" "^1.0.16"
-    "@remirror/extension-blockquote" "^1.0.19"
-    "@remirror/extension-bold" "^1.0.16"
-    "@remirror/extension-code" "^1.0.17"
-    "@remirror/extension-code-block" "^1.0.22"
-    "@remirror/extension-drop-cursor" "^1.0.16"
-    "@remirror/extension-embed" "^1.1.21"
-    "@remirror/extension-gap-cursor" "^1.0.16"
-    "@remirror/extension-hard-break" "^1.0.16"
-    "@remirror/extension-heading" "^1.0.16"
-    "@remirror/extension-horizontal-rule" "^1.0.17"
-    "@remirror/extension-image" "^1.0.27"
-    "@remirror/extension-italic" "^1.0.16"
-    "@remirror/extension-link" "^1.1.15"
-    "@remirror/extension-list" "^1.2.17"
-    "@remirror/extension-search" "^1.0.16"
-    "@remirror/extension-shortcuts" "^1.1.5"
-    "@remirror/extension-strike" "^1.0.16"
-    "@remirror/extension-trailing-node" "^1.0.16"
-    "@remirror/extension-underline" "^1.0.16"
-    "@remirror/preset-core" "^1.0.21"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-bidi" "^1.0.17"
+    "@remirror/extension-blockquote" "^1.0.20"
+    "@remirror/extension-bold" "^1.0.17"
+    "@remirror/extension-code" "^1.0.18"
+    "@remirror/extension-code-block" "^1.0.23"
+    "@remirror/extension-drop-cursor" "^1.0.17"
+    "@remirror/extension-embed" "^1.1.22"
+    "@remirror/extension-gap-cursor" "^1.0.17"
+    "@remirror/extension-hard-break" "^1.0.17"
+    "@remirror/extension-heading" "^1.0.17"
+    "@remirror/extension-horizontal-rule" "^1.0.18"
+    "@remirror/extension-image" "^1.0.28"
+    "@remirror/extension-italic" "^1.0.17"
+    "@remirror/extension-link" "^1.1.16"
+    "@remirror/extension-list" "^1.2.19"
+    "@remirror/extension-search" "^1.0.17"
+    "@remirror/extension-shortcuts" "^1.1.6"
+    "@remirror/extension-strike" "^1.0.17"
+    "@remirror/extension-trailing-node" "^1.0.17"
+    "@remirror/extension-underline" "^1.0.17"
+    "@remirror/preset-core" "^1.0.23"
 
-"@remirror/react-components@^1.0.24":
-  version "1.0.24"
-  resolved "https://registry.yarnpkg.com/@remirror/react-components/-/react-components-1.0.24.tgz#e17857c8696dd97b884e9d2bc7b4d82252067a45"
-  integrity sha512-81ZKpgc3xsiB2cC+0AOGGYlOPlR9R/JA0mdmCdWVIkeiSf2Y+U3biAcoA1adTC5hpKv8og6bI5P668bxUeZKgQ==
+"@remirror/react-components@^1.0.27":
+  version "1.0.27"
+  resolved "https://registry.yarnpkg.com/@remirror/react-components/-/react-components-1.0.27.tgz#58c250e4ac9428c35463241644367f237c0e0275"
+  integrity sha512-97gavENGhAanOP3o0lvOIKIsPKhCNDdKk88L5yGKm18gKzmtvxBq5LJrbT0YNBdQHqlTMmW/dupvBxAi4z3a3g==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@lingui/core" "^3.10.4"
     "@popperjs/core" "^2.9.2"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-positioner" "^1.1.18"
-    "@remirror/extension-text-color" "^1.0.19"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-positioner" "^1.2.1"
+    "@remirror/extension-text-color" "^1.0.20"
     "@remirror/i18n" "^1.0.8"
     "@remirror/icons" "^1.0.7"
     "@remirror/messages" "^1.0.6"
-    "@remirror/react-core" "^1.0.23"
-    "@remirror/react-hooks" "^1.0.24"
+    "@remirror/react-core" "^1.1.0"
+    "@remirror/react-hooks" "^1.0.27"
     "@remirror/react-utils" "^1.0.6"
     "@remirror/theme" "^1.2.1"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -3040,21 +3040,21 @@
     use-isomorphic-layout-effect "^1.1.1"
     use-previous "^1.1.0"
 
-"@remirror/react-core@^1.0.23":
-  version "1.0.23"
-  resolved "https://registry.yarnpkg.com/@remirror/react-core/-/react-core-1.0.23.tgz#e09aaa3224bf04a9f7b0d76d0cd7c4c68fbdf8c5"
-  integrity sha512-HSfCxMSHa0YepWkANqpDtkYtt845zMMWh22KOYSqjwXvFdR8Mt946jvXuonTVgCHAKelTyfOZo+Om2bthDJhtA==
+"@remirror/react-core@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@remirror/react-core/-/react-core-1.1.0.tgz#9025aab7130bb6b77591d5b96be478ef95f3bc7b"
+  integrity sha512-ZMC6nAosxGp7hgnM8i88oy2DLknoepGfsiFgvAe6dBoN6H4OXOwO6Ouf/63tMzUngxt4bLYYT1XpKzYqJUmyKQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-positioner" "^1.1.18"
-    "@remirror/extension-react-component" "^1.1.7"
-    "@remirror/extension-react-ssr" "^1.0.18"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-positioner" "^1.2.1"
+    "@remirror/extension-react-component" "^1.1.8"
+    "@remirror/extension-react-ssr" "^1.0.19"
     "@remirror/i18n" "^1.0.8"
-    "@remirror/preset-core" "^1.0.21"
-    "@remirror/preset-react" "^1.0.20"
-    "@remirror/react-renderer" "^1.0.18"
-    "@remirror/react-ssr" "^1.0.18"
+    "@remirror/preset-core" "^1.0.23"
+    "@remirror/preset-react" "^1.0.21"
+    "@remirror/react-renderer" "^1.0.19"
+    "@remirror/react-ssr" "^1.0.19"
     "@remirror/react-utils" "^1.0.6"
     "@remirror/theme" "^1.2.1"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -3065,60 +3065,42 @@
     use-isomorphic-layout-effect "^1.1.1"
     use-previous "^1.1.0"
 
-"@remirror/react-editors@^0.1.56":
-  version "0.1.56"
-  resolved "https://registry.yarnpkg.com/@remirror/react-editors/-/react-editors-0.1.56.tgz#1dc93c0cb0500ff92e4dfb3177a679827be536bb"
-  integrity sha512-HpVrzjE+UsbZvwEXmkfwEk7FTsujesCpD5jEiBZfx0B5Wwo4FZDxPQJyRDxAK//gaUVwyjMD3eu1NQYPRUuc2A==
+"@remirror/react-hooks@^1.0.27":
+  version "1.0.27"
+  resolved "https://registry.yarnpkg.com/@remirror/react-hooks/-/react-hooks-1.0.27.tgz#77ad8b0bc2c02d6c027f2bb380243291d7f3a1c7"
+  integrity sha512-8ARrO2mgRj7Z6Q+akOl28RFh1svGGgRLnoqvK3gp9YNbPDT30mmB29DD91tmyeY/dpEGhOEAn8HS0gR9+A7YuA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core-helpers" "^1.0.5"
-    "@remirror/extension-react-tables" "^1.0.25"
-    "@remirror/pm" "^1.0.11"
-    "@remirror/react" "^1.0.25"
-    "@remirror/styles" "^1.1.3"
-    "@svgmoji/noto" "^3.2.0"
-    "@types/refractor" "^3.0.2"
-    create-context-state "^1.0.1"
-    refractor "^3.3.1"
-    remirror "1.0.67"
-    svgmoji "^3.2.0"
-
-"@remirror/react-hooks@^1.0.24":
-  version "1.0.24"
-  resolved "https://registry.yarnpkg.com/@remirror/react-hooks/-/react-hooks-1.0.24.tgz#979dd9617675e6883b22f337404491d3b24fbefd"
-  integrity sha512-8SzJUeLe0aRB3lEboY30jfdgCRIN94FzkIe2T7uVC1HBbl7N/gQOqWIHeyCZxzC4zloAyw55qVL1JvY1+pbgDA==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-emoji" "^1.0.19"
-    "@remirror/extension-events" "^1.0.17"
-    "@remirror/extension-history" "^1.0.16"
-    "@remirror/extension-mention" "^1.0.17"
-    "@remirror/extension-mention-atom" "^1.0.20"
-    "@remirror/extension-positioner" "^1.1.18"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-emoji" "^1.0.20"
+    "@remirror/extension-events" "^1.0.18"
+    "@remirror/extension-history" "^1.0.17"
+    "@remirror/extension-mention" "^1.0.18"
+    "@remirror/extension-mention-atom" "^1.0.21"
+    "@remirror/extension-positioner" "^1.2.1"
     "@remirror/i18n" "^1.0.8"
-    "@remirror/react-core" "^1.0.23"
+    "@remirror/react-core" "^1.1.0"
     "@remirror/react-utils" "^1.0.6"
     multishift "^1.0.6"
     use-isomorphic-layout-effect "^1.1.1"
     use-previous "^1.1.0"
 
-"@remirror/react-renderer@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@remirror/react-renderer/-/react-renderer-1.0.18.tgz#1c52afeb8f12d972823e72943793a545073ebf26"
-  integrity sha512-jHy8GAgVJqTKfEojac5+XC1FgWBnrjPOqHTxlagQDMJNE1ei4KB00h2ct6jscWwRfDCvmxlvVs0aujMK/NBJbA==
+"@remirror/react-renderer@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@remirror/react-renderer/-/react-renderer-1.0.19.tgz#7ca0f8bcc6b1c83c7db1d71b294d65d9ee888d0d"
+  integrity sha512-twirw60/kszK5ckS7z67huYbKcbKSZi6vzXCIlsN0a/j/bkKSwIoLrvHn9EdjzZcUkJF0kVWc0ScKPw64zkdeg==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
 
-"@remirror/react-ssr@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@remirror/react-ssr/-/react-ssr-1.0.18.tgz#1a5848542e12f9252ebce481147c6d879c69c532"
-  integrity sha512-PIMAX/qJA+zQ8hFpiEZdr5MKB7tgo2Ebkk0UbAEJzp1x12c/VJ7WzWzQ5IPZDBzGOdhlY9JxVYgCul9qck1yOA==
+"@remirror/react-ssr@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@remirror/react-ssr/-/react-ssr-1.0.19.tgz#bf73f0b926fe6ae40be3d5aaaccea2d9e92d4a43"
+  integrity sha512-3WATbSY1L91ZTRVBYN35UL57pcnbupFuwiCxXwd0iO71VwOb2fdbz9xvaJSsqbKh3ETd0vdlrKbKzfbyso+MLA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
-    "@remirror/extension-react-ssr" "^1.0.18"
+    "@remirror/core" "^1.4.0"
+    "@remirror/extension-react-ssr" "^1.0.19"
 
 "@remirror/react-utils@^1.0.6":
   version "1.0.6"
@@ -3130,23 +3112,23 @@
     "@remirror/core-helpers" "^1.0.5"
     "@remirror/core-types" "^1.0.4"
 
-"@remirror/react@^1.0.25":
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/@remirror/react/-/react-1.0.25.tgz#10dc7136d5f2469a5d68cbeca4a9a135f7a6cd9d"
-  integrity sha512-ocd1gSzual0PQmBp797Gnxjh6PwxHZtIJtseI6MGIT00RY5MPC1z59gZ6EJjFQojBgRz7vCfUt/INRLe2elERg==
+"@remirror/react@^1.0.28":
+  version "1.0.28"
+  resolved "https://registry.yarnpkg.com/@remirror/react/-/react-1.0.28.tgz#08a2557e40eb3af7b175d9e9e3cb71d77f54ce2c"
+  integrity sha512-kat7XCOBekKOAABvnVaIpAPfvzqeXj+cNp3Meu23d4Kd+eWqig+eaqzmln2XekTG6zJ/WsAXbEKgchxWk5q9lQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/extension-placeholder" "^1.0.19"
-    "@remirror/extension-positioner" "^1.1.18"
-    "@remirror/extension-react-component" "^1.1.7"
-    "@remirror/extension-react-ssr" "^1.0.18"
-    "@remirror/extension-react-tables" "^1.0.25"
-    "@remirror/preset-react" "^1.0.20"
-    "@remirror/react-components" "^1.0.24"
-    "@remirror/react-core" "^1.0.23"
-    "@remirror/react-hooks" "^1.0.24"
-    "@remirror/react-renderer" "^1.0.18"
-    "@remirror/react-ssr" "^1.0.18"
+    "@remirror/extension-placeholder" "^1.0.20"
+    "@remirror/extension-positioner" "^1.2.1"
+    "@remirror/extension-react-component" "^1.1.8"
+    "@remirror/extension-react-ssr" "^1.0.19"
+    "@remirror/extension-react-tables" "^1.0.28"
+    "@remirror/preset-react" "^1.0.21"
+    "@remirror/react-components" "^1.0.27"
+    "@remirror/react-core" "^1.1.0"
+    "@remirror/react-hooks" "^1.0.27"
+    "@remirror/react-renderer" "^1.0.19"
+    "@remirror/react-ssr" "^1.0.19"
     "@remirror/react-utils" "^1.0.6"
 
 "@remirror/styles@^1.1.3":
@@ -8793,10 +8775,10 @@ prosemirror-model@^1.0.0, prosemirror-model@^1.16.0, prosemirror-model@^1.16.1, 
   dependencies:
     orderedmap "^1.1.0"
 
-prosemirror-paste-rules@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/prosemirror-paste-rules/-/prosemirror-paste-rules-1.0.7.tgz#1e316d0774ca32d09287967fb93bfc54a5255fb4"
-  integrity sha512-PaX8G5evreUEZJJRh9mFHs6R+lgjs0jiNBQD3tHE9Wj7NvhVLzg/Fsyqerb+HKzunCF2GN0Xrieh0zUW6M85nw==
+prosemirror-paste-rules@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/prosemirror-paste-rules/-/prosemirror-paste-rules-1.0.9.tgz#7c16004171d4b5a6ee44542f94dbde203735efa6"
+  integrity sha512-WyCtITOO7qJrH59NhYDnw4xCGoJSW85wxzpxR9ox9XwuOtNG/CpKO7q0rahnMBoxbl4DvJOodMOkcYrf/u0oIg==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@remirror/core-constants" "^1.0.2"
@@ -8830,10 +8812,10 @@ prosemirror-state@^1.0.0, prosemirror-state@^1.2.2, prosemirror-state@^1.3.1, pr
     prosemirror-model "^1.0.0"
     prosemirror-transform "^1.0.0"
 
-prosemirror-suggest@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/prosemirror-suggest/-/prosemirror-suggest-1.0.7.tgz#df46eb69cb56af4e4b1523f6a21961e75db34e73"
-  integrity sha512-sAkPrZV9GXEB2J2L/KwfESZ0VOLoelbXIZCMJb+t/f8Xfqg7D5svGBmj15ajkMFYsXI+Fdad8R+SaSr8TCZJUg==
+prosemirror-suggest@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/prosemirror-suggest/-/prosemirror-suggest-1.0.8.tgz#010684ad3f2cef4131f46fbb2b766529bb743cad"
+  integrity sha512-1mw/Sjmo6TCx918ZEZZETUXS66BIwKW0SJ0pmUt08lfGZL/YsAXB83H1uCiKf9P0qCBPOO6oBw9mjbNubB1etg==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@remirror/core-constants" "^1.0.2"
@@ -9341,71 +9323,71 @@ rehype-stringify@^9.0.3:
     hast-util-to-html "^8.0.0"
     unified "^10.0.0"
 
-remirror@1.0.67, remirror@^1.0.67:
-  version "1.0.67"
-  resolved "https://registry.yarnpkg.com/remirror/-/remirror-1.0.67.tgz#b84d06822eac67e25177d00fb57b99b3c50400d5"
-  integrity sha512-oVjWChIRstXgjXeMs9KZ8nytPT/d3bJhWxTz5LoO05n+B5SAhEGcxyho4RoV+ekpJqPsUW5CRvA1yQ9CkTgmew==
+remirror@^1.0.71:
+  version "1.0.71"
+  resolved "https://registry.yarnpkg.com/remirror/-/remirror-1.0.71.tgz#32eaac55d2fdecf0529883891cd62ec346793bfa"
+  integrity sha512-1V0QL05DBMWnLd/N1F7AaYOLeFCT9J1a7wuwWo8F323AeFpQHzIaml5EThCqqrUXUqnJIC195tQI5FSBNLivew==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    "@remirror/core" "^1.3.6"
+    "@remirror/core" "^1.4.0"
     "@remirror/core-constants" "^1.0.2"
     "@remirror/core-helpers" "^1.0.5"
     "@remirror/core-types" "^1.0.4"
     "@remirror/core-utils" "^1.1.7"
-    "@remirror/dom" "^1.0.21"
-    "@remirror/extension-annotation" "^1.1.16"
-    "@remirror/extension-bidi" "^1.0.16"
-    "@remirror/extension-blockquote" "^1.0.19"
-    "@remirror/extension-bold" "^1.0.16"
-    "@remirror/extension-callout" "^1.0.19"
-    "@remirror/extension-code" "^1.0.17"
-    "@remirror/extension-code-block" "^1.0.22"
-    "@remirror/extension-codemirror5" "^1.0.16"
-    "@remirror/extension-collaboration" "^1.0.16"
-    "@remirror/extension-columns" "^1.0.16"
-    "@remirror/extension-diff" "^1.0.16"
-    "@remirror/extension-doc" "^1.0.17"
-    "@remirror/extension-drop-cursor" "^1.0.16"
-    "@remirror/extension-embed" "^1.1.21"
-    "@remirror/extension-emoji" "^1.0.19"
-    "@remirror/extension-epic-mode" "^1.0.16"
-    "@remirror/extension-events" "^1.0.17"
-    "@remirror/extension-font-family" "^1.0.16"
-    "@remirror/extension-font-size" "^1.0.18"
-    "@remirror/extension-gap-cursor" "^1.0.16"
-    "@remirror/extension-hard-break" "^1.0.16"
-    "@remirror/extension-heading" "^1.0.16"
-    "@remirror/extension-history" "^1.0.16"
-    "@remirror/extension-horizontal-rule" "^1.0.17"
-    "@remirror/extension-image" "^1.0.27"
-    "@remirror/extension-italic" "^1.0.16"
-    "@remirror/extension-link" "^1.1.15"
-    "@remirror/extension-list" "^1.2.17"
-    "@remirror/extension-markdown" "^1.0.16"
-    "@remirror/extension-mention" "^1.0.17"
-    "@remirror/extension-mention-atom" "^1.0.20"
-    "@remirror/extension-node-formatting" "^1.0.19"
-    "@remirror/extension-paragraph" "^1.0.16"
-    "@remirror/extension-placeholder" "^1.0.19"
-    "@remirror/extension-positioner" "^1.1.18"
-    "@remirror/extension-search" "^1.0.16"
-    "@remirror/extension-shortcuts" "^1.1.5"
-    "@remirror/extension-strike" "^1.0.16"
-    "@remirror/extension-sub" "^1.0.16"
-    "@remirror/extension-sup" "^1.0.16"
-    "@remirror/extension-tables" "^1.0.19"
-    "@remirror/extension-text" "^1.0.16"
-    "@remirror/extension-text-case" "^1.0.16"
-    "@remirror/extension-text-color" "^1.0.19"
-    "@remirror/extension-text-highlight" "^1.0.19"
-    "@remirror/extension-trailing-node" "^1.0.16"
-    "@remirror/extension-underline" "^1.0.16"
-    "@remirror/extension-whitespace" "^1.0.16"
-    "@remirror/extension-yjs" "^1.0.25"
+    "@remirror/dom" "^1.0.24"
+    "@remirror/extension-annotation" "^1.1.18"
+    "@remirror/extension-bidi" "^1.0.17"
+    "@remirror/extension-blockquote" "^1.0.20"
+    "@remirror/extension-bold" "^1.0.17"
+    "@remirror/extension-callout" "^1.0.20"
+    "@remirror/extension-code" "^1.0.18"
+    "@remirror/extension-code-block" "^1.0.23"
+    "@remirror/extension-codemirror5" "^1.0.17"
+    "@remirror/extension-collaboration" "^1.0.17"
+    "@remirror/extension-columns" "^1.0.17"
+    "@remirror/extension-diff" "^1.0.17"
+    "@remirror/extension-doc" "^1.0.18"
+    "@remirror/extension-drop-cursor" "^1.0.17"
+    "@remirror/extension-embed" "^1.1.22"
+    "@remirror/extension-emoji" "^1.0.20"
+    "@remirror/extension-epic-mode" "^1.0.17"
+    "@remirror/extension-events" "^1.0.18"
+    "@remirror/extension-font-family" "^1.0.17"
+    "@remirror/extension-font-size" "^1.0.19"
+    "@remirror/extension-gap-cursor" "^1.0.17"
+    "@remirror/extension-hard-break" "^1.0.17"
+    "@remirror/extension-heading" "^1.0.17"
+    "@remirror/extension-history" "^1.0.17"
+    "@remirror/extension-horizontal-rule" "^1.0.18"
+    "@remirror/extension-image" "^1.0.28"
+    "@remirror/extension-italic" "^1.0.17"
+    "@remirror/extension-link" "^1.1.16"
+    "@remirror/extension-list" "^1.2.19"
+    "@remirror/extension-markdown" "^1.0.17"
+    "@remirror/extension-mention" "^1.0.18"
+    "@remirror/extension-mention-atom" "^1.0.21"
+    "@remirror/extension-node-formatting" "^1.0.20"
+    "@remirror/extension-paragraph" "^1.0.17"
+    "@remirror/extension-placeholder" "^1.0.20"
+    "@remirror/extension-positioner" "^1.2.1"
+    "@remirror/extension-search" "^1.0.17"
+    "@remirror/extension-shortcuts" "^1.1.6"
+    "@remirror/extension-strike" "^1.0.17"
+    "@remirror/extension-sub" "^1.0.17"
+    "@remirror/extension-sup" "^1.0.17"
+    "@remirror/extension-tables" "^1.0.20"
+    "@remirror/extension-text" "^1.0.17"
+    "@remirror/extension-text-case" "^1.0.17"
+    "@remirror/extension-text-color" "^1.0.20"
+    "@remirror/extension-text-highlight" "^1.0.20"
+    "@remirror/extension-trailing-node" "^1.0.17"
+    "@remirror/extension-underline" "^1.0.17"
+    "@remirror/extension-whitespace" "^1.0.17"
+    "@remirror/extension-yjs" "^1.0.27"
     "@remirror/icons" "^1.0.7"
-    "@remirror/preset-core" "^1.0.21"
-    "@remirror/preset-formatting" "^1.0.23"
-    "@remirror/preset-wysiwyg" "^1.1.40"
+    "@remirror/preset-core" "^1.0.23"
+    "@remirror/preset-formatting" "^1.0.24"
+    "@remirror/preset-wysiwyg" "^1.1.43"
     "@remirror/theme" "^1.2.1"
     "@types/codemirror" "^5.60.2"
     "@types/refractor" "^3.0.2"

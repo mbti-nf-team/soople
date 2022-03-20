@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import useFetchGroups from '@/hooks/api/group/useFetchGroups';
@@ -37,10 +37,10 @@ describe('RecruitPostsContainer', () => {
   context('로딩중인 경우', () => {
     given('isLoading', () => true);
 
-    it('"로딩중..."문구가 보여야만 한다', () => {
-      const { container } = renderRecruitPostsContainer();
+    it('로딩 스켈레톤이 나타나야만 한다', () => {
+      renderRecruitPostsContainer();
 
-      expect(container).toHaveTextContent('로딩중...');
+      expect(screen.getByTitle('loading...')).toBeInTheDocument();
     });
   });
 

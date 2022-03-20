@@ -18,6 +18,18 @@ const fadeOut = keyframes`
   }
 `;
 
+const blink = keyframes`
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+`;
+
 const popInFromBottom = keyframes`
   0% {
     opacity: 0;
@@ -47,6 +59,7 @@ const transitions = {
   fadeOut,
   popInFromBottom,
   popOutToBottom,
+  blink,
 };
 
 export default transitions;
