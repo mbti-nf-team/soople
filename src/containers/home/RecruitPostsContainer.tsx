@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
 import RecruitPosts from '@/components/home/RecruitPosts';
+import RecruitPostsSkeletonLoader from '@/components/home/RecruitPostsSkeletonLoader';
 import useFetchGroups from '@/hooks/api/group/useFetchGroups';
 import { errorToast } from '@/utils/toast';
 
@@ -19,7 +20,11 @@ function RecruitPostsContainer(): ReactElement {
   }, [query]);
 
   if (isLoading) {
-    return <>로딩중...</>;
+    return (
+      <RecruitPostsWrapper>
+        <RecruitPostsSkeletonLoader />
+      </RecruitPostsWrapper>
+    );
   }
 
   return (

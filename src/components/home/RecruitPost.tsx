@@ -67,7 +67,7 @@ function RecruitPost({ group }: Props): ReactElement {
 
 export default memo(RecruitPost);
 
-const RecruitPostWrapper = styled.div`
+export const RecruitPostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -120,7 +120,7 @@ const PostPreview = styled.div`
   }
 `;
 
-const PostWriter = styled.div`
+export const PostWriter = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;

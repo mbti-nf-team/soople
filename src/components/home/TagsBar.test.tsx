@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import TagsBar from './TagsBar';
 
@@ -18,10 +18,10 @@ describe('TagsBar', () => {
   context('로딩중인 경우', () => {
     given('isLoading', () => true);
 
-    it('"로딩중..." 문구가 나타나야만 한다', () => {
-      const { container } = renderTagsBar();
+    it('로딩 스켈레톤이 나타나야만 한다', () => {
+      renderTagsBar();
 
-      expect(container).toHaveTextContent('로딩중...');
+      expect(screen.getByTitle('loading...')).toBeInTheDocument();
     });
   });
 

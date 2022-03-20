@@ -25,7 +25,7 @@ function RecruitPosts({ groups }: Props): ReactElement {
 
 export default memo(RecruitPosts);
 
-const RecruitPostsWrapper = styled.div`
+export const RecruitPostsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: -0.625rem;
