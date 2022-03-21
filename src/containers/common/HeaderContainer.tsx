@@ -13,7 +13,7 @@ import { signInModalVisibleState } from '@/recoil/modal/atom';
 function HeaderContainer(): ReactElement {
   const { pathname } = useRouter();
   const setSignInModalVisible = useSetRecoilState(signInModalVisibleState);
-  const { data: user } = useFetchUserProfile();
+  const { data: user, isLoading } = useFetchUserProfile();
   const { mutate } = useSignOut();
   const [isScrollTop, setIsScrollTop] = useState<boolean>(true);
 
@@ -36,6 +36,7 @@ function HeaderContainer(): ReactElement {
       user={user}
       hasBackground={pathname === '/'}
       hasOnlyLogo={pathname === '/signup'}
+      isLoading={isLoading}
     />
   );
 }

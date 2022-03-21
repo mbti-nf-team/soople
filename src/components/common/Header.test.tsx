@@ -15,6 +15,7 @@ describe('Header', () => {
         user={given.user}
         onClick={handleClick}
         hasBackground
+        isLoading={given.isLoading}
         hasOnlyLogo={given.hasOnlyLogo}
       />
     </ReactQueryWrapper>
@@ -27,6 +28,16 @@ describe('Header', () => {
       renderHeader();
 
       expect(screen.getByTestId('only-logo-block')).toBeInTheDocument();
+    });
+  });
+
+  context('로딩중인 경우', () => {
+    given('isLoading', () => true);
+
+    it('로딩 스켈레톤이 나타나야만 한다', () => {
+      renderHeader();
+
+      expect(screen.getByTitle('loading-skeleton')).toBeInTheDocument();
     });
   });
 

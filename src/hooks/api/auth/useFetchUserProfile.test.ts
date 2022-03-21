@@ -28,12 +28,14 @@ describe('useFetchUserProfile', () => {
 
     (useGetUser as jest.Mock).mockImplementation(() => ({
       data: FIXTURE_PROFILE,
+      isLoading: given.isLoading,
     }));
     (getUserProfile as jest.Mock).mockImplementation(() => (given.user));
   });
 
   context('user가 존재하는 경우', () => {
     given('user', () => FIXTURE_PROFILE);
+    given('isLoading', () => false);
 
     it('user에 대한 profile 정보를 반환해야만 한다', async () => {
       const { result, waitFor } = useFetchUserProfileHook();
@@ -46,6 +48,8 @@ describe('useFetchUserProfile', () => {
 
   context('user가 존재하지 않는 경우', () => {
     given('user', () => null);
+    given('isLoading', () => true);
+
     it('user에 대한 profile 정보를 반환해야만 한다', async () => {
       const { result, waitFor } = useFetchUserProfileHook();
 

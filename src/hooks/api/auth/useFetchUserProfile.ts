@@ -10,7 +10,7 @@ import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast'
 import useGetUser from './useGetUser';
 
 function useFetchUserProfile() {
-  const { data: user } = useGetUser();
+  const { data: user, isLoading } = useGetUser();
 
   const query = useQuery<Profile | null, FirestoreError>(['profile'], () => getUserProfile(user?.uid), {
     enabled: !!user?.uid,
@@ -27,6 +27,7 @@ function useFetchUserProfile() {
   return {
     ...query,
     data: query.data || null,
+    isLoading: isLoading || query.isLoading,
   };
 }
 

@@ -1,9 +1,12 @@
 import React, { memo, ReactElement } from 'react';
 
+import styled from '@emotion/styled';
+
 import { Profile } from '@/models/auth';
 
 import Button from './Button';
 import HeaderWrapper from './HeaderWrapper';
+import SkeletonItem from './SkeletonItem';
 import UserNavbar from './UserNavbar';
 
 interface Props {
@@ -13,10 +16,11 @@ interface Props {
   isScrollTop: boolean;
   hasBackground: boolean;
   hasOnlyLogo: boolean;
+  isLoading: boolean;
 }
 
 function Header({
-  user, onClick, isScrollTop, signOut, hasBackground, hasOnlyLogo,
+  user, onClick, isScrollTop, signOut, hasBackground, hasOnlyLogo, isLoading,
 }: Props): ReactElement {
   if (hasOnlyLogo) {
     return (
@@ -25,6 +29,21 @@ function Header({
         isScrollTop={isScrollTop}
         testId="only-logo-block"
       />
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <HeaderWrapper
+        hasBackground={hasBackground}
+        isScrollTop={isScrollTop}
+        testId="header-block"
+      >
+        <LoaderWrapper title="loading-skeleton">
+          <SkeletonItem width="80px" height="28px" borderRadius="6px" margin="0 16px 0 0" />
+          <SkeletonItem width="32px" height="32px" circle />
+        </LoaderWrapper>
+      </HeaderWrapper>
     );
   }
 
@@ -54,3 +73,9 @@ function Header({
 }
 
 export default memo(Header);
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
