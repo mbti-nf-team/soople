@@ -24,6 +24,7 @@ describe('RecruitedGroupsContainer', () => {
     (useFetchUserRecruitedGroups as jest.Mock).mockImplementation(() => ({
       data: [FIXTURE_GROUP],
       isLoading: given.isLoading,
+      isIdle: false,
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       push: mockPush,
@@ -40,10 +41,10 @@ describe('RecruitedGroupsContainer', () => {
   context('로딩중인 경우', () => {
     given('isLoading', () => true);
 
-    it('"로딩중..." 문구가 나타나야만 한다', () => {
-      const { container } = renderRecruitedGroupsContainer();
+    it('로딩 스켈레톤이 나타나야만 한다', () => {
+      renderRecruitedGroupsContainer();
 
-      expect(container).toHaveTextContent('로딩중...');
+      expect(screen.getByTestId('skeleton-loader')).toBeInTheDocument();
     });
   });
 

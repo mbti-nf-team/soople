@@ -1,6 +1,7 @@
 import React, { ReactElement, useCallback } from 'react';
 
 import Alarms from '@/components/alarm/Alarms';
+import AlarmsSkeletonLoader from '@/components/alarm/AlarmsSkeletonLoader';
 import useFetchAlarms from '@/hooks/api/alarm/useFetchAlarms';
 import useUpdateAlarmViewed from '@/hooks/api/alarm/useUpdateAlarmViewed';
 
@@ -11,7 +12,7 @@ function AlarmListContainer(): ReactElement {
   const onClickAlarm = useCallback((alarmUid: string) => updateAlarm(alarmUid), [updateAlarm]);
 
   if (isLoading || isIdle) {
-    return <>로딩중...</>;
+    return <AlarmsSkeletonLoader />;
   }
 
   return (
