@@ -29,6 +29,7 @@ describe('HeaderContainer', () => {
     (useSetRecoilState as jest.Mock).mockImplementation(() => setSignInModalVisible);
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: given.user,
+      isLoading: false,
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       pathname: '/',
