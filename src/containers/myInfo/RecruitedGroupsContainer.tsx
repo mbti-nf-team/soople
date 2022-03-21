@@ -4,19 +4,19 @@ import { useRouter } from 'next/router';
 
 import EmptyStateArea from '@/components/common/EmptyStateArea';
 import MyGroups from '@/components/myInfo/MyGroups';
+import MyGroupsSkeletonLoader from '@/components/myInfo/MyGroupsSkeletonLoader';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchUserRecruitedGroups from '@/hooks/api/group/useFetchUserRecruitedGroups';
-import { DetailLayout } from '@/styles/Layout';
 
 function RecruitedGroupsContainer(): ReactElement {
   const router = useRouter();
   const { data: user } = useFetchUserProfile();
-  const { data: groups, isLoading } = useFetchUserRecruitedGroups(user?.uid);
+  const { data: groups, isLoading, isIdle } = useFetchUserRecruitedGroups(user?.uid);
 
   const onClickGroup = (groupId: string) => router.push(`/detail/${groupId}`);
 
-  if (isLoading) {
-    return <DetailLayout>로딩중...</DetailLayout>;
+  if (isLoading || isIdle) {
+    return <MyGroupsSkeletonLoader />;
   }
 
   return (

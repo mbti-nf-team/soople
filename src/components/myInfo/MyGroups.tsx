@@ -34,7 +34,7 @@ function MyGroups({ groups, onClickGroup, children }: PropsWithChildren<Props>):
 
 export default MyGroups;
 
-const MyGroupLayout = styled(DetailLayout)`
+export const MyGroupLayout = styled(DetailLayout)`
   & > :first-of-type {
     padding-top : 40px;
   }
