@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 
 import SettingPage from './setting.page';
 
@@ -21,7 +22,9 @@ describe('SettingPage', () => {
   });
 
   const renderSettingPage = () => render((
-    <SettingPage />
+    <ReactQueryWrapper>
+      <SettingPage />
+    </ReactQueryWrapper>
   ));
 
   it('내 정보 수정 페이지에 대한 내용이 보여야만 한다', () => {

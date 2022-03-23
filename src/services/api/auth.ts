@@ -1,4 +1,5 @@
 import {
+  deleteUser,
   getRedirectResult, signOut, updateProfile, User,
 } from 'firebase/auth';
 import { getDoc, setDoc } from 'firebase/firestore';
@@ -40,4 +41,12 @@ export const getAuthRedirectResult = async (): Promise<User | undefined> => {
   const user = await getRedirectResult(firebaseAuth);
 
   return user?.user;
+};
+
+export const deleteMember = async () => {
+  if (!firebaseAuth.currentUser) {
+    return;
+  }
+
+  await deleteUser(firebaseAuth.currentUser);
 };

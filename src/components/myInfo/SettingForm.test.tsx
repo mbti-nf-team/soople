@@ -1,16 +1,23 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
 import SettingForm from './SettingForm';
 
 describe('SettingForm', () => {
+  const handleWithdrawal = jest.fn();
+
+  beforeEach(() => {
+    handleWithdrawal.mockClear();
+  });
+
   const renderSettingForm = () => render((
     <SettingForm
       user={{
         ...FIXTURE_PROFILE,
         position: given.position,
       }}
+      onWithdrawal={handleWithdrawal}
     />
   ));
 
@@ -31,6 +38,38 @@ describe('SettingForm', () => {
       const { container } = renderSettingForm();
 
       expect(container).toHaveTextContent('프론트엔드');
+    });
+  });
+
+  describe('"회원 탈퇴하기" 버튼을 클릭한다', () => {
+    it('회원 탈퇴 모달창이 나타나야만 한다', () => {
+      const { container } = renderSettingForm();
+
+      fireEvent.click(screen.getByText('회원 탈퇴하기'));
+
+      expect(container).toHaveTextContent('탈퇴하시면 내 정보에 등록된 계정 정보가 모두 삭제돼요.');
+    });
+  });
+
+  describe('회원 탈퇴 모달창에서 "닫기" 버튼을 클릭한다', () => {
+    it('모달창이 안보여야만 한다', () => {
+      const { container } = renderSettingForm();
+
+      fireEvent.click(screen.getByText('회원 탈퇴하기'));
+      fireEvent.click(screen.getByText('닫기'));
+
+      expect(container).not.toHaveTextContent('탈퇴하시면 내 정보에 등록된 계정 정보가 모두 삭제돼요.');
+    });
+  });
+
+  describe('회원 탈퇴 모달창에서 "탈퇴하기" 버튼을 클릭한다', () => {
+    it('클릭 이벤트가 호출되어야만 한다', () => {
+      renderSettingForm();
+
+      fireEvent.click(screen.getByText('회원 탈퇴하기'));
+      fireEvent.click(screen.getByText('탈퇴하기'));
+
+      expect(handleWithdrawal).toBeCalled();
     });
   });
 });

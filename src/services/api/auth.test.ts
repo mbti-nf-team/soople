@@ -1,10 +1,11 @@
-import { getRedirectResult, signOut } from 'firebase/auth';
+import { deleteUser, getRedirectResult, signOut } from 'firebase/auth';
 import { getDoc, setDoc } from 'firebase/firestore';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
-import { docRef } from '../firebase';
+import { docRef, firebaseAuth } from '../firebase';
 
 import {
+  deleteMember,
   getAuthRedirectResult,
   getUserProfile,
   postSignOut,
@@ -86,6 +87,32 @@ describe('auth API', () => {
 
       expect(getRedirectResult).toBeCalled();
       expect(user).toEqual(FIXTURE_PROFILE);
+    });
+  });
+
+  describe('deleteMember', () => {
+    context('user가 존재하는 경우', () => {
+      beforeEach(() => {
+        (firebaseAuth.currentUser as any) = 'currentUser';
+      });
+
+      it('"deleteUser"이 호출되어야만 한다', async () => {
+        await deleteMember();
+
+        expect(deleteUser).toBeCalled();
+      });
+    });
+
+    context('user가 존재하지 않는 경우', () => {
+      beforeEach(() => {
+        (firebaseAuth.currentUser as any) = '';
+      });
+
+      it('"deleteUser"이 호출되지 않아야만 한다', async () => {
+        await deleteMember();
+
+        expect(deleteUser).not.toBeCalled();
+      });
     });
   });
 });
