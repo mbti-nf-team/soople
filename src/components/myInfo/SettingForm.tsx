@@ -12,12 +12,16 @@ import Button from '../common/Button';
 import CreatableSelectBox from '../common/CreatableSelectBox';
 import Input from '../common/Input';
 
+import AskMemberWithdrawalModal from './modal/AskMemberWithdrawalModal';
+
 interface Props {
   user: Profile | null;
+  onWithdrawal: () => void;
 }
 
-function SettingForm({ user }: Props): ReactElement {
+function SettingForm({ user, onWithdrawal }: Props): ReactElement {
   const [, setPosition] = useState<Position>();
+  const [isVisibleWithdrawalPopup, setIsVisibleWithdrawalPopup] = useState<boolean>(false);
 
   const defaultPosition = user?.position ? ({
     label: user.position, value: user.position,
@@ -57,16 +61,25 @@ function SettingForm({ user }: Props): ReactElement {
       <Button color="success" size="large">
         저장하기
       </Button>
-      <WithdrawalButton color="ghost" size="medium">
+      <MemberWithdrawalButton
+        color="ghost"
+        size="medium"
+        onClick={() => setIsVisibleWithdrawalPopup(true)}
+      >
         회원 탈퇴하기
-      </WithdrawalButton>
+      </MemberWithdrawalButton>
+      <AskMemberWithdrawalModal
+        isVisible={isVisibleWithdrawalPopup}
+        onWithdrawal={onWithdrawal}
+        onClose={() => setIsVisibleWithdrawalPopup(false)}
+      />
     </>
   );
 }
 
 export default SettingForm;
 
-const WithdrawalButton = styled(Button)`
+const MemberWithdrawalButton = styled(Button)`
   color: ${palette.accent6};
   margin-top: 12px;
 `;

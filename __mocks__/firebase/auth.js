@@ -17,3 +17,5 @@ export const updateProfile = jest.fn();
 export const setPersistence = jest.fn();
 
 export const onIdTokenChanged = jest.fn();
+
+export const deleteUser = jest.fn();
