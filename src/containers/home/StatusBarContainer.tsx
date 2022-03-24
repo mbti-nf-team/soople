@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { useLocalStorage } from 'react-use';
 
 import styled from '@emotion/styled';
@@ -23,6 +24,8 @@ type FilterCondition = {
 };
 
 function StatusBarContainer(): ReactElement {
+  const isMobile = useMediaQuery({ maxWidth: 450 });
+
   const { data: tagsCount, isLoading } = useFetchTagsCount();
   const [initFilterCompleted, toggleFilterCompleted] = useLocalStorage('isFilterCompleted', false);
   const [{ isFilterCompleted }, setCondition] = useRecoilState(groupsConditionState);
@@ -52,11 +55,15 @@ function StatusBarContainer(): ReactElement {
         <FilterBar
           onChange={onChange}
         />
-        <StyledDivider />
-        <TagsBar
-          isLoading={isLoading}
-          tags={tagsCount}
-        />
+        {!isMobile && (
+          <>
+            <StyledDivider />
+            <TagsBar
+              isLoading={isLoading}
+              tags={tagsCount}
+            />
+          </>
+        )}
       </div>
       <RecruitmentDeadline>
         <span>모집 마감 안보기</span>

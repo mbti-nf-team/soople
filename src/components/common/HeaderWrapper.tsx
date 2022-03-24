@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import Layout from '@/styles/Layout';
 import palette from '@/styles/palette';
+import { mq2 } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
 import LogoSvg from '../../assets/icons/img_logo_conners.svg';
@@ -61,4 +62,7 @@ const HeaderContents = styled(Layout)`
   align-items: center;
   justify-content: space-between;
   height: 4rem;
+  ${mq2({
+    width: ['calc(100% - 3rem)', 'calc(100% - 3rem)', 'calc(100% - 3rem)', '800px', '1040px'],
+  })};
 `;

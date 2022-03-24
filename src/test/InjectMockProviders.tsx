@@ -1,18 +1,25 @@
-import { ComponentProps, ReactElement } from 'react';
+import { ComponentProps, ReactElement, useMemo } from 'react';
+import { Context as ResponsiveContext } from 'react-responsive';
 
 import InjectTestingRecoilState from './InjectTestingRecoilState';
 import ReactQueryWrapper from './ReactQueryWrapper';
 
-type Props = ComponentProps<typeof InjectTestingRecoilState>;
+interface Props extends ComponentProps<typeof InjectTestingRecoilState> {
+  width?: number;
+}
 
-function InjectMockProviders({ groupsCondition, children }: Props): ReactElement {
+function InjectMockProviders({ width = 700, groupsCondition, children }: Props): ReactElement {
+  const value = useMemo(() => ({ width }), []);
+
   return (
     <ReactQueryWrapper>
-      <InjectTestingRecoilState
-        groupsCondition={groupsCondition}
-      >
-        {children}
-      </InjectTestingRecoilState>
+      <ResponsiveContext.Provider value={value}>
+        <InjectTestingRecoilState
+          groupsCondition={groupsCondition}
+        >
+          {children}
+        </InjectTestingRecoilState>
+      </ResponsiveContext.Provider>
     </ReactQueryWrapper>
   );
 }

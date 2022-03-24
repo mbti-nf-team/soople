@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
+import InjectMockProviders from '@/test/InjectMockProviders';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
@@ -16,13 +17,15 @@ describe('UserNavbar', () => {
   });
 
   const renderUserNavbar = () => render((
-    <UserNavbar
-      signOut={jest.fn()}
-      user={{
-        ...PROFILE_FIXTURE,
-        image: '',
-      }}
-    />
+    <InjectMockProviders width={given.width}>
+      <UserNavbar
+        signOut={jest.fn()}
+        user={{
+          ...PROFILE_FIXTURE,
+          image: '',
+        }}
+      />
+    </InjectMockProviders>
   ));
 
   it('"팀 모집하기" 링크가 나타나야만 한다', () => {
@@ -34,11 +37,26 @@ describe('UserNavbar', () => {
   context('읽지 않은 알람이 존재하는 경우', () => {
     given('alertAlarms', () => [1, 2, 3]);
 
-    it('알람 상태가 나타나야만 한다', () => {
-      const { container } = renderUserNavbar();
+    context('모바일인 경우', () => {
+      given('width', () => 400);
 
-      expect(container).toHaveTextContent('3');
-      expect(screen.getByTestId('alarm-status')).toBeInTheDocument();
+      it('알람 상태가 나타나야만 한다', () => {
+        const { container } = renderUserNavbar();
+
+        expect(container).toHaveTextContent('3');
+        expect(screen.getByTestId('mobile-alarm-status')).toBeInTheDocument();
+      });
+    });
+
+    context('모바일이 아닌 경우', () => {
+      given('width', () => 700);
+
+      it('알람 상태가 나타나야만 한다', () => {
+        const { container } = renderUserNavbar();
+
+        expect(container).toHaveTextContent('3');
+        expect(screen.getByTestId('alarm-status')).toBeInTheDocument();
+      });
     });
   });
 
