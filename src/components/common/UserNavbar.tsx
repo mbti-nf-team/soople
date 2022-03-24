@@ -2,8 +2,10 @@ import React, {
   memo, ReactElement, useRef, useState,
 } from 'react';
 import { Bell as AlarmIcon } from 'react-feather';
+import { useMediaQuery } from 'react-responsive';
 import { useClickAway } from 'react-use';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { isEmpty } from 'ramda';
@@ -23,6 +25,8 @@ interface Props {
 }
 
 function UserNavbar({ user, signOut }: Props): ReactElement {
+  const isMobile = useMediaQuery({ maxWidth: 450 });
+
   const { data: alertAlarms } = useFetchAlertAlarms();
   const [isVisible, setVisible] = useState<boolean>(false);
   const userIconRef = useRef<HTMLDivElement>(null);
@@ -30,24 +34,31 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
   useClickAway(userIconRef, () => setVisible(false), ['mousedown', 'scroll', 'touchstart']);
 
   return (
-    <UserNavbarWrapper>
+    <UserNavbarWrapper isMobile={isMobile}>
       <Button
         size="small"
         href="/write"
       >
         팀 모집하기
       </Button>
-      <Link href="/alarm" passHref>
-        <AlarmLink className="alarm-icon">
-          {!isEmpty(alertAlarms) && (
-            <AlertAlarmStatus data-testid="alarm-status">
-              {alertAlarms.length}
-            </AlertAlarmStatus>
-          )}
-          <AlarmIcon color={palette.accent6} />
-        </AlarmLink>
-      </Link>
+      {!isMobile && (
+        <Link href="/alarm" passHref>
+          <AlarmLink className="alarm-icon">
+            {!isEmpty(alertAlarms) && (
+              <AlertAlarmStatus data-testid="alarm-status">
+                {alertAlarms.length}
+              </AlertAlarmStatus>
+            )}
+            <AlarmIcon color={palette.accent6} />
+          </AlarmLink>
+        </Link>
+      )}
       <div className="profile-dropdown-wrapper" ref={userIconRef}>
+        {isMobile && !isEmpty(alertAlarms) && (
+          <AlertAlarmStatus data-testid="mobile-alarm-status">
+            {alertAlarms.length}
+          </AlertAlarmStatus>
+        )}
         <ProfileImage
           src={user.image}
           onClick={() => setVisible(!isVisible)}
@@ -66,7 +77,7 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
 
 export default memo(UserNavbar);
 
-const UserNavbarWrapper = styled.div`
+const UserNavbarWrapper = styled.div<{ isMobile: boolean; }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -76,6 +87,10 @@ const UserNavbarWrapper = styled.div`
   }
 
   .profile-dropdown-wrapper {
+    ${({ isMobile }) => isMobile && css`
+      margin-left: 16px;
+    `}
+
     position: relative;
   }
 `;

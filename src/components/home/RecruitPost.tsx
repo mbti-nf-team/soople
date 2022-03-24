@@ -10,6 +10,7 @@ import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body2Font, h4Font, subtitle1Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
+import { mq2 } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
 import { emptyAThenB } from '@/utils/utils';
 
@@ -68,10 +69,13 @@ function RecruitPost({ group }: Props): ReactElement {
 export default memo(RecruitPost);
 
 export const RecruitPostWrapper = styled.div`
+  ${mq2({
+    width: ['100%', '100%', 'calc(50% - 1.5rem)', '245px', '245px'],
+  })};
+
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  width: 245px;
   height: 346px; 
   margin: 0.625rem;
   border-radius: 8px;

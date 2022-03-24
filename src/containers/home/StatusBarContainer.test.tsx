@@ -3,7 +3,7 @@ import {
 } from '@testing-library/react';
 
 import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
-import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+import InjectMockProviders from '@/test/InjectMockProviders';
 
 import StatusBarContainer from './StatusBarContainer';
 
@@ -26,10 +26,20 @@ describe('StatusBarContainer', () => {
   });
 
   const renderStatusBarContainer = () => render((
-    <InjectTestingRecoilState>
+    <InjectMockProviders width={given.width}>
       <StatusBarContainer />
-    </InjectTestingRecoilState>
+    </InjectMockProviders>
   ));
+
+  context('모바일인 경우', () => {
+    given('width', () => 400);
+
+    it('tag 리스트가 안보여야만 한다', async () => {
+      const { container } = renderStatusBarContainer();
+
+      await waitFor(() => expect(container).not.toHaveTextContent('javascript'));
+    });
+  });
 
   describe('필터 select를 변경한다', () => {
     context('category가 존재하지 않는 경우', () => {
