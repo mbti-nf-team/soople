@@ -8,12 +8,13 @@ import palette from '@/styles/palette';
 interface Props {
   tag: string;
   onRemove?: () => void;
+  onClick?: () => void;
 }
 
-function Tag({ tag, onRemove }: Props): ReactElement {
-  if (!onRemove) {
+function Tag({ tag, onRemove, onClick }: Props): ReactElement {
+  if (onClick) {
     return (
-      <TagWrapper>
+      <TagWrapper onClick={onClick} className="view-tag">
         {`#${tag}`}
       </TagWrapper>
     );
@@ -50,6 +51,10 @@ const TagWrapper = styled.div`
   line-height: 24px;
   text-align: center;
   color: ${palette.accent7};
+
+  &.view-tag {
+    cursor: pointer;
+  }
 
   &.write-tag {
     margin-top: 3px;

@@ -9,6 +9,7 @@ import { publishModalVisibleState, recruitCompleteModalVisibleState, signInModal
 const initialGroupsCondition: FilterGroupsCondition = {
   category: ['project', 'study'],
   isFilterCompleted: false,
+  tag: '',
 };
 
 interface Props {

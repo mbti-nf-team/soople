@@ -51,6 +51,7 @@ export interface PublishModalFields {
 export interface FilterGroupsCondition {
   category: Category[];
   isFilterCompleted: boolean;
+  tag: string;
 }
 
 export interface CommentFields {
