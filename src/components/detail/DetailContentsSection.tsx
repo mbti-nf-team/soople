@@ -2,11 +2,14 @@ import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 import { extensionEmojiStyledCss } from '@remirror/styles/emotion';
+import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
 import rehypeParse from 'rehype-parse';
 import rehypeStringify from 'rehype-stringify';
 import { unified } from 'unified';
 
 import { Group } from '@/models/group';
+import { groupsConditionState } from '@/recoil/group/atom';
 import { body1Font, body2Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 import styledAnchor from '@/styles/styledAnchor';
@@ -22,7 +25,17 @@ interface Props {
 }
 
 function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
+  const { push } = useRouter();
+  const setGroupsCondition = useSetRecoilState(groupsConditionState);
   const { content, tags } = group;
+
+  const handleClickTag = (name: string) => {
+    push('/');
+    setGroupsCondition((prev) => ({
+      ...prev,
+      tag: name,
+    }));
+  };
 
   const convertedCleanHtml = filteredWithSanitizeHtml(unified()
     .use(rehypeParse)
@@ -58,6 +71,7 @@ function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
           <Tag
             key={tag}
             tag={tag}
+            onClick={() => handleClickTag(tag)}
           />
         ))}
       </TagsWrapper>

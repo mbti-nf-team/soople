@@ -1,16 +1,30 @@
 import { render, screen } from '@testing-library/react';
 
+import { groupsConditionState } from '@/recoil/group/atom';
 import palette from '@/styles/palette';
+import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+import RecoilObserver from '@/test/RecoilObserver';
 
 import HeaderWrapper from './HeaderWrapper';
 
 describe('HeaderWrapper', () => {
+  const handleReset = jest.fn();
+
+  beforeEach(() => {
+    handleReset.mockClear();
+  });
+
   const renderHeaderWrapper = () => render((
-    <HeaderWrapper
-      hasBackground={given.hasBackground}
-      isScrollTop={given.isScrollTop}
-      testId="test-id"
-    />
+    <InjectTestingRecoilState>
+      <>
+        <RecoilObserver node={groupsConditionState} onChange={handleReset} />
+        <HeaderWrapper
+          hasBackground={given.hasBackground}
+          isScrollTop={given.isScrollTop}
+          testId="test-id"
+        />
+      </>
+    </InjectTestingRecoilState>
   ));
 
   context('hasBackground가 true인 경우', () => {

@@ -13,6 +13,7 @@ describe('Tag', () => {
     <Tag
       tag="tag"
       onRemove={given.onRemove}
+      onClick={given.onClick}
     />
   ));
 
@@ -30,8 +31,8 @@ describe('Tag', () => {
     });
   });
 
-  context('삭제 함수가 존재하지 않는 경우', () => {
-    given('onRemove', () => undefined);
+  context('클릭 함수가 존재하는 경우', () => {
+    given('onClick', () => jest.fn());
 
     it('삭제 아이콘이 나타나지 않아야한다', () => {
       renderTag();

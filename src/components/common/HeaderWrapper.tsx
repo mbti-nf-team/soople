@@ -2,7 +2,9 @@ import React, { memo, PropsWithChildren, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useResetRecoilState } from 'recoil';
 
+import { groupsConditionState } from '@/recoil/group/atom';
 import Layout from '@/styles/Layout';
 import palette from '@/styles/palette';
 import { mq2 } from '@/styles/responsive';
@@ -19,13 +21,15 @@ interface Props {
 function HeaderWrapper({
   hasBackground, isScrollTop, testId, children,
 }: PropsWithChildren<Props>):ReactElement {
+  const resetGroupsCondition = useResetRecoilState(groupsConditionState);
+
   return (
     <>
       <HeaderBlock hasBackground={hasBackground} isScrollTop={isScrollTop} data-testid={testId}>
         <HeaderContents>
           <Link href="/" passHref>
             <a>
-              <LogoIcon />
+              <LogoIcon onClick={resetGroupsCondition} />
             </a>
           </Link>
           {children}

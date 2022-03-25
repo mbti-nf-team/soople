@@ -9,6 +9,7 @@ export const groupsConditionState = atom<FilterGroupsCondition>({
   default: {
     category: ['study', 'project'],
     isFilterCompleted: trueOrFalse(loadItem<boolean>('isFilterCompleted')),
+    tag: '',
   },
 });
 

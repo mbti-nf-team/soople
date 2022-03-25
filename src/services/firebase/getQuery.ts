@@ -4,12 +4,31 @@ import { FilterGroupsCondition } from '@/models/group';
 
 import { collectionRef } from '.';
 
-export const getGroupsQuery = ({ category, isFilterCompleted }: FilterGroupsCondition) => {
-  if (isFilterCompleted) {
+export const getGroupsQuery = ({ category, isFilterCompleted, tag }: FilterGroupsCondition) => {
+  if (isFilterCompleted && tag) {
     return query(
       collectionRef('groups'),
       where('category', 'in', category),
       where('isCompleted', '==', false),
+      where('tags', 'array-contains', tag),
+      orderBy('createdAt', 'asc'),
+    );
+  }
+
+  if (isFilterCompleted && !tag) {
+    return query(
+      collectionRef('groups'),
+      where('category', 'in', category),
+      where('isCompleted', '==', false),
+      orderBy('createdAt', 'asc'),
+    );
+  }
+
+  if (!isFilterCompleted && tag) {
+    return query(
+      collectionRef('groups'),
+      where('category', 'in', category),
+      where('tags', 'array-contains', tag),
       orderBy('createdAt', 'asc'),
     );
   }

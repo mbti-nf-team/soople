@@ -13,6 +13,11 @@ import DetailContentsContainer from './DetailContentsContainer';
 jest.mock('@/hooks/api/group/useFetchGroup');
 jest.mock('@/hooks/api/applicant/useFetchApplicants');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    push: jest.fn(),
+  })),
+}));
 
 describe('DetailContentsContainer', () => {
   beforeEach(() => {
