@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { h3Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
 
-import Button from './Button';
+import Button, { ColorType } from './Button';
 
 interface Props {
   imageUrl?: string;
@@ -13,13 +13,14 @@ interface Props {
   svg?: ReactElement;
   emptyText: string;
   buttonText?: string;
+  buttonColor?: ColorType;
   onClick?: () => void;
   href?: string;
   marginTop?: string;
 }
 
 function EmptyStateArea({
-  imageUrl, svg, imageName, emptyText, buttonText, onClick, href, marginTop = '24px',
+  imageUrl, svg, imageName, emptyText, buttonText, buttonColor = 'primary', onClick, href, marginTop = '24px',
 }: Props) {
   return (
     <EmptyStateWrapper marginTop={marginTop}>
@@ -32,7 +33,7 @@ function EmptyStateArea({
       </EmptyStateText>
       {buttonText && (
         <Button
-          color="primary"
+          color={buttonColor}
           size="medium"
           type="button"
           onClick={onClick}
@@ -60,6 +61,8 @@ const EmptyStateWrapper = styled.section<{ marginTop: string; }>`
 
 const EmptyStateText = styled.div`
   margin-bottom: 16px;
+  white-space: pre-line;
+  text-align: center;
 
   ${h3Font(true)};
   color: ${palette.accent5};
