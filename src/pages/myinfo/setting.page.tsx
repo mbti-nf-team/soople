@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { GetServerSideProps } from 'next';
+import { NextSeo } from 'next-seo';
 
 import getMyInfoLayout from '@/components/myInfo/MyInfoLayout';
 import MyInfoSettingContainer from '@/containers/myInfo/MyInfoSettingContainer';
@@ -10,7 +11,12 @@ export const getServerSideProps: GetServerSideProps = authenticatedServerSidePro
 
 function SettingPage(): ReactElement {
   return (
-    <MyInfoSettingContainer />
+    <>
+      <NextSeo
+        title="Conners - 내 정보, 내 정보 수정"
+      />
+      <MyInfoSettingContainer />
+    </>
   );
 }
 

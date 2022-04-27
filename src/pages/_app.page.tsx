@@ -5,10 +5,13 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
+import { DefaultSeo } from 'next-seo';
 import { RecoilRoot } from 'recoil';
 
 import Core from '@/components/common/Core';
 import SignInModalContainer from '@/containers/auth/SignInModalContainer';
+
+import defaultNextSeoConfig from '../../next-seo.config';
 
 import '../assets/css/dracula-prism.min.css';
 
@@ -32,18 +35,21 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   }));
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <RecoilRoot>
-          <Core />
-          <SignInModalContainer />
-          {getLayout((
-            <Component {...pageProps} />
-          ))}
-        </RecoilRoot>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </Hydrate>
-    </QueryClientProvider>
+    <>
+      <DefaultSeo {...defaultNextSeoConfig} />
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <RecoilRoot>
+            <Core />
+            <SignInModalContainer />
+            {getLayout((
+              <Component {...pageProps} />
+            ))}
+          </RecoilRoot>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Hydrate>
+      </QueryClientProvider>
+    </>
   );
 }
 

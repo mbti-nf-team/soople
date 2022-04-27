@@ -1,5 +1,7 @@
 import { ReactElement } from 'react';
 
+import { NextSeo } from 'next-seo';
+
 import EmptyStateArea from '@/components/common/EmptyStateArea';
 import HeaderWrapper from '@/components/common/HeaderWrapper';
 
@@ -8,6 +10,9 @@ import NotFoundIcon from '../assets/icons/img_404.svg';
 function Custom404(): ReactElement {
   return (
     <>
+      <NextSeo
+        title="Conners - 404"
+      />
       <HeaderWrapper
         hasBackground
         isScrollTop

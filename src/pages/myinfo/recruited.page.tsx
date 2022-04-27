@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { GetServerSideProps } from 'next';
+import { NextSeo } from 'next-seo';
 
 import getMyInfoLayout from '@/components/myInfo/MyInfoLayout';
 import RecruitedGroupsContainer from '@/containers/myInfo/RecruitedGroupsContainer';
@@ -10,7 +11,12 @@ export const getServerSideProps: GetServerSideProps = authenticatedServerSidePro
 
 function RecruitedPage(): ReactElement {
   return (
-    <RecruitedGroupsContainer />
+    <>
+      <NextSeo
+        title="Conners - 내 정보, 모집한 팀"
+      />
+      <RecruitedGroupsContainer />
+    </>
   );
 }
 
