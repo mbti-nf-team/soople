@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { GetServerSideProps } from 'next';
+import { NextSeo } from 'next-seo';
 
 import AlarmListContainer from '@/containers/alarm/AlarmListContainer';
 import HeaderContainer from '@/containers/common/HeaderContainer';
@@ -12,6 +13,9 @@ export const getServerSideProps: GetServerSideProps = authenticatedServerSidePro
 function AlarmPage(): ReactElement {
   return (
     <>
+      <NextSeo
+        title="Conners - 알람"
+      />
       <HeaderContainer />
       <DetailLayout>
         <AlarmListContainer />
