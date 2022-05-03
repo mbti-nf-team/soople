@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import { postSignOut } from '@/services/api/auth';
@@ -32,12 +32,10 @@ describe('useCheckSignUp', () => {
     given('pathname', () => '/');
 
     it('postSignOut이 호출되어야만 한다', async () => {
-      const { result, waitFor } = useCheckSignUpHook();
+      const { result } = useCheckSignUpHook();
 
-      await waitFor(() => result.current.isSuccess);
-
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
       expect(postSignOut).toBeCalled();
-      expect(result.current.isSuccess).toBeTruthy();
       expect(removeItem).toBeCalledWith('isSignUp');
     });
   });

@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getApplicants } from '@/services/api/applicants';
 import wrapper from '@/test/InjectMockProviders';
@@ -29,11 +29,9 @@ describe('useFetchApplicants', () => {
     given('applicants', () => null);
 
     it('빈 배열을 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchApplicantsHook();
+      const { result } = useFetchApplicantsHook();
 
-      await waitFor(() => !!result.current.data);
-
-      expect(result.current.data).toEqual([]);
+      await waitFor(() => expect(result.current.data).toEqual([]));
     });
   });
 
@@ -41,11 +39,9 @@ describe('useFetchApplicants', () => {
     given('applicants', () => [FIXTURE_APPLICANT]);
 
     it('applicants에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchApplicantsHook();
+      const { result } = useFetchApplicantsHook();
 
-      await waitFor(() => !!result.current.data);
-
-      expect(result.current.data).toEqual([FIXTURE_APPLICANT]);
+      await waitFor(() => expect(result.current.data).toEqual([FIXTURE_APPLICANT]));
     });
   });
 });

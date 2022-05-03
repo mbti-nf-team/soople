@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useEffectOnce, useLocalStorage } from 'react-use';
 
 import styled from '@emotion/styled';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { User } from 'firebase/auth';
 import * as yup from 'yup';
 

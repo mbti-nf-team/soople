@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getUserAlertAlarm } from '@/services/api/alarm';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -28,11 +28,9 @@ describe('useFetchAlertAlarms', () => {
     given('alarms', () => null);
 
     it('빈 배열을 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchAlertAlarmsHook();
+      const { result } = useFetchAlertAlarmsHook();
 
-      await waitFor(() => result.current.isSuccess);
-
-      expect(result.current.data).toEqual([]);
+      await waitFor(() => expect(result.current.data).toEqual([]));
     });
   });
 
@@ -40,11 +38,9 @@ describe('useFetchAlertAlarms', () => {
     given('alarms', () => [ALARM_FIXTURE]);
 
     it('alarms에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchAlertAlarmsHook();
+      const { result } = useFetchAlertAlarmsHook();
 
-      await waitFor(() => result.current.isSuccess);
-
-      expect(result.current.data).toEqual([ALARM_FIXTURE]);
+      await waitFor(() => expect(result.current.data).toEqual([ALARM_FIXTURE]));
     });
   });
 });

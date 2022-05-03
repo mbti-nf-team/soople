@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import { patchAlarmViewed } from '@/services/api/alarm';
 import wrapper from '@/test/ReactQueryWrapper';

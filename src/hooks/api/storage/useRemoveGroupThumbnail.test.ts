@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import { deleteGroupThumbnail } from '@/services/api/storage';
 import wrapper from '@/test/InjectMockProviders';

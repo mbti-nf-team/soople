@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getGroupDetail } from '@/services/api/group';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -26,11 +26,9 @@ describe('useFetchGroup', () => {
   });
 
   it('group에 대한 정보를 반환해야만 한다', async () => {
-    const { result, waitFor } = useFetchGroupHook();
-
-    await waitFor(() => !!result.current.data);
+    const { result } = useFetchGroupHook();
 
     expect(getGroupDetail).toBeCalledWith('groupId');
-    expect(result.current.data).toEqual(FIXTURE_GROUP);
+    await waitFor(() => expect(result.current.data).toEqual(FIXTURE_GROUP));
   });
 });

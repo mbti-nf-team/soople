@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import { deleteGroupComment } from '@/services/api/comment';
 import wrapper from '@/test/ReactQueryWrapper';

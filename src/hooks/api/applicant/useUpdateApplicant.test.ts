@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import { putApplicant } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';

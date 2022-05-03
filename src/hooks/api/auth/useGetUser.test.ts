@@ -1,5 +1,5 @@
 import { useAuthUser } from '@react-query-firebase/auth';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import wrapper from '@/test/ReactQueryWrapper';
 
@@ -24,11 +24,9 @@ describe('useGetUser', () => {
     given('user', () => null);
 
     it('user에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useGetUserHook();
+      const { result } = useGetUserHook();
 
-      await waitFor(() => result.current.isSuccess);
-
-      expect(result.current.data).toEqual(null);
+      await waitFor(() => expect(result.current.data).toEqual(null));
     });
   });
 
@@ -36,11 +34,9 @@ describe('useGetUser', () => {
     given('user', () => FIXTURE_PROFILE);
 
     it('user에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useGetUserHook();
+      const { result } = useGetUserHook();
 
-      await waitFor(() => result.current.isSuccess);
-
-      expect(result.current.data).toEqual(FIXTURE_PROFILE);
+      await waitFor(() => expect(result.current.data).toEqual(FIXTURE_PROFILE));
     });
   });
 });

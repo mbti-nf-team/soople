@@ -1,11 +1,7 @@
-import { ReactChild, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-interface Props {
-  children: ReactChild;
-}
-
-function ReactQueryWrapper({ children }: Props): ReactElement {
+function ReactQueryWrapper({ children }: PropsWithChildren<unknown>): ReactElement {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {

@@ -6,6 +6,10 @@ import RecoilObserver from '@/test/RecoilObserver';
 
 import TagsBar from './TagsBar';
 
+jest.mock('nanoid', () => ({
+  nanoid: jest.fn().mockImplementation(() => '12345'),
+}));
+
 describe('TagsBar', () => {
   const handleClick = jest.fn();
 

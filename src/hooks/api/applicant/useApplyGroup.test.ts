@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import { postAddAlarm } from '@/services/api/alarm';
 import { postAddApplicant } from '@/services/api/applicants';

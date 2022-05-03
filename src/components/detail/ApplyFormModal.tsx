@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 
 import styled from '@emotion/styled';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import FormModal from '@/components/common/FormModal';

@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getGroupComments } from '@/services/api/comment';
 import wrapper from '@/test/InjectMockProviders';
@@ -29,11 +29,9 @@ describe('useFetchComments', () => {
     given('comments', () => null);
 
     it('빈 배열을 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchCommentsHook();
+      const { result } = useFetchCommentsHook();
 
-      await waitFor(() => !!result.current.data);
-
-      expect(result.current.data).toEqual([]);
+      await waitFor(() => expect(result.current.data).toEqual([]));
     });
   });
 
@@ -41,11 +39,9 @@ describe('useFetchComments', () => {
     given('comments', () => [FIXTURE_COMMENT]);
 
     it('comments에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchCommentsHook();
+      const { result } = useFetchCommentsHook();
 
-      await waitFor(() => !!result.current.data);
-
-      expect(result.current.data).toEqual([FIXTURE_COMMENT]);
+      await waitFor(() => expect(result.current.data).toEqual([FIXTURE_COMMENT]));
     });
   });
 });

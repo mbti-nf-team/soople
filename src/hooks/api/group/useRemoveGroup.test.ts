@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import { deleteGroup } from '@/services/api/group';
 import { deleteTagCount } from '@/services/api/tagsCount';

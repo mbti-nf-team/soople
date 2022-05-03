@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getTagsCount } from '@/services/api/tagsCount';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -20,11 +20,9 @@ describe('useFetchTagsCount', () => {
     given('tagsCount', () => null);
 
     it('빈 배열을 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchTagsCountHook();
+      const { result } = useFetchTagsCountHook();
 
-      await waitFor(() => !!result.current.data);
-
-      expect(result.current.data).toEqual([]);
+      await waitFor(() => expect(result.current.data).toEqual([]));
     });
   });
 
@@ -37,11 +35,9 @@ describe('useFetchTagsCount', () => {
     given('tagsCount', () => tagsCount);
 
     it('태그에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchTagsCountHook();
+      const { result } = useFetchTagsCountHook();
 
-      await waitFor(() => !!result.current.data);
-
-      expect(result.current.data).toEqual(tagsCount);
+      await waitFor(() => expect(result.current.data).toEqual(tagsCount));
     });
   });
 });
