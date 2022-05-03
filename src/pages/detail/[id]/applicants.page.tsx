@@ -3,6 +3,7 @@ import { dehydrate, QueryClient } from 'react-query';
 
 import { FirebaseError } from 'firebase/app';
 import { GetServerSideProps } from 'next';
+import { NextSeo } from 'next-seo';
 import nookies from 'nookies';
 
 import ApplicationStatusContainer from '@/containers/applicants/ApplicationStatusContainer';
@@ -71,6 +72,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 function ApplicantsPage(): ReactElement {
   return (
     <>
+      <NextSeo
+        title="Conners - 신청현황 보기"
+      />
       <ApplicationStatusHeaderContainer />
       <ApplicationStatusContainer />
     </>

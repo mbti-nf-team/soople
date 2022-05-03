@@ -26,6 +26,12 @@ function Core(): ReactElement {
     <>
       <NextNProgress
         color={palette.success}
+        options={{
+          showSpinner: false,
+          easing: 'ease',
+          speed: 300,
+          trickle: false,
+        }}
       />
       <GlobalStyles />
       <StyledToastContainer

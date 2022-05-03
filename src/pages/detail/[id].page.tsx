@@ -3,6 +3,7 @@ import { dehydrate, QueryClient } from 'react-query';
 
 import { FirebaseError } from 'firebase/app';
 import { GetServerSideProps } from 'next';
+import { NextSeo } from 'next-seo';
 
 import RecruitCompleteModal from '@/components/detail/modal/RecruitCompleteModal';
 import RecruitCompleteCanvasConfetti from '@/components/detail/RecruitCompleteCanvasConfetti';
@@ -10,6 +11,7 @@ import HeaderContainer from '@/containers/common/HeaderContainer';
 import CommentsContainer from '@/containers/detail/CommentsContainer';
 import DetailContentsContainer from '@/containers/detail/DetailContentsContainer';
 import DetailHeaderContainer from '@/containers/detail/DetailHeaderContainer';
+import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import useIncreaseView from '@/hooks/api/group/useIncreaseView';
 import { GroupQuery } from '@/models';
 import { Group } from '@/models/group';
@@ -45,9 +47,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 function DetailPage(): ReactElement {
   useIncreaseView();
+  const { data: group } = useFetchGroup();
 
   return (
     <>
+      <NextSeo
+        title={`Conners - ${group.title}`}
+        description={group.shortDescription}
+      />
       <HeaderContainer />
       <DetailLayout>
         <DetailHeaderContainer />
