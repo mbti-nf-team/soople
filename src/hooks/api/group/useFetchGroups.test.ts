@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 
 import { getFilteredGroups } from '@/services/api/group';
 import wrapper from '@/test/InjectMockProviders';
@@ -22,9 +22,11 @@ describe('useFetchGroups', () => {
     given('groups', () => null);
 
     it('빈 배열을 반환해야만 한다', async () => {
-      const { result } = useFetchGroupsHook();
+      const { result, waitFor } = useFetchGroupsHook();
 
-      await waitFor(() => expect(result.current.data).toEqual([]));
+      await waitFor(() => result.current.isSuccess);
+
+      expect(result.current.data).toEqual([]);
     });
   });
 
@@ -32,9 +34,11 @@ describe('useFetchGroups', () => {
     given('groups', () => [FIXTURE_GROUP]);
 
     it('groups에 대한 정보를 반환해야만 한다', async () => {
-      const { result } = useFetchGroupsHook();
+      const { result, waitFor } = useFetchGroupsHook();
 
-      await waitFor(() => expect(result.current.data).toEqual([FIXTURE_GROUP]));
+      await waitFor(() => result.current.isSuccess);
+
+      expect(result.current.data).toEqual([FIXTURE_GROUP]);
     });
   });
 });

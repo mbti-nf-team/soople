@@ -9,7 +9,7 @@ jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 jest.mock('nanoid', () => ({
-  nanoid: jest.fn().mockImplementation(() => '12345'),
+  nanoid: jest.fn().mockImplementation(() => Math.random()),
 }));
 
 describe('HomePage', () => {

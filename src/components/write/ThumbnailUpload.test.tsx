@@ -1,6 +1,5 @@
 import {
-  act,
-  fireEvent, render, screen, waitFor,
+  act, fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
@@ -81,9 +80,11 @@ describe('ThumbnailUpload', () => {
           });
         });
 
-        await waitFor(async () => expect(mutate).toBeCalledWith({
-          userUid: FIXTURE_PROFILE.uid, thumbnail: file,
-        }));
+        await waitFor(
+          async () => expect(mutate).toBeCalledWith({
+            userUid: FIXTURE_PROFILE.uid, thumbnail: file,
+          }),
+        );
       });
     });
   });
@@ -105,9 +106,11 @@ describe('ThumbnailUpload', () => {
           });
         });
 
-        await waitFor(async () => expect(mutate).toBeCalledWith({
-          userUid: FIXTURE_PROFILE.uid, thumbnail: file,
-        }));
+        await waitFor(
+          async () => expect(mutate).toBeCalledWith({
+            userUid: FIXTURE_PROFILE.uid, thumbnail: file,
+          }),
+        );
 
         act(() => {
           fireEvent.click(screen.getByTestId('close-icon'));
