@@ -1,4 +1,4 @@
-import { ReactChild, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
 
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 
@@ -18,7 +18,6 @@ interface Props {
   publishModalVisible?: boolean;
   recruitCompleteModalVisible?: boolean;
   writeFields?: WriteFields;
-  children: ReactChild;
 }
 
 function InjectTestingRecoilState({
@@ -28,7 +27,7 @@ function InjectTestingRecoilState({
   recruitCompleteModalVisible = false,
   writeFields = initialWriteFieldsState,
   children,
-}: Props): ReactElement {
+}: PropsWithChildren<Props>): ReactElement {
   return (
     <RecoilRoot
       initializeState={({ set }: MutableSnapshot): void => {

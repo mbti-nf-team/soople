@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { ReactChild, ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import { ChevronLeft } from 'react-feather';
 
 import styled from '@emotion/styled';
@@ -11,11 +11,10 @@ import zIndexes from '@/styles/zIndexes';
 
 interface Props {
   previousText: string;
-  children: ReactChild;
   goBack: () => void;
 }
 
-function SubHeader({ goBack, previousText, children }: Props): ReactElement {
+function SubHeader({ goBack, previousText, children }: PropsWithChildren<Props>): ReactElement {
   return (
     <>
       <HeaderBlock>

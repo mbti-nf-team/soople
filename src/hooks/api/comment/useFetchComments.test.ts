@@ -31,7 +31,7 @@ describe('useFetchComments', () => {
     it('빈 배열을 반환해야만 한다', async () => {
       const { result, waitFor } = useFetchCommentsHook();
 
-      await waitFor(() => !!result.current.data);
+      await waitFor(() => result.current.isSuccess);
 
       expect(result.current.data).toEqual([]);
     });
@@ -43,7 +43,7 @@ describe('useFetchComments', () => {
     it('comments에 대한 정보를 반환해야만 한다', async () => {
       const { result, waitFor } = useFetchCommentsHook();
 
-      await waitFor(() => !!result.current.data);
+      await waitFor(() => result.current.isSuccess);
 
       expect(result.current.data).toEqual([FIXTURE_COMMENT]);
     });

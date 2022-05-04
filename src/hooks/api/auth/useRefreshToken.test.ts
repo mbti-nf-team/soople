@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import { firebaseAuth } from '@/services/firebase';
 import wrapper from '@/test/ReactQueryWrapper';

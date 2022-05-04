@@ -28,7 +28,7 @@ describe('useFetchGroup', () => {
   it('group에 대한 정보를 반환해야만 한다', async () => {
     const { result, waitFor } = useFetchGroupHook();
 
-    await waitFor(() => !!result.current.data);
+    await waitFor(() => result.current.isSuccess);
 
     expect(getGroupDetail).toBeCalledWith('groupId');
     expect(result.current.data).toEqual(FIXTURE_GROUP);

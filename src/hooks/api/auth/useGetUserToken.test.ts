@@ -1,5 +1,5 @@
 import { useAuthIdToken } from '@react-query-firebase/auth';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 import { IdTokenResult } from 'firebase/auth';
 import { setCookie } from 'nookies';
 
@@ -25,7 +25,7 @@ describe('useGetUserToken', () => {
   });
 
   it('useAuthIdToken이 호출되어야만 한다', async () => {
-    const { result, waitFor } = useGetUserTokenHook();
+    const { result } = useGetUserTokenHook();
 
     await waitFor(() => !!result.current);
 

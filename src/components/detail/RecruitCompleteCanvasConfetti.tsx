@@ -22,11 +22,11 @@ function RecruitCompleteCanvasConfetti(): ReactElement {
   const refAnimationInstance = useRef<any>(null);
   const isVisible = useRecoilValue(recruitCompleteModalVisibleState);
 
-  const getInstance = useCallback((instance) => {
+  const getInstance = useCallback((instance: any) => {
     refAnimationInstance.current = instance;
   }, []);
 
-  const makeShot = useCallback((particleRatio, opts) => {
+  const makeShot = useCallback((particleRatio: any, opts: any) => {
     if (refAnimationInstance.current) {
       refAnimationInstance.current({
         ...opts,

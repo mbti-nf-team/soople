@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import { getAuthRedirectResult } from '@/services/api/auth';
@@ -39,12 +39,10 @@ describe('useAuthRedirectResult', () => {
     given('profile', () => null);
 
     it('"/signup"과 함께 router.push가 호출되어야만 한다', async () => {
-      const { result, waitFor } = useAuthRedirectResultHook();
+      const { result } = useAuthRedirectResultHook();
 
-      await waitFor(() => result.current.isSuccess);
-
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
       expect(getAuthRedirectResult).toBeCalled();
-      expect(result.current.isSuccess).toBeTruthy();
       expect(mockPush).toBeCalledWith('/signup');
     });
   });
@@ -53,11 +51,9 @@ describe('useAuthRedirectResult', () => {
     given('profile', () => FIXTURE_PROFILE);
 
     it('router.push가 호출되지 않아야만 한다', async () => {
-      const { result, waitFor } = useAuthRedirectResultHook();
+      const { result } = useAuthRedirectResultHook();
 
-      await waitFor(() => result.current.isSuccess);
-
-      expect(result.current.isSuccess).toBeTruthy();
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
       expect(mockPush).not.toBeCalled();
     });
   });

@@ -22,7 +22,13 @@ const customJestConfig = {
   coveragePathIgnorePatterns: [
     '<rootDir>/src/components/detail/RecruitCompleteCanvasConfetti.tsx',
   ],
-  testEnvironment: 'jsdom',
+  moduleDirectories: ['node_modules', '<rootDir>/'],
+  testEnvironment: 'jest-environment-jsdom',
 };
 
-module.exports = createJestConfig(customJestConfig);
+module.exports = async () => ({
+  ...await createJestConfig(customJestConfig)(),
+  transformIgnorePatterns: [
+    'node_modules/(?!(@firebase|nanoid|@hookform)/)',
+  ],
+});

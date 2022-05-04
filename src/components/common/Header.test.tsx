@@ -1,24 +1,34 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import ReactQueryWrapper from '@/test/ReactQueryWrapper';
+import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
+
+import FIXTURE_ALARM from '../../../fixtures/alarm';
 
 import Header from './Header';
+
+jest.mock('@/hooks/api/alarm/useFetchAlertAlarms');
 
 describe('Header', () => {
   const handleClick = jest.fn();
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    (useFetchAlertAlarms as jest.Mock).mockImplementation(() => ({
+      data: [FIXTURE_ALARM],
+    }));
+  });
+
   const renderHeader = () => render((
-    <ReactQueryWrapper>
-      <Header
-        signOut={jest.fn()}
-        isScrollTop
-        user={given.user}
-        onClick={handleClick}
-        hasBackground
-        isLoading={given.isLoading}
-        hasOnlyLogo={given.hasOnlyLogo}
-      />
-    </ReactQueryWrapper>
+    <Header
+      signOut={jest.fn()}
+      isScrollTop
+      user={given.user}
+      onClick={handleClick}
+      hasBackground
+      isLoading={given.isLoading}
+      hasOnlyLogo={given.hasOnlyLogo}
+    />
   ));
 
   context('signup 페이지인 경우', () => {

@@ -26,7 +26,7 @@ describe('useFetchUserAppliedGroups', () => {
     it('빈 배열을 반환해야만 한다', async () => {
       const { result, waitFor } = useFetchUserAppliedGroupsHook();
 
-      await waitFor(() => !!result.current.data);
+      await waitFor(() => result.current.isSuccess);
 
       expect(result.current.data).toEqual([]);
     });
@@ -37,8 +37,7 @@ describe('useFetchUserAppliedGroups', () => {
 
     it('groups에 대한 정보를 반환해야만 한다', async () => {
       const { result, waitFor } = useFetchUserAppliedGroupsHook();
-
-      await waitFor(() => !!result.current.data);
+      await waitFor(() => result.current.isSuccess);
 
       expect(result.current.data).toEqual([FIXTURE_GROUP]);
     });

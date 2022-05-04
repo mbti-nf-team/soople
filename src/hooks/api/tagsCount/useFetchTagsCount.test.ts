@@ -22,7 +22,7 @@ describe('useFetchTagsCount', () => {
     it('빈 배열을 반환해야만 한다', async () => {
       const { result, waitFor } = useFetchTagsCountHook();
 
-      await waitFor(() => !!result.current.data);
+      await waitFor(() => result.current.isSuccess);
 
       expect(result.current.data).toEqual([]);
     });
@@ -39,7 +39,7 @@ describe('useFetchTagsCount', () => {
     it('태그에 대한 정보를 반환해야만 한다', async () => {
       const { result, waitFor } = useFetchTagsCountHook();
 
-      await waitFor(() => !!result.current.data);
+      await waitFor(() => result.current.isSuccess);
 
       expect(result.current.data).toEqual(tagsCount);
     });
