@@ -5,20 +5,28 @@ import { QueryClient } from 'react-query';
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 
+import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 import useApplyGroup from '@/hooks/api/applicant/useApplyGroup';
 import useCancelApply from '@/hooks/api/applicant/useCancelApply';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import useGetUser from '@/hooks/api/auth/useGetUser';
+import useSignOut from '@/hooks/api/auth/useSignOut';
 import useAddComment from '@/hooks/api/comment/useAddComment';
 import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useFetchComments from '@/hooks/api/comment/useFetchComments';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
+import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
+import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
 import { getGroupDetail } from '@/services/api/group';
-import InjectMockProviders from '@/test/InjectMockProviders';
+import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 import { filteredWithSanitizeHtml } from '@/utils/filter';
 
+import FIXTURE_ALARM from '../../../fixtures/alarm';
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 import GROUP_FIXTURE from '../../../fixtures/group';
+import FIXTURE_PROFILE from '../../../fixtures/profile';
 
 import DetailPage, { getServerSideProps } from './[id].page';
 
@@ -32,6 +40,12 @@ jest.mock('@/hooks/api/comment/useFetchComments');
 jest.mock('@/hooks/api/group/useFetchGroup');
 jest.mock('@/utils/filter');
 jest.mock('@/hooks/api/group/useIncreaseView');
+jest.mock('@/hooks/api/alarm/useFetchAlertAlarms');
+jest.mock('@/hooks/api/auth/useGetUser');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
+jest.mock('@/hooks/api/auth/useSignOut');
+jest.mock('@/hooks/api/group/useRemoveGroup');
+jest.mock('@/hooks/api/storage/useRemoveGroupThumbnail');
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
@@ -60,6 +74,19 @@ describe('DetailPage', () => {
       data: [APPLICANT_FIXTURE],
       isLoading: false,
     }));
+    (useFetchAlertAlarms as jest.Mock).mockImplementation(() => ({
+      data: [FIXTURE_ALARM],
+    }));
+    (useGetUser as jest.Mock).mockImplementation(() => ({
+      data: FIXTURE_PROFILE,
+    }));
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
+      data: FIXTURE_PROFILE,
+    }));
+
+    (useRemoveGroupThumbnail as jest.Mock).mockImplementation(() => ({ mutate }));
+    (useRemoveGroup as jest.Mock).mockImplementation(() => ({ mutate }));
+    (useSignOut as jest.Mock).mockImplementation(() => ({ mutate }));
     (useApplyGroup as jest.Mock).mockImplementation(() => ({ mutate }));
     (useCancelApply as jest.Mock).mockImplementation(() => ({ mutate }));
     (useAddComment as jest.Mock).mockImplementation(() => ({ mutate }));
@@ -67,9 +94,9 @@ describe('DetailPage', () => {
   });
 
   const renderDetailPage = () => render((
-    <InjectMockProviders>
+    <InjectTestingRecoilState>
       <DetailPage />
-    </InjectMockProviders>
+    </InjectTestingRecoilState>
   ));
 
   it('detail 페이지에 대한 내용이 나타나야만 한다', () => {

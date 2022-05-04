@@ -14,7 +14,7 @@ import { groupsConditionState } from '@/recoil/group/atom';
 import Divider from '@/styles/Divider';
 import { body1Font } from '@/styles/fontStyles';
 
-const DynamicComponentWithNoSSR = dynamic(
+const SwitchButton = dynamic(
   () => import('@/components/common/SwitchButton'),
   { ssr: false },
 );
@@ -67,7 +67,7 @@ function StatusBarContainer(): ReactElement {
       </div>
       <RecruitmentDeadline>
         <span>모집 마감 안보기</span>
-        <DynamicComponentWithNoSSR
+        <SwitchButton
           defaultChecked={!!initFilterCompleted}
           onChange={() => onToggle(!isFilterCompleted)}
         />

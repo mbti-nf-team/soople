@@ -1,16 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
 import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
 import InjectMockProviders from '@/test/InjectMockProviders';
 
+import FIXTURE_APPLICANT from '../../../fixtures/applicant';
 import FIXTURE_GROUP from '../../../fixtures/group';
 
 import WriterStatusButtons from './WriterStatusButtons';
 
 jest.mock('@/hooks/api/group/useRemoveGroup');
 jest.mock('@/hooks/api/storage/useRemoveGroupThumbnail');
+jest.mock('@/hooks/api/applicant/useFetchApplicants');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
@@ -37,6 +40,10 @@ describe('WriterStatusButtons', () => {
 
     (useRemoveGroupThumbnail as jest.Mock).mockImplementation(() => ({
       mutate: removeGroupThumbnailMutate,
+    }));
+
+    (useFetchApplicants as jest.Mock).mockImplementation(() => ({
+      data: [FIXTURE_APPLICANT],
     }));
   });
 
