@@ -79,12 +79,12 @@
 ## 💻 Project Stack
 🚧 WIP
 - Next.js v.12
-- React v.17
+- React v.18
 - react-query v.3
-- recoil v.0.6
+- recoil v.0.7
 - firebase v.9
 - emotion v.11
-- jest v.27
+- jest v.28
 
 ## 🐛 Bug reporting
 [Issues](https://github.com/jennie-harang/Conners/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
