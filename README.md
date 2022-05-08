@@ -24,35 +24,6 @@
   <img src="https://img.shields.io/github/repo-size/jennie-harang/Conners?logo=yarn&style=flat-square">
 </a>
 
-<br />
-
-<a href="#">
-  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/next?logo=next.js&style=for-the-badge">
-</a>
-<a href="#">
-  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/react?logo=react&style=for-the-badge">
-</a>
-<a href="#">
-  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/react-query?logo=react-query&style=for-the-badge">
-</a>
-<a href="#">
-  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/recoil?style=for-the-badge">
-</a>
-<a href="#">
-  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/firebase?logo=firebase&style=for-the-badge">
-</a>
-<a href="#">
-  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/@emotion/react?label=emotion&logo=%F0%9F%91%A9%E2%80%8D%F0%9F%8E%A4&style=for-the-badge">
-</a>
-<a href="#">
-  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/dev/jest?logo=jest&logoColor=%23C21325&style=for-the-badge">
-</a>
-<a href="#">
-  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/dev/cypress?logo=cypress&style=for-the-badge">
-</a> 
-
-[View More dependencies..](https://github.com/jennie-harang/Conners/blob/main/package.json)
-
 ### 스터디와 프로젝트를 연결해주는 Connect + er + s Conners! 🎨
 
 #### 👉👉👉 **잠시 쉬어갑니다.. 디자니어의 개인적인 사정으로..** 😭 👈👈👈 (조만간 다시 시작합니다~~)
@@ -103,6 +74,35 @@
  ┣ 📜 tsconfig.json
  ┗ 📜 yarn.lock
 ```
+
+## 🛠 Tech Stack
+
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/next?logo=next.js&style=for-the-badge">
+</a>
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/react?logo=react&style=for-the-badge">
+</a>
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/react-query?logo=react-query&style=for-the-badge">
+</a>
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/recoil?style=for-the-badge">
+</a>
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/firebase?logo=firebase&style=for-the-badge">
+</a>
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/@emotion/react?label=emotion&logo=%F0%9F%91%A9%E2%80%8D%F0%9F%8E%A4&style=for-the-badge">
+</a>
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/dev/jest?logo=jest&logoColor=%23C21325&style=for-the-badge">
+</a>
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/dev/cypress?logo=cypress&style=for-the-badge">
+</a> 
+
+[View More dependencies..](https://github.com/jennie-harang/Conners/blob/main/package.json)
 
 ## 🐛 Bug reporting
 [Issues](https://github.com/jennie-harang/Conners/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
