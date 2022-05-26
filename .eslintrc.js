@@ -20,7 +20,6 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:jest/recommended',
     'plugin:testing-library/react',
-    'plugin:storybook/recommended',
   ],
   plugins: [
     '@typescript-eslint',
@@ -31,13 +30,23 @@ module.exports = {
     'testing-library',
     '@emotion',
   ],
-  overrides: [{
-    extends: ['plugin:cypress/recommended'],
-    files: ['cypress/**/*.ts'],
-    rules: {
-      'jest/expect-expect': 'off',
+  overrides: [
+    {
+      extends: ['plugin:cypress/recommended'],
+      files: ['cypress/**/*.ts'],
+      rules: {
+        'jest/expect-expect': 'off',
+      },
     },
-  }],
+    {
+      extends: ['plugin:storybook/recommended'],
+      files: ['**/*.stories.tsx'],
+      rules: {
+        'react/function-component-definition': 'off',
+        'react/jsx-props-no-spreading': 'off',
+      },
+    },
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {

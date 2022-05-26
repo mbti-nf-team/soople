@@ -1,5 +1,4 @@
 /* eslint-disable testing-library/no-await-sync-query */
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
