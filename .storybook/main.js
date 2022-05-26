@@ -1,4 +1,7 @@
+const TsconfigPathsPlugin  = require('tsconfig-paths-webpack-plugin')
+
 module.exports = {
+  staticDirs: ['../public'],
   "stories": [
     "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(js|jsx|ts|tsx)"
@@ -9,7 +12,9 @@ module.exports = {
     "@storybook/addon-interactions"
   ],
   "framework": "@storybook/react",
-  "core": {
-    "builder": "@storybook/builder-webpack5"
-  }
+  webpackFinal: async (config) => {
+    config.resolve.plugins.push(new TsconfigPathsPlugin({}));
+
+    return config;
+  },
 }
