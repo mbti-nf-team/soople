@@ -12,6 +12,10 @@
   <img src="https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/oj7cg1&style=flat-square&logo=cypress">
 </a>
 
+<a href="https://main--628f96cff42ef5004a46c62a.chromatic.com">
+  <img src="https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg">
+</a>
+
 <a href="https://github.com/jennie-harang/Conners/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
   <img src="https://img.shields.io/github/issues/jennie-harang/Conners?style=flat-square" />
 </a>
