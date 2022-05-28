@@ -17,4 +17,9 @@ module.exports = {
 
     return config;
   },
+  babel: async (options) => {
+    options.plugins.push("babel-plugin-inline-react-svg");
+
+    return options;
+  },
 }

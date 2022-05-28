@@ -8,7 +8,7 @@ const styles = {
 };
 
 export default {
-  title: 'Components/Common/ConfirmModal',
+  title: 'Components/ConfirmModal',
   component: ConfirmModal,
   argTypes: {
     isVisible: {

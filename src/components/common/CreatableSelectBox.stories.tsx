@@ -8,7 +8,7 @@ const styles = {
 };
 
 export default {
-  title: 'Components/Common/CreatableSelectBox',
+  title: 'Components/CreatableSelectBox',
   component: CreatableSelectBox,
   argTypes: {},
   decorators: [(storyFn) => <div style={styles}>{storyFn()}</div>],

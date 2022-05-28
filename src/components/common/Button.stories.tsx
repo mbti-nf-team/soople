@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import Button from './Button';
 
 export default {
-  title: 'Components/Common/Button',
+  title: 'Components/Button',
   component: Button,
   argTypes: {
     disabled: {
