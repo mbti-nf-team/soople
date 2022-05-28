@@ -5,7 +5,7 @@ import EmptySvg from '../../assets/icons/empty-frame.svg';
 import EmptyStateArea from './EmptyStateArea';
 
 export default {
-  title: 'Components/Common/EmptyStateArea',
+  title: 'Components/EmptyStateArea',
   component: EmptyStateArea,
 } as ComponentMeta<typeof EmptyStateArea>;
 

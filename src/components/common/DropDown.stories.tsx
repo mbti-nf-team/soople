@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `;
 
 export default {
-  title: 'Components/Common/DropDown',
+  title: 'Components/DropDown',
   component: DropDown,
   decorators: [(storyFn) => <Wrapper>{storyFn()}</Wrapper>],
 } as ComponentMeta<typeof DropDown>;
