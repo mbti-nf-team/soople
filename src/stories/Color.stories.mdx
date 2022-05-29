@@ -1,0 +1,74 @@
+import { Meta, ColorPalette, ColorItem } from "@storybook/addon-docs";
+
+import palette from "../styles/palette";
+
+<Meta title="Colors" />
+
+# Colors
+
+<ColorPalette>
+  {/* Primary */}
+  <ColorItem
+    title="Primary"
+    subtitle="background"
+    colors={[palette.background]}
+  />
+  <ColorItem title="Primary" subtitle="accent1" colors={[palette.accent1]} />
+  <ColorItem title="Primary" subtitle="accent2" colors={[palette.accent2]} />
+  <ColorItem title="Primary" subtitle="accent3" colors={[palette.accent3]} />
+  <ColorItem title="Primary" subtitle="accent4" colors={[palette.accent4]} />
+  <ColorItem title="Primary" subtitle="accent5" colors={[palette.accent5]} />
+  <ColorItem title="Primary" subtitle="accent6" colors={[palette.accent6]} />
+  <ColorItem title="Primary" subtitle="accent7" colors={[palette.accent7]} />
+  <ColorItem
+    title="Primary"
+    subtitle="foreground"
+    colors={[palette.foreground]}
+  />
+  {/* Success */}
+  <ColorItem title="Success" subtitle="success" colors={[palette.success]} />
+  <ColorItem
+    title="Success"
+    subtitle="success10"
+    colors={[palette.success10]}
+  />
+  {/* Warning */}
+  <ColorItem title="Warning" subtitle="warning" colors={[palette.warning]} />
+  <ColorItem
+    title="Warning"
+    subtitle="warning10"
+    colors={[palette.warning10]}
+  />
+</ColorPalette>
+
+## Primary
+
+<ColorPalette>
+  <ColorItem
+    title="Primary"
+    subtitle="Light mode"
+    colors={[
+      palette.background,
+      palette.accent1,
+      palette.accent2,
+      palette.accent3,
+      palette.accent4,
+      palette.accent5,
+      palette.accent6,
+      palette.accent7,
+      palette.foreground,
+    ]}
+  />
+</ColorPalette>
+
+## Success
+
+<ColorPalette>
+  <ColorItem title="Success" colors={[palette.success, palette.success10]} />
+</ColorPalette>
+
+## Warning
+
+<ColorPalette>
+  <ColorItem title="Warning" colors={[palette.warning, palette.warning10]} />
+</ColorPalette>
