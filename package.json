@@ -92,6 +92,7 @@
     "@babel/core": "^7.18.0",
     "@emotion/eslint-plugin": "^11.7.0",
     "@storybook/addon-actions": "^6.5.4",
+    "@storybook/addon-docs": "^6.5.5",
     "@storybook/addon-essentials": "^6.5.4",
     "@storybook/addon-interactions": "^6.5.4",
     "@storybook/addon-links": "^6.5.4",
