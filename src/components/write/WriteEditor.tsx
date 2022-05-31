@@ -95,6 +95,12 @@ const RemirrorEditorWrapper = styled(CoreStyledComponent)`
     ${body1Font()}
   }
 
+  p, ol, li, a, strong, em, u, s, blockquote, h1, h2, h3, h4, h5, h6, pre, code, span {
+    &::selection {
+      background-color: #B4D5FE !important;
+    }
+  }
+
   p {
     margin: 0;
   }
@@ -126,13 +132,13 @@ const RemirrorEditorWrapper = styled(CoreStyledComponent)`
     }
   }
 
-  .ProseMirror ::selection {
+  /* p::selection {
     background-color: #B4D5FE !important;
   } 
   
-  .ProseMirror .selection {
+  p.selection {
     background-color: #B4D5FE !important;
-  }
+  } */
 
   .remirror-is-empty:first-of-type::before {
     ${body1Font()}
