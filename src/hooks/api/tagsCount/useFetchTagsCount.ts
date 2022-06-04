@@ -8,7 +8,7 @@ import { getTagsCount } from '@/services/api/tagsCount';
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useFetchTagsCount() {
-  const query = useQuery<TagCount[], FirestoreError>('tagsCount', () => getTagsCount());
+  const query = useQuery<TagCount[], FirestoreError>('tagsCount', getTagsCount);
 
   const { isError, error, data } = query;
 
