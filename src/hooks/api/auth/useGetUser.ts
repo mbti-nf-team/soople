@@ -1,6 +1,6 @@
-import { useAuthUser } from '@react-query-firebase/auth';
-
 import { firebaseAuth } from '@/services/firebase';
+
+import useAuthUser from './useAuthUser';
 
 function useGetUser() {
   const user = useAuthUser(['user'], firebaseAuth);

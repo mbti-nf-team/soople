@@ -2961,11 +2961,6 @@
     tiny-warning "^1.0.3"
     tslib "^2.3.0"
 
-"@react-query-firebase/auth@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@react-query-firebase/auth/-/auth-0.3.4.tgz#89c30f2e63d984ad1821a684e4c4e3644b069ff9"
-  integrity sha512-t/NyKcGDtL5PkcMXdJPXjSzJ3ujBU5mDsxWORlZ8Cx7sSn/Os30gHmvVCh/SRYIET9kH0fSFefLY7TaL+qfaiQ==
-
 "@remirror/core-constants@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@remirror/core-constants/-/core-constants-1.0.2.tgz#15beee18734698bb86f164db78b4b92a7562c558"
