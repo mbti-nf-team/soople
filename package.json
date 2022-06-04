@@ -49,7 +49,6 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@hookform/resolvers": "^2.8.8",
-    "@react-query-firebase/auth": "^0.3.4",
     "@remirror/pm": "^1.0.16",
     "@remirror/react": "^1.0.35",
     "@remirror/styles": "^1.1.3",

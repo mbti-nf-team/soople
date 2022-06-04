@@ -1,9 +1,10 @@
-import { useAuthIdToken } from '@react-query-firebase/auth';
 import { IdTokenResult } from 'firebase/auth';
 import { destroyCookie, setCookie } from 'nookies';
 
 import { firebaseAuth } from '@/services/firebase';
 import { removeToken } from '@/utils/utils';
+
+import useAuthIdToken from './useAuthIdToken';
 
 function useGetUserToken() {
   const query = useAuthIdToken(['token'], firebaseAuth, {}, {
