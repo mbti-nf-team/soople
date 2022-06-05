@@ -1,4 +1,3 @@
-import { useAuthIdToken } from '@react-query-firebase/auth';
 import { renderHook, waitFor } from '@testing-library/react';
 import { IdTokenResult } from 'firebase/auth';
 import { setCookie } from 'nookies';
@@ -6,9 +5,10 @@ import { setCookie } from 'nookies';
 import wrapper from '@/test/ReactQueryWrapper';
 import { removeToken } from '@/utils/utils';
 
+import useAuthIdToken from './useAuthIdToken';
 import useGetUserToken, { onGetTokenSuccess } from './useGetUserToken';
 
-jest.mock('@react-query-firebase/auth');
+jest.mock('./useAuthIdToken');
 jest.mock('@/utils/utils');
 jest.mock('nookies', () => ({
   destroyCookie: jest.fn(),

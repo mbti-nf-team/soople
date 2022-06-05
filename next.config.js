@@ -1,3 +1,5 @@
+const isProd = process.env.NODE_ENV === 'production';
+
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
@@ -10,10 +12,10 @@ module.exports = {
     emotion: true,
   },
   compiler: {
-    reactRemoveProperties: process.env.NODE_ENV === 'production' && {
+    reactRemoveProperties: isProd && {
       properties: ['^data-test'],
     },
-    removeConsole: {
+    removeConsole: isProd && {
       exclude: ['error'],
     },
   },

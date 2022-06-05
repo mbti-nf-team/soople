@@ -20,7 +20,10 @@ const customJestConfig = {
     'cypress',
   ],
   coveragePathIgnorePatterns: [
+    // NOTE - 오픈소스에서 가져온 코드임으로 테스트코드를 작성할 이유가 없음.
     '<rootDir>/src/components/detail/RecruitCompleteCanvasConfetti.tsx',
+    '<rootDir>/src/hooks/api/auth/useAuthIdToken.ts',
+    '<rootDir>/src/hooks/api/auth/useAuthUser.ts',
   ],
   moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'jest-environment-jsdom',

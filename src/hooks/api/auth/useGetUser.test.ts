@@ -1,13 +1,13 @@
-import { useAuthUser } from '@react-query-firebase/auth';
 import { renderHook } from '@testing-library/react-hooks';
 
 import wrapper from '@/test/ReactQueryWrapper';
 
 import FIXTURE_PROFILE from '../../../../fixtures/profile';
 
+import useAuthUser from './useAuthUser';
 import useGetUser from './useGetUser';
 
-jest.mock('@react-query-firebase/auth');
+jest.mock('./useAuthUser');
 
 describe('useGetUser', () => {
   const useGetUserHook = () => renderHook(() => useGetUser(), {

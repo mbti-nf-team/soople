@@ -1,5 +1,3 @@
-import { useAuthUser } from '@react-query-firebase/auth';
-
 import { firebaseAuth } from '@/services/firebase';
 
 function useGetUser(suspense?: boolean) {
