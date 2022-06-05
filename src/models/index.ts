@@ -13,3 +13,13 @@ export type KeyPair<T> = {
 export type SelectOption<T> = {
   value: T; label: string;
 }
+
+export interface InfiniteResponse<T> {
+  items: T[];
+  lastUid?: string;
+}
+
+export interface InfiniteRequest {
+  perPage?: number;
+  lastUid?: string;
+}

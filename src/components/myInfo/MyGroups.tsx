@@ -38,6 +38,10 @@ export const MyGroupLayout = styled(DetailLayout)`
   & > :first-of-type {
     padding-top : 40px;
   }
+
+  & > :last-of-type {
+    margin-bottom : 40px;
+  }
   
   & > :not(div:first-of-type) {
     padding-top: 24px;
