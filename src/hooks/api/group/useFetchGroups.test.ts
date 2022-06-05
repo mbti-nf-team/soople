@@ -18,27 +18,13 @@ describe('useFetchGroups', () => {
     (getFilteredGroups as jest.Mock).mockImplementation(() => (given.groups));
   });
 
-  context('useQuery반환값이 존재하지 않는 경우', () => {
-    given('groups', () => null);
+  given('groups', () => [FIXTURE_GROUP]);
 
-    it('빈 배열을 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchGroupsHook();
+  it('groups에 대한 정보를 반환해야만 한다', async () => {
+    const { result, waitFor } = useFetchGroupsHook();
 
-      await waitFor(() => result.current.isSuccess);
+    await waitFor(() => result.current.isSuccess);
 
-      expect(result.current.data).toEqual([]);
-    });
-  });
-
-  context('useQuery반환값이 존재하는 경우', () => {
-    given('groups', () => [FIXTURE_GROUP]);
-
-    it('groups에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchGroupsHook();
-
-      await waitFor(() => result.current.isSuccess);
-
-      expect(result.current.data).toEqual([FIXTURE_GROUP]);
-    });
+    expect(result.current.data).toEqual([FIXTURE_GROUP]);
   });
 });

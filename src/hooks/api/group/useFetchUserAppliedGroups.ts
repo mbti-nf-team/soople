@@ -4,6 +4,7 @@ import { FirestoreError } from 'firebase/firestore';
 
 import { Group } from '@/models/group';
 import { getUserAppliedGroups } from '@/services/api/applicants';
+import { checkEmpty } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -22,7 +23,7 @@ function useFetchUserAppliedGroups(userUid?: string) {
 
   return {
     ...query,
-    data: data ?? [],
+    data: checkEmpty(data),
   };
 }
 

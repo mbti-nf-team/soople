@@ -16,32 +16,18 @@ describe('useFetchTagsCount', () => {
     (getTagsCount as jest.Mock).mockImplementation(() => (given.tagsCount));
   });
 
-  context('useQuery 반환값이 존재하지 않는 경우', () => {
-    given('tagsCount', () => null);
+  const tagsCount = [
+    { name: 'JavaScript' },
+    { count: 1 },
+  ];
 
-    it('빈 배열을 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchTagsCountHook();
+  given('tagsCount', () => tagsCount);
 
-      await waitFor(() => result.current.isSuccess);
+  it('태그에 대한 정보를 반환해야만 한다', async () => {
+    const { result, waitFor } = useFetchTagsCountHook();
 
-      expect(result.current.data).toEqual([]);
-    });
-  });
+    await waitFor(() => result.current.isSuccess);
 
-  context('useQuery 반환값이 존재하는 경우', () => {
-    const tagsCount = [
-      { name: 'JavaScript' },
-      { count: 1 },
-    ];
-
-    given('tagsCount', () => tagsCount);
-
-    it('태그에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchTagsCountHook();
-
-      await waitFor(() => result.current.isSuccess);
-
-      expect(result.current.data).toEqual(tagsCount);
-    });
+    expect(result.current.data).toEqual(tagsCount);
   });
 });

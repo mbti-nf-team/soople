@@ -28,6 +28,7 @@ function useFetchGroup() {
 
   return {
     ...query,
+    // NOTE - SSR 사용
     data: data as Group,
   };
 }
