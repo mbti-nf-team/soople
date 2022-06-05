@@ -52,8 +52,8 @@ function DetailPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title={`Conners - ${group.title}`}
-        description={group.shortDescription}
+        title={`Conners - ${group?.title}`}
+        description={group?.shortDescription}
       />
       <HeaderContainer />
       <DetailLayout>
