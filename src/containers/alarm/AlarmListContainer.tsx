@@ -1,17 +1,14 @@
-import React, {
-  lazy, ReactElement, Suspense, useCallback,
-} from 'react';
+import React, { ReactElement, useCallback } from 'react';
 
-import AlarmsSkeletonLoader from '@/components/alarm/AlarmsSkeletonLoader';
+import Alarms from '@/components/alarm/Alarms';
 // import Alarms from '@/components/alarm/Alarms';
 import useFetchAlarms from '@/hooks/api/alarm/useFetchAlarms';
 import useUpdateAlarmViewed from '@/hooks/api/alarm/useUpdateAlarmViewed';
 
 // const Alarms = dynamic(() => import('@/components/alarm/Alarms'), {
 //   suspense: true,
+//   ssr: false,
 // });
-
-const Alarms = lazy(() => import('@/components/alarm/Alarms'));
 
 function AlarmListContainer(): ReactElement {
   const { data: alarms } = useFetchAlarms();
@@ -23,12 +20,12 @@ function AlarmListContainer(): ReactElement {
   // console.log(alarms);
 
   return (
-    <Suspense fallback={<AlarmsSkeletonLoader />}>
-      <Alarms
-        alarms={alarms}
-        onClickAlarm={onClickAlarm}
-      />
-    </Suspense>
+  // <Suspense fallback={<AlarmsSkeletonLoader />}>
+    <Alarms
+      alarms={alarms}
+      onClickAlarm={onClickAlarm}
+    />
+  // </Suspense>
   );
 }
 
