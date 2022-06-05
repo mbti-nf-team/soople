@@ -27,3 +27,5 @@ export const where = jest.fn();
 export const limit = jest.fn();
 
 export const deleteDoc = jest.fn();
+
+export const startAfter = jest.fn();

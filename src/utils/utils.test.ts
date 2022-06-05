@@ -3,6 +3,7 @@ import { setCookie } from 'nookies';
 import GROUP_FIXTURE from '../../fixtures/group';
 
 import {
+  checkEmpty,
   emptyAThenB,
   hasBackground,
   isCurrentTimeBeforeEndDate,
@@ -239,6 +240,26 @@ describe('trueOrFalse', () => {
       const result = trueOrFalse('test');
 
       expect(result).toBe(true);
+    });
+  });
+});
+
+describe('checkEmpty', () => {
+  context('value가 undefined이거나 빈 배열인 경우', () => {
+    it('빈 배열을 반환해야만 한다', () => {
+      const result = checkEmpty();
+
+      expect(result).toEqual([]);
+    });
+  });
+
+  context('value가 undefined이거나 빈 배열이 아닌 경우', () => {
+    const mockArray = ['test', 'test2'];
+
+    it('입력된 값이 반환되어야 한다', () => {
+      const result = checkEmpty(mockArray);
+
+      expect(result).toEqual(mockArray);
     });
   });
 });

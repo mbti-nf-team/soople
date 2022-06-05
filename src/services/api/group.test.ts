@@ -8,6 +8,7 @@ import {
   getFilteredGroups,
   getGroupDetail,
   getGroups,
+  getInfiniteUserRecruitedGroups,
   getUserRecruitedGroups,
   patchCompletedGroup,
   patchEditGroup,
@@ -113,6 +114,7 @@ describe('group API', () => {
       const response = await getGroups({
         category: [],
         isFilterCompleted: false,
+        tag: 'test',
       });
 
       expect(response).toEqual([GROUP_FIXTURE]);
@@ -132,6 +134,7 @@ describe('group API', () => {
         const response = await getFilteredGroups({
           category: ['study', 'project'],
           isFilterCompleted: true,
+          tag: 'test',
         });
 
         expect(response).toEqual([GROUP_FIXTURE]);
@@ -143,6 +146,7 @@ describe('group API', () => {
         const response = await getFilteredGroups({
           category: ['study', 'project'],
           isFilterCompleted: false,
+          tag: 'test',
         });
 
         expect(response).toEqual([GROUP_FIXTURE]);
@@ -162,6 +166,83 @@ describe('group API', () => {
       const response = await getUserRecruitedGroups('userUid');
 
       expect(response).toEqual([GROUP_FIXTURE]);
+    });
+  });
+
+  describe('getInfiniteUserRecruitedGroups', () => {
+    const lastVisibleId = 'lastVisibleId';
+
+    context('"lastUid"가 존재하지 않는 경우', () => {
+      beforeEach(() => {
+        (getDocs as jest.Mock).mockImplementationOnce(() => ({
+          docs: [{
+            ...GROUP_FIXTURE,
+            id: lastVisibleId,
+          }],
+        }));
+        (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+      });
+
+      it('그룹 리스트가 반환되어야만 한다', async () => {
+        const response = await getInfiniteUserRecruitedGroups('userUid', {
+          perPage: 10,
+        });
+
+        expect(response).toEqual({
+          items: [GROUP_FIXTURE],
+          lastUid: lastVisibleId,
+        });
+      });
+    });
+
+    context('"lastUid"가 존재하는 경우', () => {
+      context('empty가 true이거나 docs 길이가 perPage보다 작을 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: true,
+            docs: [{
+              ...GROUP_FIXTURE,
+              id: lastVisibleId,
+            }],
+          }));
+          (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+        });
+
+        it('그룹 리스트가 반환되어야만 한다', async () => {
+          const response = await getInfiniteUserRecruitedGroups('userUid', {
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [GROUP_FIXTURE],
+          });
+        });
+      });
+
+      context('empty가 false이고 docs 길이가 perPage보다 클 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: false,
+            docs: [{
+              ...GROUP_FIXTURE,
+              id: lastVisibleId,
+            }],
+          }));
+          (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+        });
+
+        it('그룹 리스트가 반환되어야만 한다', async () => {
+          const response = await getInfiniteUserRecruitedGroups('userUid', {
+            perPage: 0,
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [GROUP_FIXTURE],
+            lastUid: lastVisibleId,
+          });
+        });
+      });
     });
   });
 

@@ -66,3 +66,11 @@ export const trueOrFalse = (value?: string | null | number | boolean): boolean =
 
   return true;
 };
+
+export const checkEmpty = <T>(value?: T[]): T[] => {
+  if (!value || !value.length) {
+    return [];
+  }
+
+  return value;
+};
