@@ -24,27 +24,13 @@ describe('useFetchAlarms', () => {
     (getUserAlarm as jest.Mock).mockImplementation(() => (given.alarms));
   });
 
-  context('useQuery반환값이 존재하지 않는 경우', () => {
-    given('alarms', () => null);
+  given('alarms', () => [ALARM_FIXTURE]);
 
-    it('빈 배열을 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchAlarmsHook();
+  it('alarms에 대한 정보를 반환해야만 한다', async () => {
+    const { result, waitFor } = useFetchAlarmsHook();
 
-      await waitFor(() => result.current.isSuccess);
+    await waitFor(() => result.current.isSuccess);
 
-      expect(result.current.data).toEqual([]);
-    });
-  });
-
-  context('useQuery반환값이 존재하는 경우', () => {
-    given('alarms', () => [ALARM_FIXTURE]);
-
-    it('alarms에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchAlarmsHook();
-
-      await waitFor(() => result.current.isSuccess);
-
-      expect(result.current.data).toEqual([ALARM_FIXTURE]);
-    });
+    expect(result.current.data).toEqual([ALARM_FIXTURE]);
   });
 });
