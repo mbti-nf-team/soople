@@ -7,3 +7,5 @@ export const deleteApplicant = jest.fn();
 export const putApplicant = jest.fn();
 
 export const getUserAppliedGroups = jest.fn();
+
+export const getInfiniteUserAppliedGroups = jest.fn();

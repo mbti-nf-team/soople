@@ -6,16 +6,16 @@ import { FirestoreError } from 'firebase/firestore';
 
 import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';
-import { getInfiniteUserRecruitedGroups } from '@/services/api/group';
+import { getInfiniteUserAppliedGroups } from '@/services/api/applicants';
 import { checkEmpty } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
-interface UserRecruitedGroupsRequest extends InfiniteRequest {
+interface UserAppliedGroupsRequest extends InfiniteRequest {
   userUid?: string;
 }
 
-function useInfiniteFetchUserRecruitedGroups({ userUid, perPage }: UserRecruitedGroupsRequest) {
+function useInfiniteFetchUserAppliedGroups({ userUid, perPage }: UserAppliedGroupsRequest) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const { ref, inView } = useInView({
     root: wrapperRef.current,
@@ -23,8 +23,8 @@ function useInfiniteFetchUserRecruitedGroups({ userUid, perPage }: UserRecruited
   });
 
   const query = useInfiniteQuery<InfiniteResponse<Group>, FirestoreError>(
-    ['recruitedGroups', { userUid, perPage }],
-    ({ pageParam }) => getInfiniteUserRecruitedGroups(userUid as string, {
+    ['appliedGroups', { userUid, perPage }],
+    ({ pageParam }) => getInfiniteUserAppliedGroups(userUid as string, {
       perPage,
       lastUid: pageParam,
     }),
@@ -41,7 +41,7 @@ function useInfiniteFetchUserRecruitedGroups({ userUid, perPage }: UserRecruited
   useCatchFirestoreErrorWithToast({
     error,
     isError,
-    defaultErrorMessage: '모집한 팀을 불러오는데 실패했어요!',
+    defaultErrorMessage: '신청한 팀을 불러오는데 실패했어요!',
   });
 
   useEffect(() => {
@@ -65,4 +65,4 @@ function useInfiniteFetchUserRecruitedGroups({ userUid, perPage }: UserRecruited
   }), [query, ref, wrapperRef]);
 }
 
-export default useInfiniteFetchUserRecruitedGroups;
+export default useInfiniteFetchUserAppliedGroups;
