@@ -6,7 +6,7 @@ import { ApplicantFields } from '@/models/group';
 import { formatCreatedAt } from '@/utils/firestore';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
-import FIXTURE_GROUP from '../../../fixtures/group';
+import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import { collectionRef } from '../firebase';
 
@@ -14,6 +14,7 @@ import {
   deleteApplicant,
   getApplicants,
   getAppliedGroups,
+  getInfiniteUserAppliedGroups,
   getUserAppliedGroups,
   postAddApplicant,
   putApplicant,
@@ -91,7 +92,7 @@ describe('applicants API', () => {
     } as unknown as QueryDocumentSnapshot<DocumentData>;
 
     beforeEach(() => {
-      (getGroupDetail as jest.Mock).mockResolvedValue(FIXTURE_GROUP);
+      (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
         docs: [doc],
       }));
@@ -100,7 +101,94 @@ describe('applicants API', () => {
     it('그룹 리스트가 반환되어야만 한다', async () => {
       const response = await getUserAppliedGroups('userUid');
 
-      expect(response).toEqual([FIXTURE_GROUP]);
+      expect(response).toEqual([GROUP_FIXTURE]);
+    });
+  });
+
+  describe('getInfiniteUserAppliedGroups', () => {
+    const lastVisibleId = 'lastVisibleId';
+    const groupId = '1';
+
+    const doc = {
+      data: () => ({
+        groupId,
+      }),
+    } as unknown as QueryDocumentSnapshot<DocumentData>;
+
+    context('"lastUid"가 존재하지 않는 경우', () => {
+      beforeEach(() => {
+        (getDocs as jest.Mock).mockImplementationOnce(() => ({
+          docs: [{
+            ...GROUP_FIXTURE,
+            ...doc,
+            id: lastVisibleId,
+          }],
+        }));
+        (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
+      });
+
+      it('그룹 리스트가 반환되어야만 한다', async () => {
+        const response = await getInfiniteUserAppliedGroups('userUid', {
+          perPage: 10,
+        });
+
+        expect(response).toEqual({
+          items: [GROUP_FIXTURE],
+          lastUid: lastVisibleId,
+        });
+      });
+    });
+
+    context('"lastUid"가 존재하는 경우', () => {
+      context('empty가 true이거나 docs 길이가 perPage보다 작을 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: true,
+            docs: [{
+              ...GROUP_FIXTURE,
+              ...doc,
+              id: lastVisibleId,
+            }],
+          }));
+          (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
+        });
+
+        it('그룹 리스트가 반환되어야만 한다', async () => {
+          const response = await getInfiniteUserAppliedGroups('userUid', {
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [GROUP_FIXTURE],
+          });
+        });
+      });
+
+      context('empty가 false이고 docs 길이가 perPage보다 클 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: false,
+            docs: [{
+              ...GROUP_FIXTURE,
+              ...doc,
+              id: lastVisibleId,
+            }],
+          }));
+          (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
+        });
+
+        it('그룹 리스트가 반환되어야만 한다', async () => {
+          const response = await getInfiniteUserAppliedGroups('userUid', {
+            perPage: 0,
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [GROUP_FIXTURE],
+            lastUid: lastVisibleId,
+          });
+        });
+      });
     });
   });
 
@@ -141,13 +229,13 @@ describe('applicants API', () => {
     } as unknown as QueryDocumentSnapshot<DocumentData>;
 
     beforeEach(() => {
-      (getGroupDetail as jest.Mock).mockResolvedValue(FIXTURE_GROUP);
+      (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
     });
 
     it('그룹을 반환되어야만 한다', async () => {
       const response = await getAppliedGroups(doc);
 
-      expect(response).toEqual(FIXTURE_GROUP);
+      expect(response).toEqual(GROUP_FIXTURE);
       expect(getGroupDetail).toBeCalledWith(groupId);
     });
   });
