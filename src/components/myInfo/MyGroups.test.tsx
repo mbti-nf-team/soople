@@ -7,7 +7,6 @@ import MyGroups from './MyGroups';
 describe('MyGroups', () => {
   const handleClick = jest.fn();
   const lastItemRef = jest.fn();
-  // const wrapperRef = createRef<HTMLDivElement>();
 
   const MockComponent = () => <>Component</>;
 
