@@ -1,3 +1,5 @@
+import { RefObject } from 'react';
+
 import type { ParsedUrlQuery } from 'querystring';
 
 export interface GroupQuery extends ParsedUrlQuery {
@@ -22,4 +24,9 @@ export interface InfiniteResponse<T> {
 export interface InfiniteRequest {
   perPage?: number;
   lastUid?: string;
+}
+
+export interface InfiniteRefState<T> {
+  lastItemRef: (node?: Element | null | undefined) => void;
+  wrapperRef?: RefObject<T>;
 }

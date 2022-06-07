@@ -6,6 +6,7 @@ import MyGroups from './MyGroups';
 
 describe('MyGroups', () => {
   const handleClick = jest.fn();
+  const lastItemRef = jest.fn();
 
   const MockComponent = () => <>Component</>;
 
@@ -13,6 +14,9 @@ describe('MyGroups', () => {
     <MyGroups
       onClickGroup={handleClick}
       groups={given.groups}
+      refState={{
+        lastItemRef,
+      }}
     >
       <MockComponent />
     </MyGroups>
@@ -29,7 +33,9 @@ describe('MyGroups', () => {
   });
 
   context('group이 존재하는 경우', () => {
-    given('groups', () => [FIXTURE_GROUP]);
+    given('groups', () => [{
+      items: [FIXTURE_GROUP],
+    }]);
 
     it('팀에 대한 내용이 나타나야만 한다', () => {
       const { container } = renderMyGroups();

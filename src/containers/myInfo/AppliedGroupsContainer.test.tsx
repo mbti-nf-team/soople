@@ -1,8 +1,10 @@
+import { createRef } from 'react';
+
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
+import useInfiniteFetchUserAppliedGroups from '@/hooks/api/group/useInfiniteFetchUserAppliedGroups';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
 import FIXTURE_PROFILE from '../../../fixtures/profile';
@@ -12,7 +14,7 @@ import AppliedGroupsContainer from './AppliedGroupsContainer';
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
-jest.mock('@/hooks/api/group/useFetchUserAppliedGroups');
+jest.mock('@/hooks/api/group/useInfiniteFetchUserAppliedGroups');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('AppliedGroupsContainer', () => {
@@ -21,10 +23,20 @@ describe('AppliedGroupsContainer', () => {
   beforeEach(() => {
     mockPush.mockClear();
 
-    (useFetchUserAppliedGroups as jest.Mock).mockImplementation(() => ({
-      data: [FIXTURE_GROUP],
-      isLoading: given.isLoading,
-      isIdle: false,
+    (useInfiniteFetchUserAppliedGroups as jest.Mock).mockImplementation(() => ({
+      query: {
+        data: {
+          pages: [{
+            items: [FIXTURE_GROUP],
+          }],
+        },
+        isLoading: given.isLoading,
+        isIdle: false,
+      },
+      refState: {
+        lastItemRef: jest.fn(),
+        wrapperRef: createRef(),
+      },
     }));
     (useRouter as jest.Mock).mockImplementation(() => ({
       push: mockPush,

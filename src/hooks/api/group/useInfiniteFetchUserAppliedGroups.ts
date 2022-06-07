@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useMemo } from 'react';
 import { useInfiniteQuery } from 'react-query';
 
 import { FirestoreError } from 'firebase/firestore';
 
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';
 import { getInfiniteUserAppliedGroups } from '@/services/api/applicants';
@@ -16,12 +16,6 @@ interface UserAppliedGroupsRequest extends InfiniteRequest {
 }
 
 function useInfiniteFetchUserAppliedGroups({ userUid, perPage }: UserAppliedGroupsRequest) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const { ref, inView } = useInView({
-    root: wrapperRef.current,
-    rootMargin: '50px',
-  });
-
   const query = useInfiniteQuery<InfiniteResponse<Group>, FirestoreError>(
     ['appliedGroups', { userUid, perPage }],
     ({ pageParam }) => getInfiniteUserAppliedGroups(userUid as string, {
@@ -44,11 +38,14 @@ function useInfiniteFetchUserAppliedGroups({ userUid, perPage }: UserAppliedGrou
     defaultErrorMessage: '신청한 팀을 불러오는데 실패했어요!',
   });
 
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, hasNextPage]);
+  const refState = useIntersectionObserver({
+    intersectionOptions: {
+      rootMargin: '20px',
+    },
+    isRoot: true,
+    fetchNextPage,
+    hasNextPage,
+  });
 
   return useMemo(() => ({
     query: {
@@ -58,11 +55,8 @@ function useInfiniteFetchUserAppliedGroups({ userUid, perPage }: UserAppliedGrou
         pages: checkEmpty(query.data?.pages),
       },
     },
-    refState: {
-      lastItemRef: ref,
-      wrapperRef,
-    },
-  }), [query, ref, wrapperRef]);
+    refState,
+  }), [query, refState]);
 }
 
 export default useInfiniteFetchUserAppliedGroups;
