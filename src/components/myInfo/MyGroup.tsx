@@ -1,5 +1,5 @@
 import React, {
-  ReactElement,
+  ForwardedRef, forwardRef, memo, ReactElement,
 } from 'react';
 
 import { css } from '@emotion/react';
@@ -27,7 +27,7 @@ interface Props {
   onClick: (groupId: string) => void;
 }
 
-function MyGroup({ group, onClick }: Props): ReactElement {
+function MyGroup({ group, onClick }: Props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const {
     title, content, createdAt, groupId, numberApplicants,
     recruitmentEndDate, isCompleted, thumbnail, shortDescription,
@@ -54,6 +54,7 @@ function MyGroup({ group, onClick }: Props): ReactElement {
       role="listitem"
       onClick={() => onClick(groupId)}
       tabIndex={0}
+      ref={ref}
     >
       <div>
         <MyGroupContents>
@@ -79,7 +80,7 @@ function MyGroup({ group, onClick }: Props): ReactElement {
   );
 }
 
-export default MyGroup;
+export default memo(forwardRef<HTMLDivElement, Props>(MyGroup));
 
 const MyGroupWrapper = styled.div`
   cursor: pointer;

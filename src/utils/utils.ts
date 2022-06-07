@@ -21,6 +21,10 @@ export const hasBackground = (pathname: string) => pathname === '/' || pathname 
 
 export const emptyAThenB = (b: string, a?: string | null): string => a || b;
 
+export const targetFalseThenValue = (
+  target?: boolean,
+) => <T>(value: T): undefined | T => (target ? undefined : value);
+
 export const tomorrow = (date: Date) => {
   date.setDate(date.getDate() + 1);
 

@@ -6,23 +6,27 @@ import EmptyStateArea from '@/components/common/EmptyStateArea';
 import MyGroups from '@/components/myInfo/MyGroups';
 import MyGroupsSkeletonLoader from '@/components/myInfo/MyGroupsSkeletonLoader';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
+import useInfiniteFetchUserAppliedGroups from '@/hooks/api/group/useInfiniteFetchUserAppliedGroups';
 
 function AppliedGroupsContainer(): ReactElement {
   const router = useRouter();
   const { data: user } = useFetchUserProfile();
-  const { data: groups, isLoading, isIdle } = useFetchUserAppliedGroups(user?.uid);
+  const { query, refState } = useInfiniteFetchUserAppliedGroups({
+    userUid: user?.uid,
+    perPage: 10,
+  });
 
   const onClickGroup = (groupId: string) => router.push(`/detail/${groupId}`);
 
-  if (isLoading || isIdle) {
+  if (query.isLoading || query.isIdle) {
     return <MyGroupsSkeletonLoader />;
   }
 
   return (
     <MyGroups
       onClickGroup={onClickGroup}
-      groups={groups}
+      groups={query.data.pages}
+      refState={refState}
     >
       <EmptyStateArea
         emptyText="신청한 팀이 없어요."

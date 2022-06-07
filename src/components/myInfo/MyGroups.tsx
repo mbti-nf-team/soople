@@ -1,40 +1,61 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { memo, PropsWithChildren, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 import { isEmpty } from 'ramda';
 
+import { InfiniteRefState, InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';
-import { DetailLayout } from '@/styles/Layout';
 import palette from '@/styles/palette';
+import { mq2 } from '@/styles/responsive';
+import { targetFalseThenValue } from '@/utils/utils';
 
 import MyGroup from './MyGroup';
 
 interface Props {
-  groups: Group[];
+  groups: InfiniteResponse<Group>[];
   onClickGroup: (groupId: string) => void;
+  refState: InfiniteRefState<HTMLDivElement>;
 }
 
-function MyGroups({ groups, onClickGroup, children }: PropsWithChildren<Props>): ReactElement {
-  if (isEmpty(groups)) {
+function MyGroups({
+  groups, onClickGroup, refState, children,
+}: PropsWithChildren<Props>): ReactElement {
+  if (isEmpty(groups) || isEmpty(groups[0].items)) {
     return <>{children}</>;
   }
 
   return (
     <MyGroupLayout>
-      {groups.map((group) => (
-        <MyGroup
-          key={group.groupId}
-          group={group}
-          onClick={onClickGroup}
-        />
+      {groups.map(({ items }) => (
+        items.map((group, index) => {
+          const isLastItem = index === items.length - 1;
+
+          return (
+            <MyGroup
+              key={group.groupId}
+              group={group}
+              onClick={onClickGroup}
+              ref={targetFalseThenValue(!isLastItem)(refState.lastItemRef)}
+            />
+          );
+        })
       ))}
     </MyGroupLayout>
   );
 }
 
-export default MyGroups;
+export default memo(MyGroups);
 
-export const MyGroupLayout = styled(DetailLayout)`
+export const MyGroupLayout = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  ${mq2({
+    width: ['calc(100% - 3rem)', '686px'],
+  })};
+
   & > :first-of-type {
     padding-top : 40px;
   }
