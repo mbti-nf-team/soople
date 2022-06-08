@@ -54,7 +54,8 @@ export const getApplicants = async (groupId: string) => {
   return response.docs.map(formatCreatedAt) as Applicant[];
 };
 
-export const getUserAppliedGroups = async (userUid: string) => {
+// TODO - API 삭제가 필요할 듯
+export const getUserAppliedGroupCount = async (userUid: string) => {
   const getQuery = query(
     collectionRef(APPLICANTS),
     where('applicant.uid', '==', userUid),
@@ -65,10 +66,10 @@ export const getUserAppliedGroups = async (userUid: string) => {
 
   const appliedGroups = await Promise.all(response.docs.map(getAppliedGroups));
 
-  return appliedGroups.filter((group) => !!group) as Group[];
+  return appliedGroups.filter((group) => !!group).length;
 };
 
-export const getInfiniteUserAppliedGroups = async (userUid: string, {
+export const getUserAppliedGroups = async (userUid: string, {
   perPage = 10, lastUid,
 }: InfiniteRequest): Promise<InfiniteResponse<Group>> => {
   const applicantsRef = collectionRef(APPLICANTS);

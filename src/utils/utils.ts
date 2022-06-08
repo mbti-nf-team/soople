@@ -17,6 +17,14 @@ export const stringToExcludeNull = (value?: string | null): string => {
   return value;
 };
 
+export const checkNumNull = (value?: number | null): number => {
+  if (!value) {
+    return 0;
+  }
+
+  return value;
+};
+
 export const hasBackground = (pathname: string) => pathname === '/' || pathname === '/404' || pathname === '/500';
 
 export const emptyAThenB = (b: string, a?: string | null): string => a || b;

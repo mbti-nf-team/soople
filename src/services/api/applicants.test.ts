@@ -14,7 +14,7 @@ import {
   deleteApplicant,
   getApplicants,
   getAppliedGroups,
-  getInfiniteUserAppliedGroups,
+  getUserAppliedGroupCount,
   getUserAppliedGroups,
   postAddApplicant,
   putApplicant,
@@ -82,7 +82,7 @@ describe('applicants API', () => {
     });
   });
 
-  describe('getUserAppliedGroups', () => {
+  describe('getUserAppliedGroupCount', () => {
     const groupId = '1';
 
     const doc = {
@@ -95,17 +95,18 @@ describe('applicants API', () => {
       (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
         docs: [doc],
+        size: 1,
       }));
     });
 
-    it('그룹 리스트가 반환되어야만 한다', async () => {
-      const response = await getUserAppliedGroups('userUid');
+    it('그룹 리스트 개수를 반환해야만 한다', async () => {
+      const response = await getUserAppliedGroupCount('userUid');
 
-      expect(response).toEqual([GROUP_FIXTURE]);
+      expect(response).toBe(1);
     });
   });
 
-  describe('getInfiniteUserAppliedGroups', () => {
+  describe('getUserAppliedGroups', () => {
     const lastVisibleId = 'lastVisibleId';
     const groupId = '1';
 
@@ -128,7 +129,7 @@ describe('applicants API', () => {
       });
 
       it('그룹 리스트가 반환되어야만 한다', async () => {
-        const response = await getInfiniteUserAppliedGroups('userUid', {
+        const response = await getUserAppliedGroups('userUid', {
           perPage: 10,
         });
 
@@ -154,7 +155,7 @@ describe('applicants API', () => {
         });
 
         it('그룹 리스트가 반환되어야만 한다', async () => {
-          const response = await getInfiniteUserAppliedGroups('userUid', {
+          const response = await getUserAppliedGroups('userUid', {
             lastUid: lastVisibleId,
           });
 
@@ -178,7 +179,7 @@ describe('applicants API', () => {
         });
 
         it('그룹 리스트가 반환되어야만 한다', async () => {
-          const response = await getInfiniteUserAppliedGroups('userUid', {
+          const response = await getUserAppliedGroups('userUid', {
             perPage: 0,
             lastUid: lastVisibleId,
           });

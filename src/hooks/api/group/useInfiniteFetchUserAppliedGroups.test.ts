@@ -2,7 +2,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { renderHook } from '@testing-library/react-hooks';
 
-import { getInfiniteUserAppliedGroups } from '@/services/api/applicants';
+import { getUserAppliedGroups } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
 
 import FIXTURE_GROUP from '../../../../fixtures/group';
@@ -30,18 +30,18 @@ describe('useInfiniteFetchUserAppliedGroups', () => {
       inView: given.inView,
     }));
 
-    (getInfiniteUserAppliedGroups as jest.Mock).mockImplementation(() => (responseGroups));
+    (getUserAppliedGroups as jest.Mock).mockImplementation(() => (responseGroups));
   });
 
   context('inView가 true인 경우', () => {
     given('inView', () => true);
 
-    it('getInfiniteUserAppliedGroups가 두 번 호출 후 반환해야만 한다', async () => {
+    it('getUserAppliedGroups가 두 번 호출 후 반환해야만 한다', async () => {
       const { result, waitFor } = useInfiniteFetchUserAppliedGroupsHook();
 
       await waitFor(() => result.current.query.isSuccess);
 
-      expect(getInfiniteUserAppliedGroups).toBeCalledTimes(2);
+      expect(getUserAppliedGroups).toBeCalledTimes(2);
       expect(result.current.query.data?.pages).toEqual([
         responseGroups, responseGroups,
       ]);
@@ -51,12 +51,12 @@ describe('useInfiniteFetchUserAppliedGroups', () => {
   context('inView가 false인 경우', () => {
     given('inView', () => false);
 
-    it('getInfiniteUserAppliedGroups를 한 번 호출 후 반환해야만 한다', async () => {
+    it('getUserAppliedGroups를 한 번 호출 후 반환해야만 한다', async () => {
       const { result, waitFor } = useInfiniteFetchUserAppliedGroupsHook();
 
       await waitFor(() => result.current.query.isSuccess);
 
-      expect(getInfiniteUserAppliedGroups).toBeCalledTimes(1);
+      expect(getUserAppliedGroups).toBeCalledTimes(1);
       expect(result.current.query.data?.pages).toEqual([responseGroups]);
     });
   });

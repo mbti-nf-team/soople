@@ -8,7 +8,7 @@ import {
   getFilteredGroups,
   getGroupDetail,
   getGroups,
-  getInfiniteUserRecruitedGroups,
+  getUserRecruitedGroupCount,
   getUserRecruitedGroups,
   patchCompletedGroup,
   patchEditGroup,
@@ -154,22 +154,23 @@ describe('group API', () => {
     });
   });
 
-  describe('getUserRecruitedGroups', () => {
+  describe('getUserRecruitedGroupCount', () => {
     beforeEach(() => {
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
         docs: [GROUP_FIXTURE],
+        size: 1,
       }));
       (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
     });
 
-    it('그룹 리스트가 반환되어야만 한다', async () => {
-      const response = await getUserRecruitedGroups('userUid');
+    it('그룹 리스트의 개수를 반환되어야만 한다', async () => {
+      const response = await getUserRecruitedGroupCount('userUid');
 
-      expect(response).toEqual([GROUP_FIXTURE]);
+      expect(response).toBe(1);
     });
   });
 
-  describe('getInfiniteUserRecruitedGroups', () => {
+  describe('getUserRecruitedGroups', () => {
     const lastVisibleId = 'lastVisibleId';
 
     context('"lastUid"가 존재하지 않는 경우', () => {
@@ -184,7 +185,7 @@ describe('group API', () => {
       });
 
       it('그룹 리스트가 반환되어야만 한다', async () => {
-        const response = await getInfiniteUserRecruitedGroups('userUid', {
+        const response = await getUserRecruitedGroups('userUid', {
           perPage: 10,
         });
 
@@ -209,7 +210,7 @@ describe('group API', () => {
         });
 
         it('그룹 리스트가 반환되어야만 한다', async () => {
-          const response = await getInfiniteUserRecruitedGroups('userUid', {
+          const response = await getUserRecruitedGroups('userUid', {
             lastUid: lastVisibleId,
           });
 
@@ -232,7 +233,7 @@ describe('group API', () => {
         });
 
         it('그룹 리스트가 반환되어야만 한다', async () => {
-          const response = await getInfiniteUserRecruitedGroups('userUid', {
+          const response = await getUserRecruitedGroups('userUid', {
             perPage: 0,
             lastUid: lastVisibleId,
           });

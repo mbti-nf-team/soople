@@ -6,7 +6,7 @@ import { FirestoreError } from 'firebase/firestore';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';
-import { getInfiniteUserAppliedGroups } from '@/services/api/applicants';
+import { getUserAppliedGroups } from '@/services/api/applicants';
 import { checkEmpty } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
@@ -18,7 +18,7 @@ interface UserAppliedGroupsRequest extends InfiniteRequest {
 function useInfiniteFetchUserAppliedGroups({ userUid, perPage }: UserAppliedGroupsRequest) {
   const query = useInfiniteQuery<InfiniteResponse<Group>, FirestoreError>(
     ['appliedGroups', { userUid, perPage }],
-    ({ pageParam }) => getInfiniteUserAppliedGroups(userUid as string, {
+    ({ pageParam }) => getUserAppliedGroups(userUid as string, {
       perPage,
       lastUid: pageParam,
     }),

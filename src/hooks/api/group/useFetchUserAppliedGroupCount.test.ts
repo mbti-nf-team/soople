@@ -1,15 +1,15 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { getUserAppliedGroups } from '@/services/api/applicants';
+import { getUserAppliedGroupCount } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
 
-import FIXTURE_GROUP from '../../../../fixtures/group';
-
-import useFetchUserAppliedGroups from './useFetchUserAppliedGroups';
+import useFetchUserAppliedGroups from './useFetchUserAppliedGroupCount';
 
 jest.mock('@/services/api/applicants');
 
 describe('useFetchUserAppliedGroups', () => {
+  const count = 2;
+
   const useFetchUserAppliedGroupsHook = () => renderHook(() => useFetchUserAppliedGroups('userUid'), {
     wrapper,
   });
@@ -17,15 +17,13 @@ describe('useFetchUserAppliedGroups', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (getUserAppliedGroups as jest.Mock).mockImplementation(() => (given.groups));
+    (getUserAppliedGroupCount as jest.Mock).mockImplementation(() => (count));
   });
 
-  given('groups', () => [FIXTURE_GROUP]);
-
-  it('groups에 대한 정보를 반환해야만 한다', async () => {
+  it('신청한 groups에 대한 개수를 반환해야만 한다', async () => {
     const { result, waitFor } = useFetchUserAppliedGroupsHook();
     await waitFor(() => result.current.isSuccess);
 
-    expect(result.current.data).toEqual([FIXTURE_GROUP]);
+    expect(result.current.data).toBe(count);
   });
 });
