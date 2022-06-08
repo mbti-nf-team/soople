@@ -82,7 +82,7 @@ export const getFilteredGroups = async (condition: FilterGroupsCondition) => {
   return filteredGroups;
 };
 
-export const getUserRecruitedGroups = async (userUid: string) => {
+export const getUserRecruitedGroupCount = async (userUid: string) => {
   const getQuery = query(
     collectionRef(GROUPS),
     where('writer.uid', '==', userUid),
@@ -91,12 +91,10 @@ export const getUserRecruitedGroups = async (userUid: string) => {
 
   const response = await getDocs(getQuery);
 
-  const recruitedGroups = response.docs.map(formatGroup) as Group[];
-
-  return recruitedGroups;
+  return response.size;
 };
 
-export const getInfiniteUserRecruitedGroups = async (userUid: string, {
+export const getUserRecruitedGroups = async (userUid: string, {
   perPage = 10, lastUid,
 }: InfiniteRequest): Promise<InfiniteResponse<Group>> => {
   const groupsRef = collectionRef(GROUPS);

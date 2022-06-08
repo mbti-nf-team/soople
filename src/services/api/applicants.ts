@@ -54,7 +54,7 @@ export const getApplicants = async (groupId: string) => {
   return response.docs.map(formatCreatedAt) as Applicant[];
 };
 
-export const getUserAppliedGroups = async (userUid: string) => {
+export const getUserAppliedGroupCount = async (userUid: string) => {
   const getQuery = query(
     collectionRef(APPLICANTS),
     where('applicant.uid', '==', userUid),
@@ -63,12 +63,10 @@ export const getUserAppliedGroups = async (userUid: string) => {
 
   const response = await getDocs(getQuery);
 
-  const appliedGroups = await Promise.all(response.docs.map(getAppliedGroups));
-
-  return appliedGroups.filter((group) => !!group) as Group[];
+  return response.size;
 };
 
-export const getInfiniteUserAppliedGroups = async (userUid: string, {
+export const getUserAppliedGroups = async (userUid: string, {
   perPage = 10, lastUid,
 }: InfiniteRequest): Promise<InfiniteResponse<Group>> => {
   const applicantsRef = collectionRef(APPLICANTS);
