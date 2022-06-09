@@ -24,9 +24,10 @@ function AppliedGroupsContainer(): ReactElement {
 
   return (
     <MyGroups
-      onClickGroup={onClickGroup}
-      groups={query.data.pages}
       refState={refState}
+      groups={query.data.pages}
+      onClickGroup={onClickGroup}
+      isLoading={query.isFetchingNextPage}
     >
       <EmptyStateArea
         emptyText="신청한 팀이 없어요."
