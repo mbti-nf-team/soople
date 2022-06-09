@@ -1,10 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
-import SkeletonItem from '../common/SkeletonItem';
+import palette from '@/styles/palette';
+import { mq2 } from '@/styles/responsive';
 
-import { MyGroupLayout } from './MyGroups';
+import SkeletonItem from '../common/SkeletonItem';
 
 function MyGroupsSkeletonLoader(): ReactElement {
   return (
@@ -23,7 +24,7 @@ function MyGroupsSkeletonLoader(): ReactElement {
   );
 }
 
-export default MyGroupsSkeletonLoader;
+export default memo(MyGroupsSkeletonLoader);
 
 const MyGroupsSkeletonItemWrapper = styled.div`
   display: flex;
@@ -34,5 +35,33 @@ const MyGroupsSkeletonItemWrapper = styled.div`
   & > div {
     display: flex;
     flex-direction: column;
+  }
+`;
+
+export const MyGroupLayout = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  ${mq2({
+    width: ['calc(100% - 3rem)', '686px'],
+  })};
+
+  & > :first-of-type {
+    padding-top : 40px;
+  }
+
+  & > :last-of-type {
+    margin-bottom : 40px;
+  }
+  
+  & > :not(div:first-of-type) {
+    padding-top: 24px;
+  }
+
+  & > :not(div:last-of-type) {
+    padding-bottom: 24px;
+    border-bottom: 0.5px solid ${palette.accent2};
   }
 `;

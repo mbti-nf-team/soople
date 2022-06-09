@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
 
@@ -17,10 +17,24 @@ describe('MyGroups', () => {
       refState={{
         lastItemRef,
       }}
+      isLoading={given.isLoading}
     >
       <MockComponent />
     </MyGroups>
   ));
+
+  context('로딩중인 경우', () => {
+    given('groups', () => [{
+      items: [FIXTURE_GROUP],
+    }]);
+    given('isLoading', () => true);
+
+    it('skeleton loading이 나타나야만 한다', () => {
+      renderMyGroups();
+
+      expect(screen.getByTestId('skeleton-loader')).toBeInTheDocument();
+    });
+  });
 
   context('group이 존재하지 않는 경우', () => {
     given('groups', () => []);

@@ -24,9 +24,10 @@ function RecruitedGroupsContainer(): ReactElement {
 
   return (
     <MyGroups
-      onClickGroup={onClickGroup}
-      groups={query.data.pages}
       refState={refState}
+      groups={query.data.pages}
+      onClickGroup={onClickGroup}
+      isLoading={query.isFetchingNextPage}
     >
       <EmptyStateArea
         emptyText="모집한 팀이 없어요."
