@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { PropsWithChildren } from 'react';
 
 import styled from '@emotion/styled';
 import facepaint from 'facepaint';
@@ -12,6 +12,20 @@ const mq2 = facepaint([
   '@media(min-width: 700px)',
 ]);
 
+function Layout({ children, ...rest }: PropsWithChildren<unknown>) {
+  return (
+    <LayoutWrapper {...rest}>
+      {children}
+    </LayoutWrapper>
+  );
+}
+
+export const DetailLayout = styled(Layout)`
+  ${mq2({
+    width: ['calc(100% - 3rem)', '686px'],
+  })};
+`;
+
 const LayoutWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
@@ -19,18 +33,6 @@ const LayoutWrapper = styled.div`
   padding-right: 1rem;
   ${mq1({
     width: ['calc(100% - 3rem)', '1040px'],
-  })};
-`;
-
-const Layout = ({ children, ...rest }: PropsWithChildren<{}>): ReactElement => (
-  <LayoutWrapper {...rest}>
-    {children}
-  </LayoutWrapper>
-);
-
-export const DetailLayout = styled(Layout)`
-  ${mq2({
-    width: ['calc(100% - 3rem)', '686px'],
   })};
 `;
 

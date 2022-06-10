@@ -2,15 +2,19 @@ import {
   addDoc,
   deleteDoc,
   DocumentData,
+  getDoc,
   getDocs,
+  limit,
   orderBy,
   query,
   QueryDocumentSnapshot,
   serverTimestamp,
+  startAfter,
   updateDoc,
   where,
 } from 'firebase/firestore';
 
+import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Applicant, ApplicantFields, Group } from '@/models/group';
 import { formatCreatedAt } from '@/utils/firestore';
 
@@ -50,7 +54,8 @@ export const getApplicants = async (groupId: string) => {
   return response.docs.map(formatCreatedAt) as Applicant[];
 };
 
-export const getUserAppliedGroups = async (userUid: string) => {
+// TODO - API 삭제가 필요할 듯
+export const getUserAppliedGroupCount = async (userUid: string) => {
   const getQuery = query(
     collectionRef(APPLICANTS),
     where('applicant.uid', '==', userUid),
@@ -61,7 +66,58 @@ export const getUserAppliedGroups = async (userUid: string) => {
 
   const appliedGroups = await Promise.all(response.docs.map(getAppliedGroups));
 
-  return appliedGroups.filter((group) => group) as Group[];
+  return appliedGroups.filter((group) => !!group).length;
+};
+
+export const getUserAppliedGroups = async (userUid: string, {
+  perPage = 10, lastUid,
+}: InfiniteRequest): Promise<InfiniteResponse<Group>> => {
+  const applicantsRef = collectionRef(APPLICANTS);
+  const commonQueries = [where('applicant.uid', '==', userUid), orderBy('createdAt', 'desc')];
+
+  if (!lastUid) {
+    const getQuery = query(
+      applicantsRef,
+      ...commonQueries,
+      limit(perPage),
+    );
+
+    const response = await getDocs(getQuery);
+    const lastVisible = response.docs[response.docs.length - 1];
+
+    const appliedGroups = await Promise.all(response.docs.map(getAppliedGroups));
+
+    return {
+      items: appliedGroups.filter((group) => !!group) as Group[],
+      lastUid: lastVisible.id,
+    };
+  }
+
+  const lastApplicantsRef = await getDoc(docRef(APPLICANTS, lastUid));
+  const getQuery = query(
+    applicantsRef,
+    ...commonQueries,
+    startAfter(lastApplicantsRef),
+    limit(perPage),
+  );
+
+  const response = await getDocs(getQuery);
+
+  if (response.empty || response.docs.length < perPage) {
+    const appliedGroups = await Promise.all(response.docs.map(getAppliedGroups));
+
+    return {
+      items: appliedGroups.filter((group) => !!group) as Group[],
+    };
+  }
+
+  const lastVisible = response.docs[response.docs.length - 1];
+  const appliedGroups = await Promise.all(response.docs.map(getAppliedGroups));
+
+  return {
+    items: appliedGroups.filter((group) => !!group) as Group[],
+    lastUid: lastVisible.id,
+  };
 };
 
 export const putApplicant = async (applicantForm: Applicant) => {

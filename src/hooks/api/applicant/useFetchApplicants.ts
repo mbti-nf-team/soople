@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { GroupQuery } from '@/models';
 import { Applicant } from '@/models/group';
 import { getApplicants } from '@/services/api/applicants';
+import { checkEmpty } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -28,7 +29,7 @@ function useFetchApplicants() {
 
   return {
     ...query,
-    data: data ?? [],
+    data: checkEmpty(data),
   };
 }
 

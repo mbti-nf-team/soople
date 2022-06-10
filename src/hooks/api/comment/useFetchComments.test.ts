@@ -25,27 +25,13 @@ describe('useFetchComments', () => {
     (getGroupComments as jest.Mock).mockImplementation(() => (given.comments));
   });
 
-  context('useQuery반환값이 존재하지 않는 경우', () => {
-    given('comments', () => null);
+  given('comments', () => [FIXTURE_COMMENT]);
 
-    it('빈 배열을 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchCommentsHook();
+  it('comments에 대한 정보를 반환해야만 한다', async () => {
+    const { result, waitFor } = useFetchCommentsHook();
 
-      await waitFor(() => result.current.isSuccess);
+    await waitFor(() => result.current.isSuccess);
 
-      expect(result.current.data).toEqual([]);
-    });
-  });
-
-  context('useQuery반환값이 존재하는 경우', () => {
-    given('comments', () => [FIXTURE_COMMENT]);
-
-    it('comments에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchCommentsHook();
-
-      await waitFor(() => result.current.isSuccess);
-
-      expect(result.current.data).toEqual([FIXTURE_COMMENT]);
-    });
+    expect(result.current.data).toEqual([FIXTURE_COMMENT]);
   });
 });

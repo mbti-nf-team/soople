@@ -1,13 +1,15 @@
+import { createRef } from 'react';
+
 import { render } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
+import useInfiniteFetchUserAppliedGroups from '@/hooks/api/group/useInfiniteFetchUserAppliedGroups';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
 
 import AppliedPage from './applied.page';
 
-jest.mock('@/hooks/api/group/useFetchUserAppliedGroups');
+jest.mock('@/hooks/api/group/useInfiniteFetchUserAppliedGroups');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('AppliedPage', () => {
@@ -17,9 +19,20 @@ describe('AppliedPage', () => {
         uid: '1',
       },
     }));
-    (useFetchUserAppliedGroups as jest.Mock).mockImplementation(() => ({
-      data: [FIXTURE_GROUP],
-      isLoading: false,
+    (useInfiniteFetchUserAppliedGroups as jest.Mock).mockImplementation(() => ({
+      query: {
+        data: {
+          pages: [{
+            items: [FIXTURE_GROUP],
+          }],
+        },
+        isLoading: given.isLoading,
+        isIdle: false,
+      },
+      refState: {
+        lastItemRef: jest.fn(),
+        wrapperRef: createRef(),
+      },
     }));
   });
 

@@ -3,6 +3,8 @@ import { setCookie } from 'nookies';
 import GROUP_FIXTURE from '../../fixtures/group';
 
 import {
+  checkEmpty,
+  checkNumNull,
   emptyAThenB,
   hasBackground,
   isCurrentTimeBeforeEndDate,
@@ -11,6 +13,7 @@ import {
   isRecruiting,
   removeToken,
   stringToExcludeNull,
+  targetFalseThenValue,
   tomorrow,
   trueOrFalse,
   yesterday,
@@ -67,6 +70,24 @@ describe('stringToExcludeNull', () => {
   });
 });
 
+describe('checkNumNull', () => {
+  context('value가 null인 경우', () => {
+    it('0을 반환해야 한다', () => {
+      const result = checkNumNull(0);
+
+      expect(result).toBe(0);
+    });
+  });
+
+  context('value가 null이 아닌 경우', () => {
+    it('입력된 값이 반환되어야 한다', () => {
+      const result = checkNumNull(100);
+
+      expect(result).toBe(100);
+    });
+  });
+});
+
 describe('hasBackground', () => {
   context('pathname이 "/"이거나 "/404"이거나 "/500"인 경우', () => {
     it('true를 반환해야만 한다', () => {
@@ -103,6 +124,26 @@ describe('emptyAThenB', () => {
       const result = emptyAThenB(b, a);
 
       expect(result).toBe(a);
+    });
+  });
+});
+
+describe('targetFalseThenValue', () => {
+  const value = 'result';
+
+  context('target이 false인 경우', () => {
+    it('value를 그대로 반환해야만 한다', () => {
+      const result = targetFalseThenValue(false)(value);
+
+      expect(result).toBe(value);
+    });
+  });
+
+  context('target이 true인 경우', () => {
+    it('undefined를 반환해야만 한다', () => {
+      const result = targetFalseThenValue(true)(value);
+
+      expect(result).toBeUndefined();
     });
   });
 });
@@ -239,6 +280,26 @@ describe('trueOrFalse', () => {
       const result = trueOrFalse('test');
 
       expect(result).toBe(true);
+    });
+  });
+});
+
+describe('checkEmpty', () => {
+  context('value가 undefined이거나 빈 배열인 경우', () => {
+    it('빈 배열을 반환해야만 한다', () => {
+      const result = checkEmpty();
+
+      expect(result).toEqual([]);
+    });
+  });
+
+  context('value가 undefined이거나 빈 배열이 아닌 경우', () => {
+    const mockArray = ['test', 'test2'];
+
+    it('입력된 값이 반환되어야 한다', () => {
+      const result = checkEmpty(mockArray);
+
+      expect(result).toEqual(mockArray);
     });
   });
 });

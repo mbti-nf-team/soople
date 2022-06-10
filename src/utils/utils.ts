@@ -17,9 +17,21 @@ export const stringToExcludeNull = (value?: string | null): string => {
   return value;
 };
 
+export const checkNumNull = (value?: number | null): number => {
+  if (!value) {
+    return 0;
+  }
+
+  return value;
+};
+
 export const hasBackground = (pathname: string) => pathname === '/' || pathname === '/404' || pathname === '/500';
 
 export const emptyAThenB = (b: string, a?: string | null): string => a || b;
+
+export const targetFalseThenValue = (
+  target?: boolean,
+) => <T>(value: T): undefined | T => (target ? undefined : value);
 
 export const tomorrow = (date: Date) => {
   date.setDate(date.getDate() + 1);
@@ -65,4 +77,12 @@ export const trueOrFalse = (value?: string | null | number | boolean): boolean =
   }
 
   return true;
+};
+
+export const checkEmpty = <T>(value?: T[]): T[] => {
+  if (!value || !value.length) {
+    return [];
+  }
+
+  return value;
 };

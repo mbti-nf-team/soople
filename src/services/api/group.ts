@@ -3,13 +3,16 @@ import {
   deleteDoc,
   getDoc,
   getDocs,
+  limit,
   orderBy,
   query,
   serverTimestamp,
+  startAfter,
   updateDoc,
   where,
 } from 'firebase/firestore';
 
+import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Profile } from '@/models/auth';
 import {
   CompletedGroupForm,
@@ -79,7 +82,7 @@ export const getFilteredGroups = async (condition: FilterGroupsCondition) => {
   return filteredGroups;
 };
 
-export const getUserRecruitedGroups = async (userUid: string) => {
+export const getUserRecruitedGroupCount = async (userUid: string) => {
   const getQuery = query(
     collectionRef(GROUPS),
     where('writer.uid', '==', userUid),
@@ -88,9 +91,58 @@ export const getUserRecruitedGroups = async (userUid: string) => {
 
   const response = await getDocs(getQuery);
 
+  return response.size;
+};
+
+export const getUserRecruitedGroups = async (userUid: string, {
+  perPage = 10, lastUid,
+}: InfiniteRequest): Promise<InfiniteResponse<Group>> => {
+  const groupsRef = collectionRef(GROUPS);
+  const commonQueries = [where('writer.uid', '==', userUid), orderBy('createdAt', 'desc')];
+
+  if (!lastUid) {
+    const getQuery = query(
+      groupsRef,
+      ...commonQueries,
+      limit(perPage),
+    );
+
+    const response = await getDocs(getQuery);
+    const lastVisible = response.docs[response.docs.length - 1];
+
+    const recruitedGroups = response.docs.map(formatGroup) as Group[];
+
+    return {
+      items: recruitedGroups,
+      lastUid: lastVisible.id,
+    };
+  }
+
+  const lastGroupRef = await getDoc(docRef(GROUPS, lastUid));
+  const getQuery = query(
+    groupsRef,
+    ...commonQueries,
+    startAfter(lastGroupRef),
+    limit(perPage),
+  );
+
+  const response = await getDocs(getQuery);
+
+  if (response.empty || response.docs.length < perPage) {
+    const recruitedGroups = response.docs.map(formatGroup) as Group[];
+
+    return {
+      items: recruitedGroups,
+    };
+  }
+
+  const lastVisible = response.docs[response.docs.length - 1];
   const recruitedGroups = response.docs.map(formatGroup) as Group[];
 
-  return recruitedGroups;
+  return {
+    items: recruitedGroups,
+    lastUid: lastVisible.id,
+  };
 };
 
 export const patchNumberApplicants = async ({

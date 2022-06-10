@@ -1,50 +1,51 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { memo, PropsWithChildren, ReactElement } from 'react';
 
-import styled from '@emotion/styled';
 import { isEmpty } from 'ramda';
 
+import { InfiniteRefState, InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';
-import { DetailLayout } from '@/styles/Layout';
-import palette from '@/styles/palette';
+import { targetFalseThenValue } from '@/utils/utils';
 
 import MyGroup from './MyGroup';
+import MyGroupsSkeletonLoader, { MyGroupLayout } from './MyGroupsSkeletonLoader';
 
 interface Props {
-  groups: Group[];
+  groups: InfiniteResponse<Group>[];
   onClickGroup: (groupId: string) => void;
+  refState: InfiniteRefState<HTMLDivElement>;
+  isLoading?: boolean;
 }
 
-function MyGroups({ groups, onClickGroup, children }: PropsWithChildren<Props>): ReactElement {
-  if (isEmpty(groups)) {
+function MyGroups({
+  groups, onClickGroup, refState, isLoading, children,
+}: PropsWithChildren<Props>): ReactElement {
+  if (isEmpty(groups) || isEmpty(groups[0].items)) {
     return <>{children}</>;
   }
 
   return (
-    <MyGroupLayout>
-      {groups.map((group) => (
-        <MyGroup
-          key={group.groupId}
-          group={group}
-          onClick={onClickGroup}
-        />
-      ))}
-    </MyGroupLayout>
+    <>
+      <MyGroupLayout>
+        {groups.map(({ items }) => (
+          items.map((group, index) => {
+            const isLastItem = index === items.length - 1;
+
+            return (
+              <MyGroup
+                key={group.groupId}
+                group={group}
+                onClick={onClickGroup}
+                ref={targetFalseThenValue(!isLastItem)(refState.lastItemRef)}
+              />
+            );
+          })
+        ))}
+      </MyGroupLayout>
+      {isLoading && (
+        <MyGroupsSkeletonLoader />
+      )}
+    </>
   );
 }
 
-export default MyGroups;
-
-export const MyGroupLayout = styled(DetailLayout)`
-  & > :first-of-type {
-    padding-top : 40px;
-  }
-  
-  & > :not(div:first-of-type) {
-    padding-top: 24px;
-  }
-
-  & > :not(div:last-of-type) {
-    padding-bottom: 24px;
-    border-bottom: 0.5px solid ${palette.accent2};
-  }
-`;
+export default memo(MyGroups);

@@ -4,6 +4,7 @@ import { FirestoreError } from 'firebase/firestore';
 
 import { AlertAlarm } from '@/models/alarm';
 import { getUserAlertAlarm } from '@/services/api/alarm';
+import { checkEmpty } from '@/utils/utils';
 
 import useFetchUserProfile from '../auth/useFetchUserProfile';
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
@@ -25,7 +26,7 @@ function useFetchAlertAlarms() {
 
   return {
     ...query,
-    data: data ?? [],
+    data: checkEmpty(data),
   };
 }
 

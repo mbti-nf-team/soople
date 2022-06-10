@@ -1,17 +1,16 @@
 import { render } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useFetchUserAppliedGroups from '@/hooks/api/group/useFetchUserAppliedGroups';
-import useFetchUserRecruitedGroups from '@/hooks/api/group/useFetchUserRecruitedGroups';
+import useFetchUserAppliedGroupCount from '@/hooks/api/group/useFetchUserAppliedGroupCount';
+import useFetchUserRecruitedGroupCount from '@/hooks/api/group/useFetchUserRecruitedGroupCount';
 
-import FIXTURE_GROUP from '../../../fixtures/group';
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
 import MyInfoTabContainer from './MyInfoTabContainer';
 
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
-jest.mock('@/hooks/api/group/useFetchUserAppliedGroups');
-jest.mock('@/hooks/api/group/useFetchUserRecruitedGroups');
+jest.mock('@/hooks/api/group/useFetchUserAppliedGroupCount');
+jest.mock('@/hooks/api/group/useFetchUserRecruitedGroupCount');
 
 describe('MyInfoTabContainer', () => {
   beforeEach(() => {
@@ -19,12 +18,12 @@ describe('MyInfoTabContainer', () => {
       data: FIXTURE_PROFILE,
     }));
 
-    (useFetchUserAppliedGroups as jest.Mock).mockImplementation(() => ({
-      data: FIXTURE_GROUP,
+    (useFetchUserAppliedGroupCount as jest.Mock).mockImplementation(() => ({
+      data: 3,
     }));
 
-    (useFetchUserRecruitedGroups as jest.Mock).mockImplementation(() => ({
-      data: FIXTURE_GROUP,
+    (useFetchUserRecruitedGroupCount as jest.Mock).mockImplementation(() => ({
+      data: 0,
     }));
   });
 

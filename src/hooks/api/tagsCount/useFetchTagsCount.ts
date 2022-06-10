@@ -4,6 +4,7 @@ import { FirestoreError } from 'firebase/firestore';
 
 import { TagCount } from '@/models/group';
 import { getTagsCount } from '@/services/api/tagsCount';
+import { checkEmpty } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -20,7 +21,7 @@ function useFetchTagsCount() {
 
   return {
     ...query,
-    data: data ?? [],
+    data: checkEmpty(data),
   };
 }
 

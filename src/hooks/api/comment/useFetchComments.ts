@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { GroupQuery } from '@/models';
 import { Comment } from '@/models/group';
 import { getGroupComments } from '@/services/api/comment';
+import { checkEmpty } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -28,7 +29,7 @@ function useFetchComments() {
 
   return {
     ...query,
-    data: data ?? [],
+    data: checkEmpty(data),
   };
 }
 
