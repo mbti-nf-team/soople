@@ -1,4 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, {
+  ForwardedRef, forwardRef, memo, ReactElement,
+} from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -30,7 +32,7 @@ const groupCategory: { [K in Category | string]: string; } = {
   project: '프로젝트',
 };
 
-function AlarmItem({ alarm, onClick }: Props): ReactElement {
+function AlarmItem({ alarm, onClick }: Props, ref: ForwardedRef<HTMLAnchorElement>): ReactElement {
   const {
     group, createdAt, type, applicant, isViewed, uid,
   } = alarm;
@@ -59,7 +61,7 @@ function AlarmItem({ alarm, onClick }: Props): ReactElement {
 
   return (
     <Link href={alarmUrl} passHref>
-      <AlarmItemWrapper isViewed={isViewed} onClick={handleClick}>
+      <AlarmItemWrapper ref={ref} isViewed={isViewed} onClick={handleClick}>
         <AlarmItemThumbnail>
           {alarmThumbnail[type]}
         </AlarmItemThumbnail>
@@ -79,7 +81,7 @@ function AlarmItem({ alarm, onClick }: Props): ReactElement {
   );
 }
 
-export default AlarmItem;
+export default memo(forwardRef<HTMLAnchorElement, Props>(AlarmItem));
 
 const AlarmItemWrapper = styled.a<{ isViewed: boolean; }>`
   display: flex;

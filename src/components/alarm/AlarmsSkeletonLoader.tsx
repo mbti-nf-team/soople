@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -25,7 +25,7 @@ function AlarmsSkeletonLoader(): ReactElement {
   );
 }
 
-export default AlarmsSkeletonLoader;
+export default memo(AlarmsSkeletonLoader);
 
 const AlarmsSkeletonLoaderWrapper = styled.div`
   & > div {

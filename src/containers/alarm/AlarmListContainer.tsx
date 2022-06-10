@@ -2,23 +2,25 @@ import React, { ReactElement, useCallback } from 'react';
 
 import Alarms from '@/components/alarm/Alarms';
 import AlarmsSkeletonLoader from '@/components/alarm/AlarmsSkeletonLoader';
-import useFetchAlarms from '@/hooks/api/alarm/useFetchAlarms';
+import useInfiniteFetchAlarms from '@/hooks/api/alarm/useInfiniteFetchAlarms';
 import useUpdateAlarmViewed from '@/hooks/api/alarm/useUpdateAlarmViewed';
 
 function AlarmListContainer(): ReactElement {
-  const { data: alarms, isLoading, isIdle } = useFetchAlarms();
+  const { query, refState } = useInfiniteFetchAlarms();
   const { mutate: updateAlarm } = useUpdateAlarmViewed();
 
   const onClickAlarm = useCallback((alarmUid: string) => updateAlarm(alarmUid), [updateAlarm]);
 
-  if (isLoading || isIdle) {
+  if (query.isLoading || query.isIdle) {
     return <AlarmsSkeletonLoader />;
   }
 
   return (
     <Alarms
-      alarms={alarms}
+      refState={refState}
+      alarms={query.data.pages}
       onClickAlarm={onClickAlarm}
+      isLoading={query.isFetchingNextPage}
     />
   );
 }

@@ -1,8 +1,9 @@
 import {
-  addDoc, getDocs, orderBy, query, serverTimestamp, updateDoc, where,
+  addDoc, getDoc, getDocs, limit, orderBy, query, serverTimestamp, startAfter, updateDoc, where,
 } from 'firebase/firestore';
 
-import { AlarmForm, AlertAlarm } from '@/models/alarm';
+import { InfiniteRequest, InfiniteResponse } from '@/models';
+import { Alarm, AlarmForm, AlertAlarm } from '@/models/alarm';
 import { formatAlarm, formatCreatedAt } from '@/utils/firestore';
 
 import { collectionRef, docRef } from '../firebase';
@@ -19,18 +20,55 @@ export const postAddAlarm = async (form: AlarmForm) => {
   return id;
 };
 
-export const getUserAlarm = async (userUid: string) => {
+export const getUserAlarms = async (userUid: string, {
+  perPage = 10, lastUid,
+}: InfiniteRequest): Promise<InfiniteResponse<Alarm>> => {
+  const alarmsRef = collectionRef(ALARMS);
+  const commonQueries = [where('userUid', '==', userUid), orderBy('createdAt', 'desc')];
+
+  if (!lastUid) {
+    const getQuery = query(
+      alarmsRef,
+      ...commonQueries,
+      limit(perPage),
+    );
+
+    const response = await getDocs(getQuery);
+    const lastVisible = response.docs[response.docs.length - 1];
+
+    const alarms = await Promise.all([...response.docs.map(formatAlarm)]);
+
+    return {
+      items: alarms,
+      lastUid: lastVisible.id,
+    };
+  }
+
+  const lastGroupRef = await getDoc(docRef(ALARMS, lastUid));
   const getQuery = query(
-    collectionRef(ALARMS),
-    where('userUid', '==', userUid),
-    orderBy('createdAt', 'desc'),
+    alarmsRef,
+    ...commonQueries,
+    startAfter(lastGroupRef),
+    limit(perPage),
   );
 
   const response = await getDocs(getQuery);
 
-  const alarm = Promise.all([...response.docs.map(formatAlarm)]);
+  if (response.empty || response.docs.length < perPage) {
+    const alarms = await Promise.all([...response.docs.map(formatAlarm)]);
 
-  return alarm;
+    return {
+      items: alarms,
+    };
+  }
+
+  const lastVisible = response.docs[response.docs.length - 1];
+  const alarms = await Promise.all([...response.docs.map(formatAlarm)]);
+
+  return {
+    items: alarms,
+    lastUid: lastVisible.id,
+  };
 };
 
 export const getUserAlertAlarm = async (userUid: string) => {

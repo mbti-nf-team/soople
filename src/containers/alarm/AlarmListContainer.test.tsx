@@ -1,13 +1,15 @@
+import { createRef } from 'react';
+
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import useFetchAlarms from '@/hooks/api/alarm/useFetchAlarms';
+import useInfiniteFetchAlarms from '@/hooks/api/alarm/useInfiniteFetchAlarms';
 import useUpdateAlarmViewed from '@/hooks/api/alarm/useUpdateAlarmViewed';
 
 import ALARM_FIXTURE from '../../../fixtures/alarm';
 
 import AlarmListContainer from './AlarmListContainer';
 
-jest.mock('@/hooks/api/alarm/useFetchAlarms');
+jest.mock('@/hooks/api/alarm/useInfiniteFetchAlarms');
 jest.mock('@/hooks/api/alarm/useUpdateAlarmViewed');
 jest.mock('next/link', () => ({ children }: any) => children);
 
@@ -17,10 +19,20 @@ describe('AlarmListContainer', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (useFetchAlarms as jest.Mock).mockImplementation(() => ({
-      isLoading: given.isLoading,
-      isIdle: false,
-      data: [ALARM_FIXTURE],
+    (useInfiniteFetchAlarms as jest.Mock).mockImplementation(() => ({
+      query: {
+        data: {
+          pages: [{
+            items: [ALARM_FIXTURE],
+          }],
+        },
+        isLoading: given.isLoading,
+        isIdle: false,
+      },
+      refState: {
+        lastItemRef: jest.fn(),
+        wrapperRef: createRef(),
+      },
     }));
     (useUpdateAlarmViewed as jest.Mock).mockImplementation(() => ({
       mutate,
@@ -47,7 +59,7 @@ describe('AlarmListContainer', () => {
     it('알람 리스트에 대한 정보가 나타나야만 한다', () => {
       const { container } = renderAlarmListContainer();
 
-      expect(useFetchAlarms).toBeCalled();
+      expect(useInfiniteFetchAlarms).toBeCalled();
       expect(container).toHaveTextContent(ALARM_FIXTURE.group.title);
     });
 
