@@ -10,7 +10,7 @@ import FIXTURE_GROUP from '../../../fixtures/group';
 import { collectionRef } from '../firebase';
 
 import {
-  getUserAlarm, getUserAlertAlarm, patchAlarmViewed, postAddAlarm,
+  getUserAlarms, getUserAlertAlarm, patchAlarmViewed, postAddAlarm,
 } from './alarm';
 
 jest.mock('../firebase');
@@ -54,19 +54,80 @@ describe('alarm API', () => {
     });
   });
 
-  describe('getUserAlarm', () => {
-    beforeEach(() => {
-      (getDocs as jest.Mock).mockImplementationOnce(() => ({
-        docs: [ALARM_FIXTURE],
-      }));
-      (formatAlarm as jest.Mock).mockResolvedValue(ALARM_FIXTURE);
+  describe('getUserAlarms', () => {
+    const lastVisibleId = 'lastVisibleId';
+
+    context('"lastUid"가 존재하지 않는 경우', () => {
+      beforeEach(() => {
+        (getDocs as jest.Mock).mockImplementationOnce(() => ({
+          docs: [{
+            ...ALARM_FIXTURE,
+            id: lastVisibleId,
+          }],
+        }));
+        (formatAlarm as jest.Mock).mockReturnValueOnce(ALARM_FIXTURE);
+      });
+
+      it('알람 리스트가 반환되어야만 한다', async () => {
+        const response = await getUserAlarms('userUid', {
+          perPage: 10,
+        });
+
+        expect(response).toEqual({
+          items: [ALARM_FIXTURE],
+          lastUid: lastVisibleId,
+        });
+      });
     });
 
-    it('알람 리스트가 반환되어야만 한다', async () => {
-      const response = await getUserAlarm('userUid');
+    context('"lastUid"가 존재하는 경우', () => {
+      context('empty가 true이거나 docs 길이가 perPage보다 작을 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: true,
+            docs: [{
+              ...ALARM_FIXTURE,
+              id: lastVisibleId,
+            }],
+          }));
+          (formatAlarm as jest.Mock).mockReturnValueOnce(ALARM_FIXTURE);
+        });
 
-      expect(response).toEqual([ALARM_FIXTURE]);
-      expect(getDocs).toBeCalledTimes(1);
+        it('알람 리스트가 반환되어야만 한다', async () => {
+          const response = await getUserAlarms('userUid', {
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [ALARM_FIXTURE],
+          });
+        });
+      });
+
+      context('empty가 false이고 docs 길이가 perPage보다 클 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: false,
+            docs: [{
+              ...ALARM_FIXTURE,
+              id: lastVisibleId,
+            }],
+          }));
+          (formatAlarm as jest.Mock).mockReturnValueOnce(ALARM_FIXTURE);
+        });
+
+        it('알람 리스트가 반환되어야만 한다', async () => {
+          const response = await getUserAlarms('userUid', {
+            perPage: 0,
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [ALARM_FIXTURE],
+            lastUid: lastVisibleId,
+          });
+        });
+      });
     });
   });
 

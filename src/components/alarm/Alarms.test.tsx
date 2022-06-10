@@ -1,19 +1,40 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import ALARM_FIXTURE from '../../../fixtures/alarm';
 
 import Alarms from './Alarms';
 
 describe('Alarms', () => {
+  const lastItemRef = jest.fn();
+
   const renderAlarms = () => render((
     <Alarms
       alarms={given.alarms}
+      refState={{
+        lastItemRef,
+      }}
       onClickAlarm={jest.fn()}
+      isLoading={given.isLoading}
     />
   ));
 
+  context('로딩중인 경우', () => {
+    given('alarms', () => [{
+      items: [ALARM_FIXTURE],
+    }]);
+    given('isLoading', () => true);
+
+    it('skeleton loading이 나타나야만 한다', () => {
+      renderAlarms();
+
+      expect(screen.getByTitle('loading...')).toBeInTheDocument();
+    });
+  });
+
   context('알람이 존재하는 경우', () => {
-    given('alarms', () => [ALARM_FIXTURE]);
+    given('alarms', () => [{
+      items: [ALARM_FIXTURE],
+    }]);
 
     it('알람에 대한 내용이 나타나야만 한다', () => {
       const { container } = renderAlarms();

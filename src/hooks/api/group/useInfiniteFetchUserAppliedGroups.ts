@@ -38,7 +38,7 @@ function useInfiniteFetchUserAppliedGroups({ userUid, perPage }: UserAppliedGrou
     defaultErrorMessage: '신청한 팀을 불러오는데 실패했어요!',
   });
 
-  const refState = useIntersectionObserver({
+  const refState = useIntersectionObserver<HTMLDivElement>({
     intersectionOptions: {
       rootMargin: '20px',
     },

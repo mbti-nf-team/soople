@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { FirestoreError } from 'firebase/firestore';
 
-import { Alarm } from '@/models/alarm';
 import { patchAlarmViewed } from '@/services/api/alarm';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
@@ -13,9 +12,7 @@ function useUpdateAlarmViewed() {
   const mutation = useMutation<void, FirestoreError, string>((
     alarmUid,
   ) => patchAlarmViewed(alarmUid), {
-    onSuccess: (_, alarmUid) => {
-      queryClient.setQueryData<Alarm[]>(['alarms'], updateAlarms(alarmUid));
-    },
+    onSuccess: () => queryClient.invalidateQueries(['alarms']),
   });
 
   const { isError, error } = mutation;
@@ -30,14 +27,3 @@ function useUpdateAlarmViewed() {
 }
 
 export default useUpdateAlarmViewed;
-
-export const updateAlarms = (alarmUid: string) => (alarms: Alarm[] = []) => alarms.map((alarm) => {
-  if (alarm.uid === alarmUid) {
-    return {
-      ...alarm,
-      isViewed: true,
-    };
-  }
-
-  return alarm;
-});

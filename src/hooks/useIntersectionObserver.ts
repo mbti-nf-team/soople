@@ -10,16 +10,16 @@ interface UseIntersectionObserverProps {
   fetchNextPage: () => void;
 }
 
-function useIntersectionObserver({
+function useIntersectionObserver<T = Element>({
   intersectionOptions, isRoot, hasNextPage, fetchNextPage,
 }: UseIntersectionObserverProps) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<T>(null);
 
   const checkRoot = targetFalseThenValue(isRoot);
 
   const { ref, inView } = useInView({
     ...intersectionOptions,
-    root: checkRoot(wrapperRef.current),
+    root: checkRoot(wrapperRef.current) as unknown as Element,
   });
 
   useEffect(() => {
