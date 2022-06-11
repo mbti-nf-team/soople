@@ -40,5 +40,5 @@ jobs:
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
         run: |
-          yarn install -g @lhci/cli
+          yarn global add @lhci/cli
           lhci autorun || echo "Fail to Run Lighthouse CI!"
