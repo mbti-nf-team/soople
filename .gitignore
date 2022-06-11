@@ -44,3 +44,6 @@ dev-firestore-admin.json
 # storybook
 storybook-static
 build-storybook.log
+
+# lighthouse
+.lighthouseci
