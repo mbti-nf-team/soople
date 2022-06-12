@@ -102,7 +102,7 @@ jobs:
                 `| ${score(audits['cumulative-layout-shift'].score * 100)} Cumulative Layout Shift | ${audits['cumulative-layout-shift'].displayValue} |`,
               ].join('\n');
 
-              comments += `${comment}\n   ${detail}\n   `;
+              comments += `${comment}\n\n${detail}\n\n`;
             });
 
             core.setOutput('comments', comments);
