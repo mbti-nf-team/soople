@@ -16,7 +16,7 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install && yarn global add @lhci/cli
 
       - name: Create env file
         run: |
@@ -39,14 +39,12 @@ jobs:
       - name: Run Lighthouse CI
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-        run: |
-          yarn global add @lhci/cli
-          lhci autorun || echo "Fail to Run Lighthouse CI!"
+        run: lhci autorun || echo "Fail to Run Lighthouse CI!"
       - name: Format lighthouse score
         id: format_lighthouse_score
         uses: actions/github-script@v6
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
 
@@ -108,4 +106,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: ${{ steps.format_lighthouse_score.outputs.comments}}
+          msg: ${{ steps.format_lighthouse_score.outputs.comments }}
