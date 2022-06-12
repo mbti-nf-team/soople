@@ -4,10 +4,12 @@ module.exports = {
     collect: {
       startServerCommand: 'yarn start',
       url: ['http://localhost:3000'],
-      numberOfRuns: 5,
+      numberOfRuns: 3,
     },
     upload: {
-      target: 'temporary-public-storage',
+      target: 'filesystem',
+      outputDir: './lhci_reports',
+      reportFilenamePattern: '%%PATHNAME%%-%%DATETIME%%-report.%%EXTENSION%%',
     },
     // NOTE - https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#preset
     assert: {
