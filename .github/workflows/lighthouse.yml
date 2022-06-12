@@ -56,7 +56,7 @@ jobs:
             const results = JSON.parse(fs.readFileSync('${{ github.workspace }}/lhci_reports/manifest.json'));
             let comments = '';
 
-            results.forEach((result) => {
+            results.forEach((result, index) => {
               const { summary, jsonPath } = result;
               const details = JSON.parse(fs.readFileSync(jsonPath));
               const { audits } = details;
@@ -81,7 +81,7 @@ jobs:
               };
 
               const comment = [
-                '⚡️ Lighthouse report!',
+                `⚡️ ${index + 1} Lighthouse report!`,
                 '| Category | Score |',
                 '| --- | --- |',
                 `| ${score(summary.performance)} Performance | ${summary.performance} |`,
@@ -102,7 +102,7 @@ jobs:
                 `| ${score(audits['cumulative-layout-shift'].score * 100)} Cumulative Layout Shift | ${audits['cumulative-layout-shift'].displayValue} |`,
               ].join('\n');
 
-              comments += `${comment}\n${detail}\n`;
+              comments += `${comment}\n   ${detail}\n   `;
             });
 
             core.setOutput('comments', comments);
