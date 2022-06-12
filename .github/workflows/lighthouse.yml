@@ -15,6 +15,9 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Install dependencies
+        run: yarn install
+
       - name: Create env file
         run: |
           touch .env
@@ -30,9 +33,6 @@ jobs:
           echo NEXT_PUBLIC_FIREBASE_ADMIN_PROJECT_ID = ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }} >> .env
           cat .env
 
-      - name: Install dependencies
-        run: yarn install
-
       - name: Build
         run: yarn build
 
@@ -44,7 +44,7 @@ jobs:
           lhci autorun || echo "Fail to Run Lighthouse CI!"
       - name: Format lighthouse score
         id: format_lighthouse_score
-        uses: actions/github-script@v6
+        uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
