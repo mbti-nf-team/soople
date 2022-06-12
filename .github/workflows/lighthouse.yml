@@ -1,6 +1,10 @@
-name: Run lighthouse CI When Push
+name: Run lighthouse CI
 
-on: [push]
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   lhci:
@@ -16,7 +20,7 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install && yarn global add @lhci/cli
 
       - name: Create env file
         run: |
@@ -39,21 +43,20 @@ jobs:
       - name: Run Lighthouse CI
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-        run: |
-          yarn global add @lhci/cli
-          lhci autorun || echo "Fail to Run Lighthouse CI!"
+        run: lhci autorun || echo "Fail to Run Lighthouse CI!"
       - name: Format lighthouse score
+        if: ${{ github.event_name == 'pull_request' }}
         id: format_lighthouse_score
         uses: actions/github-script@v6
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
 
             const results = JSON.parse(fs.readFileSync('${{ github.workspace }}/lhci_reports/manifest.json'));
             let comments = '';
 
-            results.forEach((result) => {
+            results.forEach((result, index) => {
               const { summary, jsonPath } = result;
               const details = JSON.parse(fs.readFileSync(jsonPath));
               const { audits } = details;
@@ -78,7 +81,7 @@ jobs:
               };
 
               const comment = [
-                '⚡️ Lighthouse report!',
+                `⚡️ ${index + 1} Lighthouse report!`,
                 '| Category | Score |',
                 '| --- | --- |',
                 `| ${score(summary.performance)} Performance | ${summary.performance} |`,
@@ -99,7 +102,7 @@ jobs:
                 `| ${score(audits['cumulative-layout-shift'].score * 100)} Cumulative Layout Shift | ${audits['cumulative-layout-shift'].displayValue} |`,
               ].join('\n');
 
-              comments += `${comment}\n${detail}\n`;
+              comments += `${comment}\n\n${detail}\n\n`;
             });
 
             core.setOutput('comments', comments);
@@ -108,4 +111,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: ${{ steps.format_lighthouse_score.outputs.comments}}
+          msg: ${{ steps.format_lighthouse_score.outputs.comments }}
+          check_for_duplicate_msg: false
