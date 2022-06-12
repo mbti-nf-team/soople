@@ -44,13 +44,14 @@ jobs:
           lhci autorun || echo "Fail to Run Lighthouse CI!"
       - name: Format lighthouse score
         id: format_lighthouse_score
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const fs = require('fs');
+            const core = require('@actions/core');
 
-            const results = JSON.parse(fs.readFileSync('/lhci_reports/manifest.json'));
+            const results = JSON.parse(fs.readFileSync('./lhci_reports/manifest.json'));
             let comments = '';
 
             results.forEach((result) => {
