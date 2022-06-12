@@ -1,6 +1,10 @@
-name: Run lighthouse CI When Push
+name: Run lighthouse CI
 
-on: [push]
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   lhci:
@@ -41,6 +45,7 @@ jobs:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
         run: lhci autorun || echo "Fail to Run Lighthouse CI!"
       - name: Format lighthouse score
+        if: ${{ github.event_name == 'pull_request' }}
         id: format_lighthouse_score
         uses: actions/github-script@v6
         with:
@@ -107,3 +112,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           msg: ${{ steps.format_lighthouse_score.outputs.comments }}
+          check_for_duplicate_msg: false
