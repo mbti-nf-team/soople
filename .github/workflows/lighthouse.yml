@@ -3,8 +3,6 @@ name: Run lighthouse CI
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [main]
 
 jobs:
   lhci:
@@ -45,7 +43,6 @@ jobs:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
         run: lhci autorun || echo "Fail to Run Lighthouse CI!"
       - name: Format lighthouse score
-        if: ${{ github.event_name == 'pull_request' }}
         id: format_lighthouse_score
         uses: actions/github-script@v6
         with:
@@ -107,7 +104,6 @@ jobs:
 
             core.setOutput('comments', comments);
       - name: comment PR
-        if: ${{ github.event_name == 'pull_request' }}
         uses: unsplash/comment-on-pr@v1.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
