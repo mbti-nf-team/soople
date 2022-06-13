@@ -17,7 +17,7 @@ const customJestConfig = {
     'node_modules',
     '<rootDir>.*/public',
     '<rootDir>/.next/',
-    'cypress',
+    '<rootDir>/cypress',
   ],
   coveragePathIgnorePatterns: [
     // NOTE - 오픈소스에서 가져온 코드임으로 테스트코드를 작성할 이유가 없음.
