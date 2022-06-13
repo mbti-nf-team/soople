@@ -43,12 +43,12 @@ jobs:
           node-version: '16'
 
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           install: yarn install
           start: yarn dev
           browser: chrome
-          headless: true
+          headed: true
           record: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
