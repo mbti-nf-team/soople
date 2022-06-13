@@ -40,7 +40,7 @@ export const getUserAlarms = async (userUid: string, {
 
     return {
       items: alarms,
-      lastUid: lastVisible.id,
+      lastUid: lastVisible?.id,
     };
   }
 
@@ -67,7 +67,7 @@ export const getUserAlarms = async (userUid: string, {
 
   return {
     items: alarms,
-    lastUid: lastVisible.id,
+    lastUid: lastVisible?.id,
   };
 };
 

@@ -89,7 +89,7 @@ export const getUserAppliedGroups = async (userUid: string, {
 
     return {
       items: appliedGroups.filter((group) => !!group) as Group[],
-      lastUid: lastVisible.id,
+      lastUid: lastVisible?.id,
     };
   }
 
@@ -116,7 +116,7 @@ export const getUserAppliedGroups = async (userUid: string, {
 
   return {
     items: appliedGroups.filter((group) => !!group) as Group[],
-    lastUid: lastVisible.id,
+    lastUid: lastVisible?.id,
   };
 };
 
