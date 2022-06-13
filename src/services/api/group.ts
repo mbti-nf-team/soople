@@ -114,7 +114,7 @@ export const getUserRecruitedGroups = async (userUid: string, {
 
     return {
       items: recruitedGroups,
-      lastUid: lastVisible.id,
+      lastUid: lastVisible?.id,
     };
   }
 
@@ -141,7 +141,7 @@ export const getUserRecruitedGroups = async (userUid: string, {
 
   return {
     items: recruitedGroups,
-    lastUid: lastVisible.id,
+    lastUid: lastVisible?.id,
   };
 };
 
