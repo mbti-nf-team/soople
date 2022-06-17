@@ -119,6 +119,7 @@ module.exports = {
         '**/*.test.tsx',
         'jest.setup.js',
         '**/*.stories.tsx',
+        'cypress/**',
       ],
     }],
     'jest/no-identical-title': 'off',
