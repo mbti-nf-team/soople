@@ -1,14 +1,9 @@
-import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nookies from 'nookies';
 
 import firebaseAdmin from '@/services/firebase/firebaseAdmin';
 
-type Data = {
-  token: DecodedIdToken;
-}
-
-async function authenticated(req: NextApiRequest, res: NextApiResponse<Data>) {
+async function authenticated(req: NextApiRequest, res: NextApiResponse<unknown>) {
   try {
     const cookies = nookies.get(res);
     const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);

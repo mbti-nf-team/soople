@@ -23,3 +23,20 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import { attachCustomCommands } from 'cypress-firebase';
+import firebase from 'firebase/compat/app';
+
+import 'firebase/compat/auth';
+import 'firebase/compat/database';
+import 'firebase/compat/firestore';
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyBCL3Hqu9z9gJMQNaLMM776KdzuF-2S3pg',
+  authDomain: 'dev-jennie-harang-conners.firebaseapp.com',
+  projectId: 'dev-jennie-harang-conners',
+  storageBucket: 'dev-jennie-harang-conners.appspot.com',
+  messagingSenderId: '226162039421',
+  appId: '1:226162039421:web:c48e322d66865f2467ef14',
+});
+
+attachCustomCommands({ Cypress, cy, firebase });
