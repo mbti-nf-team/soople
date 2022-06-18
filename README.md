@@ -104,7 +104,7 @@
 </a>
 <a href="#">
   <img src="https://img.shields.io/github/package-json/dependency-version/jennie-harang/Conners/dev/cypress?logo=cypress&style=for-the-badge">
-</a> 
+</a>
 
 [View More dependencies..](https://github.com/jennie-harang/Conners/blob/main/package.json)
 
