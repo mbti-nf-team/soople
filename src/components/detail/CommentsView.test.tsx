@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { User } from 'firebase/auth';
+
+import { Profile } from '@/models/auth';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -8,13 +9,19 @@ import CommentsView from './CommentsView';
 
 describe('CommentsView', () => {
   const handleRemove = jest.fn();
+  const lastItemRef = jest.fn();
 
   const renderCommentsView = () => render((
     <CommentsView
       isLoading={given.isLoading}
-      user={PROFILE_FIXTURE as User}
+      refState={{
+        lastItemRef,
+      }}
+      user={PROFILE_FIXTURE as Profile}
       onRemove={handleRemove}
-      comments={[COMMENT_FIXTURE]}
+      comments={[{
+        items: [COMMENT_FIXTURE],
+      }]}
     />
   ));
 

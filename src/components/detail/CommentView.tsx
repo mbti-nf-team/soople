@@ -1,4 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, {
+  ForwardedRef, forwardRef, memo, ReactElement,
+} from 'react';
 
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
@@ -24,14 +26,16 @@ interface Props {
   onRemove: (commentId: string) => void;
 }
 
-function CommentView({ comment, user, onRemove }: Props): ReactElement {
+function CommentView({
+  comment, user, onRemove,
+}: Props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const {
     writer, content, createdAt, commentId,
   } = comment;
   const isWriter = R.equals(user?.uid, writer.uid);
 
   return (
-    <CommentViewWrapper>
+    <CommentViewWrapper ref={ref}>
       <ProfileImage src={writer.image} />
       <div>
         <CommentStatus>
@@ -55,7 +59,7 @@ function CommentView({ comment, user, onRemove }: Props): ReactElement {
   );
 }
 
-export default memo(CommentView);
+export default memo(forwardRef<HTMLDivElement, Props>(CommentView));
 
 const CommentStatus = styled.div`
   display: flex;
