@@ -1,15 +1,19 @@
+import { createRef } from 'react';
+
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useAddComment from '@/hooks/api/comment/useAddComment';
 import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
-import useFetchComments from '@/hooks/api/comment/useFetchComments';
+import useFetchCommentCount from '@/hooks/api/comment/useFetchCommentCount';
+import useInfiniteFetchComments from '@/hooks/api/comment/useInfiniteFetchComments';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 
 import CommentsContainer from './CommentsContainer';
 
-jest.mock('@/hooks/api/comment/useFetchComments');
+jest.mock('@/hooks/api/comment/useInfiniteFetchComments');
+jest.mock('@/hooks/api/comment/useFetchCommentCount');
 jest.mock('@/hooks/api/comment/useDeleteComment');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/comment/useAddComment');
@@ -36,9 +40,23 @@ describe('CommentsContainer', () => {
     (useDeleteComment as jest.Mock).mockImplementation(() => ({
       mutate,
     }));
-    (useFetchComments as jest.Mock).mockImplementation(() => ({
-      data: [COMMENT_FIXTURE],
-      isLoading: false,
+    (useInfiniteFetchComments as jest.Mock).mockImplementation(() => ({
+      query: {
+        data: {
+          pages: [{
+            items: [COMMENT_FIXTURE],
+          }],
+        },
+        isLoading: given.isLoading,
+        isIdle: false,
+      },
+      refState: {
+        lastItemRef: jest.fn(),
+        wrapperRef: createRef(),
+      },
+    }));
+    (useFetchCommentCount as jest.Mock).mockImplementation(() => ({
+      data: 15,
     }));
   });
 

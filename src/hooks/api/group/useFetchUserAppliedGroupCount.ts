@@ -16,7 +16,7 @@ function useFetchUserAppliedGroupCount(userUid?: string) {
   useCatchFirestoreErrorWithToast({
     error,
     isError,
-    defaultErrorMessage: '신청한 팀을 불러오는데 실패했어요!',
+    defaultErrorMessage: '신청한 팀의 개수 불러오는데 실패했어요!',
   });
 
   return query;

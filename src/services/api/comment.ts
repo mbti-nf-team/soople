@@ -1,7 +1,8 @@
 import {
-  addDoc, deleteDoc, getDocs, orderBy, query, serverTimestamp, where,
+  addDoc, deleteDoc, getDoc, getDocs, limit, orderBy, query, serverTimestamp, startAfter, where,
 } from 'firebase/firestore';
 
+import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Comment, CommentFields } from '@/models/group';
 import { formatComment } from '@/utils/firestore';
 
@@ -18,7 +19,7 @@ export const postGroupComment = async (fields: CommentFields) => {
   return id;
 };
 
-export const getGroupComments = async (groupId: string) => {
+export const getGroupCommentCount = async (groupId: string) => {
   const getQuery = query(
     collectionRef(COMMENTS),
     where('groupId', '==', groupId),
@@ -27,7 +28,61 @@ export const getGroupComments = async (groupId: string) => {
 
   const response = await getDocs(getQuery);
 
-  return response.docs.map(formatComment) as Comment[];
+  return response.size;
+};
+
+export const getGroupComments = async (groupId: string, {
+  perPage = 15, lastUid,
+}: InfiniteRequest): Promise<InfiniteResponse<Comment>> => {
+  const commentRef = collectionRef(COMMENTS);
+  const commonQueries = [
+    where('groupId', '==', groupId),
+    orderBy('createdAt', 'asc'),
+  ];
+
+  if (!lastUid) {
+    const getQuery = query(
+      commentRef,
+      ...commonQueries,
+      limit(perPage),
+    );
+
+    const response = await getDocs(getQuery);
+    const lastVisible = response.docs[response.docs.length - 1];
+
+    const comments = response.docs.map(formatComment) as Comment[];
+
+    return {
+      items: comments,
+      lastUid: lastVisible?.id,
+    };
+  }
+
+  const lastCommentRef = await getDoc(docRef(COMMENTS, lastUid));
+  const getQuery = query(
+    commentRef,
+    ...commonQueries,
+    startAfter(lastCommentRef),
+    limit(perPage),
+  );
+
+  const response = await getDocs(getQuery);
+
+  if (response.empty || response.docs.length < perPage) {
+    const comments = response.docs.map(formatComment) as Comment[];
+
+    return {
+      items: comments,
+    };
+  }
+
+  const lastVisible = response.docs[response.docs.length - 1];
+  const comments = response.docs.map(formatComment) as Comment[];
+
+  return {
+    items: comments,
+    lastUid: lastVisible?.id,
+  };
 };
 
 export const deleteGroupComment = async (commentId: string) => {

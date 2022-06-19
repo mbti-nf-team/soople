@@ -1,8 +1,9 @@
 import { ParsedUrlQuery } from 'querystring';
 
+import { createRef } from 'react';
 import { QueryClient } from 'react-query';
 
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
@@ -14,12 +15,13 @@ import useGetUser from '@/hooks/api/auth/useGetUser';
 import useSignOut from '@/hooks/api/auth/useSignOut';
 import useAddComment from '@/hooks/api/comment/useAddComment';
 import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
-import useFetchComments from '@/hooks/api/comment/useFetchComments';
+import useInfiniteFetchComments from '@/hooks/api/comment/useInfiniteFetchComments';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
 import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
 import { getGroupDetail } from '@/services/api/group';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import { filteredWithSanitizeHtml } from '@/utils/filter';
 
 import FIXTURE_ALARM from '../../../fixtures/alarm';
@@ -36,7 +38,7 @@ jest.mock('@/hooks/api/applicant/useCancelApply');
 jest.mock('@/hooks/api/applicant/useFetchApplicants');
 jest.mock('@/hooks/api/comment/useAddComment');
 jest.mock('@/hooks/api/comment/useDeleteComment');
-jest.mock('@/hooks/api/comment/useFetchComments');
+jest.mock('@/hooks/api/comment/useInfiniteFetchComments');
 jest.mock('@/hooks/api/group/useFetchGroup');
 jest.mock('@/utils/filter');
 jest.mock('@/hooks/api/group/useIncreaseView');
@@ -63,9 +65,20 @@ describe('DetailPage', () => {
 
     (filteredWithSanitizeHtml as jest.Mock).mockImplementation(() => GROUP_FIXTURE.content);
 
-    (useFetchComments as jest.Mock).mockImplementation(() => ({
-      data: [COMMENT_FIXTURE],
-      isLoading: false,
+    (useInfiniteFetchComments as jest.Mock).mockImplementation(() => ({
+      query: {
+        data: {
+          pages: [{
+            items: [COMMENT_FIXTURE],
+          }],
+        },
+        isLoading: false,
+        isIdle: false,
+      },
+      refState: {
+        lastItemRef: jest.fn(),
+        wrapperRef: createRef(),
+      },
     }));
     (useFetchGroup as jest.Mock).mockImplementation(() => ({
       data: GROUP_FIXTURE,
@@ -94,16 +107,17 @@ describe('DetailPage', () => {
   });
 
   const renderDetailPage = () => render((
-    <InjectTestingRecoilState>
-      <DetailPage />
-    </InjectTestingRecoilState>
+    <ReactQueryWrapper>
+      <InjectTestingRecoilState>
+        <DetailPage />
+      </InjectTestingRecoilState>
+    </ReactQueryWrapper>
   ));
 
-  it('detail 페이지에 대한 내용이 나타나야만 한다', () => {
+  it('detail 페이지에 대한 내용이 나타나야만 한다', async () => {
     const { container } = renderDetailPage();
 
-    expect(container).toHaveTextContent('title');
-    expect(container).toHaveTextContent('content');
+    await act(() => expect(container).toHaveTextContent('title'));
   });
 });
 

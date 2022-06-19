@@ -9,7 +9,9 @@ import COMMENT_FIXTURE from '../../../fixtures/comment';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 import { collectionRef } from '../firebase';
 
-import { deleteGroupComment, getGroupComments, postGroupComment } from './comment';
+import {
+  deleteGroupComment, getGroupCommentCount, getGroupComments, postGroupComment,
+} from './comment';
 
 jest.mock('../firebase');
 jest.mock('@/utils/firestore');
@@ -50,19 +52,96 @@ describe('comment API', () => {
     });
   });
 
-  describe('getGroupComments', () => {
+  describe('getGroupCommentCount', () => {
     beforeEach(() => {
       (getDocs as jest.Mock).mockImplementationOnce(() => ({
         docs: [COMMENT_FIXTURE],
+        size: 1,
       }));
       (formatComment as jest.Mock).mockReturnValueOnce(COMMENT_FIXTURE);
     });
 
-    it('댓글 리스트가 반환되어야만 한다', async () => {
-      const response = await getGroupComments('groupId');
+    it('댓글 개수를 반환되어야만 한다', async () => {
+      const response = await getGroupCommentCount('groupId');
 
-      expect(response).toEqual([COMMENT_FIXTURE]);
-      expect(getDocs).toBeCalledTimes(1);
+      expect(response).toBe(1);
+    });
+  });
+
+  describe('getGroupComments', () => {
+    const lastVisibleId = 'lastVisibleId';
+
+    context('"lastUid"가 존재하지 않는 경우', () => {
+      beforeEach(() => {
+        (getDocs as jest.Mock).mockImplementationOnce(() => ({
+          docs: [{
+            ...COMMENT_FIXTURE,
+            id: lastVisibleId,
+          }],
+        }));
+        (formatComment as jest.Mock).mockReturnValueOnce(COMMENT_FIXTURE);
+      });
+
+      it('댓글 리스트가 반환되어야만 한다', async () => {
+        const response = await getGroupComments('groupId', {
+          perPage: 10,
+        });
+
+        expect(response).toEqual({
+          items: [COMMENT_FIXTURE],
+          lastUid: lastVisibleId,
+        });
+      });
+    });
+
+    context('"lastUid"가 존재하는 경우', () => {
+      context('empty가 true이거나 docs 길이가 perPage보다 작을 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: true,
+            docs: [{
+              ...COMMENT_FIXTURE,
+              id: lastVisibleId,
+            }],
+          }));
+          (formatComment as jest.Mock).mockReturnValueOnce(COMMENT_FIXTURE);
+        });
+
+        it('댓글 리스트가 반환되어야만 한다', async () => {
+          const response = await getGroupComments('groupId', {
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [COMMENT_FIXTURE],
+          });
+        });
+      });
+
+      context('empty가 false이고 docs 길이가 perPage보다 클 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: false,
+            docs: [{
+              ...COMMENT_FIXTURE,
+              id: lastVisibleId,
+            }],
+          }));
+          (formatComment as jest.Mock).mockReturnValueOnce(COMMENT_FIXTURE);
+        });
+
+        it('댓글 리스트가 반환되어야만 한다', async () => {
+          const response = await getGroupComments('groupId', {
+            perPage: 0,
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [COMMENT_FIXTURE],
+            lastUid: lastVisibleId,
+          });
+        });
+      });
     });
   });
 
