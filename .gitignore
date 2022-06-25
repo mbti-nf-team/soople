@@ -49,3 +49,6 @@ build-storybook.log
 # lighthouse
 .lighthouseci
 lhci_reports
+
+# Sentry
+.sentryclirc
