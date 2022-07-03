@@ -10,7 +10,7 @@ interface Props {
 function InjectResponsiveContext({
   width = 700, children,
 }: PropsWithChildren<Props>): ReactElement {
-  const value = useMemo(() => ({ width }), []);
+  const value = useMemo(() => ({ width }), [width]);
 
   return (
     <ResponsiveContext.Provider value={value}>

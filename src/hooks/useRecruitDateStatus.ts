@@ -31,7 +31,7 @@ const useRecruitDateStatus = (group: Group) => {
     }
 
     setRecruitDateStatus(createdDate);
-  }, [group, createdDate, currentTime]);
+  }, [group, createdDate, currentTime, recruitmentEndDate]);
 
   return recruitDateStatus;
 };

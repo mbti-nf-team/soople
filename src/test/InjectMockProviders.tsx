@@ -9,7 +9,7 @@ interface Props extends ComponentProps<typeof InjectTestingRecoilState> {
 }
 
 function InjectMockProviders({ width = 700, groupsCondition, children }: Props): ReactElement {
-  const value = useMemo(() => ({ width }), []);
+  const value = useMemo(() => ({ width }), [width]);
 
   return (
     <ReactQueryWrapper>

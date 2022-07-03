@@ -2,7 +2,6 @@ import { QueryClient } from 'react-query';
 
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
-import { useRouter } from 'next/router';
 import type { ParsedUrlQuery } from 'querystring';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
@@ -22,7 +21,14 @@ jest.mock('@/hooks/api/group/useFetchGroup');
 jest.mock('@/hooks/api/group/useUpdateCompletedApply');
 jest.mock('@/hooks/api/applicant/useUpdateApplicant');
 jest.mock('@/services/api/group');
-jest.mock('next/router');
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    back: jest.fn(),
+    query: {
+      id: '1',
+    },
+  })),
+}));
 
 describe('applicants', () => {
   const mutate = jest.fn();
@@ -39,12 +45,6 @@ describe('applicants', () => {
     }));
     (useUpdateCompletedApply as jest.Mock).mockImplementation(() => ({ mutate }));
     (useUpdateApplicant as jest.Mock).mockImplementation(() => ({ mutate }));
-    (useRouter as jest.Mock).mockImplementation(() => ({
-      back: jest.fn(),
-      query: {
-        id: '1',
-      },
-    }));
   });
 
   const renderApplicants = () => render((

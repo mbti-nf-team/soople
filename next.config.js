@@ -10,9 +10,6 @@ const moduleExports = {
     ignoreDuringBuilds: true,
   },
   swcMinify: true,
-  experimental: {
-    emotion: true,
-  },
   compiler: {
     reactRemoveProperties: isProd && {
       properties: ['^data-test'],
@@ -20,6 +17,7 @@ const moduleExports = {
     removeConsole: isProd && {
       exclude: ['error'],
     },
+    emotion: true,
   },
   webpack: (config) => {
     config.module.rules.push({
