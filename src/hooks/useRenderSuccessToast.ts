@@ -7,7 +7,7 @@ function useRenderSuccessToast(isSuccess: boolean, message: string) {
     if (isSuccess) {
       successToast(message);
     }
-  }, [isSuccess]);
+  }, [isSuccess, message]);
 }
 
 export default useRenderSuccessToast;

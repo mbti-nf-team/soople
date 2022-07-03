@@ -17,6 +17,7 @@ module.exports = {
   extends: [
     'airbnb',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:jest/recommended',
     'plugin:testing-library/react',
@@ -67,6 +68,7 @@ module.exports = {
     },
   },
   rules: {
+    'react-hooks/rules-of-hooks': 'off',
     'react/function-component-definition': 'off',
     'import/extensions': ['error', 'ignorePackages', {
       js: 'never',
