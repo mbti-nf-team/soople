@@ -60,7 +60,7 @@
     "firebase-admin": "9.12.0",
     "hast-util-to-string": "^2.0.0",
     "nanoid": "^3.3.1",
-    "next": "12.2.1-canary.2",
+    "next": "^12.2.2",
     "next-seo": "^5.4.0",
     "nextjs-progressbar": "^0.0.14",
     "nookies": "^2.5.2",
