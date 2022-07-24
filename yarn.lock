@@ -3106,7 +3106,7 @@
     "@lingui/core" "^3.10.4"
     "@remirror/core-helpers" "^1.0.6"
 
-"@remirror/pm@^1.0.22":
+"@remirror/pm@^1.0.20":
   version "1.0.22"
   resolved "https://registry.yarnpkg.com/@remirror/pm/-/pm-1.0.22.tgz#8679531c482dc90370b14182358c22f0daf6800d"
   integrity sha512-HWmPMVeABQNb5vCisG92pEIoNBGK5kM6Cudpzrej4ubs0Ypnal4kC3ZBT2vMq7uig+bIioKPMZeLDVsRBnukyA==
@@ -3324,7 +3324,7 @@
     "@remirror/core-helpers" "^1.0.6"
     "@remirror/core-types" "^1.0.4"
 
-"@remirror/react@^1.0.43":
+"@remirror/react@^1.0.39":
   version "1.0.43"
   resolved "https://registry.yarnpkg.com/@remirror/react/-/react-1.0.43.tgz#0218c4e841ec48560231c9b4887170b3aa5a05d6"
   integrity sha512-rtNsMatC3yZkVtOaGmSlJoR2nBLszeggh/WAzlLpEEz+T90cX/O+rMAkTJRZ615roF8o17XM4c8EPu9kJEIbTg==
@@ -3343,7 +3343,7 @@
     "@remirror/react-ssr" "^1.0.28"
     "@remirror/react-utils" "^1.0.7"
 
-"@remirror/styles@^1.1.4":
+"@remirror/styles@^1.1.3":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@remirror/styles/-/styles-1.1.4.tgz#f7903d4ebfbc0a16c6cc1929af84f2aad12a7fdc"
   integrity sha512-IVlfaB1U0avAKfpMZKd70+Zzqw7CDhty34COjmB5Ei7zNwhbcoWWtBNHE3BQQyIMXvtW4JkNk2pDqVaZqdRn0w==
@@ -14895,7 +14895,7 @@ remark-squeeze-paragraphs@4.0.0:
   dependencies:
     mdast-squeeze-paragraphs "^4.0.0"
 
-remirror@^1.0.89:
+remirror@^1.0.85:
   version "1.0.89"
   resolved "https://registry.yarnpkg.com/remirror/-/remirror-1.0.89.tgz#ccb1ed102618d5742e565604f175e70b574e645c"
   integrity sha512-cYbxlHN6ahu4psZstPdmBH1KV4ziH4J/xhGTH8RQKEASGWkfVWn/6zRrqrdc77IHFhmo1zqZd5XEpGIbcw1Fdw==
@@ -16645,7 +16645,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typescript@^4.7.4:
+typescript@^4.6.4:
   version "4.7.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
   integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
