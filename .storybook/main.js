@@ -1,4 +1,4 @@
-const TsconfigPathsPlugin  = require('tsconfig-paths-webpack-plugin')
+const TsconfigPathsPlugin  = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   staticDirs: ['../public'],
@@ -13,8 +13,11 @@ module.exports = {
     "@storybook/addon-docs",
   ],
   "framework": "@storybook/react",
+  "core": {
+    "builder": "@storybook/builder-webpack5"
+  },
   webpackFinal: async (config) => {
-    config.resolve.plugins.push(new TsconfigPathsPlugin({}));
+    config.resolve.plugins = [new TsconfigPathsPlugin()];
 
     return config;
   },
