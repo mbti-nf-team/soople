@@ -2,7 +2,6 @@ import React, {
   memo, ReactElement, useRef, useState,
 } from 'react';
 import { Bell as AlarmIcon } from 'react-feather';
-import { useMediaQuery } from 'react-responsive';
 import { useClickAway } from 'react-use';
 
 import { css } from '@emotion/react';
@@ -11,6 +10,7 @@ import Link from 'next/link';
 import { isEmpty } from 'ramda';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
+import useResponsive from '@/hooks/useResponsive';
 import { Profile } from '@/models/auth';
 import { subtitle2Font } from '@/styles/fontStyles';
 import palette from '@/styles/palette';
@@ -25,7 +25,7 @@ interface Props {
 }
 
 function UserNavbar({ user, signOut }: Props): ReactElement {
-  const isMobile = useMediaQuery({ maxWidth: 450 });
+  const { isMobile } = useResponsive();
 
   const { data: alertAlarms } = useFetchAlertAlarms();
   const [isVisible, setVisible] = useState<boolean>(false);
