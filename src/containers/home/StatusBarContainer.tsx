@@ -1,5 +1,4 @@
 import React, { ReactElement, useCallback } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { useLocalStorage } from 'react-use';
 
 import styled from '@emotion/styled';
@@ -9,6 +8,7 @@ import { useRecoilState } from 'recoil';
 import FilterBar from '@/components/home/FilterBar';
 import TagsBar from '@/components/home/TagsBar';
 import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
+import useResponsive from '@/hooks/useResponsive';
 import { Category, FilterGroupsCondition } from '@/models/group';
 import { groupsConditionState } from '@/recoil/group/atom';
 import Divider from '@/styles/Divider';
@@ -24,7 +24,7 @@ type FilterCondition = {
 };
 
 function StatusBarContainer(): ReactElement {
-  const isMobile = useMediaQuery({ maxWidth: 450 });
+  const { isMobile } = useResponsive();
 
   const { data: tagsCount, isLoading } = useFetchTagsCount();
   const [initFilterCompleted, toggleFilterCompleted] = useLocalStorage('isFilterCompleted', false);

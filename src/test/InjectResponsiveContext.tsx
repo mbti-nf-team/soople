@@ -4,11 +4,11 @@ import {
 import { Context as ResponsiveContext } from 'react-responsive';
 
 interface Props {
-  width?: number;
+  width: number;
 }
 
 function InjectResponsiveContext({
-  width = 700, children,
+  width, children,
 }: PropsWithChildren<Props>): ReactElement {
   const value = useMemo(() => ({ width }), [width]);
 

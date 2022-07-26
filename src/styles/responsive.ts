@@ -13,4 +13,9 @@ export const mq2 = facepaint([
   '@media(min-width: 1100px)',
 ]);
 
+export const breakpoint = {
+  mobile: 450,
+  tablet: 650,
+};
+
 export default mq;
