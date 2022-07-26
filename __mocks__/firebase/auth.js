@@ -19,3 +19,10 @@ export const setPersistence = jest.fn();
 export const onIdTokenChanged = jest.fn();
 
 export const deleteUser = jest.fn();
+
+export const AuthErrorCodes = {
+  CREDENTIAL_TOO_OLD_LOGIN_AGAIN: 'auth/requires-recent-login',
+  TIMEOUT: 'auth/timeout',
+  TOO_MANY_ATTEMPTS_TRY_LATER: 'auth/too-many-requests',
+  TOKEN_EXPIRED: 'auth/user-token-expired',
+};

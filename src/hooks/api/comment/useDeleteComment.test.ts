@@ -3,9 +3,7 @@ import { act, renderHook } from '@testing-library/react';
 import { deleteGroupComment } from '@/services/api/comment';
 import wrapper from '@/test/ReactQueryWrapper';
 
-import FIXTURE_COMMENT from '../../../../fixtures/comment';
-
-import useDeleteComment, { filteredRemoveComment } from './useDeleteComment';
+import useDeleteComment from './useDeleteComment';
 
 jest.mock('@/services/api/comment');
 jest.mock('@/hooks/useRenderSuccessToast');
@@ -30,15 +28,5 @@ describe('useDeleteComment', () => {
     });
 
     expect(result.current.isSuccess).toBeTruthy();
-  });
-});
-
-describe('filteredRemoveComment', () => {
-  const comments = [FIXTURE_COMMENT];
-
-  it('commentId와 다른 comment만 반환해야만 한다', () => {
-    const result = filteredRemoveComment('2')(comments);
-
-    expect(result).toEqual(comments);
   });
 });

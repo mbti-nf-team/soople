@@ -8,6 +8,8 @@ import { deleteMember } from '@/services/api/auth';
 import { successToast } from '@/utils/toast';
 import { removeToken } from '@/utils/utils';
 
+import useCatchAuthErrorWithToast from '../useCatchAuthErrorWithToast';
+
 function useAccountWithdrawal() {
   const { replace } = useRouter();
   const queryClient = useQueryClient();
@@ -22,6 +24,14 @@ function useAccountWithdrawal() {
       replace('/', undefined, { shallow: true });
       successToast('회원탈퇴를 완료했어요.');
     },
+  });
+
+  const { isError, error } = mutation;
+
+  useCatchAuthErrorWithToast({
+    isError,
+    error,
+    defaultErrorMessage: '회원탈퇴에 실패했어요!',
   });
 
   return mutation;
