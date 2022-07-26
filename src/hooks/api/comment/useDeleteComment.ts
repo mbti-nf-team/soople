@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import { FirestoreError } from 'firebase/firestore';
 
 import useRenderSuccessToast from '@/hooks/useRenderSuccessToast';
-import { Comment } from '@/models/group';
 import { deleteGroupComment } from '@/services/api/comment';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
@@ -19,8 +18,10 @@ function useDeleteComment() {
   const mutation = useMutation<void, FirestoreError, DeleteCommentForm>((
     commentForm,
   ) => deleteGroupComment(commentForm.commentId), {
-    onSuccess: (_: void, { groupId, commentId }: DeleteCommentForm) => {
-      queryClient.setQueryData<Comment[]>(['comments', groupId], filteredRemoveComment(commentId));
+    onSuccess: (_: void, { groupId }: DeleteCommentForm) => {
+      queryClient.invalidateQueries(['comments', {
+        id: groupId,
+      }]);
     },
   });
 
@@ -38,7 +39,3 @@ function useDeleteComment() {
 }
 
 export default useDeleteComment;
-
-export const filteredRemoveComment = (removeId: string) => (
-  comments: Comment[] = [],
-) => comments.filter(({ commentId }) => commentId !== removeId);

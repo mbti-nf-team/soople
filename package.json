@@ -78,7 +78,7 @@
     "react-toastify": "^8.2.0",
     "react-toggle": "^4.1.2",
     "react-use": "^17.4.0",
-    "recoil": "^0.7.2",
+    "recoil": "^0.7.4",
     "refractor": "^4.7.0",
     "rehype-parse": "^8.0.4",
     "rehype-stringify": "^9.0.3",
