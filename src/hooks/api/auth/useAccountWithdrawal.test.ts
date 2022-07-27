@@ -36,6 +36,6 @@ describe('useAccountWithdrawal', () => {
 
     expect(deleteMember).toBeCalled();
     expect(result.current.isSuccess).toBeTruthy();
-    expect(replace).toBeCalledWith('/', undefined, { shallow: true });
+    expect(replace).toBeCalledWith('/');
   });
 });

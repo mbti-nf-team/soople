@@ -20,6 +20,8 @@ export const onIdTokenChanged = jest.fn();
 
 export const deleteUser = jest.fn();
 
+export const reauthenticateWithRedirect = jest.fn();
+
 export const AuthErrorCodes = {
   CREDENTIAL_TOO_OLD_LOGIN_AGAIN: 'auth/requires-recent-login',
   TIMEOUT: 'auth/timeout',

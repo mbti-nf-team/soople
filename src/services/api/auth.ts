@@ -1,12 +1,13 @@
 import {
-  deleteUser,
-  getRedirectResult, signOut, updateProfile, User,
+  deleteUser, getRedirectResult, reauthenticateWithRedirect, signOut, updateProfile, User,
 } from 'firebase/auth';
 import { getDoc, setDoc } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
 
-import { docRef, firebaseAuth } from '../firebase';
+import {
+  docRef, firebaseAuth, githubProvider, googleProvider,
+} from '../firebase';
 
 export const postUserProfile = async (profile: Profile) => {
   const { uid, name, image } = profile;
@@ -41,6 +42,24 @@ export const getAuthRedirectResult = async (): Promise<User | undefined> => {
   const user = await getRedirectResult(firebaseAuth);
 
   return user?.user;
+};
+
+export const postReauthenticateWithProvider = async () => {
+  if (!firebaseAuth.currentUser) {
+    return;
+  }
+
+  const { currentUser: user } = firebaseAuth;
+
+  if (user.providerData?.[0].providerId === 'google.com') {
+    await reauthenticateWithRedirect(user, googleProvider);
+
+    return;
+  }
+
+  if (user.providerData?.[0].providerId === 'github.com') {
+    await reauthenticateWithRedirect(user, githubProvider);
+  }
 };
 
 export const deleteMember = async () => {

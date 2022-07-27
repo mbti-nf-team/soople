@@ -9,3 +9,5 @@ export const postSignIn = jest.fn();
 export const getAuthRedirectResult = jest.fn();
 
 export const deleteMember = jest.fn();
+
+export const postReauthenticateWithProvider = jest.fn();
