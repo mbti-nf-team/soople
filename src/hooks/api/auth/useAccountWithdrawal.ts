@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { Profile } from '@/models/auth';
 import { deleteMember } from '@/services/api/auth';
+import { removeItem } from '@/services/storage';
 import { successToast } from '@/utils/toast';
 import { removeToken } from '@/utils/utils';
 
@@ -21,7 +22,8 @@ function useAccountWithdrawal() {
       queryClient.setQueryData<IdTokenResult | null>(['token'], () => null);
       queryClient.setQueryData<Profile | null>(['profile'], () => null);
       queryClient.setQueryData<User | null>(['authRedirectResult'], () => null);
-      replace('/', undefined, { shallow: true });
+      removeItem('isReauthenticate');
+      replace('/');
       successToast('회원탈퇴를 완료했어요.');
     },
   });

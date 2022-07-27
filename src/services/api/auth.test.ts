@@ -1,4 +1,6 @@
-import { deleteUser, getRedirectResult, signOut } from 'firebase/auth';
+import {
+  deleteUser, getRedirectResult, reauthenticateWithRedirect, signOut,
+} from 'firebase/auth';
 import { getDoc, setDoc } from 'firebase/firestore';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
@@ -8,6 +10,7 @@ import {
   deleteMember,
   getAuthRedirectResult,
   getUserProfile,
+  postReauthenticateWithProvider,
   postSignOut,
   postUserProfile,
 } from './auth';
@@ -87,6 +90,54 @@ describe('auth API', () => {
 
       expect(getRedirectResult).toBeCalled();
       expect(user).toEqual(FIXTURE_PROFILE);
+    });
+  });
+
+  describe('postReauthenticateWithProvider', () => {
+    context('user가 존재하지 않는 경우', () => {
+      beforeEach(() => {
+        (firebaseAuth.currentUser as any) = '';
+      });
+
+      it('"reauthenticateWithRedirect"이 호출되지 않아야만 한다', async () => {
+        await postReauthenticateWithProvider();
+
+        expect(reauthenticateWithRedirect).not.toBeCalled();
+      });
+    });
+
+    context('user가 존재하는 경우', () => {
+      context('providerId가 "google.com"인 경우', () => {
+        beforeEach(() => {
+          (firebaseAuth.currentUser as any) = {
+            providerData: [{
+              providerId: 'google.com',
+            }],
+          };
+        });
+
+        it('"reauthenticateWithRedirect"이 호출되어야만 한다', async () => {
+          await postReauthenticateWithProvider();
+
+          expect(reauthenticateWithRedirect).toBeCalledTimes(1);
+        });
+      });
+
+      context('providerId가 "github.com"인 경우', () => {
+        beforeEach(() => {
+          (firebaseAuth.currentUser as any) = {
+            providerData: [{
+              providerId: 'github.com',
+            }],
+          };
+        });
+
+        it('"reauthenticateWithRedirect"이 호출되어야만 한다', async () => {
+          await postReauthenticateWithProvider();
+
+          expect(reauthenticateWithRedirect).toBeCalledTimes(1);
+        });
+      });
     });
   });
 
