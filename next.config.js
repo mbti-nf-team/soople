@@ -1,9 +1,12 @@
 const { withSentryConfig } = require('@sentry/nextjs');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const isProd = process.env.NODE_ENV === 'production';
 
 /** @type {import('next').NextConfig} */
-const moduleExports = {
+const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['page.tsx', 'page.jsx', 'api.ts'],
   eslint: {
@@ -43,4 +46,4 @@ const sentryWebpackPluginOptions = {
 
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
+module.exports = withSentryConfig(withBundleAnalyzer(nextConfig), sentryWebpackPluginOptions);

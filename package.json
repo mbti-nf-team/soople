@@ -49,6 +49,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@hookform/resolvers": "^2.8.8",
+    "@next/bundle-analyzer": "^12.2.3",
     "@remirror/pm": "^1.0.20",
     "@remirror/react": "^1.0.39",
     "@remirror/styles": "^1.1.3",
