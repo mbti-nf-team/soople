@@ -18,7 +18,7 @@ class MyDocument extends Document {
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
           <link rel="shortcut icon" href="/favicon.ico" />
-          <link rel="manifest" href="/manifest.json" />
+          <link rel="manifest" href="/manifest.webmanifest" />
 
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
         </Head>
