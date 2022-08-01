@@ -1,5 +1,4 @@
-import { useMutation } from 'react-query';
-
+import { useMutation } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';

@@ -1,5 +1,4 @@
-import { useMutation } from 'react-query';
-
+import { useMutation } from '@tanstack/react-query';
 import { AuthError } from 'firebase/auth';
 
 import { postReauthenticateWithProvider } from '@/services/api/auth';

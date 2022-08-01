@@ -1,5 +1,4 @@
-import { useQuery } from 'react-query';
-
+import { useQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
@@ -15,6 +14,8 @@ function useFetchUserProfile() {
   const query = useQuery<Profile | null, FirestoreError>(['profile'], () => getUserProfile(user?.uid), {
     enabled: !!user?.uid,
   });
+
+  // console.log(isLoading, query);
 
   const { isError, error } = query;
 

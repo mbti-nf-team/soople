@@ -55,6 +55,7 @@ module.exports = withSentryConfig(
     [withPWA, {
       pwa: {
         dest: 'public',
+        disable: process.env.NODE_ENV === 'development',
         maximumFileSizeToCacheInBytes: 7000000,
         runtimeCaching,
       },

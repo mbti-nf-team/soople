@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from 'react-query';
 import { useEffectOnce } from 'react-use';
 
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AuthError, IdTokenResult, User } from 'firebase/auth';
 import { useRouter } from 'next/router';
 

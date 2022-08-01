@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { ReactElement, ReactNode, useState } from 'react';
-import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 
+import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
+
 import {
   QueryKey, useQuery, useQueryClient, UseQueryOptions, UseQueryResult,
-} from 'react-query';
-
+} from '@tanstack/react-query';
 import {
   Auth, AuthError, IdTokenResult, Unsubscribe,
 } from 'firebase/auth';
@@ -39,6 +39,8 @@ function useAuthIdToken<R = IdTokenResult | null>(
       return new Promise<IdTokenResult | null>((resolve, reject) => {
         unsubscribe.current = auth.onIdTokenChanged(async (user) => {
           let token: IdTokenResult | null = null;
+
+          console.log(user);
 
           if (user) {
             token = await user.getIdTokenResult(options?.forceRefresh);

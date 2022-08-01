@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useInfiniteQuery } from 'react-query';
 
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 

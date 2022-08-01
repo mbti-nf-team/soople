@@ -1,5 +1,4 @@
-import { QueryClient } from 'react-query';
-
+import { QueryClient } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 import type { ParsedUrlQuery } from 'querystring';

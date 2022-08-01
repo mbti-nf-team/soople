@@ -1,5 +1,4 @@
-import { useQuery } from 'react-query';
-
+import { useQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 
 import { TagCount } from '@/models/group';
@@ -9,7 +8,7 @@ import { checkEmpty } from '@/utils/utils';
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useFetchTagsCount() {
-  const query = useQuery<TagCount[], FirestoreError>('tagsCount', () => getTagsCount());
+  const query = useQuery<TagCount[], FirestoreError>(['tagsCount'], () => getTagsCount());
 
   const { isError, error, data } = query;
 

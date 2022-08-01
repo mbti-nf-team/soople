@@ -1,5 +1,4 @@
-import { useMutation, useQueryClient } from 'react-query';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 
 import {
@@ -47,7 +46,7 @@ function useApplyGroup() {
         numberApplicants,
       }));
 
-      queryClient.invalidateQueries('alarms');
+      queryClient.invalidateQueries(['alarms']);
     },
   });
 

@@ -1,5 +1,4 @@
-import { useMutation, useQueryClient } from 'react-query';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 
@@ -19,7 +18,7 @@ function useRemoveGroup() {
   ) => Promise.all([deleteGroup(group.groupId), ...group.tags.map(deleteTagCount)]), {
     onSuccess: () => {
       replace('/');
-      queryClient.invalidateQueries('tagsCount');
+      queryClient.invalidateQueries(['tagsCount']);
       queryClient.invalidateQueries(['groups']);
       successToast('글을 삭제했어요.');
     },
