@@ -50,9 +50,6 @@ jobs:
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 
-      - name: Install global @lhci/cli dependencies
-        run: yarn global add @lhci/cli
-
       - name: Create env file
         run: |
           touch .env
@@ -111,6 +108,9 @@ jobs:
         with:
           path: ${{ env.CACHED_BUILD_PATHS }}
           key: ${{ env.BUILD_CACHE_KEY }}
+
+      - name: Install global @lhci/cli dependencies
+        run: yarn global add @lhci/cli
 
       - name: Run Lighthouse CI
         env:
