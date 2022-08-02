@@ -4,21 +4,54 @@ on:
   pull_request:
     branches: [main]
 
-jobs:
-  lhci:
-    name: Lighthouse CI
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+env:
+  CACHED_DEPENDENCY_PATHS: ${{ github.workspace }}/node_modules
+  CACHED_BUILD_PATHS: ${{ github.workspace }}/.next
+  BUILD_CACHE_KEY: ${{ github.sha }}
+  DEFAULT_NODE_VERSION: '16'
 
-      - name: Use Node.js 16.x
+jobs:
+  job_install_dependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out current commit (${{ github.sha }})
+        uses: actions/checkout@v2
+      - name: Set up Node
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
+      - name: Compute dependency cache key
+        id: compute_lockfile_hash
+        run: echo "::set-output name=hash::${{ hashFiles('yarn.lock') }}"
 
+      - name: Check dependency cache
+        uses: actions/cache@v3
+        id: cache_dependencies
+        with:
+          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
+          key: ${{ steps.compute_lockfile_hash.outputs.hash }}
       - name: Install dependencies
-        run: yarn install && yarn global add @lhci/cli
+        if: steps.cache_dependencies.outputs.cache-hit == ''
+        run: yarn install --ignore-engines --frozen-lockfile
+    outputs:
+      dependency_cache_key: ${{ steps.compute_lockfile_hash.outputs.hash }}
+
+  job_build:
+    name: Build
+    needs: [job_install_dependencies]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current commit (${{ github.sha }})
+      - uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
+
+      - name: Install global @lhci/cli dependencies
+        run: yarn global add @lhci/cli
 
       - name: Create env file
         run: |
@@ -37,8 +70,47 @@ jobs:
           echo SENTRY_AUTH_TOKEN = ${{ secrets.SENTRY_AUTH_TOKEN }} >> .env
           cat .env
 
+      - name: Check dependency cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
+          key: ${{ needs.job_install_dependencies.outputs.dependency_cache_key }}
+      - name: Check build cache
+        uses: actions/cache@v3
+        id: cache_built_packages
+        with:
+          path: ${{ env.CACHED_BUILD_PATHS }}
+          key: ${{ env.BUILD_CACHE_KEY }}
+
       - name: Build
+        if: steps.cache_built_packages.outputs.cache-hit == ''
         run: yarn build
+
+    outputs:
+      dependency_cache_key: ${{ needs.job_install_dependencies.outputs.dependency_cache_key }}
+
+  lhci:
+    name: Lighthouse CI
+    needs: [job_build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current commit (${{ github.sha }})
+      - uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
+
+      - name: Check dependency cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHED_DEPENDENCY_PATHS }}
+          key: ${{ needs.job_build.outputs.dependency_cache_key }}
+      - name: Check build cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CACHED_BUILD_PATHS }}
+          key: ${{ env.BUILD_CACHE_KEY }}
 
       - name: Run Lighthouse CI
         env:
