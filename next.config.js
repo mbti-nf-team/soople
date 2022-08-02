@@ -57,6 +57,7 @@ module.exports = withSentryConfig(
         dest: 'public',
         disable: process.env.NODE_ENV === 'development',
         maximumFileSizeToCacheInBytes: 7000000,
+        disable: process.env.NODE_ENV === 'development',
         runtimeCaching,
       },
     }],
