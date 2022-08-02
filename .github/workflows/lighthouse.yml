@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out current commit (${{ github.sha }})
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       - name: Set up Node
         uses: actions/setup-node@v2
         with:
@@ -95,7 +95,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out current commit (${{ github.sha }})
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       - name: Set up Node
         uses: actions/setup-node@v2
         with:
