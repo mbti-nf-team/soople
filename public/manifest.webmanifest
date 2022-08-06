@@ -1,12 +1,12 @@
 {
-  "theme_color": "#499DDF",
-  "background_color": "#499DDF",
+  "theme_color": "#23CD4B",
+  "background_color": "#23CD4B",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Conners",
-  "short_name": "Conners",
-  "description": "스터디와 사이드 프로젝트 코너스와 함께 시작하세요!",
+  "name": "soople",
+  "short_name": "soople",
+  "description": "스터디와 사이드 프로젝트 수플과 함께 시작하세요!",
   "icons": [
     {
       "src": "/icon-192x192.png",
@@ -34,8 +34,8 @@
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
+      "src": "/android-chrome-384x384.png",
+      "sizes": "384x384",
       "type": "image/png"
     }
   ]

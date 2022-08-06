@@ -73,7 +73,7 @@ function ApplicantsPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="Conners - 신청현황 보기"
+        title="soople - 신청현황 보기"
       />
       <ApplicationStatusHeaderContainer />
       <ApplicationStatusContainer />

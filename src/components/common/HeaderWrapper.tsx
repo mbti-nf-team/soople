@@ -10,7 +10,7 @@ import palette from '@/styles/palette';
 import { mq2 } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
-import LogoSvg from '../../assets/icons/img_logo_conners.svg';
+import LogoSvg from '../../assets/icons/img_logo_soople.svg';
 
 interface Props {
   hasBackground: boolean;

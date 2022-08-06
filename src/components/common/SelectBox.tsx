@@ -143,7 +143,7 @@ const StyledSelect = styled(Select)<{ size: Size; isError: boolean; }>`
 
   & .select__control--is-focused {
     ${({ isError }) => !isError && css`
-      border-color: ${palette.success};
+      border-color: ${palette.success} !important;
     `}
     box-shadow: none;
   }

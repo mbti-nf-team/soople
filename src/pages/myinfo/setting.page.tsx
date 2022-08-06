@@ -13,7 +13,7 @@ function SettingPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="Conners - 내 정보, 내 정보 수정"
+        title="soople - 내 정보, 내 정보 수정"
       />
       <MyInfoSettingContainer />
     </>

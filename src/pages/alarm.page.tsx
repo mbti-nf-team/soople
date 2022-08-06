@@ -14,7 +14,7 @@ function AlarmPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="Conners - 알람"
+        title="soople - 알람"
       />
       <HeaderContainer />
       <DetailLayout>

@@ -9,7 +9,7 @@ function SignUpPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="Conners - 시작하기"
+        title="soople - 시작하기"
       />
       <HeaderContainer />
       <SignUpContainer />

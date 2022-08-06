@@ -13,7 +13,7 @@ function AppliedPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="Conners - 내 정보, 신청한 팀"
+        title="soople - 내 정보, 신청한 팀"
       />
       <AppliedGroupsContainer />
     </>

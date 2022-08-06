@@ -12,7 +12,7 @@ function WritePage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="Conners - 팀 모집하기"
+        title="soople - 팀 모집하기"
       />
       <WriteHeaderContainer />
       <DetailLayout>
