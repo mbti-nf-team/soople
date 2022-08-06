@@ -9,7 +9,7 @@ import palette from '@/styles/palette';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
-import LogoSvg from '../../assets/icons/img_logo_conners.svg';
+import LogoSvg from '../../assets/icons/img_logo_soople.svg';
 
 interface Props {
   isVisible: boolean;
@@ -50,7 +50,6 @@ export default SignInModal;
 
 const LogoIcon = styled(LogoSvg)`
   width: 80px;
-  height: 20px;
 `;
 
 const CloseIcon = styled(CloseSvg)`

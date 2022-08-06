@@ -11,7 +11,7 @@ const palette = {
   foreground: '#000000',
 
   /* success */
-  success: '#499DDF',
+  success: '#23CD4B',
   success10: '#428DC9',
 
   /* warning */

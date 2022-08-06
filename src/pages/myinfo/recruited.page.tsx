@@ -13,7 +13,7 @@ function RecruitedPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="Conners - 내 정보, 모집한 팀"
+        title="soople - 내 정보, 모집한 팀"
       />
       <RecruitedGroupsContainer />
     </>

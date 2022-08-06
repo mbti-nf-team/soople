@@ -11,7 +11,7 @@ function Custom500(): ReactElement {
   return (
     <>
       <NextSeo
-        title="Conners - 500"
+        title="soople - 500"
       />
       <HeaderWrapper
         hasBackground

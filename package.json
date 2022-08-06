@@ -1,7 +1,7 @@
 {
-  "name": "conners",
+  "name": "soople",
   "version": "0.0.1",
-  "description": "스터디와 프로젝트를 연결해주는 Connect + er + s, Conners! 🎨",
+  "description": "스터디와 프로젝트를 연결해주는 soople! 🎨",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
@@ -22,7 +22,7 @@
     "build-storybook": "build-storybook"
   },
   "keywords": [
-    "conners",
+    "soople",
     "react",
     "next.js",
     "TDD",
@@ -31,14 +31,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jennie-harang/Conners.git"
+    "url": "git+https://github.com/jenny-harang/soople.git"
   },
   "author": "Harang & Jennie",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jennie-harang/Conners/issues"
+    "url": "https://github.com/jenny-harang/soople/issues"
   },
-  "homepage": "https://www.conners.io",
+  "homepage": "https://soople.io",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
