@@ -15,6 +15,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  output: 'standalone',
   swcMinify: true,
   compiler: {
     reactRemoveProperties: isProd && {
