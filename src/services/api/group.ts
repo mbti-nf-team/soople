@@ -82,6 +82,17 @@ export const getFilteredGroups = async (condition: FilterGroupsCondition) => {
   return filteredGroups;
 };
 
+// TODO - 추후 BFF 적용
+// export const fetchGroups = async (condition: FilterGroupsCondition): Promise<Group[]> => {
+//   const response = await fetch(`/api/groups?${paramsSerializer(condition)}`, {
+//     method: 'GET',
+//   });
+
+//   const groups = await response.json();
+
+//   return groups;
+// };
+
 export const getUserRecruitedGroupCount = async (userUid: string) => {
   const getQuery = query(
     collectionRef(GROUPS),
