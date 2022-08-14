@@ -3,14 +3,14 @@ import nookies from 'nookies';
 
 import firebaseAdmin from '@/services/firebase/firebaseAdmin';
 
-async function authenticated(req: NextApiRequest, res: NextApiResponse<unknown>) {
+async function authenticated(req: NextApiRequest, res: NextApiResponse) {
   try {
     const cookies = nookies.get(res);
     const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
 
-    res.status(200).json({ token });
+    return res.status(200).json({ token });
   } catch (error) {
-    res.status(401);
+    return res.status(500).send(error);
   }
 }
 

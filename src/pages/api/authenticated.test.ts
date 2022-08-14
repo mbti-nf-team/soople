@@ -50,7 +50,7 @@ describe('authenticated API', () => {
       }));
     });
 
-    it('status code는 400이어야만 한다', async () => {
+    it('status code는 500이어야만 한다', async () => {
       const { req, res } = createMocks({
         method: 'GET',
         cookies: {
@@ -60,7 +60,7 @@ describe('authenticated API', () => {
 
       await authenticated(req as unknown as NextApiRequest, res as unknown as NextApiResponse);
 
-      expect(res._getStatusCode()).toBe(401);
+      expect(res._getStatusCode()).toBe(500);
     });
   });
 });
