@@ -16,6 +16,7 @@ describe('paramsSerializer', () => {
     expect(result).toBe('param1=apple&param2=banana&param3=orange');
     expect(qsSpyOn).toBeCalledWith(params, {
       indices: false,
+      arrayFormat: 'comma',
     });
 
     qsSpyOn.mockRestore();

@@ -1,24 +1,31 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { FilterGroupsCondition } from '@/models/group';
+import { Category } from '@/models/group';
 import { getFilteredGroups } from '@/services/api/group';
 
-const fetchGroups = async (req: NextApiRequest, res: NextApiResponse) => {
+type FilterGroupsCondition = {
+  category: string;
+  isFilterCompleted: string;
+  tag: string;
+}
+
+const groupsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
-    return res.status(404).send({
+    res.status(404).send({
       message: 'Page not found',
     });
+    return;
   }
 
-  const { category, isFilterCompleted, tag } = req.query as unknown as FilterGroupsCondition;
+  const { category, isFilterCompleted, tag } = req.query as FilterGroupsCondition;
 
   const data = await getFilteredGroups({
-    category: Array.isArray(category) ? category : [category],
-    isFilterCompleted,
+    category: category.split(',') as Category[],
+    isFilterCompleted: isFilterCompleted === 'true',
     tag,
   });
 
-  return res.json(data);
+  res.status(200).json(data);
 };
 
-export default fetchGroups;
+export default groupsHandler;
