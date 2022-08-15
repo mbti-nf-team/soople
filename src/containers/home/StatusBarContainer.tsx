@@ -28,7 +28,9 @@ function StatusBarContainer(): ReactElement {
 
   const { data: tagsCount, isLoading } = useFetchTagsCount();
   const [initFilterCompleted, toggleFilterCompleted] = useLocalStorage('isFilterCompleted', false);
-  const [{ isFilterCompleted }, setCondition] = useRecoilState(groupsConditionState);
+  const [{
+    isFilterCompleted, category: filterCategory,
+  }, setCondition] = useRecoilState(groupsConditionState);
 
   const setGroupsCondition = (condition: FilterCondition) => setCondition((prevCondition) => ({
     ...prevCondition,
@@ -53,6 +55,7 @@ function StatusBarContainer(): ReactElement {
     <StatusBarWrapper>
       <div>
         <FilterBar
+          filterCategory={filterCategory}
           onChange={onChange}
         />
         {!isMobile && (

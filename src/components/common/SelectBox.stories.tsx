@@ -20,13 +20,16 @@ const Template: ComponentStory<typeof SelectBox> = (
 
 export const Default = Template.bind({});
 
+const options = [
+  { value: 'orange', label: 'orange' },
+  { value: 'banana', label: 'banana' },
+  { value: 'apple', label: 'apple' },
+];
+
 Default.args = {
   id: '1',
-  options: [
-    { value: 'orange', label: 'orange' },
-    { value: 'banana', label: 'banana' },
-    { value: 'apple', label: 'apple' },
-  ],
+  options,
+  value: options[0],
   labelText: '과일',
   helperMessage: '맛있는 과일',
   labelOptionText: '선택',
