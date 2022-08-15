@@ -1,5 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, {
+  ReactElement, useState,
+} from 'react';
 import Select, { GroupBase, OptionsOrGroups } from 'react-select';
+import { useIsomorphicLayoutEffect } from 'react-use';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -18,6 +21,7 @@ interface Props<T> {
   id: string;
   defaultValue?: SelectOption<T>;
   onChange: (value: T) => void;
+  value?: SelectOption<T>;
   size?: Size;
   placeholder?: string;
   labelText?: string;
@@ -32,6 +36,7 @@ function SelectBox<Option>({
   options,
   defaultValue,
   onChange,
+  value,
   placeholder,
   size = 'large',
   errorMessage,
@@ -40,9 +45,18 @@ function SelectBox<Option>({
   labelOptionText,
   disabled = false,
 }: Props<Option>): ReactElement {
+  const [optionValue, setOptionValue] = useState(defaultValue);
+
   const handleChange = (newValue: SelectOption<Option>) => {
     onChange(newValue?.value);
+    setOptionValue(newValue);
   };
+
+  useIsomorphicLayoutEffect(() => {
+    if (value) {
+      setOptionValue(value);
+    }
+  }, [value]);
 
   return (
     <SelectForm isError={!!errorMessage}>
@@ -59,10 +73,10 @@ function SelectBox<Option>({
         inputId={id}
         classNamePrefix="select"
         options={options}
-        defaultValue={defaultValue}
         onChange={(newValue) => handleChange(newValue as SelectOption<Option>)}
         placeholder={placeholder}
         size={size}
+        value={optionValue}
         isSearchable={false}
         isError={!!errorMessage}
         isDisabled={disabled}

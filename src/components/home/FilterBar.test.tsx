@@ -7,6 +7,7 @@ describe('FilterBar', () => {
 
   const renderFilterBar = () => render((
     <FilterBar
+      filterCategory={['study', 'project']}
       onChange={handleChange}
     />
   ));

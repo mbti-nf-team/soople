@@ -28,6 +28,7 @@ describe('SelectBox', () => {
       options={positionOption}
       onChange={handleChange}
       labelText="포지션"
+      value={positionOption[0]}
       placeholder="포지션을 선택하세요"
       errorMessage={errorMessage}
       size={given.size}
