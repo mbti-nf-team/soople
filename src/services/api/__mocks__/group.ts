@@ -19,3 +19,5 @@ export const patchEditGroup = jest.fn();
 export const patchIncreaseView = jest.fn();
 
 export const getUserRecruitedGroupCount = jest.fn();
+
+export const fetchGroups = jest.fn();

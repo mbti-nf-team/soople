@@ -2,9 +2,10 @@ import {
   addDoc, deleteDoc, getDoc, getDocs, serverTimestamp, updateDoc,
 } from 'firebase/firestore';
 
-import { WriteFields } from '@/models/group';
+import { FilterGroupsCondition, WriteFields } from '@/models/group';
 import {
   deleteGroup,
+  fetchGroups,
   getFilteredGroups,
   getGroupDetail,
   getGroups,
@@ -20,6 +21,8 @@ import { formatGroup } from '@/utils/firestore';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
+
+import { paramsSerializer } from '.';
 
 jest.mock('@/utils/firestore');
 jest.mock('../firebase');
@@ -100,6 +103,29 @@ describe('group API', () => {
 
         expect(response).toBeNull();
       });
+    });
+  });
+
+  describe('fetchGroups', () => {
+    const params: FilterGroupsCondition = {
+      category: ['project'],
+      isFilterCompleted: false,
+      tag: 'test',
+    };
+
+    beforeEach(() => {
+      (global.fetch as unknown as any) = jest.fn().mockImplementation(() => ({
+        json: jest.fn().mockResolvedValue([GROUP_FIXTURE]),
+      }));
+    });
+
+    it('그룹 리스트가 반환되어야만 한다', async () => {
+      const response = await fetchGroups(params);
+
+      expect(fetch).toBeCalledWith(`/api/groups?${paramsSerializer(params)}`, {
+        method: 'GET',
+      });
+      expect(response).toEqual([GROUP_FIXTURE]);
     });
   });
 

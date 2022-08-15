@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { getFilteredGroups } from '@/services/api/group';
+import { fetchGroups } from '@/services/api/group';
 import wrapper from '@/test/InjectMockProviders';
 
 import FIXTURE_GROUP from '../../../../fixtures/group';
@@ -15,7 +15,7 @@ describe('useFetchGroups', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (getFilteredGroups as jest.Mock).mockImplementation(() => (given.groups));
+    (fetchGroups as jest.Mock).mockImplementation(() => (given.groups));
   });
 
   given('groups', () => [FIXTURE_GROUP]);

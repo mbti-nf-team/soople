@@ -24,6 +24,8 @@ import { isRecruiting } from '@/utils/utils';
 import { collectionRef, docRef } from '../firebase';
 import { getGroupsQuery } from '../firebase/getQuery';
 
+import { paramsSerializer } from '.';
+
 const GROUPS = 'groups';
 
 const getQueryWithGroup = (groupId: string) => (collectionId: string) => query(
@@ -82,16 +84,15 @@ export const getFilteredGroups = async (condition: FilterGroupsCondition) => {
   return filteredGroups;
 };
 
-// TODO - 추후 BFF 적용
-// export const fetchGroups = async (condition: FilterGroupsCondition): Promise<Group[]> => {
-//   const response = await fetch(`/api/groups?${paramsSerializer(condition)}`, {
-//     method: 'GET',
-//   });
+export const fetchGroups = async (condition: FilterGroupsCondition): Promise<Group[]> => {
+  const response = await fetch(`/api/groups?${paramsSerializer(condition)}`, {
+    method: 'GET',
+  });
 
-//   const groups = await response.json();
+  const groups = await response.json();
 
-//   return groups;
-// };
+  return groups;
+};
 
 export const getUserRecruitedGroupCount = async (userUid: string) => {
   const getQuery = query(
