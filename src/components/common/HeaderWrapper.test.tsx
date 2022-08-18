@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { groupsConditionState } from '@/recoil/group/atom';
 import palette from '@/styles/palette';
@@ -7,17 +7,19 @@ import RecoilObserver from '@/test/RecoilObserver';
 
 import HeaderWrapper from './HeaderWrapper';
 
+jest.mock('next/link', () => ({ children }: any) => children);
+
 describe('HeaderWrapper', () => {
-  const handleReset = jest.fn();
+  const handleChange = jest.fn();
 
   beforeEach(() => {
-    handleReset.mockClear();
+    handleChange.mockClear();
   });
 
   const renderHeaderWrapper = () => render((
     <InjectTestingRecoilState>
       <>
-        <RecoilObserver node={groupsConditionState} onChange={handleReset} />
+        <RecoilObserver node={groupsConditionState} onChange={handleChange} />
         <HeaderWrapper
           hasBackground={given.hasBackground}
           isScrollTop={given.isScrollTop}
@@ -26,6 +28,20 @@ describe('HeaderWrapper', () => {
       </>
     </InjectTestingRecoilState>
   ));
+
+  describe('로고를 클릭한다', () => {
+    it('프로젝트 스터디 목록 필터 state가 변경되는 이벤트가 호출되어야만 한다', () => {
+      renderHeaderWrapper();
+
+      fireEvent.click(screen.getByTestId('logo-icon'));
+
+      expect(handleChange).toBeCalledWith({
+        isFilterCompleted: false,
+        category: ['study', 'project'],
+        tag: '',
+      });
+    });
+  });
 
   context('hasBackground가 true인 경우', () => {
     given('hasBackground', () => true);
