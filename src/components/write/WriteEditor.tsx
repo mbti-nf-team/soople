@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { X as CloseIcon } from 'react-feather';
 
 import styled from '@emotion/styled';
-import { EditorComponent, EmojiPopupComponent } from '@remirror/react';
+import { EditorComponent } from '@remirror/react';
 import {
   CoreStyledComponent,
   extensionEmojiStyledCss,
@@ -47,7 +47,6 @@ function WriteEditor(): ReactElement {
         </WarningMessage>
       )}
       <RemirrorEditorWrapper>
-        <EmojiPopupComponent />
         <EditorComponent />
       </RemirrorEditorWrapper>
     </>

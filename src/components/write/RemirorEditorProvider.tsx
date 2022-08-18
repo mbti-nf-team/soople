@@ -17,7 +17,6 @@ import {
   CodeBlockExtension,
   CodeExtension,
   DropCursorExtension,
-  EmojiExtension,
   HeadingExtension,
   HorizontalRuleExtension,
   ImageExtension,
@@ -28,7 +27,6 @@ import {
   UnderlineExtension,
   WhitespaceExtension,
 } from 'remirror/extensions';
-import emojiData from 'svgmoji/emoji.json';
 
 import { writeFieldsState } from '@/recoil/group/atom';
 import palette from '@/styles/palette';
@@ -52,7 +50,6 @@ const extensions = () => [
     supportedLanguages: [css, javascript, json, markdown, typescript, java],
     syntaxTheme: 'dracula',
   }),
-  new EmojiExtension({ data: emojiData, moji: 'twemoji' }),
   new HorizontalRuleExtension(),
   new CodeExtension(),
   new UnderlineExtension(),
