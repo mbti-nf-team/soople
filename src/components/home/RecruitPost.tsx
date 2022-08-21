@@ -1,6 +1,7 @@
 import React, { memo, ReactElement } from 'react';
 import { Eye as ViewsIcon } from 'react-feather';
 
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import Link from 'next/link';
@@ -9,7 +10,6 @@ import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body2Font, h4Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import { mq2 } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
 import { emptyAThenB } from '@/utils/utils';
@@ -28,6 +28,8 @@ function RecruitPost({ group }: Props): ReactElement {
   const {
     title, content, groupId, writer, views, shortDescription, thumbnail,
   } = group;
+
+  const theme = useTheme();
   const recruitDate = useRecruitDateStatus(group);
 
   return (
@@ -46,8 +48,8 @@ function RecruitPost({ group }: Props): ReactElement {
           <PostMetaData>
             <ViewsIcon
               size={16}
-              color={palette.background}
-              fill={palette.accent6}
+              color={theme.background}
+              fill={theme.accent6}
             />
             <span>{views}</span>
             <Divider />
@@ -79,7 +81,7 @@ export const RecruitPostWrapper = styled.div`
   height: 346px; 
   margin: 0.625rem;
   border-radius: 8px;
-  background-color: ${palette.background};
+  background-color: ${({ theme }) => theme.background};
 `;
 
 const RecruitPostContents = styled.a`
@@ -96,7 +98,7 @@ const Title = styled.div`
 
 const Content = styled.div`
   ${body2Font()};
-  color: ${palette.accent7};
+  color: ${({ theme }) => theme.accent7};
   word-break: break-all;
   overflow-wrap: break-word;
   text-overflow: ellipsis;
@@ -111,7 +113,7 @@ const PostMetaData = styled.div`
   flex-direction: row;
   align-items: center;
   ${subtitle1Font()};
-  color: ${palette.accent6};
+  color: ${({ theme }) => theme.accent6};
 
   & > svg {
     margin-right: 4px;
@@ -129,7 +131,7 @@ export const PostWriter = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 12px 16px;
-  border-top: 1px solid ${palette.accent1};
+  border-top: 1px solid ${({ theme }) => theme.accent1};
   ${subtitle1Font(true)};
 
   & > :first-of-type {

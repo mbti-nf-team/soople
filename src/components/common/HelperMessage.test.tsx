@@ -1,15 +1,18 @@
 import { render, screen } from '@testing-library/react';
 
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
+import MockTheme from '@/test/MockTheme';
 
 import HelperMessage from './HelperMessage';
 
 describe('HelperMessage', () => {
   const renderHelperMessage = () => render((
-    <HelperMessage
-      message={given.message}
-      isError={given.isError}
-    />
+    <MockTheme>
+      <HelperMessage
+        message={given.message}
+        isError={given.isError}
+      />
+    </MockTheme>
   ));
 
   context('메시지가 존재하는 경우', () => {
@@ -18,11 +21,11 @@ describe('HelperMessage', () => {
     context('에러가 존재하는 경우', () => {
       given('isError', () => true);
 
-      it(`색상이 ${palette.warning}이어야만 한다`, () => {
+      it(`색상이 ${lightTheme.warning}이어야만 한다`, () => {
         renderHelperMessage();
 
         expect(screen.getByText('message')).toHaveStyle({
-          color: palette.warning,
+          color: lightTheme.warning,
         });
       });
     });
@@ -30,11 +33,11 @@ describe('HelperMessage', () => {
     context('에러가 존재하지 않는 경우', () => {
       given('isError', () => false);
 
-      it(`색상이 ${palette.accent5}이어야만 한다`, () => {
+      it(`색상이 ${lightTheme.accent5}이어야만 한다`, () => {
         renderHelperMessage();
 
         expect(screen.getByText('message')).toHaveStyle({
-          color: palette.accent5,
+          color: lightTheme.accent5,
         });
       });
     });

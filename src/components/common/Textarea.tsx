@@ -7,7 +7,6 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { body1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import HelperMessage from './HelperMessage';
 import Label from './Label';
@@ -71,8 +70,8 @@ const TextareaWrapper = styled.div<{ isError?: boolean; }>`
 
   &:focus-within {
     & > label > span {
-      ${({ isError }) => !isError && css`
-        color: ${palette.success};
+      ${({ isError, theme }) => !isError && css`
+        color: ${theme.success};
       `}
     }
   }
@@ -86,7 +85,7 @@ const TextareaBlock = styled.textarea<{isError?: boolean; height?: string }>`
   flex-direction: row;
   align-items: center;
   padding: 12px 16px;
-  background: ${palette.background};
+  background: ${({ theme }) => theme.background};
   box-sizing: border-box;
   border-radius: 8px;
   resize: none;
@@ -94,21 +93,21 @@ const TextareaBlock = styled.textarea<{isError?: boolean; height?: string }>`
   transition: border .2s;
 
   &::placeholder {
-    color: ${palette.accent4};
+    color: ${({ theme }) => theme.accent4};
   }
 
   &:disabled {
-    color: ${palette.accent4};
-    background: ${palette.accent1};
+    color: ${({ theme }) => theme.accent4};
+    background: ${({ theme }) => theme.accent1};
   }
 
-  ${({ isError }) => (isError ? css`
-    border: 1px solid ${palette.warning};
+  ${({ isError, theme }) => (isError ? css`
+    border: 1px solid ${theme.warning};
   ` : css`
-    border: 1px solid ${palette.accent2};
+    border: 1px solid ${theme.accent2};
 
     &:focus {
-      border: 1px solid ${palette.success};
+      border: 1px solid ${theme.success};
     }
   `)};
 `;

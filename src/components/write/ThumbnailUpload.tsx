@@ -6,6 +6,7 @@ import { PlusCircle } from 'react-feather';
 import ReactImageUploading, { ImageListType } from 'react-images-uploading';
 import { useEffectOnce } from 'react-use';
 
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { isEmpty } from 'ramda';
 import { useRecoilValue } from 'recoil';
@@ -15,13 +16,13 @@ import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail
 import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { body2Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import CloseSvg from '../../assets/icons/close.svg';
 import HelperMessage from '../common/HelperMessage';
 import Label from '../common/Label';
 
 function ThumbnailUpload(): ReactElement {
+  const theme = useTheme();
   const { mutate: onUploadThumbnail } = useUploadGroupThumbnail();
   const { mutate: onRemoveThumbnail } = useRemoveGroupThumbnail();
   const { data: user } = useFetchUserProfile();
@@ -86,8 +87,8 @@ function ThumbnailUpload(): ReactElement {
             {isEmpty(imageList) ? (
               <EmptyBox>
                 <PlusCircle
-                  fill={palette.accent6}
-                  color={palette.background}
+                  fill={theme.accent6}
+                  color={theme.background}
                   width={40}
                   height={40}
                 />
@@ -142,12 +143,12 @@ const EmptyBox = styled.div`
 
   & > div:first-of-type {
     ${body2Font(true)}
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
   }
 
   & > div:last-of-type {
     ${subtitle1Font()}
-    color: ${palette.accent4};
+    color: ${({ theme }) => theme.accent4};
   }
 `;
 
@@ -157,7 +158,7 @@ const ThumbnailUploadBox = styled.div<{ isError?: boolean; }>`
   overflow: hidden;
   width: 100%;
   padding-top: 144px;
-  border: 1px solid ${({ isError }) => (isError ? palette.warning : palette.accent2)};
+  border: 1px solid ${({ isError, theme }) => (isError ? theme.warning : theme.accent2)};
   box-sizing: border-box;
   border-radius: 8px;
 `;

@@ -10,7 +10,6 @@ import * as R from 'ramda';
 import { Profile } from '@/models/auth';
 import { Comment } from '@/models/group';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import { emptyAThenB } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
@@ -80,13 +79,13 @@ const CommentState = styled.div`
 
   span {
     ${subtitle1Font()};
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
     margin: 0 3px;
   }
 
   .recruit-date {
     ${subtitle1Font()};
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
   }
 `;
 
@@ -95,7 +94,7 @@ const CommentViewWrapper = styled.div`
   flex-direction: row;
   padding-bottom: 16px;
   margin-bottom: 16px;
-  border-bottom: 0.5px solid ${palette.accent2};
+  border-bottom: 0.5px solid ${({ theme }) => theme.accent2};
 
   & > div {
     width: 100%;
@@ -104,7 +103,7 @@ const CommentViewWrapper = styled.div`
 
 const RemoveCommentButton = styled.button`
   ${subtitle1Font()};
-  color: ${palette.accent6};
+  color: ${({ theme }) => theme.accent6};
   background-color: transparent;
 `;
 

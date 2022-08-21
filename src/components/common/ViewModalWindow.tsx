@@ -2,11 +2,10 @@ import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 import { X as CloseSvg } from 'react-feather';
 import { useClickAway } from 'react-use';
 
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { h4Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
@@ -23,6 +22,7 @@ interface Props {
 function ViewModalWindow({
   isVisible, title, onClose, size, children,
 }: PropsWithChildren<Props>): ReactElement | null {
+  const theme = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
 
   useClickAway(modalRef, onClose);
@@ -38,7 +38,7 @@ function ViewModalWindow({
           <h4>{title}</h4>
           <CloseIcon
             size={24}
-            color={palette.accent6}
+            color={theme.accent6}
             onClick={onClose}
             data-testid="close-icon"
           />
@@ -65,7 +65,7 @@ const ViewModalWindowWrapper = styled.div`
 `;
 
 const ViewModalWindowBox = styled.div<{ size?: { height?: string; width?: string; }; isVisible: boolean }>`
-  background: ${palette.background};
+  background: ${({ theme }) => theme.background};
   border-radius: 8px;
   overflow: hidden;
   width: ${({ size }) => size?.width || '540px'};
@@ -81,7 +81,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  box-shadow: 0px 1px 0px ${palette.accent2};
+  box-shadow: 0px 1px 0px ${({ theme }) => theme.accent2};
 
   h4 {
     margin: 0px;

@@ -1,7 +1,8 @@
 import { useActive, useChainedCommands } from '@remirror/react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
+import MockTheme from '@/test/MockTheme';
 
 import EditorToolbar from './EditorToolbar';
 
@@ -27,7 +28,9 @@ describe('EditorToolbar', () => {
   });
 
   const renderEditorToolbar = () => render((
-    <EditorToolbar />
+    <MockTheme>
+      <EditorToolbar />
+    </MockTheme>
   ));
 
   describe('bold 버튼을 클릭한다', () => {
@@ -143,11 +146,11 @@ describe('EditorToolbar', () => {
   context('active.bold가 true인 경우', () => {
     given('isBold', () => true);
 
-    it(`bold 버튼의 배경색이 ${palette.background}가 되어야만 한다`, () => {
+    it(`bold 버튼의 배경색이 ${lightTheme.background}가 되어야만 한다`, () => {
       renderEditorToolbar();
 
       expect(screen.getByTestId('bold-button')).toHaveStyle({
-        background: palette.background,
+        background: lightTheme.background,
       });
     });
   });

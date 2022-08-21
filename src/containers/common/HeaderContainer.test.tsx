@@ -5,7 +5,8 @@ import { useSetRecoilState } from 'recoil';
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useSignOut from '@/hooks/api/auth/useSignOut';
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
+import MockTheme from '@/test/MockTheme';
 
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
@@ -40,7 +41,9 @@ describe('HeaderContainer', () => {
   });
 
   const renderHeaderContainer = () => render((
-    <HeaderContainer />
+    <MockTheme>
+      <HeaderContainer />
+    </MockTheme>
   ));
 
   describe('스크롤 위치에 따라 스타일이 변경된다', () => {
@@ -57,13 +60,13 @@ describe('HeaderContainer', () => {
     });
 
     context('스크롤 위치가 최상단이 아닐 경우', () => {
-      it(`box-shadow 속성이 ${palette.accent2} 이어야 한다`, () => {
+      it(`box-shadow 속성이 ${lightTheme.accent2} 이어야 한다`, () => {
         renderHeaderContainer();
 
         fireEvent.scroll(window, { target: { scrollY: 200 } });
 
         expect(screen.getByTestId('header-block')).toHaveStyle({
-          'box-shadow': `0 1px 0 0 ${palette.accent2}`,
+          'box-shadow': `0 1px 0 0 ${lightTheme.accent2}`,
         });
       });
     });

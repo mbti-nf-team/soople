@@ -1,8 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { groupsConditionState } from '@/recoil/group/atom';
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+import MockTheme from '@/test/MockTheme';
 import RecoilObserver from '@/test/RecoilObserver';
 
 import HeaderWrapper from './HeaderWrapper';
@@ -18,14 +19,14 @@ describe('HeaderWrapper', () => {
 
   const renderHeaderWrapper = () => render((
     <InjectTestingRecoilState>
-      <>
+      <MockTheme>
         <RecoilObserver node={groupsConditionState} onChange={handleChange} />
         <HeaderWrapper
           hasBackground={given.hasBackground}
           isScrollTop={given.isScrollTop}
           testId="test-id"
         />
-      </>
+      </MockTheme>
     </InjectTestingRecoilState>
   ));
 
@@ -46,11 +47,11 @@ describe('HeaderWrapper', () => {
   context('hasBackground가 true인 경우', () => {
     given('hasBackground', () => true);
 
-    it(`background 속성이 ${palette.accent1}이어야 한다`, () => {
+    it(`background 속성이 ${lightTheme.accent1}이어야 한다`, () => {
       renderHeaderWrapper();
 
       expect(screen.getByTestId('test-id')).toHaveStyle({
-        background: palette.accent1,
+        background: lightTheme.accent1,
       });
     });
   });
@@ -58,11 +59,11 @@ describe('HeaderWrapper', () => {
   context('hasBackground가 false인 경우', () => {
     given('hasBackground', () => false);
 
-    it(`background 속성이 ${palette.background}이어야 한다`, () => {
+    it(`background 속성이 ${lightTheme.background}이어야 한다`, () => {
       renderHeaderWrapper();
 
       expect(screen.getByTestId('test-id')).toHaveStyle({
-        background: palette.background,
+        background: lightTheme.background,
       });
     });
   });
@@ -83,11 +84,11 @@ describe('HeaderWrapper', () => {
     context('scroll 위치가 최상단일 때', () => {
       given('isScrollTop', () => false);
 
-      it(`box-shadow 속성이 ${palette.accent2} 이어야 한다`, () => {
+      it(`box-shadow 속성이 ${lightTheme.accent2} 이어야 한다`, () => {
         renderHeaderWrapper();
 
         expect(screen.getByTestId('test-id')).toHaveStyle({
-          'box-shadow': `0 1px 0 0 ${palette.accent2}`,
+          'box-shadow': `0 1px 0 0 ${lightTheme.accent2}`,
         });
       });
     });

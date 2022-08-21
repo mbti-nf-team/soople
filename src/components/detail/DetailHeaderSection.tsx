@@ -1,6 +1,7 @@
 import React, { memo, PropsWithChildren, ReactElement } from 'react';
 import { Eye as ViewsIcon } from 'react-feather';
 
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 
@@ -8,7 +9,6 @@ import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body1Font, h2Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import { emptyAThenB } from '@/utils/utils';
 
 import 'dayjs/locale/ko';
@@ -25,6 +25,8 @@ function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): Rea
   const {
     writer, views, isCompleted, numberApplicants,
   } = group;
+
+  const theme = useTheme();
   const recruitDate = useRecruitDateStatus(group);
 
   return (
@@ -44,8 +46,8 @@ function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): Rea
               <div className="view-wrapper">
                 <ViewsIcon
                   size={16}
-                  color={palette.background}
-                  fill={palette.accent6}
+                  color={theme.background}
+                  fill={theme.accent6}
                 />
                 <span>{views}</span>
               </div>
@@ -65,7 +67,7 @@ function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): Rea
 export default memo(DetailHeaderSection);
 
 const DetailHeaderSectionWrapper = styled.section`
-  border-bottom: 0.5px solid ${palette.accent2};
+  border-bottom: 0.5px solid ${({ theme }) => theme.accent2};
   margin-bottom: 40px;
 
   h2 {
@@ -97,7 +99,7 @@ const WriterProfileTextWrapper = styled.div`
   }
 
   div {
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
     ${subtitle1Font()};
   }
 `;
@@ -109,12 +111,12 @@ const MetadataWrapper = styled.div`
 
   & > :not(:last-of-type) {
     ${subtitle1Font()};
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
   }
 
   & > :last-of-type {
     ${subtitle1Font(true)};
-    color: ${palette.foreground};
+    color: ${({ theme }) => theme.foreground};
   }
 
   .view-wrapper {

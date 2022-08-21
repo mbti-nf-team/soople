@@ -9,7 +9,6 @@ import styled from '@emotion/styled';
 
 import { SelectOption } from '@/models';
 import { body1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import HelperMessage from './HelperMessage';
 import Label from './Label';
@@ -101,8 +100,8 @@ const SelectForm = styled.div<{ isError?: boolean; }>`
 
   &:focus-within {
     & > label > span {
-      ${({ isError }) => !isError && css`
-        color: ${palette.success};
+      ${({ isError, theme }) => !isError && css`
+        color: ${theme.success};
       `}
     }
   }
@@ -136,42 +135,42 @@ const StyledSelect = styled(Select)<{ size: Size; isError: boolean; }>`
     box-sizing: border-box;
     border-radius: 8px;
 
-    ${({ isError }) => (isError ? css`
-      border: 1px solid ${palette.warning};
+    ${({ isError, theme }) => (isError ? css`
+      border: 1px solid ${theme.warning};
     ` : css`
-      border: 1px solid ${palette.accent2};
+      border: 1px solid ${theme.accent2};
     `)}
   }
 
   &.select--is-disabled {
     & > .select__control--is-disabled {
-      background-color: ${palette.accent1};
+      background-color: ${({ theme }) => theme.accent1};
 
       & > .select__value-container--has-value {
         & > .select__single-value--is-disabled {
-          color: ${palette.accent6};
+          color: ${({ theme }) => theme.accent6};
         }
       }
     }
   }
 
   & .select__control--is-focused {
-    ${({ isError }) => !isError && css`
-      border-color: ${palette.success} !important;
+    ${({ isError, theme }) => !isError && css`
+      border-color: ${theme.success} !important;
     `}
     box-shadow: none;
   }
 
   & .select__option {
     cursor: pointer;
-    color: ${palette.foreground};
+    color: ${({ theme }) => theme.foreground};
     text-align: left;
-    background-color: ${palette.background};
+    background-color: ${({ theme }) => theme.background};
     padding: 7px 16px;
   }
   
   & .select__placeholder {
-    color: ${palette.accent4};
+    color: ${({ theme }) => theme.accent4};
   }
 
   & .select__menu {
@@ -179,15 +178,15 @@ const StyledSelect = styled(Select)<{ size: Size; isError: boolean; }>`
   }
 
   & .select__option--is-focused {
-    background-color: ${palette.accent1};
+    background-color: ${({ theme }) => theme.accent1};
   }
 
   & .select__option--is-selected {
-    background-color: ${palette.accent1};
+    background-color: ${({ theme }) => theme.accent1};
   }
 
   & .select__single-value {
-    color: ${palette.foreground};
+    color: ${({ theme }) => theme.foreground};
     text-align: left;
   }
 

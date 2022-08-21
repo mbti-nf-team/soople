@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
+import MockTheme from '@/test/MockTheme';
 
 import Textarea from './Textarea';
 
@@ -8,23 +9,25 @@ describe('Textarea', () => {
   const handleChange = jest.fn();
 
   const renderTextarea = () => render((
-    <Textarea
-      placeholder="test"
-      value="test"
-      isError={given.isError}
-      labelText="test"
-      onChange={handleChange}
-    />
+    <MockTheme>
+      <Textarea
+        placeholder="test"
+        value="test"
+        isError={given.isError}
+        labelText="test"
+        onChange={handleChange}
+      />
+    </MockTheme>
   ));
 
   context('error가 존재하지 않는 경우', () => {
     given('isError', () => false);
 
-    it(`textarea border 색상이 ${palette.accent2}이어야만 한다`, () => {
+    it(`textarea border 색상이 ${lightTheme.accent2}이어야만 한다`, () => {
       renderTextarea();
 
       expect(screen.getByPlaceholderText('test')).toHaveStyle({
-        border: `1px solid ${palette.accent2}`,
+        border: `1px solid ${lightTheme.accent2}`,
       });
     });
 
@@ -44,11 +47,11 @@ describe('Textarea', () => {
   context('error가 존재한 경우', () => {
     given('isError', () => true);
 
-    it(`textarea border 색상이 ${palette.warning}이어야만 한다`, () => {
+    it(`textarea border 색상이 ${lightTheme.warning}이어야만 한다`, () => {
       renderTextarea();
 
       expect(screen.getByPlaceholderText('test')).toHaveStyle({
-        border: `1px solid ${palette.warning}`,
+        border: `1px solid ${lightTheme.warning}`,
       });
     });
   });

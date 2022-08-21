@@ -6,7 +6,6 @@ import { useSetRecoilState } from 'recoil';
 
 import { groupsConditionState } from '@/recoil/group/atom';
 import Layout from '@/styles/Layout';
-import palette from '@/styles/palette';
 import { mq2 } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
@@ -57,8 +56,8 @@ const HeaderBlock = styled.div<{ hasBackground: boolean; isScrollTop: boolean }>
   position: fixed;
   width: 100%;
   z-index: ${zIndexes.TopNavigation};
-  background: ${({ hasBackground }) => (hasBackground ? palette.accent1 : palette.background)};
-  box-shadow: 0 1px 0 0 ${({ isScrollTop }) => (isScrollTop ? 'transparent' : palette.accent2)};
+  background: ${({ hasBackground, theme }) => (hasBackground ? theme.accent1 : theme.background)};
+  box-shadow: 0 1px 0 0 ${({ isScrollTop, theme }) => (isScrollTop ? 'transparent' : theme.accent2)};
   transition: box-shadow .2s ease-in-out;
 `;
 

@@ -3,7 +3,6 @@ import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
 
 import { h3Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import Button, { ColorType } from './Button';
 
@@ -65,5 +64,5 @@ const EmptyStateText = styled.div`
   text-align: center;
 
   ${h3Font(true)};
-  color: ${palette.accent5};
+  color: ${({ theme }) => theme.accent5};
 `;

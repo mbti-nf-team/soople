@@ -3,8 +3,6 @@ import Toggle from 'react-toggle';
 
 import styled from '@emotion/styled';
 
-import palette from '@/styles/palette';
-
 import 'react-toggle/style.css';
 
 interface Props {
@@ -28,7 +26,7 @@ export default SwitchButton;
 
 const SwitchButtonWrapper = styled(Toggle)`
   &.react-toggle .react-toggle-track {
-    background-color: ${palette.accent3};
+    background-color: ${({ theme }) => theme.accent3};
   }
 
   &.react-toggle .react-toggle-track {
@@ -41,24 +39,24 @@ const SwitchButtonWrapper = styled(Toggle)`
     height: 24px;
     top: 0px;
     left: 0px;
-    border: 2px solid ${palette.accent3};
+    border: 2px solid ${({ theme }) => theme.accent3};
   }
 
   &.react-toggle--checked .react-toggle-thumb {
     left: 14px;
-    border: 2px solid ${palette.success};
+    border: 2px solid ${({ theme }) => theme.success};
   }
 
   &.react-toggle--checked .react-toggle-track {
-    background-color: ${palette.success};
+    background-color: ${({ theme }) => theme.success};
   }
 
   &.react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
-    background-color: ${palette.accent4};
+    background-color: ${({ theme }) => theme.accent4};
   }
 
   &.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
-    background-color: ${palette.success10};
+    background-color: ${({ theme }) => theme.success10};
   }
 
   &.react-toggle--focus .react-toggle-thumb {

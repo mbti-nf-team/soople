@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { isEmpty } from 'ramda';
 
 import { Applicant } from '@/models/group';
-import palette from '@/styles/palette';
 
 import EmptyStateArea from '../common/EmptyStateArea';
 
@@ -46,6 +45,6 @@ const ApplicationStatusSection = styled.section`
   margin-top: 24px;
 
   & > :not(:last-of-type) {
-    border-bottom: 0.5px solid ${palette.accent2};
+    border-bottom: 0.5px solid ${({ theme }) => theme.accent2};
   }
 `;

@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 
 import { h4Font } from '@/styles/fontStyles';
 import Layout from '@/styles/Layout';
-import palette from '@/styles/palette';
 import zIndexes from '@/styles/zIndexes';
 
 interface Props {
@@ -45,7 +44,7 @@ const HeaderBlock = styled.div`
   position: fixed;
   width: 100%;
   z-index: ${zIndexes.TopNavigation};
-  background: ${palette.background};
+  background: ${({ theme }) => theme.background};
 `;
 
 const HeaderWrapper = styled(Layout)`
@@ -65,5 +64,5 @@ const HeaderWrapper = styled(Layout)`
 const GoBackButton = styled.button`
   ${h4Font(true)};
   background: transparent;
-  color: ${palette.foreground};
+  color: ${({ theme }) => theme.foreground};
 `;

@@ -1,9 +1,8 @@
 import React, { ReactElement } from 'react';
 import { X as CloseSvg } from 'react-feather';
 
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-
-import palette from '@/styles/palette';
 
 interface Props {
   tag: string;
@@ -12,6 +11,8 @@ interface Props {
 }
 
 function Tag({ tag, onRemove, onClick }: Props): ReactElement {
+  const theme = useTheme();
+
   if (onClick) {
     return (
       <TagWrapper onClick={onClick} className="view-tag">
@@ -28,7 +29,7 @@ function Tag({ tag, onRemove, onClick }: Props): ReactElement {
       <CloseIcon
         size={12}
         strokeWidth={3}
-        color={palette.accent5}
+        color={theme.accent5}
         onClick={onRemove}
         data-testid="remove-icon"
       />
@@ -44,13 +45,13 @@ const TagWrapper = styled.div`
   align-items: center;
   padding: 0 1rem;
   height: 36px;
-  background: ${palette.accent2};
+  background: ${({ theme }) => theme.accent2};
   border-radius: 8px;
   font-weight: 600;
   font-size: 15px;
   line-height: 24px;
   text-align: center;
-  color: ${palette.accent7};
+  color: ${({ theme }) => theme.accent7};
 
   &.view-tag {
     cursor: pointer;

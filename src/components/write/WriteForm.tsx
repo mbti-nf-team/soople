@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import { KeyPair } from '@/models';
 import { WriteFields } from '@/models/group';
 import { h2Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import TagForm from './TagForm';
 import WriteEditor from './WriteEditor';
@@ -55,13 +54,13 @@ const WriteFormWrapper = styled.div`
 
 const TitleInput = styled.input`
   ${h2Font(true)}
-  color: ${palette.foreground};
+  color: ${({ theme }) => theme.foreground};
   outline: none;
   border: none;
   padding: 0;
   margin-bottom: 24px;
 
   &::placeholder {
-    color: ${palette.accent4};
+    color: ${({ theme }) => theme.accent4};
   }
 `;

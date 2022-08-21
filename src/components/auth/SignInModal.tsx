@@ -1,11 +1,10 @@
 import React, { PropsWithChildren, ReactElement } from 'react';
 import { X as CloseSvg } from 'react-feather';
 
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { body1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
@@ -19,6 +18,8 @@ interface Props {
 function SignInModal({
   isVisible, onClose, children,
 }: PropsWithChildren<Props>): ReactElement | null {
+  const theme = useTheme();
+
   if (!isVisible) {
     return null;
   }
@@ -30,7 +31,7 @@ function SignInModal({
           <LogoIcon />
           <CloseIcon
             size={24}
-            color={palette.accent6}
+            color={theme.accent6}
             onClick={onClose}
             data-testid="close-icon"
           />
@@ -69,7 +70,7 @@ const HeaderWrapper = styled.div`
 
 const SignInDescription = styled.p`
   ${body1Font()};
-  color: ${palette.accent7};
+  color: ${({ theme }) => theme.accent7};
   text-align: center;
   margin-bottom: 2rem;
 `;
@@ -90,7 +91,7 @@ const SignInModalWrapper = styled.div`
 const SignInModalBox = styled.div<{ isVisible: boolean }>`
   width: 400px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
-  background: ${palette.background};
+  background: ${({ theme }) => theme.background};
   display: flex;
   justify-content: center;
   align-items: center;

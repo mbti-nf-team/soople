@@ -5,7 +5,6 @@ import React, {
 import styled from '@emotion/styled';
 
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import TagList from './TagList';
 
@@ -100,19 +99,19 @@ const TagFormWrapper = styled.div`
   .title {
     ${body2Font(true)};
     margin-left: 4px;
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
     transition: color 0.1s ease-in-out;
   }
 
   .tag-tip {
     ${subtitle1Font()};
     margin-left: 4px;
-    color: ${palette.accent5};
+    color: ${({ theme }) => theme.accent5};
   }
 
   &:focus-within {
     & > .title {
-      color: ${palette.success};
+      color: ${({ theme }) => theme.success};
     }
   }
 `;
@@ -126,15 +125,15 @@ const TagsWrapper = styled.div<{isHaveTag: boolean }>`
   padding-left: 8px;
   padding-top: ${({ isHaveTag }) => (isHaveTag ? '5px' : '8px')};
   padding-bottom: ${({ isHaveTag }) => (isHaveTag ? '5px' : '8px')};
-  background: ${palette.background};
-  border: 1px solid ${palette.accent2};
+  background: ${({ theme }) => theme.background};
+  border: 1px solid ${({ theme }) => theme.accent2};
   box-sizing: border-box;
   border-radius: 8px;
   margin: 6px 0;
   transition: border-color 0.1s ease-in-out;
 
   &:focus-within {
-    border: 1px solid ${palette.success};
+    border: 1px solid ${({ theme }) => theme.success};
   }
 
   div {
@@ -148,11 +147,11 @@ const TagInput = styled.input<{isHaveTag: boolean }>`
   outline: none;
   height: ${({ isHaveTag }) => (isHaveTag ? '40px' : '34px')};
   min-width: 8rem;
-  color: ${palette.foreground};
+  color: ${({ theme }) => theme.foreground};
   border: none;
   cursor: text;
 
   &::placeholder {
-    color: ${palette.accent4};
+    color: ${({ theme }) => theme.accent4};
   }
 `;

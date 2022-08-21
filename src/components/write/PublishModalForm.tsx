@@ -9,7 +9,6 @@ import {
   Category, RecruitmentEndSetting, WriteFields,
 } from '@/models/group';
 import { subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import { stringToExcludeNull } from '@/utils/utils';
 
 import FormModal from '../common/FormModal';
@@ -177,7 +176,7 @@ const RecruitmentEndDateInput = styled(Input)`
   padding: 11px 7px 11px 16px;
 
   &:focus-within {
-    border: 1px solid ${palette.success};
+    border: 1px solid ${({ theme }) => theme.success};
   }
 
   &::-webkit-calendar-picker-indicator {
@@ -198,7 +197,7 @@ const PublishFormWrapper = styled.div`
 
 const ShortDescriptionLength = styled.div<{ isError: boolean; }>`
   ${subtitle1Font()}
-  color: ${({ isError }) => (isError ? palette.warning : palette.accent5)};
+  color: ${({ isError, theme }) => (isError ? theme.warning : theme.accent5)};
   text-align: right;
   margin-top: 6px;
 `;

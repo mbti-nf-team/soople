@@ -4,7 +4,6 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { body2Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 interface Props extends DetailedHTMLProps<
   LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement
@@ -36,16 +35,16 @@ const StyledLabel = styled.label<{ isError?: boolean; }>`
     transition: color .2s ease-in-out;
     margin: 0px 0px 6px 4px;
 
-    ${({ isError }) => (isError ? css`
-      color: ${palette.warning};
+    ${({ isError, theme }) => (isError ? css`
+      color: ${theme.warning};
     ` : css`
-      color: ${palette.accent6};
+      color: ${theme.accent6};
     `)};
   }
 
   .option-span {
     ${body2Font()};
-    color: ${palette.accent4};
+    color: ${({ theme }) => theme.accent4};
     margin-left: 4px;
   }
 `;

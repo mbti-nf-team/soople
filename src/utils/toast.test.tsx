@@ -1,7 +1,7 @@
 import { AlertCircle as WarnIcon } from 'react-feather';
 import { toast } from 'react-toastify';
 
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
 
 import { errorToast, successToast } from './toast';
 
@@ -19,7 +19,7 @@ describe('errorToast', () => {
     errorToast(errorMessage);
 
     expect(toast.error).toBeCalledWith(errorMessage, {
-      icon: <WarnIcon width="24px" height="24px" fill={palette.warning} color={palette.background} />,
+      icon: <WarnIcon width="24px" height="24px" fill={lightTheme.warning} color={lightTheme.background} />,
     });
   });
 });

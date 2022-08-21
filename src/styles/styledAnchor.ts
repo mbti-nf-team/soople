@@ -1,14 +1,12 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 
-import palette from './palette';
-
-const styledAnchor = css`
+const styledAnchor = ({ theme }: { theme: Theme }) => css`
   a {
-    color: ${palette.success10};
+    color: ${theme.success10};
     transition: color 0.1s ease-in-out;
   
     &:hover {
-      color: ${palette.success};
+      color: ${theme.success};
       text-decoration: underline;
     }
   }

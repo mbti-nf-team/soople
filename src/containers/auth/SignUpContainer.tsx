@@ -12,7 +12,6 @@ import useSignUp from '@/hooks/api/auth/useSignUp';
 import { SignUpAdditionalForm } from '@/models/auth';
 import { body1Font, h2Font } from '@/styles/fontStyles';
 import Layout from '@/styles/Layout';
-import palette from '@/styles/palette';
 
 function SignUpContainer(): ReactElement {
   const profile = useFetchUserProfile();
@@ -63,7 +62,7 @@ export default SignUpContainer;
 const Title = styled.div`
   ${h2Font(true)}
   margin: 8px 0;
-  color: ${palette.foreground};
+  color: ${({ theme }) => theme.foreground};
 `;
 
 const SignUpFormLayout = styled(Layout)`
@@ -75,7 +74,7 @@ const SignUpFormLayout = styled(Layout)`
 
   & > h4 {
     ${body1Font()}
-    color: ${palette.accent7};
+    color: ${({ theme }) => theme.accent7};
     margin: 0 0 38px 0;
   }
 `;

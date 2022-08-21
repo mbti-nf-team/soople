@@ -1,24 +1,27 @@
 import { render, screen } from '@testing-library/react';
 
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
+import MockTheme from '@/test/MockTheme';
 
 import MyInfoTab from './MyInfoTab';
 
 describe('MyInfoTab', () => {
   const renderMyInfoTab = () => render((
-    <MyInfoTab
-      activeTab="setting"
-      numberAppliedGroups={3}
-      numberRecruitedGroups={3}
-    />
+    <MockTheme>
+      <MyInfoTab
+        activeTab="setting"
+        numberAppliedGroups={3}
+        numberRecruitedGroups={3}
+      />
+    </MockTheme>
   ));
 
   context('active 상태인 경우', () => {
-    it(`링크의 border color가 ${palette.success10} 이어야만 한다`, () => {
+    it(`링크의 border color가 ${lightTheme.success10} 이어야만 한다`, () => {
       renderMyInfoTab();
 
       expect(screen.getByText('내 정보 수정')).toHaveStyle({
-        'border-bottom': `2px solid ${palette.foreground}`,
+        'border-bottom': `2px solid ${lightTheme.foreground}`,
       });
     });
   });

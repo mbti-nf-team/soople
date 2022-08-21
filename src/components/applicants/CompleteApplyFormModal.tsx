@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 
 import { CompletedGroupForm } from '@/models/group';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import AlertTriangleIcon from '../../assets/icons/alert_triangle.svg';
 import FormModal from '../common/FormModal';
@@ -101,27 +100,27 @@ const MessageInputWrapper = styled.div`
 
   & > label {
     ${body2Font(true)}
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
     margin-left: 3px;
     margin-bottom: 6px;
 
     & > span {
       ${body2Font()}
-      color: ${palette.accent4};
+      color: ${({ theme }) => theme.accent4};
       margin-left: 4px;
     }
   }
 
   & > small {
     ${subtitle1Font()}
-    color: ${palette.accent5};
+    color: ${({ theme }) => theme.accent5};
     margin-left: 3px;
     margin-top: 6px;
   }
 `;
 
 const WarningRemainBlock = styled.div`
-  background-color: ${palette.accent1};
+  background-color: ${({ theme }) => theme.accent1};
   border-radius: 8px;
   padding: 9px 12px;
   width: 100%;

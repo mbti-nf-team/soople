@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
 import { WriteFields } from '@/models/group';
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
 import InjectMockProviders from '@/test/InjectMockProviders';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
@@ -130,14 +130,14 @@ describe('PublishModalForm', () => {
           expect(handleChangeFields).toBeCalledWith({ shortDescription: '소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니' });
         });
 
-        it(`폰트 색상이 ${palette.warning}이어야만 한다`, () => {
+        it(`폰트 색상이 ${lightTheme.warning}이어야만 한다`, () => {
           renderPublishModalForm({
             ...WRITE_FIELDS_FIXTURE,
             shortDescription: '소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니',
           });
 
           expect(screen.getByTestId('short-description-length')).toHaveStyle({
-            color: palette.warning,
+            color: lightTheme.warning,
           });
         });
       });
