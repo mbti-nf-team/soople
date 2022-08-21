@@ -8,11 +8,12 @@ const palette = {
   accent5: '#8C94A0',
   accent6: '#686E78',
   accent7: '#46484B',
+  accent8: '#232426',
   foreground: '#000000',
 
   /* success */
   success: '#23CD4B',
-  success10: '#428DC9',
+  success10: '#28B94B',
 
   /* warning */
   warning: '#DC4146',

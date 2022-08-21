@@ -61,11 +61,11 @@ describe('Button', () => {
     });
 
     context('색상 속성이 "primary"인 경우', () => {
-      it(`배경 색상이 ${palette.accent7} 이어야만 한다`, () => {
+      it(`배경 색상이 ${palette.accent8} 이어야만 한다`, () => {
         renderButton({ color: 'primary' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          background: palette.accent7,
+          background: palette.accent8,
         });
       });
     });
@@ -95,7 +95,7 @@ describe('Button', () => {
         renderButton({ color: 'ghost' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          color: palette.accent7,
+          color: palette.foreground,
         });
       });
     });

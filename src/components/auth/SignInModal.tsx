@@ -39,7 +39,7 @@ function SignInModal({
         <SignInDescription>
           스터디와 사이드 프로젝트
           <br />
-          코너스와 함께 시작하세요
+          수플과 함께 시작하세요
         </SignInDescription>
       </SignInModalBox>
     </SignInModalWrapper>
