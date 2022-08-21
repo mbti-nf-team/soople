@@ -49,7 +49,7 @@ function SignUpContainer(): ReactElement {
   return (
     <SignUpFormLayout>
       <Title>시작하기</Title>
-      <h4>코너스를 시작하기 위해 정보를 입력해주세요.</h4>
+      <h4>수플을 시작하기 위해 정보를 입력해주세요.</h4>
       <SignUpForm
         fields={user.data}
         onSubmit={onSubmit}
