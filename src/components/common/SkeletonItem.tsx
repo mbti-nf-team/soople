@@ -4,7 +4,6 @@ import React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import palette from '@/styles/palette';
 import transitions from '@/styles/transitions';
 
 export interface SkeletonProps {
@@ -42,7 +41,7 @@ function SkeletonItem({
 export default SkeletonItem;
 
 const SkeletonBlock = styled.span<{ circle?: boolean; }>`
-  background: ${palette.accent2};
+  background: ${({ theme }) => theme.accent2};
   animation: ${transitions.blink} 1s ease-in-out infinite;
   display: inline-block;
   border-radius: 4px;

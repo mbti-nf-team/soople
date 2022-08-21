@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import { useActive, useChainedCommands } from '@remirror/react';
 
 import Divider from '@/styles/Divider';
-import palette from '@/styles/palette';
 
 import BoldIcon from '../../assets/icons/editor_b.svg';
 import BlockquoteIcon from '../../assets/icons/editor_blockquote.svg';
@@ -179,7 +178,7 @@ const EditorToolbarWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   box-sizing: border-box;
-  border: 1px solid ${palette.accent1};
+  border: 1px solid ${({ theme }) => theme.accent1};
   padding: 8px 16px;
   border-radius: 8px;
 
@@ -194,40 +193,40 @@ const ToolbarItemButton = styled.button<{ active: boolean; }>`
   justify-content: center;
   border-radius: 4px;
   transition: background-color .1s ease-in-out;
-  background: ${palette.background};
+  background: ${({ theme }) => theme.background};
 
-  ${({ active }) => active && css`
+  ${({ active, theme }) => active && css`
     & >.toolbar-icon > path {
         transition: stroke .1s ease-in-out;
-        stroke: ${palette.success};
+        stroke: ${theme.success};
       }
 
     & >.strike-icon > path, >.blockquote-icon > path  {
       transition: fill .1s ease-in-out;
-      fill: ${palette.success};
+      fill: ${theme.success};
     }
 
     & >.ordered-list-icon {
       & > path:first-of-type, > path:nth-of-type(3) {
         transition: stroke .1s ease-in-out;
-        stroke: ${palette.success};
+        stroke: ${theme.success};
       }
 
       & > path:last-of-type, > path:nth-of-type(2) {
         transition: fill .1s ease-in-out;
-        fill: ${palette.success};
+        fill: ${theme.success};
       }
     }
 
     & >.heading-icon {
       & > path:first-of-type {
         transition: stroke .1s ease-in-out;
-        stroke: ${palette.success};
+        stroke: ${theme.success};
       }
 
       & > path:last-of-type {
         transition: fill .1s ease-in-out;
-        fill: ${palette.success};
+        fill: ${theme.success};
       }
     }
   `}

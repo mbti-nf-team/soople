@@ -1,26 +1,29 @@
 import { render, screen } from '@testing-library/react';
 
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
+import MockTheme from '@/test/MockTheme';
 
 import Label from './Label';
 
 describe('Label', () => {
   const renderLabel = () => render((
-    <Label
-      labelText="label"
-      labelOptionText="optionText"
-      isError={given.isError}
-    />
+    <MockTheme>
+      <Label
+        labelText="label"
+        labelOptionText="optionText"
+        isError={given.isError}
+      />
+    </MockTheme>
   ));
 
   context('error가 존재하는 경우', () => {
     given('isError', () => true);
 
-    it(`label 색상이 ${palette.warning}이어야만 한다`, () => {
+    it(`label 색상이 ${lightTheme.warning}이어야만 한다`, () => {
       renderLabel();
 
       expect(screen.getByTestId('label')).toHaveStyle({
-        color: palette.warning,
+        color: lightTheme.warning,
       });
     });
   });
@@ -28,11 +31,11 @@ describe('Label', () => {
   context('error가 존재하지 않는 경우', () => {
     given('isError', () => false);
 
-    it(`label 색상이 ${palette.accent6}이어야만 한다`, () => {
+    it(`label 색상이 ${lightTheme.accent6}이어야만 한다`, () => {
       renderLabel();
 
       expect(screen.getByTestId('label')).toHaveStyle({
-        color: palette.accent6,
+        color: lightTheme.accent6,
       });
     });
   });

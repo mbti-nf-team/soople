@@ -3,7 +3,6 @@ import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
 
 import { subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 interface Props {
   error: string;
@@ -38,7 +37,7 @@ const ErrorBlock = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${palette.warning};
+  background-color: ${({ theme }) => theme.warning};
   text-align: center;
-  color: ${palette.background};
+  color: ${({ theme }) => theme.background};
 `;

@@ -2,20 +2,20 @@ import React, { ReactElement, useRef } from 'react';
 import { X as CloseIcon } from 'react-feather';
 import { useClickAway } from 'react-use';
 
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 
 import Button from '@/components/common/Button';
 import { recruitCompleteModalVisibleState } from '@/recoil/modal/atom';
 import { body1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
 import SuccessIcon from '../../../assets/icons/img_success.svg';
 
 function RecruitCompleteModal(): ReactElement | null {
+  const theme = useTheme();
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useRecoilState(recruitCompleteModalVisibleState);
 
@@ -35,7 +35,7 @@ function RecruitCompleteModal(): ReactElement | null {
             size={24}
             cursor="pointer"
             onClick={onClose}
-            color={palette.accent6}
+            color={theme.accent6}
             data-testid="close-icon"
           />
         </HeaderWrapper>
@@ -87,7 +87,7 @@ const HeaderWrapper = styled.div`
 const RecruitCompleteModalBox = styled.div<{ isVisible: boolean }>`
   width: 400px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
-  background: ${palette.background};
+  background: ${({ theme }) => theme.background};
   border-radius: 8px;
 
   ${({ isVisible }) => (isVisible && css`
@@ -103,7 +103,7 @@ const Contents = styled.div`
   margin-bottom: 40px;
 
   & h3 {
-    color: ${palette.foreground};
+    color: ${({ theme }) => theme.foreground};
     margin: 0px;
   }
 
@@ -113,7 +113,7 @@ const Contents = styled.div`
 
   & > p {
     ${body1Font()}
-    color: ${palette.accent7};
+    color: ${({ theme }) => theme.accent7};
     margin: 4px 0 0 0;
     text-align: center;
   }
@@ -125,7 +125,7 @@ const FooterWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding: 12px 12px 12px 16px;
-  box-shadow: inset 0px 1px 0px ${palette.accent2};
+  box-shadow: inset 0px 1px 0px ${({ theme }) => theme.accent2};
 
   & > button:first-of-type {
     margin-right: 8px;

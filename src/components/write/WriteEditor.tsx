@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { X as CloseIcon } from 'react-feather';
 
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { EditorComponent } from '@remirror/react';
 import {
@@ -16,11 +17,11 @@ import {
 
 import EditorToolbar from '@/components/write/EditorToolbar';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import AlertTriangleIcon from '../../assets/icons/alert_triangle.svg';
 
 function WriteEditor(): ReactElement {
+  const theme = useTheme();
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   return (
@@ -39,7 +40,7 @@ function WriteEditor(): ReactElement {
           <CloseIcon
             width={16}
             height={16}
-            color={palette.accent5}
+            color={theme.accent5}
             cursor="pointer"
             onClick={() => setIsVisible(false)}
             data-testid="close-icon"
@@ -57,8 +58,8 @@ export default WriteEditor;
 
 const WarningMessage = styled.div`
   ${subtitle1Font()};
-  background: ${palette.accent1};
-  color: ${palette.foreground};
+  background: ${({ theme }) => theme.accent1};
+  color: ${({ theme }) => theme.foreground};
   border-radius: 8px;
   padding: 12px;
   margin-top: 24px;
@@ -87,7 +88,7 @@ const RemirrorEditorWrapper = styled(CoreStyledComponent)`
   ${extensionEmojiStyledCss}
   ${extensionWhitespaceStyledCss}
   ${extensionPositionerStyledCss}
-  border-bottom: 1px solid ${palette.accent2};
+  border-bottom: 1px solid ${({ theme }) => theme.accent2};
   margin-bottom: 24px;
 
   p, ol, li, a {
@@ -105,48 +106,40 @@ const RemirrorEditorWrapper = styled(CoreStyledComponent)`
   }
 
   a {
-    color: ${palette.success10};
+    color: ${({ theme }) => theme.success10};
   }
 
   p > code {
     padding: 0.2em 0.4em;
     margin: 0;
     font-size: 85%;
-    background-color: ${palette.accent2};
+    background-color: ${({ theme }) => theme.accent2};
     border-radius: 6px;
   }
 
   .ProseMirror hr {
-    border: .5px solid ${palette.accent4} !important;
+    border: .5px solid ${({ theme }) => theme.accent4} !important;
   }
 
   .ProseMirror blockquote {
-    border-left: 4px solid ${palette.accent3};
+    border-left: 4px solid ${({ theme }) => theme.accent3};
     margin-left: 0;
     margin-right: 0;
     padding-left: 15px;
 
     & p {
-      color: ${palette.accent5}
+      color: ${({ theme }) => theme.accent5}
     }
   }
-
-  /* p::selection {
-    background-color: #B4D5FE !important;
-  } 
-  
-  p.selection {
-    background-color: #B4D5FE !important;
-  } */
 
   .remirror-is-empty:first-of-type::before {
     ${body1Font()}
     font-style: normal;
-    color: ${palette.accent4};
+    color: ${({ theme }) => theme.accent4};
   }
 
   .remirror-emoji-popup-highlight {
-    background-color: ${palette.accent1};
+    background-color: ${({ theme }) => theme.accent1};
   }
 
   & >.remirror-editor-wrapper {

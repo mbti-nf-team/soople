@@ -7,7 +7,6 @@ import ViewModalWindow from '@/components/common/ViewModalWindow';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import Divider from '@/styles/Divider';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import styledAnchor from '@/styles/styledAnchor';
 import { emptyAThenB } from '@/utils/utils';
 
@@ -88,6 +87,6 @@ const MemberMetaData = styled.div`
   align-items: center;
 
   & > div:first-of-type {
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
   }
 `;

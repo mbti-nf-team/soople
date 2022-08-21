@@ -2,8 +2,6 @@ import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
-import palette from '@/styles/palette';
-
 import SkeletonItem from '../common/SkeletonItem';
 
 function AlarmsSkeletonLoader(): ReactElement {
@@ -32,7 +30,7 @@ const AlarmsSkeletonLoaderWrapper = styled.div`
     display: flex;
     flex-direction: row;
     padding: 24px 16px 24px 16px;
-    border-bottom: 0.5px solid ${palette.accent2};
+    border-bottom: 0.5px solid ${({ theme }) => theme.accent2};
     justify-content: space-between;
     align-items: flex-start;
 

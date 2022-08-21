@@ -2,7 +2,6 @@ import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
-import palette from '@/styles/palette';
 import { mq2 } from '@/styles/responsive';
 
 import SkeletonItem from '../common/SkeletonItem';
@@ -62,6 +61,6 @@ export const MyGroupLayout = styled.div`
 
   & > :not(div:last-of-type) {
     padding-bottom: 24px;
-    border-bottom: 0.5px solid ${palette.accent2};
+    border-bottom: 0.5px solid ${({ theme }) => theme.accent2};
   }
 `;

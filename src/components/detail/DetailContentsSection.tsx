@@ -11,7 +11,6 @@ import { unified } from 'unified';
 import { Group } from '@/models/group';
 import { groupsConditionState } from '@/recoil/group/atom';
 import { body1Font, body2Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import styledAnchor from '@/styles/styledAnchor';
 import { filteredWithSanitizeHtml } from '@/utils/filter';
 import rehypePrism from '@/utils/rehypePrism';
@@ -104,35 +103,35 @@ const DetailContentWrapper = styled.div`
       padding: 0.2em 0.4em;
       margin: 0;
       font-size: 85%;
-      background-color: ${palette.accent2};
+      background-color: ${({ theme }) => theme.accent2};
       border-radius: 6px;
     }
   }
 
   hr {
-    border: .5px solid ${palette.accent4}
+    border: .5px solid ${({ theme }) => theme.accent4}
   }
 
   blockquote {
-    border-left: 4px solid ${palette.accent3};
+    border-left: 4px solid ${({ theme }) => theme.accent3};
     margin-left: 0;
     margin-right: 0;
     padding-left: 15px;
 
     & p {
-      color: ${palette.accent5}
+      color: ${({ theme }) => theme.accent5}
     }
   }
 `;
 
 const DetailContentsWrapper = styled.div`
-  border-bottom: 0.5px solid ${palette.accent2};
+  border-bottom: 0.5px solid ${({ theme }) => theme.accent2};
   padding-bottom: 40px;
   margin-bottom: 24px;
 `;
 
 const MemberMessageBlock = styled.div`
-  background: ${palette.accent1};
+  background: ${({ theme }) => theme.accent1};
   box-sizing: border-box;
   border-radius: 12px;
   padding: 16px;
@@ -147,17 +146,17 @@ const MemberMessageBlock = styled.div`
   & > div > p {
     ${body2Font()}
     margin: 0px;
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
   }
 `;
 
 const MemberMessageTitle = styled.h6`
   ${body2Font(true)}
-  color: ${palette.foreground};
+  color: ${({ theme }) => theme.foreground};
   margin: 0px 0px 4px 0px;
 
   &.empty-message {
-    color: ${palette.accent5};
+    color: ${({ theme }) => theme.accent5};
     margin: 0px;
   }
 `;

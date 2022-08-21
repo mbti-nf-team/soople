@@ -1,6 +1,6 @@
 import { Meta, ColorPalette, ColorItem } from "@storybook/addon-docs";
 
-import palette from "../styles/palette";
+import { lightTheme } from "../styles/theme";
 
 <Meta title="Colors" />
 
@@ -11,34 +11,34 @@ import palette from "../styles/palette";
   <ColorItem
     title="Primary"
     subtitle="background"
-    colors={[palette.background]}
+    colors={[lightTheme.background]}
   />
-  <ColorItem title="Primary" subtitle="accent1" colors={[palette.accent1]} />
-  <ColorItem title="Primary" subtitle="accent2" colors={[palette.accent2]} />
-  <ColorItem title="Primary" subtitle="accent3" colors={[palette.accent3]} />
-  <ColorItem title="Primary" subtitle="accent4" colors={[palette.accent4]} />
-  <ColorItem title="Primary" subtitle="accent5" colors={[palette.accent5]} />
-  <ColorItem title="Primary" subtitle="accent6" colors={[palette.accent6]} />
-  <ColorItem title="Primary" subtitle="accent7" colors={[palette.accent7]} />
-  <ColorItem title="Primary" subtitle="accent8" colors={[palette.accent8]} />
+  <ColorItem title="Primary" subtitle="accent1" colors={[lightTheme.accent1]} />
+  <ColorItem title="Primary" subtitle="accent2" colors={[lightTheme.accent2]} />
+  <ColorItem title="Primary" subtitle="accent3" colors={[lightTheme.accent3]} />
+  <ColorItem title="Primary" subtitle="accent4" colors={[lightTheme.accent4]} />
+  <ColorItem title="Primary" subtitle="accent5" colors={[lightTheme.accent5]} />
+  <ColorItem title="Primary" subtitle="accent6" colors={[lightTheme.accent6]} />
+  <ColorItem title="Primary" subtitle="accent7" colors={[lightTheme.accent7]} />
+  <ColorItem title="Primary" subtitle="accent8" colors={[lightTheme.accent8]} />
   <ColorItem
     title="Primary"
     subtitle="foreground"
-    colors={[palette.foreground]}
+    colors={[lightTheme.foreground]}
   />
   {/* Success */}
-  <ColorItem title="Success" subtitle="success" colors={[palette.success]} />
+  <ColorItem title="Success" subtitle="success" colors={[lightTheme.success]} />
   <ColorItem
     title="Success"
     subtitle="success10"
-    colors={[palette.success10]}
+    colors={[lightTheme.success10]}
   />
   {/* Warning */}
-  <ColorItem title="Warning" subtitle="warning" colors={[palette.warning]} />
+  <ColorItem title="Warning" subtitle="warning" colors={[lightTheme.warning]} />
   <ColorItem
     title="Warning"
     subtitle="warning10"
-    colors={[palette.warning10]}
+    colors={[lightTheme.warning10]}
   />
 </ColorPalette>
 
@@ -49,16 +49,16 @@ import palette from "../styles/palette";
     title="Primary"
     subtitle="Light mode"
     colors={[
-      palette.background,
-      palette.accent1,
-      palette.accent2,
-      palette.accent3,
-      palette.accent4,
-      palette.accent5,
-      palette.accent6,
-      palette.accent7,
-      palette.accent8,
-      palette.foreground,
+      lightTheme.background,
+      lightTheme.accent1,
+      lightTheme.accent2,
+      lightTheme.accent3,
+      lightTheme.accent4,
+      lightTheme.accent5,
+      lightTheme.accent6,
+      lightTheme.accent7,
+      lightTheme.accent8,
+      lightTheme.foreground,
     ]}
   />
 </ColorPalette>
@@ -66,11 +66,17 @@ import palette from "../styles/palette";
 ## Success
 
 <ColorPalette>
-  <ColorItem title="Success" colors={[palette.success, palette.success10]} />
+  <ColorItem
+    title="Success"
+    colors={[lightTheme.success, lightTheme.success10]}
+  />
 </ColorPalette>
 
 ## Warning
 
 <ColorPalette>
-  <ColorItem title="Warning" colors={[palette.warning, palette.warning10]} />
+  <ColorItem
+    title="Warning"
+    colors={[lightTheme.warning, lightTheme.warning10]}
+  />
 </ColorPalette>

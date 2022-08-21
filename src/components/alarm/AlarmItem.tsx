@@ -11,7 +11,6 @@ import Link from 'next/link';
 import { Alarm, AlarmType } from '@/models/alarm';
 import { Category } from '@/models/group';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import 'dayjs/locale/ko';
 
@@ -87,7 +86,7 @@ const AlarmItemWrapper = styled.a<{ isViewed: boolean; }>`
   display: flex;
   flex-direction: row;
   padding: 24px 16px 24px 16px;
-  border-bottom: 0.5px solid ${palette.accent2};
+  border-bottom: 0.5px solid ${({ theme }) => theme.accent2};
   ${({ isViewed }) => !isViewed && css`
     background-color: rgba(73, 157, 223, 0.08);
   `}
@@ -102,13 +101,13 @@ const AlarmItemContents = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  color: ${palette.foreground};
+  color: ${({ theme }) => theme.foreground};
 `;
 
 const AlarmItemMetaData = styled.div`
   ${body1Font(true)};
   width: 100%;
-  color: ${palette.accent6};
+  color: ${({ theme }) => theme.accent6};
   display: flex;
   flex-direction: row;
   justify-content: space-between;

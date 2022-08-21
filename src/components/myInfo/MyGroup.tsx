@@ -14,7 +14,6 @@ import Divider from '@/styles/Divider';
 import {
   body1Font, body2Font, h3Font,
 } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import { removeAllHtml } from '@/utils/filter';
 
 import 'dayjs/locale/ko';
@@ -101,7 +100,7 @@ const MyGroupContents = styled.div`
 
   .group-content {
     ${body1Font()};
-    color: ${palette.accent7};
+    color: ${({ theme }) => theme.accent7};
     word-break: break-all;
     overflow-wrap: break-word;
     text-overflow: ellipsis;
@@ -117,19 +116,19 @@ const GroupMetaData = styled.div<{ status: RecruitmentStatus; }>`
   flex-direction: row;
   align-items: center;
   ${body2Font()};
-  color: ${palette.accent6};
+  color: ${({ theme }) => theme.accent6};
 
   .date-status {
     ${body2Font(true)};
-    color: ${palette.foreground};
+    color: ${({ theme }) => theme.foreground};
 
-    ${({ status }) => status === 'automaticCloseRecruitment' && css`
-      color: ${palette.accent6};
+    ${({ status, theme }) => status === 'automaticCloseRecruitment' && css`
+      color: ${theme.accent6};
     `}
   }
 
   .number-applied {
-    color: ${palette.foreground};
+    color: ${({ theme }) => theme.foreground};
   }
 `;
 

@@ -4,11 +4,10 @@ import React, {
 } from 'react';
 import { X as CloseSvg } from 'react-feather';
 
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { h4Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
@@ -29,6 +28,8 @@ interface Props {
 function FormModal({
   isVisible, title, confirmText = '확인', closeText = '닫기', onSubmit, onClose, confirmButtonColor = 'success', children, size = '600px',
 }: PropsWithChildren<Props>): ReactElement | null {
+  const theme = useTheme();
+
   if (!isVisible) {
     return null;
   }
@@ -43,7 +44,7 @@ function FormModal({
             <h4>{title}</h4>
             <CloseIcon
               size={24}
-              color={palette.accent6}
+              color={theme.accent6}
               onClick={onClose}
               data-testid="close-icon"
             />
@@ -76,7 +77,7 @@ const FormModalWrapper = styled.div`
 
 const FormModalBox = styled.div<{ size: string; isVisible: boolean; }>`
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
-  background: ${palette.background};
+  background: ${({ theme }) => theme.background};
   border-radius: 8px;
   width: ${({ size }) => size};
 
@@ -90,7 +91,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  box-shadow: 0px 1px 0px ${palette.accent2};
+  box-shadow: 0px 1px 0px ${({ theme }) => theme.accent2};
   margin-bottom: 20px;
 
   h4 {
@@ -109,5 +110,5 @@ const FooterWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 16px 16px 16px 20px;
-  box-shadow: inset 0px 1px 0px ${palette.accent2};
+  box-shadow: inset 0px 1px 0px ${({ theme }) => theme.accent2};
 `;

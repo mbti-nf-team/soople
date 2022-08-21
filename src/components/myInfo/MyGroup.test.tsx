@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
+import MockTheme from '@/test/MockTheme';
 import { yesterday } from '@/utils/utils';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
@@ -11,10 +12,12 @@ describe('MyGroup', () => {
   const handleClick = jest.fn();
 
   const renderMyGroup = () => render((
-    <MyGroup
-      onClick={handleClick}
-      group={given.group}
-    />
+    <MockTheme>
+      <MyGroup
+        onClick={handleClick}
+        group={given.group}
+      />
+    </MockTheme>
   ));
 
   context('썸네일과 짧은 소개글이 존재하는 경우', () => {
@@ -79,11 +82,11 @@ describe('MyGroup', () => {
       recruitmentEndDate: yesterday(new Date()),
     }));
 
-    it(`모집 상태의 color가 ${palette.accent6}이어야만 한다`, () => {
+    it(`모집 상태의 color가 ${lightTheme.accent6}이어야만 한다`, () => {
       renderMyGroup();
 
       expect(screen.getByTestId('date-status')).toHaveStyle({
-        color: palette.accent6,
+        color: lightTheme.accent6,
       });
     });
   });

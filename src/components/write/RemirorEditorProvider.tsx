@@ -29,7 +29,7 @@ import {
 } from 'remirror/extensions';
 
 import { writeFieldsState } from '@/recoil/group/atom';
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
 
 const extensions = () => [
   new LinkExtension({
@@ -42,7 +42,7 @@ const extensions = () => [
   new BoldExtension(),
   new ItalicExtension(),
   new ImageExtension({ enableResizing: true }),
-  new DropCursorExtension({ color: palette.success }),
+  new DropCursorExtension({ color: lightTheme.success }),
   new BlockquoteExtension(),
   new BulletListExtension(),
   new OrderedListExtension(),

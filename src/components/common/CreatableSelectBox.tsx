@@ -3,12 +3,11 @@ import { XCircle } from 'react-feather';
 import { ClearIndicatorProps, GroupBase, OptionsOrGroups } from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { SelectOption } from '@/models';
 import { body1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import HelperMessage from './HelperMessage';
 import Label from './Label';
@@ -29,12 +28,13 @@ interface Props<T> {
 }
 
 function ClearIndicator(props: ClearIndicatorProps<unknown, boolean, GroupBase<unknown>>) {
+  const theme = useTheme();
   const {
     children = <XCircle
       cursor="pointer"
       size="20px"
-      color={palette.background}
-      fill={palette.accent5}
+      color={theme.background}
+      fill={theme.accent5}
       data-testid="clear-icon"
     />,
     innerProps: { ref, ...restInnerProps },
@@ -122,8 +122,8 @@ const SelectForm = styled.div<{ isError?: boolean; }>`
 
   &:focus-within {
     & > label > span {
-      ${({ isError }) => !isError && css`
-        color: ${palette.success};
+      ${({ isError, theme }) => !isError && css`
+        color: ${theme.success};
       `}
     }
   }
@@ -157,30 +157,30 @@ const StyledSelect = styled(CreatableSelect)<{ size: Size; isError: boolean; }>`
     box-sizing: border-box;
     border-radius: 8px;
 
-    ${({ isError }) => (isError ? css`
-      border: 1px solid ${palette.warning};
+    ${({ isError, theme }) => (isError ? css`
+      border: 1px solid ${theme.warning};
     ` : css`
-      border: 1px solid ${palette.accent2};
+      border: 1px solid ${theme.accent2};
     `)}
   }
 
   & .select__control--is-focused {
-    ${({ isError }) => !isError && css`
-      border-color: ${palette.success};
+    ${({ isError, theme }) => !isError && css`
+      border-color: ${theme.success};
     `}
     box-shadow: none;
   }
 
   & .select__option {
     cursor: pointer;
-    color: ${palette.foreground};
+    color: ${({ theme }) => theme.foreground};
     text-align: left;
-    background-color: ${palette.background};
+    background-color: ${({ theme }) => theme.background};
     padding: 7px 16px;
   }
   
   & .select__placeholder {
-    color: ${palette.accent4};
+    color: ${({ theme }) => theme.accent4};
   }
 
   & .select__menu {
@@ -188,15 +188,15 @@ const StyledSelect = styled(CreatableSelect)<{ size: Size; isError: boolean; }>`
   }
 
   & .select__option--is-focused {
-    background-color: ${palette.accent1};
+    background-color: ${({ theme }) => theme.accent1};
   }
 
   & .select__option--is-selected {
-    background-color: ${palette.accent1};
+    background-color: ${({ theme }) => theme.accent1};
   }
 
   & .select__single-value {
-    color: ${palette.foreground};
+    color: ${({ theme }) => theme.foreground};
     text-align: left;
   }
 

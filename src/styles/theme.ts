@@ -1,4 +1,4 @@
-const palette = {
+export const lightTheme = {
   /* primary */
   background: '#FFFFFF',
   accent1: '#F5F5F7',
@@ -20,4 +20,4 @@ const palette = {
   warning10: '#CD2328',
 };
 
-export default palette;
+export const darkTheme = {};

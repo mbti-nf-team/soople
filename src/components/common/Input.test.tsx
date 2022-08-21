@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
+import MockTheme from '@/test/MockTheme';
 
 import Input from './Input';
 
@@ -8,17 +9,19 @@ describe('Input', () => {
   const handleClear = jest.fn();
 
   const renderInput = () => render((
-    <Input
-      id="test"
-      labelOptionText="labelOptionText"
-      labelText="test"
-      placeholder="test"
-      onClear={handleClear}
-      isError={given.isError}
-      message="message"
-      disabled={given.disabled}
-      defaultValue={given.defaultValue}
-    />
+    <MockTheme>
+      <Input
+        id="test"
+        labelOptionText="labelOptionText"
+        labelText="test"
+        placeholder="test"
+        onClear={handleClear}
+        isError={given.isError}
+        message="message"
+        disabled={given.disabled}
+        defaultValue={given.defaultValue}
+      />
+    </MockTheme>
   ));
 
   it('input 값이 변한다', () => {
@@ -37,11 +40,11 @@ describe('Input', () => {
     context('isError가 true인 경우', () => {
       given('isError', () => true);
 
-      it(`input의 border color가 ${palette.warning}이어야만 한다`, () => {
+      it(`input의 border color가 ${lightTheme.warning}이어야만 한다`, () => {
         renderInput();
 
         expect(screen.getByPlaceholderText('test')).toHaveStyle({
-          border: `1px solid ${palette.warning}`,
+          border: `1px solid ${lightTheme.warning}`,
         });
       });
     });
@@ -49,11 +52,11 @@ describe('Input', () => {
     context('isError가 false인 경우', () => {
       given('isError', () => false);
 
-      it(`input의 border color가 ${palette.accent2}이어야만 한다`, () => {
+      it(`input의 border color가 ${lightTheme.accent2}이어야만 한다`, () => {
         renderInput();
 
         expect(screen.getByPlaceholderText('test')).toHaveStyle({
-          border: `1px solid ${palette.accent2}`,
+          border: `1px solid ${lightTheme.accent2}`,
         });
       });
     });

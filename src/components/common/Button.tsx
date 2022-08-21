@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { HTMLProps, PropsWithChildren, ReactElement } from 'react';
 
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import { body1Font, body2Font, h4Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 export type ColorType = 'success' | 'outlined' | 'primary' | 'warning' | 'ghost';
 type ButtonSize = 'small' | 'medium' | 'large';
@@ -19,6 +18,7 @@ interface Props extends Omit<HTMLProps<HTMLButtonElement | HTMLAnchorElement>, '
 interface StyledButtonProps {
   color: ColorType;
   size: ButtonSize;
+  theme: Theme;
 }
 
 function Button({
@@ -54,7 +54,7 @@ function Button({
 
 export default Button;
 
-const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
+const ButtonWrapper = ({ color, size, theme }: StyledButtonProps) => css`
   position: relative;
   transform: translateZ(0);
   user-select: none;
@@ -81,7 +81,7 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
       right: 0;
       bottom: 0;
       left: 0;
-      background-color: ${palette.foreground};
+      background-color: ${theme.foreground};
       opacity: 0;
       transition: opacity .1s ease-in-out;
     }
@@ -110,34 +110,34 @@ const ButtonWrapper = ({ color, size }: StyledButtonProps) => css`
   `};
 
   ${color === 'outlined' && css`
-    color: ${palette.foreground};
-    background-color: ${palette.background};
-    border: 1px solid ${palette.accent2};
+    color: ${theme.foreground};
+    background-color: ${theme.background};
+    border: 1px solid ${theme.accent2};
   `}
 
   ${color === 'success' && css`
-    color: ${palette.background};
-    background-color: ${palette.success};
+    color: ${theme.background};
+    background-color: ${theme.success};
   `}
 
   ${color === 'primary' && css`
-    color: ${palette.background};
-    background-color: ${palette.accent8};
+    color: ${theme.background};
+    background-color: ${theme.accent8};
   `}
 
   ${color === 'warning' && css`
-    color: ${palette.background};
-    background-color: ${palette.warning};
+    color: ${theme.background};
+    background-color: ${theme.warning};
   `}
 
   ${color === 'ghost' && css`
-    color: ${palette.foreground};
+    color: ${theme.foreground};
     background-color: initial;
   `}
 
   &:disabled {
-    color: ${palette.accent4};
-    background-color: ${palette.accent1};
+    color: ${theme.accent4};
+    background-color: ${theme.accent1};
   }
 `;
 

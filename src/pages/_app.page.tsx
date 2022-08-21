@@ -3,6 +3,7 @@ import { ReactElement, ReactNode, useState } from 'react';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
+import { ThemeProvider } from '@emotion/react';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
@@ -10,6 +11,7 @@ import { RecoilRoot } from 'recoil';
 
 import Core from '@/components/common/Core';
 import SignInModalContainer from '@/containers/auth/SignInModalContainer';
+import { lightTheme } from '@/styles/theme';
 
 import defaultNextSeoConfig from '../../next-seo.config';
 
@@ -40,11 +42,13 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <RecoilRoot>
-            <Core />
-            <SignInModalContainer />
-            {getLayout((
-              <Component {...pageProps} />
-            ))}
+            <ThemeProvider theme={lightTheme}>
+              <Core />
+              <SignInModalContainer />
+              {getLayout((
+                <Component {...pageProps} />
+              ))}
+            </ThemeProvider>
           </RecoilRoot>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>

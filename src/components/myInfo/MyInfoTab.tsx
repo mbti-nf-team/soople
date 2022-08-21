@@ -6,7 +6,6 @@ import Link from 'next/link';
 
 import type { ActiveMyInfoTab } from '@/containers/myInfo/MyInfoTabContainer';
 import { h4Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import zIndexes from '@/styles/zIndexes';
 
 interface Props {
@@ -36,13 +35,13 @@ export default MyInfoTab;
 const StyledLink = styled.a<{ pathName: ActiveMyInfoTab; activeTab: ActiveMyInfoTab; }>`
   transition: border-color .2s ease-in-out;
   padding: 9px 12px;
-  ${({ pathName, activeTab }) => (pathName === activeTab ? css`
-    border-bottom: 2px solid ${palette.foreground};
+  ${({ pathName, activeTab, theme }) => (pathName === activeTab ? css`
+    border-bottom: 2px solid ${theme.foreground};
     ${h4Font(true)}
   ` : css`
     ${h4Font()}
     border-bottom: 2px solid transparent;
-    color: ${palette.accent6};
+    color: ${theme.accent6};
   `)};
 `;
 
@@ -50,8 +49,8 @@ const MyInfoNav = styled.nav`
   position: sticky;
   z-index: ${zIndexes.MyInfoNavTab};
   top: 64px;
-  box-shadow: 0px 1px 0px ${palette.accent2};
-  background: ${palette.background};
+  box-shadow: 0px 1px 0px ${({ theme }) => theme.accent2};
+  background: ${({ theme }) => theme.background};
   display: flex;
   flex-direction: row;
   justify-content: center;

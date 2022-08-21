@@ -1,12 +1,10 @@
 import React, { memo, ReactElement } from 'react';
 
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import { body1Font, subtitle1Font, subtitle2Font } from '@/styles/fontStyles';
-
-import palette from '../../styles/palette';
 
 interface Props {
   isVisible: boolean;
@@ -70,7 +68,7 @@ const DropDownWrapper = styled.div`
     position: relative;
     z-index: 5;
     min-width: 175px;
-    background: ${palette.background};
+    background: ${({ theme }) => theme.background};
     border-radius: 8px;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px;
   }
@@ -82,7 +80,7 @@ const DropDownWrapper = styled.div`
 
 const Pipe = styled.div`
   margin: 0;
-  border-top: 1px solid ${palette.accent2};
+  border-top: 1px solid ${({ theme }) => theme.accent2};
 `;
 
 const UserState = styled.div`
@@ -97,19 +95,19 @@ const UserState = styled.div`
 
   .user-email {
     ${subtitle1Font()};
-    color: ${palette.accent5};
+    color: ${({ theme }) => theme.accent5};
   }
 `;
 
-const navItem = css`
+const navItem = ({ theme }: { theme: Theme }) => css`
   ${body1Font()};
-  color: ${palette.foreground};
+  color: ${theme.foreground};
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: background-color .2s;
 
   &:hover {
-    background: ${palette.accent1};
+    background: ${theme.accent1};
   }
 `;
 
@@ -131,8 +129,8 @@ const MyInfoMenu = styled.a`
 const AlertAlarmStatus = styled.div`
   ${subtitle2Font(true)}
   text-align: center;
-  background-color: ${palette.warning};
-  color: ${palette.background};
+  background-color: ${({ theme }) => theme.warning};
+  color: ${({ theme }) => theme.background};
   width: 16px;
   height: 16px;
   border-radius: 16px;

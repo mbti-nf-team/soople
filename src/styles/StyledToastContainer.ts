@@ -3,7 +3,6 @@ import { ToastContainer } from 'react-toastify';
 import styled from '@emotion/styled';
 
 import { body2Font } from './fontStyles';
-import palette from './palette';
 
 const StyledToastContainer = styled(ToastContainer)`
   width: 328px;
@@ -11,7 +10,7 @@ const StyledToastContainer = styled(ToastContainer)`
   .Toastify__toast {
     ${body2Font()}
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    color: ${palette.accent7};
+    color: ${({ theme }) => theme.accent7};
     border-radius: 8px;
     display: flex;
     flex-direction: row;

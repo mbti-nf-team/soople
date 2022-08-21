@@ -5,7 +5,6 @@ import styled from '@emotion/styled';
 import { Applicant } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 import styledAnchor from '@/styles/styledAnchor';
 import { emptyAThenB, stringToExcludeNull } from '@/utils/utils';
 
@@ -95,7 +94,7 @@ const ApplicantTextWrapper = styled.div`
   }
 
   div {
-    color: ${palette.accent6};
+    color: ${({ theme }) => theme.accent6};
     ${subtitle1Font()};
   }
 `;

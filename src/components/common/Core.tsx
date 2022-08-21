@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react';
 import { Bounce } from 'react-toastify';
 
+import { useTheme } from '@emotion/react';
 import NextNProgress from 'nextjs-progressbar';
 
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
 import useCheckSignUp from '@/hooks/api/auth/useCheckSignUp';
 import useGetUserToken from '@/hooks/api/auth/useGetUserToken';
 import GlobalStyles from '@/styles/GlobalStyles';
-import palette from '@/styles/palette';
 import StyledToastContainer from '@/styles/StyledToastContainer';
 
 import useRefreshToken from '../../hooks/api/auth/useRefreshToken';
@@ -17,6 +17,7 @@ import CloseButton from './CloseButton';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Core(): ReactElement {
+  const theme = useTheme();
   useGetUserToken();
   useRefreshToken();
   useAuthRedirectResult();
@@ -25,7 +26,7 @@ function Core(): ReactElement {
   return (
     <>
       <NextNProgress
-        color={palette.success}
+        color={theme.success}
         options={{
           showSpinner: false,
           easing: 'ease',
@@ -35,7 +36,6 @@ function Core(): ReactElement {
       />
       <GlobalStyles />
       <StyledToastContainer
-        theme="light"
         closeOnClick
         pauseOnHover
         transition={Bounce}

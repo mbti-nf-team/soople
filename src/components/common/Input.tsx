@@ -11,11 +11,10 @@ import React, {
 import { XCircle } from 'react-feather';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { body1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 import HelperMessage from './HelperMessage';
 import Label from './Label';
@@ -41,6 +40,7 @@ function Input({
   readOnly,
   labelOptionText, value, defaultValue, placeholder, message, isError, register, ...rest
 }: Props, ref: ForwardedRef<HTMLInputElement>): ReactElement {
+  const theme = useTheme();
   const [state, setState] = useState(defaultValue);
 
   const onInput = (e: ChangeEvent<HTMLInputElement>) => setState(e.target.value);
@@ -76,8 +76,8 @@ function Input({
         {onClear && (
           <ClearIcon
             size="20px"
-            color={palette.background}
-            fill={palette.accent5}
+            color={theme.background}
+            fill={theme.accent5}
             onClick={handleClear}
             display={(!state || disabled || readOnly) ? 'none' : 'block'}
             data-testid="clear-icon"
@@ -103,8 +103,8 @@ const InputWrapper = styled.div<{ isError?: boolean; }>`
 
   &:focus-within {
     & > label > span {
-      ${({ isError }) => !isError && css`
-        color: ${palette.success};
+      ${({ isError, theme }) => !isError && css`
+        color: ${theme.success};
       `}
     }
   }
@@ -115,34 +115,34 @@ const InputField = styled.input<{ isError?: boolean; hasValue: boolean; }>`
   width: 100%;
   height: 48px;
   outline: none;
-  color: ${palette.foreground};
-  background-color: ${palette.background};
+  color: ${({ theme }) => theme.foreground};
+  background-color: ${({ theme }) => theme.background};
   border-radius: 8px;
   box-sizing: border-box;
   padding: 11px 50px 11px 16px;
   transition: border .2s;
 
   &::placeholder {
-    color: ${palette.accent4};
+    color: ${({ theme }) => theme.accent4};
   }
 
   &:disabled {
-    color: ${palette.accent6};
-    background: ${palette.accent1};
+    color: ${({ theme }) => theme.accent6};
+    background: ${({ theme }) => theme.accent1};
   }
 
   &:read-only {
-    color: ${palette.accent6};
-    background: ${palette.accent1};
+    color: ${({ theme }) => theme.accent6};
+    background: ${({ theme }) => theme.accent1};
   }
 
-  ${({ isError }) => (isError ? css`
-    border: 1px solid ${palette.warning};
+  ${({ isError, theme }) => (isError ? css`
+    border: 1px solid ${theme.warning};
   ` : css`
-    border: 1px solid ${palette.accent2};
+    border: 1px solid ${theme.accent2};
 
     &:not(:read-only):not(:disabled):focus {
-      border: 1px solid ${palette.success};
+      border: 1px solid ${theme.success};
     }
   `)};
 `;

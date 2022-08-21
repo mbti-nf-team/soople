@@ -4,7 +4,6 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { subtitle1Font } from '@/styles/fontStyles';
-import palette from '@/styles/palette';
 
 interface Props {
   message?: string | null;
@@ -30,9 +29,9 @@ const HelperText = styled.small<{ isError?: boolean; }>`
   margin: 6px 0px 0px 4px;
   transition: color .2s ease-in-out;
 
-  ${({ isError }) => (isError ? css`
-    color: ${palette.warning};
+  ${({ isError, theme }) => (isError ? css`
+    color: ${theme.warning};
   ` : css`
-    color: ${palette.accent5};
+    color: ${theme.accent5};
   `)};
 `;

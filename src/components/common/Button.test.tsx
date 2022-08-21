@@ -2,19 +2,22 @@ import { ComponentProps } from 'react';
 
 import { render, screen } from '@testing-library/react';
 
-import palette from '@/styles/palette';
+import { lightTheme } from '@/styles/theme';
+import MockTheme from '@/test/MockTheme';
 
 import Button from './Button';
 
 describe('Button', () => {
   const renderButton = ({ color, size, href }: ComponentProps<typeof Button>) => render((
-    <Button
-      color={color}
-      size={size}
-      href={href}
-    >
-      버튼
-    </Button>
+    <MockTheme>
+      <Button
+        color={color}
+        size={size}
+        href={href}
+      >
+        버튼
+      </Button>
+    </MockTheme>
   ));
 
   describe('버튼 사이즈에 따라서 스타일 속성이 다르다', () => {
@@ -51,51 +54,51 @@ describe('Button', () => {
 
   describe('버튼 색상 속성에 따라서 스타일 속성이 다르다', () => {
     context('색상 속성이 "outlined"인 경우', () => {
-      it(`색상이 ${palette.foreground} 이어야만 한다`, () => {
+      it(`색상이 ${lightTheme.foreground} 이어야만 한다`, () => {
         renderButton({ color: 'outlined' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          color: palette.foreground,
+          color: lightTheme.foreground,
         });
       });
     });
 
     context('색상 속성이 "primary"인 경우', () => {
-      it(`배경 색상이 ${palette.accent8} 이어야만 한다`, () => {
+      it(`배경 색상이 ${lightTheme.accent8} 이어야만 한다`, () => {
         renderButton({ color: 'primary' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          background: palette.accent8,
+          background: lightTheme.accent8,
         });
       });
     });
 
     context('색상 속성이 "success"인 경우', () => {
-      it(`배경 색상이 ${palette.success} 이어야만 한다`, () => {
+      it(`배경 색상이 ${lightTheme.success} 이어야만 한다`, () => {
         renderButton({ color: 'success' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          background: palette.success,
+          background: lightTheme.success,
         });
       });
     });
 
     context('색상 속성이 "warning"인 경우', () => {
-      it(`배경 색상이 ${palette.warning} 이어야만 한다`, () => {
+      it(`배경 색상이 ${lightTheme.warning} 이어야만 한다`, () => {
         renderButton({ color: 'warning' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          background: palette.warning,
+          background: lightTheme.warning,
         });
       });
     });
 
     context('색상 속성이 "ghost"인 경우', () => {
-      it(`폰트 색상이 ${palette.foreground} 이어야만 한다`, () => {
+      it(`폰트 색상이 ${lightTheme.foreground} 이어야만 한다`, () => {
         renderButton({ color: 'ghost' });
 
         expect(screen.getByText('버튼')).toHaveStyle({
-          color: palette.foreground,
+          color: lightTheme.foreground,
         });
       });
     });
