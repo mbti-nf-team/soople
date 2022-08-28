@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -7,30 +7,20 @@ import styled from '@emotion/styled';
 import transitions from '@/styles/transitions';
 
 export interface SkeletonProps {
-  width?: string;
-  height?: string;
-  flex?: number;
-  margin?: string;
   circle?: boolean;
   className?: string;
-  borderRadius?: string;
+  styles?: CSSProperties;
 }
 
 function SkeletonItem({
-  width,
-  height,
-  flex,
-  margin,
   circle,
   className,
-  borderRadius,
+  styles,
   ...rest
 }: SkeletonProps) {
   return (
     <SkeletonBlock
-      style={{
-        width, height, flex, margin, borderRadius,
-      }}
+      style={styles}
       circle={circle}
       className={className}
       {...rest}
@@ -41,6 +31,8 @@ function SkeletonItem({
 export default SkeletonItem;
 
 const SkeletonBlock = styled.span<{ circle?: boolean; }>`
+  user-select: none;
+  box-sizing: border-box;
   background: ${({ theme }) => theme.accent2};
   animation: ${transitions.blink} 1s ease-in-out infinite;
   display: inline-block;

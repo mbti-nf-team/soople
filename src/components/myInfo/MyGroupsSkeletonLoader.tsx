@@ -12,11 +12,33 @@ function MyGroupsSkeletonLoader(): ReactElement {
       {Array.from({ length: 7 }, (_, i) => (i)).map((key) => (
         <MyGroupsSkeletonItemWrapper key={key}>
           <div>
-            <SkeletonItem width="160px" height="28px" margin="0 0 10px 0" />
-            <SkeletonItem width="320px" height="20px" margin="0 0 26px 0" />
-            <SkeletonItem width="120px" height="14px" />
+            <SkeletonItem
+              styles={{
+                width: '160px',
+                height: '28px',
+                margin: '0 0 10px 0',
+              }}
+            />
+            <SkeletonItem
+              styles={{
+                width: '320px',
+                height: '20px',
+                margin: '0 0 26px 0',
+              }}
+            />
+            <SkeletonItem
+              styles={{
+                width: '120px',
+                height: '14px',
+              }}
+            />
           </div>
-          <SkeletonItem width="174px" height="96px" />
+          <SkeletonItem
+            styles={{
+              width: '174px',
+              height: '96px',
+            }}
+          />
         </MyGroupsSkeletonItemWrapper>
       ))}
     </MyGroupLayout>

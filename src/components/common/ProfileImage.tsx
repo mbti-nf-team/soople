@@ -20,6 +20,10 @@ function ProfileImage({
         alt={alt}
         width={size}
         height={size}
+        style={{
+          minHeight: size,
+          minWidth: size,
+        }}
         data-testid="default-profile-icon"
         onClick={onClick}
       />
@@ -32,6 +36,10 @@ function ProfileImage({
       alt={alt}
       width={size}
       height={size}
+      style={{
+        minHeight: size,
+        minWidth: size,
+      }}
       onClick={onClick}
     />
   );

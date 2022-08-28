@@ -40,8 +40,23 @@ function Header({
         testId="header-block"
       >
         <LoaderWrapper title="loading-skeleton">
-          <SkeletonItem width="80px" height="28px" borderRadius="6px" margin="0 16px 0 0" />
-          <SkeletonItem width="32px" height="32px" circle />
+          <SkeletonItem
+            styles={{
+              width: '80px',
+              height: '28px',
+              margin: '0 16px 0 0',
+              borderRadius: '6px',
+            }}
+          />
+          <SkeletonItem
+            styles={{
+              width: '32px',
+              height: '32px',
+              minWidth: '32px',
+              minHeight: '32px',
+            }}
+            circle
+          />
         </LoaderWrapper>
       </HeaderWrapper>
     );

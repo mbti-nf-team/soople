@@ -22,7 +22,14 @@ function TagsBar({ tags, isLoading }: Props): ReactElement {
     return (
       <TagsWrapper title="loading..." data-testid="loading-skeleton">
         {['80px', '120px', '80px', '80px', '120px', '64px'].map((width) => (
-          <SkeletonItem key={nanoid()} height="36px" width={width} borderRadius="6px" />
+          <SkeletonItem
+            key={nanoid()}
+            styles={{
+              height: '36px',
+              width,
+              borderRadius: '6px',
+            }}
+          />
         ))}
       </TagsWrapper>
     );

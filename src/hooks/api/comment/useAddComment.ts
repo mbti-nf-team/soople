@@ -4,6 +4,7 @@ import { FirestoreError } from 'firebase/firestore';
 
 import { CommentForm } from '@/models/group';
 import { postGroupComment } from '@/services/api/comment';
+import { checkNumNull } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -17,6 +18,7 @@ function useAddComment() {
       queryClient.invalidateQueries(['comments', {
         id: commentForm.groupId,
       }]);
+      queryClient.setQueryData<number>(['commentCount', commentForm.groupId], (commentCount) => checkNumNull(commentCount) + 1);
     },
   });
 
