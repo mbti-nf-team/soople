@@ -15,21 +15,58 @@ function RecruitPostsSkeletonLoader(): ReactElement {
           <div className="contents">
             <div>
               <div className="thumbnail-skeleton-wrapper">
-                <SkeletonItem className="thumbnail-skeleton" borderRadius="0" />
+                <SkeletonItem
+                  className="thumbnail-skeleton"
+                  styles={{
+                    borderRadius: '0',
+                  }}
+                />
               </div>
-              <SkeletonItem height="24px" width="160px" margin="0 0 12px 0" borderRadius="6px" />
-              <SkeletonItem height="18px" width="213px" margin="0 0 8px 0" />
-              <SkeletonItem height="18px" width="100px" />
+              <SkeletonItem
+                styles={{
+                  height: '24px',
+                  width: '160px',
+                  margin: '0 0 12px 0',
+                  borderRadius: '6px',
+                }}
+              />
+              <SkeletonItem
+                styles={{
+                  height: '18px',
+                  width: '213px',
+                  margin: '0 0 8px 0',
+                }}
+              />
+              <SkeletonItem
+                styles={{
+                  height: '18px',
+                  width: '100px',
+                }}
+              />
             </div>
-            <SkeletonItem height="14px" width="64px" />
+            <SkeletonItem
+              styles={{
+                height: '14px',
+                width: '64px',
+              }}
+            />
           </div>
           <PostWriter>
             <SkeletonItem
-              width="24px"
-              height="24px"
+              styles={{
+                height: '24px',
+                width: '24px',
+                minWidth: '24px',
+                minHeight: '24px',
+              }}
               circle
             />
-            <SkeletonItem height="14px" width="64px" />
+            <SkeletonItem
+              styles={{
+                height: '14px',
+                width: '64px',
+              }}
+            />
           </PostWriter>
         </SkeletonBlock>
       ))}

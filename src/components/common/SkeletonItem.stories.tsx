@@ -12,14 +12,18 @@ const Template: ComponentStory<typeof SkeletonItem> = (args: any) => <SkeletonIt
 export const Default = Template.bind({});
 
 Default.args = {
-  width: '300px',
-  height: '50px',
+  styles: {
+    width: '300px',
+    height: '50px',
+  },
 };
 
 export const Circle = Template.bind({});
 
 Circle.args = {
-  width: '100px',
-  height: '100px',
+  styles: {
+    width: '100px',
+    height: '100px',
+  },
   circle: true,
 };

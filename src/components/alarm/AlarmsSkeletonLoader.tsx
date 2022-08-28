@@ -10,13 +10,38 @@ function AlarmsSkeletonLoader(): ReactElement {
       {Array.from({ length: 12 }, (_, i) => (i)).map((key) => (
         <div key={key}>
           <div className="meta-data">
-            <SkeletonItem width="32px" height="32px" margin="0 12px 0 0" circle />
+            <SkeletonItem
+              styles={{
+                width: '32px',
+                height: '32px',
+                minWidth: '32px',
+                minHeight: '32px',
+                margin: '0 12px 0 0',
+              }}
+              circle
+            />
             <div>
-              <SkeletonItem width="120px" height="18px" margin="0 0 10px 0" />
-              <SkeletonItem width="240px" height="20px" />
+              <SkeletonItem
+                styles={{
+                  width: '120px',
+                  height: '18px',
+                  margin: '0 0 10px 0',
+                }}
+              />
+              <SkeletonItem
+                styles={{
+                  width: '240px',
+                  height: '20px',
+                }}
+              />
             </div>
           </div>
-          <SkeletonItem width="64px" height="14px" />
+          <SkeletonItem
+            styles={{
+              width: '64px',
+              height: '14px',
+            }}
+          />
         </div>
       ))}
     </AlarmsSkeletonLoaderWrapper>

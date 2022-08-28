@@ -28,10 +28,10 @@ describe('CommentsView', () => {
   context('로딩중인 경우', () => {
     given('isLoading', () => true);
 
-    it('"로딩중..."문구가 나타나야만 한다', () => {
-      const { container } = renderCommentsView();
+    it('스켈레톤 로딩이 나타나야만 한다', () => {
+      renderCommentsView();
 
-      expect(container).toHaveTextContent('로딩중...');
+      expect(screen.getByTestId('comments-skeleton-loading')).toBeInTheDocument();
     });
   });
 

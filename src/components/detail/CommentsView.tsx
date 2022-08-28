@@ -7,6 +7,7 @@ import { Profile } from '@/models/auth';
 import { Comment } from '@/models/group';
 import { targetFalseThenValue } from '@/utils/utils';
 
+import CommentSkeletonLoader from './CommentSkeletonLoader';
 import CommentView from './CommentView';
 
 interface Props {
@@ -21,7 +22,7 @@ function CommentsView({
   isLoading, comments, user, onRemove, refState,
 }: Props): ReactElement {
   if (isLoading) {
-    return <CommentsViewWrapper>로딩중...</CommentsViewWrapper>;
+    return <CommentSkeletonLoader />;
   }
 
   return (
