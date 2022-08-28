@@ -8,6 +8,7 @@ import {
   emptyAThenB,
   hasBackground,
   isCurrentTimeBeforeEndDate,
+  isEmpty,
   isProdLevel,
   isRecruitCompletedAndManual,
   isRecruiting,
@@ -300,6 +301,32 @@ describe('checkEmpty', () => {
       const result = checkEmpty(mockArray);
 
       expect(result).toEqual(mockArray);
+    });
+  });
+});
+
+describe('isEmpty', () => {
+  context('falsy한 값인 경우', () => {
+    it('true를 반환해야만 한다', () => {
+      const result = isEmpty(undefined);
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  context('빈 배열이 아닌 경우', () => {
+    it('false를 반환해야만 한다', () => {
+      const result = isEmpty([1]);
+
+      expect(result).toBeFalsy();
+    });
+  });
+
+  context('빈 배열인 경우', () => {
+    it('true를 반환해야만 한다', () => {
+      const result = isEmpty([]);
+
+      expect(result).toBeTruthy();
     });
   });
 });

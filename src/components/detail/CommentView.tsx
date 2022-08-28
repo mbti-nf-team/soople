@@ -5,7 +5,6 @@ import React, {
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import * as R from 'ramda';
 
 import { Profile } from '@/models/auth';
 import { Comment } from '@/models/group';
@@ -31,7 +30,7 @@ function CommentView({
   const {
     writer, content, createdAt, commentId,
   } = comment;
-  const isWriter = R.equals(user?.uid, writer.uid);
+  const isWriter = user?.uid === writer.uid;
 
   return (
     <CommentViewWrapper ref={ref}>

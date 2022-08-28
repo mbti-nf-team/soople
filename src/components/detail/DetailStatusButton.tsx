@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 
-import * as R from 'ramda';
-
 import useCurrentTime from '@/hooks/useCurrentTime';
 import { Profile } from '@/models/auth';
 import { Applicant, ApplicantForm, Group } from '@/models/group';
@@ -28,7 +26,7 @@ function DetailStatusButton({
   const { writer, isCompleted } = group;
 
   const currentTime = useCurrentTime(group);
-  const isWriter = R.equals(writer.uid, user?.uid);
+  const isWriter = writer.uid === user?.uid;
   const findApplicant = applicants.find(({ applicant }) => applicant.uid === user?.uid);
 
   if (isWriter) {

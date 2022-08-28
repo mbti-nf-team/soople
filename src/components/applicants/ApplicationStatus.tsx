@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { isEmpty } from 'ramda';
 
 import { Applicant } from '@/models/group';
+import { isEmpty } from '@/utils/utils';
 
 import EmptyStateArea from '../common/EmptyStateArea';
 

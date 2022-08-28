@@ -1,9 +1,9 @@
 import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { isEmpty } from 'ramda';
 
 import { Group } from '@/models/group';
+import { isEmpty } from '@/utils/utils';
 
 import EmptyFrameSvg from '../../assets/icons/empty-frame.svg';
 import EmptyStateArea from '../common/EmptyStateArea';

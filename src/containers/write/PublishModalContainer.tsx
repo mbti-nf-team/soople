@@ -5,7 +5,6 @@ import { useEffectOnce, useUnmount } from 'react-use';
 
 import { useHelpers, useRemirrorContext } from '@remirror/react';
 import { useRouter } from 'next/router';
-import { isEmpty } from 'ramda';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import PublishModalForm from '@/components/write/PublishModalForm';
@@ -19,6 +18,7 @@ import { Profile } from '@/models/auth';
 import { WriteFields } from '@/models/group';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { publishModalVisibleState } from '@/recoil/modal/atom';
+import { isEmpty } from '@/utils/utils';
 
 function PublishModalContainer(): ReactElement {
   const router = useRouter();

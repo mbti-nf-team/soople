@@ -1,10 +1,8 @@
 import React, { memo, PropsWithChildren, ReactElement } from 'react';
 
-import { isEmpty } from 'ramda';
-
 import { InfiniteRefState, InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';
-import { targetFalseThenValue } from '@/utils/utils';
+import { isEmpty, targetFalseThenValue } from '@/utils/utils';
 
 import MyGroup from './MyGroup';
 import MyGroupsSkeletonLoader, { MyGroupLayout } from './MyGroupsSkeletonLoader';
