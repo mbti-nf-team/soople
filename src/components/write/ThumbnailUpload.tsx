@@ -8,7 +8,6 @@ import { useEffectOnce } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { isEmpty } from 'ramda';
 import { useRecoilValue } from 'recoil';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
@@ -16,6 +15,7 @@ import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail
 import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { body2Font, subtitle1Font } from '@/styles/fontStyles';
+import { isEmpty } from '@/utils/utils';
 
 import CloseSvg from '../../assets/icons/close.svg';
 import HelperMessage from '../common/HelperMessage';

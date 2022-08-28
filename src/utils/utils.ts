@@ -86,3 +86,15 @@ export const checkEmpty = <T>(value?: T[]): T[] => {
 
   return value;
 };
+
+export const isEmpty = <T>(value?: T[]) => {
+  if (!value) {
+    return true;
+  }
+
+  if (value.length > 0) {
+    return false;
+  }
+
+  return true;
+};

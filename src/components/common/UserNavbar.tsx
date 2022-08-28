@@ -7,12 +7,12 @@ import { useClickAway } from 'react-use';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { isEmpty } from 'ramda';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 import useResponsive from '@/hooks/useResponsive';
 import { Profile } from '@/models/auth';
 import { subtitle2Font } from '@/styles/fontStyles';
+import { isEmpty } from '@/utils/utils';
 
 import Button from './Button';
 import DropDown from './DropDown';
