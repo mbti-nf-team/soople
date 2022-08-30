@@ -22,27 +22,33 @@ function RecruitPostsSkeletonLoader(): ReactElement {
                   }}
                 />
               </div>
-              <SkeletonItem
-                styles={{
-                  height: '24px',
-                  width: '160px',
-                  margin: '0 0 12px 0',
-                  borderRadius: '6px',
-                }}
-              />
-              <SkeletonItem
-                styles={{
-                  height: '18px',
-                  width: '213px',
-                  margin: '0 0 8px 0',
-                }}
-              />
-              <SkeletonItem
-                styles={{
-                  height: '18px',
-                  width: '100px',
-                }}
-              />
+              <div className="post-description-skeleton">
+                <SkeletonItem
+                  styles={{
+                    height: '24px',
+                    width: '160px',
+                    margin: '0 0 12px 0',
+                    borderRadius: '6px',
+                  }}
+                />
+              </div>
+              <div className="post-description-skeleton">
+                <SkeletonItem
+                  styles={{
+                    height: '18px',
+                    width: '213px',
+                    margin: '0 0 8px 0',
+                  }}
+                />
+              </div>
+              <div className="post-description-skeleton">
+                <SkeletonItem
+                  styles={{
+                    height: '18px',
+                    width: '100px',
+                  }}
+                />
+              </div>
             </div>
             <SkeletonItem
               styles={{
@@ -88,6 +94,7 @@ const SkeletonBlock = styled(RecruitPostWrapper)`
       & > .thumbnail-skeleton-wrapper {
         margin: -16px -16px 16px -16px !important;
         position: relative;
+        overflow: hidden;
         padding-top: 136px;
   
         & > .thumbnail-skeleton {
@@ -97,6 +104,10 @@ const SkeletonBlock = styled(RecruitPostWrapper)`
           width: 100%;
           height: 100%;
         }
+      }
+
+      & > .post-description-skeleton {
+        width: 100%;
       }
     }
   }
