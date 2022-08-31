@@ -22,6 +22,7 @@ describe('useResponsive', () => {
       const { result: { current } } = useResponsiveHook();
 
       expect(current).toEqual({
+        isClient: true,
         isDesktop: false,
         isTablet: false,
         isMobile: true,
@@ -36,6 +37,7 @@ describe('useResponsive', () => {
       const { result: { current } } = useResponsiveHook();
 
       expect(current).toEqual({
+        isClient: true,
         isDesktop: false,
         isTablet: true,
         isMobile: false,
@@ -50,6 +52,7 @@ describe('useResponsive', () => {
       const { result: { current } } = useResponsiveHook();
 
       expect(current).toEqual({
+        isClient: true,
         isDesktop: true,
         isTablet: false,
         isMobile: false,

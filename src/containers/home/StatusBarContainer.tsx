@@ -24,7 +24,7 @@ type FilterCondition = {
 };
 
 function StatusBarContainer(): ReactElement {
-  const { isMobile } = useResponsive();
+  const { isMobile, isClient } = useResponsive();
 
   const { data: tagsCount, isLoading } = useFetchTagsCount();
   const [initFilterCompleted, toggleFilterCompleted] = useLocalStorage('isFilterCompleted', false);
@@ -58,7 +58,7 @@ function StatusBarContainer(): ReactElement {
           filterCategory={filterCategory}
           onChange={onChange}
         />
-        {!isMobile && (
+        {(isClient && !isMobile) && (
           <>
             <StyledDivider />
             <TagsBar

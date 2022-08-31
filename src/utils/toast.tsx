@@ -6,14 +6,14 @@ import styled from '@emotion/styled';
 import mq from '@/styles/responsive';
 import { lightTheme } from '@/styles/theme';
 
-import CheckIcon from '../assets/icons/check.svg';
+import SuccessIcon from '../assets/icons/check.svg';
 
 export const errorToast = (message: string) => toast.error(message, {
   icon: <StyledWarnIcon fill={lightTheme.warning} color={lightTheme.background} />,
 });
 
 export const successToast = (message: string) => toast.success(message, {
-  icon: <CheckIcon />,
+  icon: <SuccessIcon />,
 });
 
 export const defaultToast = (message: string) => toast.info(message, {
