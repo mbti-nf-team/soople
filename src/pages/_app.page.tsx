@@ -4,6 +4,8 @@ import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { ThemeProvider } from '@emotion/react';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
@@ -12,6 +14,8 @@ import { RecoilRoot } from 'recoil';
 import Core from '@/components/common/Core';
 import SignInModalContainer from '@/containers/auth/SignInModalContainer';
 import { lightTheme } from '@/styles/theme';
+
+import 'dayjs/locale/ko';
 
 import defaultNextSeoConfig from '../../next-seo.config';
 
@@ -58,3 +62,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 }
 
 export default MyApp;
+
+dayjs.locale('ko');
+dayjs.extend(relativeTime);

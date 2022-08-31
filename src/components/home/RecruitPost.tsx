@@ -3,7 +3,6 @@ import { Eye as ViewsIcon } from 'react-feather';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import dayjs from 'dayjs';
 import Link from 'next/link';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
@@ -14,11 +13,7 @@ import { mq2 } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
 import { emptyAThenB } from '@/utils/utils';
 
-import 'dayjs/locale/ko';
-
 import ProfileImage from '../common/ProfileImage';
-
-dayjs.locale('ko');
 
 interface Props {
   group: Group;

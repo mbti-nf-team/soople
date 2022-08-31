@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRouter } from 'next/router';
 
 import ApplicationStatusHeader from '@/components/applicants/ApplicationStatusHeader';
@@ -14,11 +13,6 @@ import useCurrentTime from '@/hooks/useCurrentTime';
 import { AlarmType } from '@/models/alarm';
 import { CompletedGroupForm } from '@/models/group';
 import { isCurrentTimeBeforeEndDate } from '@/utils/utils';
-
-import 'dayjs/locale/ko';
-
-dayjs.locale('ko');
-dayjs.extend(relativeTime);
 
 function ApplicationStatusHeaderContainer(): ReactElement {
   const { back } = useRouter();

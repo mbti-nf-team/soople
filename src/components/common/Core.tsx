@@ -7,6 +7,7 @@ import NextNProgress from 'nextjs-progressbar';
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
 import useCheckSignUp from '@/hooks/api/auth/useCheckSignUp';
 import useGetUserToken from '@/hooks/api/auth/useGetUserToken';
+import useResponsive from '@/hooks/useResponsive';
 import GlobalStyles from '@/styles/GlobalStyles';
 import StyledToastContainer from '@/styles/StyledToastContainer';
 
@@ -18,6 +19,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Core(): ReactElement {
   const theme = useTheme();
+  const { isMobile } = useResponsive();
+
   useGetUserToken();
   useRefreshToken();
   useAuthRedirectResult();
@@ -45,7 +48,8 @@ function Core(): ReactElement {
         position="top-right"
         autoClose={3000}
         icon={false}
-        closeButton={CloseButton}
+        isMobile={isMobile}
+        closeButton={!isMobile && CloseButton}
       />
     </>
   );

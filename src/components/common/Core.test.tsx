@@ -26,6 +26,6 @@ describe('Core', () => {
   it('useGetUserToken가 호출되어야만 한다', () => {
     renderCore();
 
-    expect(useGetUserToken).toBeCalledTimes(1);
+    expect(useGetUserToken).toBeCalledTimes(3);
   });
 });
