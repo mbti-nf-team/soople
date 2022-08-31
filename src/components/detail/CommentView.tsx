@@ -4,19 +4,13 @@ import React, {
 
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { Profile } from '@/models/auth';
 import { Comment } from '@/models/group';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import { emptyAThenB } from '@/utils/utils';
 
-import 'dayjs/locale/ko';
-
 import ProfileImage from '../common/ProfileImage';
-
-dayjs.locale('ko');
-dayjs.extend(relativeTime);
 
 interface Props {
   comment: Comment;

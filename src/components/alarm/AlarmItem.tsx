@@ -5,21 +5,15 @@ import React, {
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import Link from 'next/link';
 
 import { Alarm, AlarmType } from '@/models/alarm';
 import { Category } from '@/models/group';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
 
-import 'dayjs/locale/ko';
-
 import AlarmConfirmedSvg from '../../assets/icons/img_alarm_confirmed.svg';
 import AlarmRejectedSvg from '../../assets/icons/img_alarm_rejected.svg';
 import ProfileImage from '../common/ProfileImage';
-
-dayjs.locale('ko');
-dayjs.extend(relativeTime);
 
 interface Props {
   alarm: Alarm;

@@ -1,17 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { Group } from '@/models/group';
 import { isCurrentTimeBeforeEndDate, isRecruitCompletedAndManual } from '@/utils/utils';
 
-import 'dayjs/locale/ko';
-
 import useCurrentTime from './useCurrentTime';
-
-dayjs.locale('ko');
-dayjs.extend(relativeTime);
 
 const useRecruitDateStatus = (group: Group) => {
   const currentTime = useCurrentTime(group);

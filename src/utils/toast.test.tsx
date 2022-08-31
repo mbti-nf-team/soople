@@ -1,14 +1,12 @@
-import { AlertCircle as WarnIcon } from 'react-feather';
 import { toast } from 'react-toastify';
 
-import { lightTheme } from '@/styles/theme';
-
-import { errorToast, successToast } from './toast';
+import { defaultToast, errorToast, successToast } from './toast';
 
 jest.mock('react-toastify', () => ({
   toast: {
     error: jest.fn(),
     success: jest.fn(),
+    info: jest.fn(),
   },
 }));
 
@@ -18,9 +16,7 @@ describe('errorToast', () => {
   it('toast.error가 메시지와 함께 호출되어야만 한다', () => {
     errorToast(errorMessage);
 
-    expect(toast.error).toBeCalledWith(errorMessage, {
-      icon: <WarnIcon width="24px" height="24px" fill={lightTheme.warning} color={lightTheme.background} />,
-    });
+    expect(toast.error).toBeCalledTimes(1);
   });
 });
 
@@ -31,5 +27,15 @@ describe('successToast', () => {
     successToast(successMessage);
 
     expect(toast.success).toBeCalledTimes(1);
+  });
+});
+
+describe('defaultToast', () => {
+  const defaultMessage = 'default';
+
+  it('toast.info가 메시지와 함께 호출되어야만 한다', () => {
+    defaultToast(defaultMessage);
+
+    expect(toast.info).toBeCalledTimes(1);
   });
 });

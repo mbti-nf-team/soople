@@ -5,7 +5,6 @@ import React, {
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 
 import useCurrentTime from '@/hooks/useCurrentTime';
 import useGroupRecruitmentStatus from '@/hooks/useGroupRecruitmentStatus';
@@ -15,11 +14,6 @@ import {
   body1Font, body2Font, h3Font,
 } from '@/styles/fontStyles';
 import { removeAllHtml } from '@/utils/filter';
-
-import 'dayjs/locale/ko';
-
-dayjs.locale('ko');
-dayjs.extend(relativeTime);
 
 interface Props {
   group: Group;

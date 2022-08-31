@@ -13,7 +13,7 @@ import {
 } from './fontStyles';
 
 export const setGlobalStyles = (pathname: string, theme: Theme) => css`
-  ${emotionNormalize}
+  ${emotionNormalize};
 
   body {
     -webkit-font-smoothing: antialiased;

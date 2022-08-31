@@ -19,6 +19,7 @@ const customJestConfig = {
     '<rootDir>/src/components/detail/RecruitCompleteCanvasConfetti.tsx',
     '<rootDir>/src/hooks/api/auth/useAuthIdToken.ts',
     '<rootDir>/src/hooks/api/auth/useAuthUser.ts',
+    '<rootDir>/src/styles/StyledToastContainer.tsx',
   ],
   moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'jest-environment-jsdom',
