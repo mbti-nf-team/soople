@@ -32,6 +32,7 @@ function useResponsive() {
     isDesktop: isClient ? isDesktop : true,
     isTablet: isClient ? isTablet : false,
     isMobile: isClient ? isMobile : false,
+    isClient,
   }), [isClient, isDesktop, isTablet, isMobile]);
 }
 

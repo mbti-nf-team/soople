@@ -15,10 +15,10 @@ const StyledToastContainer = styled(ToastContainer)<{ isMobile: boolean; }>`
   .Toastify__toast {
     ${({ isMobile }) => (isMobile ? css`
       ${body2Font(true)};
-      padding: 15px 16px;
+      padding: 13px 16px;
       ` : css`
       ${body1Font()};
-      padding: 13px 16px;
+      padding: 15px 16px;
     `)}
 
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;

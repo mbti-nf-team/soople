@@ -168,6 +168,10 @@ const StyledSelect = styled(Select)<{ size: Size; isError: boolean; }>`
     background-color: ${({ theme }) => theme.background};
     padding: 7px 16px;
   }
+
+  & .select__option:active {
+    background-color: ${({ theme }) => theme.accent2} !important;
+  }
   
   & .select__placeholder {
     color: ${({ theme }) => theme.accent4};
