@@ -5,6 +5,7 @@ import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { body1Font } from '@/styles/fontStyles';
+import mq from '@/styles/responsive';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
@@ -40,7 +41,7 @@ function SignInModal({
         <SignInDescription>
           스터디와 사이드 프로젝트
           <br />
-          수플과 함께 시작하세요
+          수플과 함께 시작해요
         </SignInDescription>
       </SignInModalBox>
     </SignInModalWrapper>
@@ -76,6 +77,10 @@ const SignInDescription = styled.p`
 `;
 
 const SignInModalWrapper = styled.div`
+  ${mq({
+    alignItems: ['flex-end', 'center'],
+  })};
+
   position: fixed;
   top: 0;
   left: 0;
@@ -83,20 +88,22 @@ const SignInModalWrapper = styled.div`
   height: 100%;
   z-index: ${zIndexes.SignInModal};
   display: flex;
-  align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.25);
 `;
 
 const SignInModalBox = styled.div<{ isVisible: boolean }>`
-  width: 400px;
+  ${mq({
+    borderRadius: ['24px 24px 0px 0px', '8px'],
+    width: ['100%', '400px'],
+  })};
+
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
   background: ${({ theme }) => theme.background};
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border-radius: 8px;
 
   ${({ isVisible }) => (isVisible && css`
     animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;
