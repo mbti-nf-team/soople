@@ -9,6 +9,7 @@ import * as yup from 'yup';
 
 import type { SignUpAdditionalForm } from '@/models/auth';
 import { Position, positionOption } from '@/models/group';
+import mq from '@/styles/responsive';
 import { stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
@@ -83,7 +84,9 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         onClear={() => setValue('portfolioUrl', '')}
         type="url"
       />
-      <Button type="submit" color="success" size="large">확인</Button>
+      <SubmitButton type="submit" color="success" size="large" disabled={!position}>
+        확인
+      </SubmitButton>
     </SignUpFormWrapper>
   );
 }
@@ -91,9 +94,17 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
 export default SignUpForm;
 
 const SignUpFormWrapper = styled.form`
+  position: relative;
   width: 100%;
 
   & > :not(:last-child) {
     margin-bottom: 20px;
   }
+`;
+
+const SubmitButton = styled(Button)`
+  ${mq({
+    position: ['fixed', 'initial'],
+    bottom: ['20px', 'initial'],
+  })};
 `;
