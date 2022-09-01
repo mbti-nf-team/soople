@@ -127,12 +127,16 @@ const InputField = styled.input<{ isError?: boolean; hasValue: boolean; }>`
   }
 
   &:disabled {
-    color: ${({ theme }) => theme.accent6};
+    opacity: 1;
+    -webkit-text-fill-color: ${({ theme }) => theme.accent5};
+    color: ${({ theme }) => theme.accent5};
     background: ${({ theme }) => theme.accent1};
   }
 
   &:read-only {
-    color: ${({ theme }) => theme.accent6};
+    opacity: 1;
+    -webkit-text-fill-color: ${({ theme }) => theme.accent5};
+    color: ${({ theme }) => theme.accent5};
     background: ${({ theme }) => theme.accent1};
   }
 

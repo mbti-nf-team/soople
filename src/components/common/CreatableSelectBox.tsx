@@ -171,6 +171,13 @@ const StyledSelect = styled(CreatableSelect)<{ size: Size; isError: boolean; }>`
     box-shadow: none;
   }
 
+  & .select__control--is-focused:hover {
+    ${({ isError, theme }) => !isError && css`
+      border-color: ${theme.success};
+    `}
+    box-shadow: none;
+  }
+
   & .select__option {
     cursor: pointer;
     color: ${({ theme }) => theme.foreground};
@@ -185,6 +192,10 @@ const StyledSelect = styled(CreatableSelect)<{ size: Size; isError: boolean; }>`
 
   & .select__menu {
     border-radius: 8px;
+  }
+
+  & .select__option:active {
+    background-color: ${({ theme }) => theme.accent2} !important;
   }
 
   & .select__option--is-focused {
