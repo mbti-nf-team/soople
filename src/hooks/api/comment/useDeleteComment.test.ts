@@ -9,7 +9,7 @@ jest.mock('@/services/api/comment');
 jest.mock('@/hooks/useRenderSuccessToast');
 
 describe('useDeleteComment', () => {
-  const useDeleteCommentHook = () => renderHook(() => useDeleteComment(), { wrapper });
+  const useDeleteCommentHook = () => renderHook(() => useDeleteComment(15), { wrapper });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -28,5 +28,6 @@ describe('useDeleteComment', () => {
     });
 
     expect(result.current.isSuccess).toBeTruthy();
+    expect(deleteGroupComment).toBeCalled();
   });
 });

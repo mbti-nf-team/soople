@@ -1,24 +1,28 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { InfiniteData, useMutation, useQueryClient } from 'react-query';
 
 import { FirestoreError } from 'firebase/firestore';
 
-import { CommentForm } from '@/models/group';
+import { InfiniteResponse } from '@/models';
+import { Comment, CommentForm } from '@/models/group';
 import { postGroupComment } from '@/services/api/comment';
 import { checkNumNull } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
-function useAddComment() {
+import { addCommentQueryData } from './queryDataUtils';
+
+function useAddComment(perPage: number) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<string, FirestoreError, CommentForm>((
     commentForm,
   ) => postGroupComment(commentForm), {
-    onSuccess: (_, commentForm: CommentForm) => {
-      queryClient.invalidateQueries(['comments', {
-        id: commentForm.groupId,
-      }]);
+    onSuccess: (commentId: string, commentForm: CommentForm) => {
       queryClient.setQueryData<number>(['commentCount', commentForm.groupId], (commentCount) => checkNumNull(commentCount) + 1);
+      queryClient.setQueryData<InfiniteData<InfiniteResponse<Comment>> | undefined>(['comments', {
+        id: commentForm.groupId,
+        perPage,
+      }], addCommentQueryData(commentId, commentForm));
     },
   });
 

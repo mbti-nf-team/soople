@@ -37,7 +37,7 @@ export const getGroupComments = async (groupId: string, {
   const commentRef = collectionRef(COMMENTS);
   const commonQueries = [
     where('groupId', '==', groupId),
-    orderBy('createdAt', 'asc'),
+    orderBy('createdAt', 'desc'),
   ];
 
   if (!lastUid) {

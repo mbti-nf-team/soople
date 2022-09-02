@@ -10,7 +10,7 @@ import useAddComment from './useAddComment';
 jest.mock('@/services/api/comment');
 
 describe('useAddComment', () => {
-  const useAddCommentHook = () => renderHook(() => useAddComment(), { wrapper });
+  const useAddCommentHook = () => renderHook(() => useAddComment(15), { wrapper });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -30,5 +30,6 @@ describe('useAddComment', () => {
     });
 
     expect(result.current.data).toBe('commentId');
+    expect(postGroupComment).toBeCalled();
   });
 });
