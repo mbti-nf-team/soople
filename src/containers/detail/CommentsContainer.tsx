@@ -16,15 +16,17 @@ import { h4Font } from '@/styles/fontStyles';
 import { checkNumNull } from '@/utils/utils';
 
 function CommentsContainer(): ReactElement {
+  const perPage = 15;
+
   const router = useRouter();
   const { id: groupId } = router.query as GroupQuery;
   const { data: user } = useFetchUserProfile();
   const { data: commentCount } = useFetchCommentCount(groupId);
   const { query, refState } = useInfiniteFetchComments({
-    perPage: 15,
+    perPage,
   });
-  const { mutate: addCommentMutate } = useAddComment();
-  const { mutate: deleteCommentMutate } = useDeleteComment();
+  const { mutate: addCommentMutate } = useAddComment(perPage);
+  const { mutate: deleteCommentMutate } = useDeleteComment(perPage);
 
   const onSubmit = useCallback((commentForm: CommentFields) => addCommentMutate({
     ...commentForm,

@@ -1,27 +1,34 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { InfiniteData, useMutation, useQueryClient } from 'react-query';
 
 import { FirestoreError } from 'firebase/firestore';
 
 import useRenderSuccessToast from '@/hooks/useRenderSuccessToast';
+import { InfiniteResponse } from '@/models';
+import { Comment } from '@/models/group';
 import { deleteGroupComment } from '@/services/api/comment';
+import { checkNumNull } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
+
+import { deleteCommentQueryData } from './queryDataUtils';
 
 type DeleteCommentForm = {
   commentId: string;
   groupId: string;
 }
 
-function useDeleteComment() {
+function useDeleteComment(perPage: number) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<void, FirestoreError, DeleteCommentForm>((
     commentForm,
   ) => deleteGroupComment(commentForm.commentId), {
-    onSuccess: (_: void, { groupId }: DeleteCommentForm) => {
-      queryClient.invalidateQueries(['comments', {
+    onSuccess: (_: void, { groupId, commentId }: DeleteCommentForm) => {
+      queryClient.setQueryData<number>(['commentCount', groupId], (commentCount) => checkNumNull(commentCount) - 1);
+      queryClient.setQueryData<InfiniteData<InfiniteResponse<Comment>> | undefined>(['comments', {
         id: groupId,
-      }]);
+        perPage,
+      }], deleteCommentQueryData(commentId));
     },
   });
 
