@@ -120,7 +120,7 @@ const TagsWrapper = styled.div<{isHaveTag: boolean }>`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 686px;
+  width: 100%;
   align-items: center;
   padding-left: 8px;
   padding-top: ${({ isHaveTag }) => (isHaveTag ? '5px' : '8px')};

@@ -1,16 +1,17 @@
 import facepaint from 'facepaint';
 
+const breakpoints = ['450', '650', '850', '1100'];
+
+export const mediaQueries = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
 const mq = facepaint([
-  '@media(min-width: 450px)',
-  '@media(min-width: 650px)',
-  '@media(min-width: 1100px)',
+  mediaQueries[0],
+  mediaQueries[1],
+  mediaQueries[3],
 ]);
 
 export const mq2 = facepaint([
-  '@media(min-width: 450px)',
-  '@media(min-width: 650px)',
-  '@media(min-width: 850px)',
-  '@media(min-width: 1100px)',
+  ...mediaQueries,
 ]);
 
 export const breakpoint = {

@@ -40,6 +40,10 @@ function WriteEditor(): ReactElement {
           <CloseIcon
             width={16}
             height={16}
+            style={{
+              minHeight: '16px',
+              minWidth: '16px',
+            }}
             color={theme.accent5}
             cursor="pointer"
             onClick={() => setIsVisible(false)}
@@ -60,20 +64,23 @@ const WarningMessage = styled.div`
   ${subtitle1Font()};
   background: ${({ theme }) => theme.accent1};
   color: ${({ theme }) => theme.foreground};
-  border-radius: 8px;
-  padding: 12px;
-  margin-top: 24px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 24px;
 
   & > div {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    margin-right: 12px;
 
     & > svg {
+      min-height: 16px;
+      min-width: 16px;
       margin-right: 12px;
       margin-top: 4px;
     }
