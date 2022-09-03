@@ -71,10 +71,10 @@ describe('WriteFormContainer', () => {
   context('로그인하지 않은 사용자인 경우', () => {
     given('user', () => null);
 
-    it('"로그인 후 이용해주세요!" 문구가 나타나야만 한다', () => {
+    it('아무것도 나타나지 않아야만 한다', () => {
       const { container } = renderWriteFormContainer();
 
-      expect(container).toHaveTextContent('로그인 후 이용해주세요!');
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });

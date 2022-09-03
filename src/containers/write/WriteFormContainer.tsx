@@ -8,7 +8,7 @@ import { KeyPair } from '@/models';
 import { WriteFields } from '@/models/group';
 import { writeFieldsState } from '@/recoil/group/atom';
 
-function WriteFormContainer(): ReactElement {
+function WriteFormContainer(): ReactElement | null {
   const { data: user } = useFetchUserProfile();
   const [fields, changeFields] = useRecoilState(writeFieldsState);
 
@@ -17,7 +17,7 @@ function WriteFormContainer(): ReactElement {
   }, [changeFields]);
 
   if (!user) {
-    return <div>로그인 후 이용해주세요!</div>;
+    return null;
   }
 
   return (

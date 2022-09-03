@@ -4,7 +4,8 @@ import styled from '@emotion/styled';
 
 import { KeyPair } from '@/models';
 import { WriteFields } from '@/models/group';
-import { h2Font } from '@/styles/fontStyles';
+import { h2Font, h3Font } from '@/styles/fontStyles';
+import mq, { mediaQueries } from '@/styles/responsive';
 
 import TagForm from './TagForm';
 import WriteEditor from './WriteEditor';
@@ -53,12 +54,19 @@ const WriteFormWrapper = styled.div`
 `;
 
 const TitleInput = styled.input`
-  ${h2Font(true)}
+  ${mq({
+    padding: ['8px 0px', 0],
+    marginBottom: [false, '24px'],
+  })};
+
+  ${mediaQueries[0]} {
+    ${h2Font(true)}
+  }
+  
+  ${h3Font(true)}
   color: ${({ theme }) => theme.foreground};
   outline: none;
   border: none;
-  padding: 0;
-  margin-bottom: 24px;
 
   &::placeholder {
     color: ${({ theme }) => theme.accent4};

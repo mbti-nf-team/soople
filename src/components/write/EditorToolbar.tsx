@@ -174,6 +174,7 @@ function EditorToolbar(): ReactElement {
 export default EditorToolbar;
 
 const EditorToolbarWrapper = styled.div`
+  overflow-x: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
