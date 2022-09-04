@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { X as CloseIcon } from 'react-feather';
 
 import { useTheme } from '@emotion/react';
@@ -16,18 +16,20 @@ import {
 } from '@remirror/styles/emotion';
 
 import EditorToolbar from '@/components/write/EditorToolbar';
+import useBoolean from '@/hooks/useBoolean';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
 
 import AlertTriangleIcon from '../../assets/icons/alert_triangle.svg';
 
 function WriteEditor(): ReactElement {
   const theme = useTheme();
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+
+  const [isVisibleTip, , closeTip] = useBoolean(true);
 
   return (
     <>
       <EditorToolbar />
-      {isVisible && (
+      {isVisibleTip && (
         <WarningMessage>
           <div>
             <AlertTriangleIcon />
@@ -46,7 +48,7 @@ function WriteEditor(): ReactElement {
             }}
             color={theme.accent5}
             cursor="pointer"
-            onClick={() => setIsVisible(false)}
+            onClick={closeTip}
             data-testid="close-icon"
           />
         </WarningMessage>

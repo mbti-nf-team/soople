@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from 'react';
 
 import styled from '@emotion/styled';
 
+import useBoolean from '@/hooks/useBoolean';
 import { SelectOption } from '@/models';
 import { Profile } from '@/models/auth';
 import { Position, positionOption } from '@/models/group';
@@ -20,7 +21,7 @@ interface Props {
 
 function SettingForm({ user, onWithdrawal }: Props): ReactElement {
   const [, setPosition] = useState<Position>();
-  const [isVisibleWithdrawalPopup, setIsVisibleWithdrawalPopup] = useState<boolean>(false);
+  const [isVisibleWithdrawalModal, openWithDrawalModal, closeWithDrawalModal] = useBoolean(false);
 
   const defaultPosition = user?.position ? ({
     label: user.position, value: user.position,
@@ -63,14 +64,14 @@ function SettingForm({ user, onWithdrawal }: Props): ReactElement {
       <MemberWithdrawalButton
         color="ghost"
         size="medium"
-        onClick={() => setIsVisibleWithdrawalPopup(true)}
+        onClick={openWithDrawalModal}
       >
         회원 탈퇴하기
       </MemberWithdrawalButton>
       <AskMemberWithdrawalModal
-        isVisible={isVisibleWithdrawalPopup}
+        isVisible={isVisibleWithdrawalModal}
         onWithdrawal={onWithdrawal}
-        onClose={() => setIsVisibleWithdrawalPopup(false)}
+        onClose={closeWithDrawalModal}
       />
     </>
   );

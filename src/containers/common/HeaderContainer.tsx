@@ -20,13 +20,13 @@ function HeaderContainer(): ReactElement {
   const onClickSignIn = () => setSignInModalVisible(true);
   const signOut = useCallback(() => mutate(), [mutate]);
 
-  const handleScrollAction = () => setIsScrollTop(window.scrollY === 0);
+  const handleScrollAction = useCallback(() => setIsScrollTop(window.scrollY === 0), []);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScrollAction);
 
     return () => window.removeEventListener('scroll', handleScrollAction);
-  }, []);
+  }, [handleScrollAction]);
 
   return (
     <Header

@@ -1,5 +1,5 @@
 import React, {
-  memo, ReactElement, useRef, useState,
+  memo, ReactElement, useRef,
 } from 'react';
 import { Bell as AlarmIcon } from 'react-feather';
 import { useClickAway } from 'react-use';
@@ -9,6 +9,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
+import useBoolean from '@/hooks/useBoolean';
 import useResponsive from '@/hooks/useResponsive';
 import { Profile } from '@/models/auth';
 import { subtitle2Font } from '@/styles/fontStyles';
@@ -28,10 +29,10 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
   const theme = useTheme();
 
   const { data: alertAlarms } = useFetchAlertAlarms();
-  const [isVisible, setVisible] = useState<boolean>(false);
+  const [isVisibleDropDownMenu, , closeDropDownMenu, onToggle] = useBoolean(false);
   const userIconRef = useRef<HTMLDivElement>(null);
 
-  useClickAway(userIconRef, () => setVisible(false), ['mousedown', 'scroll', 'touchstart']);
+  useClickAway(userIconRef, closeDropDownMenu, ['mousedown', 'scroll', 'touchstart']);
 
   return (
     <UserNavbarWrapper isMobile={isMobile}>
@@ -61,13 +62,13 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
         )}
         <ProfileImage
           src={user.image}
-          onClick={() => setVisible(!isVisible)}
+          onClick={onToggle}
         />
         <DropDown
           signOut={signOut}
           name={user.name}
           email={user.email}
-          isVisible={isVisible}
+          isVisible={isVisibleDropDownMenu}
           numberAlertAlarms={alertAlarms.length}
         />
       </div>
