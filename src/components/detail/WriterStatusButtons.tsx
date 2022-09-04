@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -6,6 +6,7 @@ import { useSetRecoilState } from 'recoil';
 
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
 import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
+import useBoolean from '@/hooks/useBoolean';
 import { Group } from '@/models/group';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { stringToExcludeNull } from '@/utils/utils';
@@ -27,8 +28,10 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
 
   const setWriteFields = useSetRecoilState(writeFieldsState);
 
-  const [isVisibleApplicantsModal, setIsVisibleApplicantsModal] = useState<boolean>(false);
-  const [isVisibleAskRemoveGroupModal, setIsVisibleAskRemoveGroupModal] = useState<boolean>(false);
+  const [isVisibleApplicantsModal, openApplicantModal, closeApplicantModal] = useBoolean(false);
+  const [
+    isVisibleAskRemoveGroupModal, openAskRemoveGroupModal, closeAskRemoveGroupModal,
+  ] = useBoolean(false);
 
   const handleRemove = useCallback(() => {
     removeGroupMutate(group);
@@ -66,26 +69,26 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
       </Button>
       <Button
         type="button"
-        onClick={() => setIsVisibleAskRemoveGroupModal(true)}
+        onClick={openAskRemoveGroupModal}
       >
         삭제
       </Button>
       <AskRemoveGroupModal
         isVisible={isVisibleAskRemoveGroupModal}
-        onClose={() => setIsVisibleAskRemoveGroupModal(false)}
+        onClose={closeAskRemoveGroupModal}
         onConfirm={handleRemove}
       />
       {isCompleted ? (
         <>
           <Button
             color="primary"
-            onClick={() => setIsVisibleApplicantsModal(true)}
+            onClick={openApplicantModal}
           >
             팀원 보기
           </Button>
           <MembersViewModal
             isVisible={isVisibleApplicantsModal}
-            onClose={() => setIsVisibleApplicantsModal(false)}
+            onClose={closeApplicantModal}
           />
         </>
       ) : (

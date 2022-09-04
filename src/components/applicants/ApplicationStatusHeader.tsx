@@ -1,7 +1,8 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 
 import styled from '@emotion/styled';
 
+import useBoolean from '@/hooks/useBoolean';
 import { Applicant, CompletedGroupForm } from '@/models/group';
 import { body2Font } from '@/styles/fontStyles';
 
@@ -20,13 +21,15 @@ interface Props{
 function ApplicationStatusHeader({
   goBack, onSubmit, applicants, timeRemaining,
 }: Props) {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [
+    isVisibleCompleteApplyFormModal, openCompleteApplyFormModal, closeCompleteApplyFormModal,
+  ] = useBoolean(false);
+
   const numberConfirmApplicants = applicants.filter(({ isConfirm }) => isConfirm).length;
 
-  const onClose = () => setIsVisible(false);
   const handleSubmit = (completedGroupForm: CompletedGroupForm) => {
     onSubmit(completedGroupForm);
-    onClose();
+    closeCompleteApplyFormModal();
   };
 
   return (
@@ -44,16 +47,16 @@ function ApplicationStatusHeader({
             size="small"
             color="success"
             disabled={!numberConfirmApplicants}
-            onClick={() => setIsVisible(true)}
+            onClick={openCompleteApplyFormModal}
           >
             모집 완료
           </Button>
         </>
       </SubHeader>
       <CompleteApplyFormModal
-        onClose={onClose}
+        onClose={closeCompleteApplyFormModal}
         onSubmit={handleSubmit}
-        isVisible={isVisible}
+        isVisible={isVisibleCompleteApplyFormModal}
         numberApplicant={numberConfirmApplicants}
         timeRemaining={timeRemaining}
       />
