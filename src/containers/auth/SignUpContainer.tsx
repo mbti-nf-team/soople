@@ -12,6 +12,7 @@ import useSignUp from '@/hooks/api/auth/useSignUp';
 import { SignUpAdditionalForm } from '@/models/auth';
 import { body1Font, h2Font } from '@/styles/fontStyles';
 import Layout from '@/styles/Layout';
+import mq from '@/styles/responsive';
 
 function SignUpContainer(): ReactElement {
   const profile = useFetchUserProfile();
@@ -66,11 +67,14 @@ const Title = styled.div`
 `;
 
 const SignUpFormLayout = styled(Layout)`
+  ${mq({
+    width: ['calc(100% - 3rem)', '320px'],
+  })};
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 320px !important;
 
   & > h4 {
     ${body1Font()}

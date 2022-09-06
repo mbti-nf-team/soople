@@ -12,6 +12,12 @@ const StyledToastContainer = styled(ToastContainer)<{ isMobile: boolean; }>`
     width: [false, '328px'],
   })};
 
+  &.Toastify__toast-container--bottom-center {
+  ${mq({
+    bottom: ['80px', '0px'],
+  })};
+  }
+
   .Toastify__toast {
     ${({ isMobile }) => (isMobile ? css`
       ${body2Font(true)};

@@ -1,5 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import InjectResponsiveContext from '@/test/InjectResponsiveContext';
+import MockTheme from '@/test/MockTheme';
+
 import FormModal from './FormModal';
 
 describe('FormModal', () => {
@@ -12,40 +15,32 @@ describe('FormModal', () => {
   });
 
   const renderFormModal = () => render((
-    <FormModal
-      size={given.size}
-      isVisible={given.isVisible}
-      title="제목"
-      onClose={handleClose}
-      onSubmit={handleSubmit}
-    >
-      <MockComponent />
-    </FormModal>
+    <InjectResponsiveContext width={given.width}>
+      <MockTheme>
+        <FormModal
+          size={given.size}
+          isVisible={given.isVisible}
+          title="제목"
+          onClose={handleClose}
+          onSubmit={handleSubmit}
+        >
+          <MockComponent />
+        </FormModal>
+      </MockTheme>
+    </InjectResponsiveContext>
   ));
 
   context('isVisible이 true인 경우', () => {
     given('isVisible', () => true);
 
-    context('size를 정한 경우', () => {
-      given('size', () => '500px');
+    context('모바일인 경우', () => {
+      given('width', () => 400);
 
-      it('지정한 width값이어야만 한다', () => {
+      it('confirm 버튼의 width는 100%여야만 한다', () => {
         renderFormModal();
 
-        expect(screen.getByTestId('form-modal-box')).toHaveStyle({
-          width: '500px',
-        });
-      });
-    });
-
-    context('size를 정하지 않은 경우', () => {
-      given('size', () => undefined);
-
-      it('width값은 600px이어야만 한다', () => {
-        renderFormModal();
-
-        expect(screen.getByTestId('form-modal-box')).toHaveStyle({
-          width: '600px',
+        expect(screen.getByText('확인')).toHaveStyle({
+          width: '100%',
         });
       });
     });
