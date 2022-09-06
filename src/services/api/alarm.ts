@@ -4,7 +4,8 @@ import {
 
 import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Alarm, AlarmForm, AlertAlarm } from '@/models/alarm';
-import { formatAlarm, formatCreatedAt } from '@/utils/firestore';
+import { formatAlarm, formatCreatedAt, isLessThanPerPage } from '@/utils/firestore';
+import { targetFalseThenValue } from '@/utils/utils';
 
 import { collectionRef, docRef } from '../firebase';
 
@@ -26,6 +27,8 @@ export const getUserAlarms = async (userUid: string, {
   const alarmsRef = collectionRef(ALARMS);
   const commonQueries = [where('userUid', '==', userUid), orderBy('createdAt', 'desc')];
 
+  const isLengthLessThanPerPage = isLessThanPerPage(perPage);
+
   if (!lastUid) {
     const getQuery = query(
       alarmsRef,
@@ -40,7 +43,7 @@ export const getUserAlarms = async (userUid: string, {
 
     return {
       items: alarms,
-      lastUid: lastVisible?.id,
+      lastUid: targetFalseThenValue(isLengthLessThanPerPage(response))(lastVisible?.id),
     };
   }
 
@@ -54,7 +57,7 @@ export const getUserAlarms = async (userUid: string, {
 
   const response = await getDocs(getQuery);
 
-  if (response.empty || response.docs.length < perPage) {
+  if (isLengthLessThanPerPage(response)) {
     const alarms = await Promise.all([...response.docs.map(formatAlarm)]);
 
     return {

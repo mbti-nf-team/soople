@@ -5,14 +5,12 @@ import FIXTURE_GROUP from '../../../fixtures/group';
 import MyGroups from './MyGroups';
 
 describe('MyGroups', () => {
-  const handleClick = jest.fn();
   const lastItemRef = jest.fn();
 
   const MockComponent = () => <>Component</>;
 
   const renderMyGroups = () => render((
     <MyGroups
-      onClickGroup={handleClick}
       groups={given.groups}
       refState={{
         lastItemRef,

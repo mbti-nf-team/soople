@@ -4,7 +4,8 @@ import {
 
 import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Comment, CommentFields } from '@/models/group';
-import { formatComment } from '@/utils/firestore';
+import { formatComment, isLessThanPerPage } from '@/utils/firestore';
+import { targetFalseThenValue } from '@/utils/utils';
 
 import { collectionRef, docRef } from '../firebase';
 
@@ -40,6 +41,8 @@ export const getGroupComments = async (groupId: string, {
     orderBy('createdAt', 'desc'),
   ];
 
+  const isLengthLessThanPerPage = isLessThanPerPage(perPage);
+
   if (!lastUid) {
     const getQuery = query(
       commentRef,
@@ -54,7 +57,7 @@ export const getGroupComments = async (groupId: string, {
 
     return {
       items: comments,
-      lastUid: lastVisible?.id,
+      lastUid: targetFalseThenValue(isLengthLessThanPerPage(response))(lastVisible?.id),
     };
   }
 
@@ -68,7 +71,7 @@ export const getGroupComments = async (groupId: string, {
 
   const response = await getDocs(getQuery);
 
-  if (response.empty || response.docs.length < perPage) {
+  if (isLengthLessThanPerPage(response)) {
     const comments = response.docs.map(formatComment) as Comment[];
 
     return {

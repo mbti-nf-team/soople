@@ -3,7 +3,7 @@ import {
 } from 'firebase/firestore';
 
 import { ApplicantFields } from '@/models/group';
-import { formatCreatedAt } from '@/utils/firestore';
+import { formatCreatedAt, isLessThanPerPage } from '@/utils/firestore';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import GROUP_FIXTURE from '../../../fixtures/group';
@@ -152,6 +152,9 @@ describe('applicants API', () => {
             }],
           }));
           (getGroupDetail as jest.Mock).mockResolvedValue(GROUP_FIXTURE);
+          (isLessThanPerPage as jest.Mock).mockImplementationOnce(
+            () => jest.fn().mockReturnValueOnce(true),
+          );
         });
 
         it('그룹 리스트가 반환되어야만 한다', async () => {

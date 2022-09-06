@@ -9,13 +9,12 @@ import MyGroupsSkeletonLoader, { MyGroupLayout } from './MyGroupsSkeletonLoader'
 
 interface Props {
   groups: InfiniteResponse<Group>[];
-  onClickGroup: (groupId: string) => void;
-  refState: InfiniteRefState<HTMLDivElement>;
+  refState: InfiniteRefState<HTMLAnchorElement>;
   isLoading?: boolean;
 }
 
 function MyGroups({
-  groups, onClickGroup, refState, isLoading, children,
+  groups, refState, isLoading, children,
 }: PropsWithChildren<Props>): ReactElement {
   if (isEmpty(groups) || isEmpty(groups[0].items)) {
     return <>{children}</>;
@@ -32,7 +31,6 @@ function MyGroups({
               <MyGroup
                 key={group.groupId}
                 group={group}
-                onClick={onClickGroup}
                 ref={targetFalseThenValue(!isLastItem)(refState.lastItemRef)}
               />
             );

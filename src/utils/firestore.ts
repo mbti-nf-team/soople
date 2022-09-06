@@ -1,4 +1,4 @@
-import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import type { DocumentData, QueryDocumentSnapshot, QuerySnapshot } from 'firebase/firestore';
 
 import { Alarm, AlarmResponse } from '@/models/alarm';
 import { Profile } from '@/models/auth';
@@ -64,3 +64,7 @@ export const formatAlarm = async (alarm: QueryDocumentSnapshot<DocumentData>) =>
     applicant: null,
   } as Alarm;
 };
+
+export const isLessThanPerPage = (perPage: number) => (
+  documentData: QuerySnapshot<DocumentData>,
+) => documentData.empty || documentData.docs.length < perPage;

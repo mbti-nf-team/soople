@@ -1,4 +1,4 @@
-import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import { DocumentData, QueryDocumentSnapshot, QuerySnapshot } from 'firebase/firestore';
 
 import { getUserProfile } from '@/services/api/auth';
 
@@ -6,8 +6,7 @@ import GROUP_FIXTURE from '../../fixtures/group';
 import PROFILE_FIXTURE from '../../fixtures/profile';
 
 import {
-  formatAlarm,
-  formatComment, formatCreatedAt, formatGroup, timestampToString,
+  formatAlarm, formatComment, formatCreatedAt, formatGroup, isLessThanPerPage, timestampToString,
 } from './firestore';
 
 jest.mock('@/services/api/group');
@@ -163,6 +162,42 @@ describe('formatAlarm', () => {
         userUid: '2',
         applicant: null,
       });
+    });
+  });
+});
+
+describe('isLessThanPerPage', () => {
+  const perPage = 10;
+
+  const isLengthLessThanPerPage = isLessThanPerPage(10);
+
+  context(`documentData가 빈 배열이거나 ${perPage}보다 길이가 작은 경우`, () => {
+    const documentData = {
+      empty: true,
+      docs: {
+        length: 1,
+      },
+    } as unknown as QuerySnapshot<DocumentData>;
+
+    it('true를 반환해야만 한다', () => {
+      const result = isLengthLessThanPerPage(documentData);
+
+      expect(result).toBeTruthy();
+    });
+  });
+
+  context(`documentData가 빈 배열이 아니거나 ${perPage}보다 길이가 큰 경우`, () => {
+    const documentData = {
+      empty: false,
+      docs: {
+        length: 11,
+      },
+    } as unknown as QuerySnapshot<DocumentData>;
+
+    it('false를 반환해야만 한다', () => {
+      const result = isLengthLessThanPerPage(documentData);
+
+      expect(result).toBeFalsy();
     });
   });
 });

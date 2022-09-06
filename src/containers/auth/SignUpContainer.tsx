@@ -13,7 +13,7 @@ import { SignUpAdditionalForm } from '@/models/auth';
 import { body1Font, h2Font } from '@/styles/fontStyles';
 import Layout from '@/styles/Layout';
 
-function SignUpContainer(): ReactElement {
+function SignUpContainer(): ReactElement | null {
   const profile = useFetchUserProfile();
   const user = useGetUser();
   const { mutate } = useSignUp();
@@ -34,7 +34,7 @@ function SignUpContainer(): ReactElement {
   }, [user, mutate]);
 
   if (isAllLoading) {
-    return <div>로딩중...</div>;
+    return null;
   }
 
   if (profile.data) {

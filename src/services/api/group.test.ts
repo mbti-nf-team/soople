@@ -17,7 +17,7 @@ import {
   patchNumberApplicants,
   postNewGroup,
 } from '@/services/api/group';
-import { formatGroup } from '@/utils/firestore';
+import { formatGroup, isLessThanPerPage } from '@/utils/firestore';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -233,6 +233,9 @@ describe('group API', () => {
             }],
           }));
           (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+          (isLessThanPerPage as jest.Mock).mockImplementationOnce(
+            () => jest.fn().mockReturnValueOnce(true),
+          );
         });
 
         it('그룹 리스트가 반환되어야만 한다', async () => {

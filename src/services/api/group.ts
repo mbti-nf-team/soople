@@ -18,8 +18,8 @@ import {
   CompletedGroupForm,
   FilterGroupsCondition, Group, IncreaseViewRequestForm, WriteFields,
 } from '@/models/group';
-import { formatGroup, timestampToString } from '@/utils/firestore';
-import { isRecruiting } from '@/utils/utils';
+import { formatGroup, isLessThanPerPage, timestampToString } from '@/utils/firestore';
+import { isRecruiting, targetFalseThenValue } from '@/utils/utils';
 
 import { collectionRef, docRef } from '../firebase';
 import { getGroupsQuery } from '../firebase/getQuery';
@@ -112,6 +112,8 @@ export const getUserRecruitedGroups = async (userUid: string, {
   const groupsRef = collectionRef(GROUPS);
   const commonQueries = [where('writer.uid', '==', userUid), orderBy('createdAt', 'desc')];
 
+  const isLengthLessThanPerPage = isLessThanPerPage(perPage);
+
   if (!lastUid) {
     const getQuery = query(
       groupsRef,
@@ -126,7 +128,7 @@ export const getUserRecruitedGroups = async (userUid: string, {
 
     return {
       items: recruitedGroups,
-      lastUid: lastVisible?.id,
+      lastUid: targetFalseThenValue(isLengthLessThanPerPage(response))(lastVisible?.id),
     };
   }
 
@@ -140,7 +142,7 @@ export const getUserRecruitedGroups = async (userUid: string, {
 
   const response = await getDocs(getQuery);
 
-  if (response.empty || response.docs.length < perPage) {
+  if (isLengthLessThanPerPage(response)) {
     const recruitedGroups = response.docs.map(formatGroup) as Group[];
 
     return {

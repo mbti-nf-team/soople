@@ -3,7 +3,7 @@ import {
 } from 'firebase/firestore';
 
 import { AlarmForm } from '@/models/alarm';
-import { formatAlarm, formatCreatedAt } from '@/utils/firestore';
+import { formatAlarm, formatCreatedAt, isLessThanPerPage } from '@/utils/firestore';
 
 import ALARM_FIXTURE from '../../../fixtures/alarm';
 import FIXTURE_GROUP from '../../../fixtures/group';
@@ -91,6 +91,9 @@ describe('alarm API', () => {
             }],
           }));
           (formatAlarm as jest.Mock).mockReturnValueOnce(ALARM_FIXTURE);
+          (isLessThanPerPage as jest.Mock).mockImplementationOnce(
+            () => jest.fn().mockReturnValueOnce(true),
+          );
         });
 
         it('알람 리스트가 반환되어야만 한다', async () => {

@@ -5,6 +5,7 @@ import React, {
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 
 import useCurrentTime from '@/hooks/useCurrentTime';
 import useGroupRecruitmentStatus from '@/hooks/useGroupRecruitmentStatus';
@@ -17,10 +18,9 @@ import { removeAllHtml } from '@/utils/filter';
 
 interface Props {
   group: Group;
-  onClick: (groupId: string) => void;
 }
 
-function MyGroup({ group, onClick }: Props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
+function MyGroup({ group }: Props, ref: ForwardedRef<HTMLAnchorElement>): ReactElement {
   const {
     title, content, createdAt, groupId, numberApplicants,
     recruitmentEndDate, isCompleted, thumbnail, shortDescription,
@@ -43,39 +43,39 @@ function MyGroup({ group, onClick }: Props, ref: ForwardedRef<HTMLDivElement>): 
   const dateStatus = recruitStatus(`${dayjs(currentTime).to(dayjs(recruitmentEndDate))} 마감`)[status];
 
   return (
-    <MyGroupWrapper
-      role="listitem"
-      onClick={() => onClick(groupId)}
-      tabIndex={0}
-      ref={ref}
-    >
-      <div>
-        <MyGroupContents>
-          <div className="group-title">{title}</div>
-          <div className="group-content">
-            {shortDescription || removeAllHtml(content)}
-          </div>
-        </MyGroupContents>
-        <GroupMetaData status={status}>
-          <div className="date-status" data-testid="date-status">{dateStatus}</div>
-          <Divider />
-          <div className="number-applied">{numberApplied}</div>
-          <Divider />
-          <div>{dayjs(createdAt).format('YYYY년 MM월 DD일')}</div>
-        </GroupMetaData>
-      </div>
-      {thumbnail && (
-        <ThumbnailWrapper>
-          <Thumbnail src={thumbnail} alt="thumbnail" />
-        </ThumbnailWrapper>
-      )}
-    </MyGroupWrapper>
+    <Link href={`/detail/${groupId}`} passHref>
+      <MyGroupWrapper
+        role="listitem"
+        ref={ref}
+      >
+        <div>
+          <MyGroupContents>
+            <div className="group-title">{title}</div>
+            <div className="group-content">
+              {shortDescription || removeAllHtml(content)}
+            </div>
+          </MyGroupContents>
+          <GroupMetaData status={status}>
+            <div className="date-status" data-testid="date-status">{dateStatus}</div>
+            <Divider />
+            <div className="number-applied">{numberApplied}</div>
+            <Divider />
+            <div>{dayjs(createdAt).format('YYYY년 MM월 DD일')}</div>
+          </GroupMetaData>
+        </div>
+        {thumbnail && (
+          <ThumbnailWrapper>
+            <Thumbnail src={thumbnail} alt="thumbnail" />
+          </ThumbnailWrapper>
+        )}
+      </MyGroupWrapper>
+    </Link>
   );
 }
 
-export default memo(forwardRef<HTMLDivElement, Props>(MyGroup));
+export default memo(forwardRef<HTMLAnchorElement, Props>(MyGroup));
 
-const MyGroupWrapper = styled.div`
+const MyGroupWrapper = styled.a`
   cursor: pointer;
   outline: none;
   display: flex;
