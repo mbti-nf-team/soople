@@ -106,5 +106,6 @@ const SubmitButton = styled(Button)`
   ${mq({
     position: ['fixed', 'initial'],
     bottom: ['20px', 'initial'],
+    width: ['calc(100% - 3rem)', '320px'],
   })};
 `;
