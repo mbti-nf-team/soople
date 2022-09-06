@@ -1,7 +1,6 @@
 import { createRef } from 'react';
 
-import { fireEvent, render, screen } from '@testing-library/react';
-import { useRouter } from 'next/router';
+import { render, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useInfiniteFetchUserRecruitedGroups from '@/hooks/api/group/useInfiniteFetchUserRecruitedGroups';
@@ -11,18 +10,11 @@ import FIXTURE_PROFILE from '../../../fixtures/profile';
 
 import RecruitedGroupsContainer from './RecruitedGroupsContainer';
 
-jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
-}));
 jest.mock('@/hooks/api/group/useInfiniteFetchUserRecruitedGroups');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('RecruitedGroupsContainer', () => {
-  const mockPush = jest.fn();
-
   beforeEach(() => {
-    mockPush.mockClear();
-
     (useInfiniteFetchUserRecruitedGroups as jest.Mock).mockImplementation(() => ({
       query: {
         data: {
@@ -37,9 +29,6 @@ describe('RecruitedGroupsContainer', () => {
         lastItemRef: jest.fn(),
         wrapperRef: createRef(),
       },
-    }));
-    (useRouter as jest.Mock).mockImplementation(() => ({
-      push: mockPush,
     }));
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: FIXTURE_PROFILE,
@@ -63,14 +52,10 @@ describe('RecruitedGroupsContainer', () => {
   context('로딩중이 아닌 경우', () => {
     given('isLoading', () => false);
 
-    describe('group을 클릭한다', () => {
-      it('router.push가 해당 글 url과 함께 호출되어야만 한다', () => {
-        renderRecruitedGroupsContainer();
+    it('모집한 팀에 대한 리스트가 나타나야만 한다', () => {
+      const { container } = renderRecruitedGroupsContainer();
 
-        fireEvent.click(screen.getByText(FIXTURE_GROUP.title));
-
-        expect(mockPush).toBeCalledWith(`/detail/${FIXTURE_GROUP.groupId}`);
-      });
+      expect(container).toHaveTextContent(FIXTURE_GROUP.title);
     });
   });
 });

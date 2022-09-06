@@ -59,10 +59,10 @@ describe('MyInfoSettingContainer', () => {
       isSuccess: false,
     }));
 
-    it('"로딩중..."문구가 나타나야만 한다', async () => {
+    it('아무것도 나타나지 않아야만 한다', async () => {
       const { container } = renderMyInfoSettingContainer();
 
-      await act(() => expect(container).toHaveTextContent('로딩중...'));
+      await act(() => expect(container).toBeEmptyDOMElement());
     });
   });
 

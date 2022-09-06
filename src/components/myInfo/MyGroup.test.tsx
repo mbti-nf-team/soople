@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import { lightTheme } from '@/styles/theme';
 import MockTheme from '@/test/MockTheme';
@@ -9,12 +9,9 @@ import FIXTURE_GROUP from '../../../fixtures/group';
 import MyGroup from './MyGroup';
 
 describe('MyGroup', () => {
-  const handleClick = jest.fn();
-
   const renderMyGroup = () => render((
     <MockTheme>
       <MyGroup
-        onClick={handleClick}
         group={given.group}
       />
     </MockTheme>
@@ -60,18 +57,6 @@ describe('MyGroup', () => {
       const { container } = renderMyGroup();
 
       expect(container).toHaveTextContent(/2명 신청 중/);
-    });
-  });
-
-  describe('group을 클릭한다', () => {
-    given('group', () => (FIXTURE_GROUP));
-
-    it('클릭 이벤트가 호출되어야만 한다', () => {
-      renderMyGroup();
-
-      fireEvent.click(screen.getByText(FIXTURE_GROUP.title));
-
-      expect(handleClick).toBeCalledWith(FIXTURE_GROUP.groupId);
     });
   });
 

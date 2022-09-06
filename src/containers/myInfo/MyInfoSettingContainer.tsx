@@ -12,7 +12,7 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWithProvider';
 import { DetailLayout } from '@/styles/Layout';
 
-function MyInfoSettingContainer(): ReactElement {
+function MyInfoSettingContainer(): ReactElement | null {
   const { replace } = useRouter();
   const [isReauthenticate, setIsReauthenticate] = useLocalStorage('isReauthenticate', false);
 
@@ -39,7 +39,7 @@ function MyInfoSettingContainer(): ReactElement {
   }, [isReauthenticate, auth]);
 
   if (isLoading || !isSuccess) {
-    return <>로딩중...</>;
+    return null;
   }
 
   return (

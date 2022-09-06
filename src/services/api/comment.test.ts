@@ -3,7 +3,7 @@ import {
 } from 'firebase/firestore';
 
 import { CommentFields } from '@/models/group';
-import { formatComment } from '@/utils/firestore';
+import { formatComment, isLessThanPerPage } from '@/utils/firestore';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -105,6 +105,9 @@ describe('comment API', () => {
             }],
           }));
           (formatComment as jest.Mock).mockReturnValueOnce(COMMENT_FIXTURE);
+          (isLessThanPerPage as jest.Mock).mockImplementationOnce(
+            () => jest.fn().mockReturnValueOnce(true),
+          );
         });
 
         it('댓글 리스트가 반환되어야만 한다', async () => {

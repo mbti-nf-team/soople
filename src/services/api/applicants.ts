@@ -16,7 +16,8 @@ import {
 
 import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Applicant, ApplicantFields, Group } from '@/models/group';
-import { formatCreatedAt } from '@/utils/firestore';
+import { formatCreatedAt, isLessThanPerPage } from '@/utils/firestore';
+import { targetFalseThenValue } from '@/utils/utils';
 
 import { collectionRef, docRef } from '../firebase';
 
@@ -75,6 +76,8 @@ export const getUserAppliedGroups = async (userUid: string, {
   const applicantsRef = collectionRef(APPLICANTS);
   const commonQueries = [where('applicant.uid', '==', userUid), orderBy('createdAt', 'desc')];
 
+  const isLengthLessThanPerPage = isLessThanPerPage(perPage);
+
   if (!lastUid) {
     const getQuery = query(
       applicantsRef,
@@ -89,7 +92,7 @@ export const getUserAppliedGroups = async (userUid: string, {
 
     return {
       items: appliedGroups.filter((group) => !!group) as Group[],
-      lastUid: lastVisible?.id,
+      lastUid: targetFalseThenValue(isLengthLessThanPerPage(response))(lastVisible?.id),
     };
   }
 
@@ -103,7 +106,7 @@ export const getUserAppliedGroups = async (userUid: string, {
 
   const response = await getDocs(getQuery);
 
-  if (response.empty || response.docs.length < perPage) {
+  if (isLengthLessThanPerPage(response)) {
     const appliedGroups = await Promise.all(response.docs.map(getAppliedGroups));
 
     return {

@@ -42,10 +42,10 @@ describe('SignUpContainer', () => {
   context('로딩중인 경우', () => {
     given('isLoading', () => (true));
 
-    it('"로딩중..."문구가 나타나야만 한다', () => {
+    it('아무것도 나타나지 않아야만 한다', () => {
       const { container } = renderSignUpContainer();
 
-      expect(container).toHaveTextContent('로딩중...');
+      expect(container).toBeEmptyDOMElement();
     });
   });
 
