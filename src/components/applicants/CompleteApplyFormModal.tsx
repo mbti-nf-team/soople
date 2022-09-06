@@ -1,13 +1,17 @@
 import React, {
-  ChangeEvent, FormEvent, memo, useState,
+  ChangeEvent, FormEvent, memo, useEffect, useState,
 } from 'react';
+import { Info as InfoIcon } from 'react-feather';
 
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import useResponsive from '@/hooks/useResponsive';
 import { CompletedGroupForm } from '@/models/group';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
+import mq from '@/styles/responsive';
+import { defaultToast } from '@/utils/toast';
 
-import AlertTriangleIcon from '../../assets/icons/alert_triangle.svg';
 import FormModal from '../common/FormModal';
 import Textarea from '../common/Textarea';
 
@@ -22,9 +26,13 @@ interface Props {
 function CompleteApplyFormModal({
   numberApplicant, isVisible, onClose, onSubmit, timeRemaining,
 }: Props) {
+  const theme = useTheme();
+  const { isClient, isMobile } = useResponsive();
   const [message, setMessage] = useState<string>('');
 
   const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value);
+
+  const isClientDesktop = isClient && !isMobile;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,6 +42,17 @@ function CompleteApplyFormModal({
       message,
     });
   };
+
+  useEffect(() => {
+    if (timeRemaining && isMobile && isVisible) {
+      defaultToast(`아직 모집 마감시간이 ${timeRemaining} 남아있어요.`, {
+        position: 'bottom-center',
+        style: {
+          margin: '0 20px 8px 20px',
+        },
+      });
+    }
+  }, [timeRemaining, isMobile, isVisible]);
 
   return (
     <FormModal
@@ -46,9 +65,9 @@ function CompleteApplyFormModal({
       size="540px"
     >
       <FormContentsWrapper>
-        {timeRemaining && (
+        {timeRemaining && isClientDesktop && (
           <WarningRemainBlock>
-            <AlertTriangleIcon />
+            <StyledInfoIcon width="16px" height="16px" color={theme.background} fill={theme.accent6} />
             <span>{`아직 모집 마감시간이 ${timeRemaining} 남아있어요.`}</span>
           </WarningRemainBlock>
         )}
@@ -62,14 +81,16 @@ function CompleteApplyFormModal({
             labelText="메시지"
             labelOptionText="선택"
             id="message"
-            placeholder="팀 멤버들에게 보낼 메시지를 입력하세요"
+            placeholder="메시지를 입력하세요"
             onChange={onChangeMessage}
             value={message}
             height="100px"
           />
           <small>
-            팀 멤버들과 함께 대화할 오픈 채팅방 URL을 메시지로 보내보세요.
-            <br />
+            팀 멤버들과 함께 대화할 오픈 채팅방 URL을 메시지로 보내보세요.&nbsp;
+            {isClientDesktop && (
+              <br />
+            )}
             메시지는 멤버들에게만 공개돼요.
           </small>
         </MessageInputWrapper>
@@ -80,22 +101,38 @@ function CompleteApplyFormModal({
 
 export default memo(CompleteApplyFormModal);
 
+const StyledInfoIcon = styled(InfoIcon)`
+  min-width: 16px;
+  min-height: 16px;
+
+  circle {
+    stroke: ${({ theme }) => theme.accent6};
+  }
+`;
+
 const FormContentsWrapper = styled.div`
+  ${mq({
+    margin: ['0 20px', '0 24px'],
+  })};
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 0 24px;
 `;
 
 const DescribeMessage = styled.div`
-  ${body1Font()}
+  ${body1Font()};
+  word-break: keep-all;
 `;
 
 const MessageInputWrapper = styled.div`
+  ${mq({
+    marginTop: ['24px', '20px'],
+  })};
+
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 20px;
   margin-bottom: 40px;
 
   & > label {
