@@ -80,7 +80,7 @@ const FormModalWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.4);
 `;
 
 const FormModalBox = styled.div<{ size: string; isVisible: boolean; }>`

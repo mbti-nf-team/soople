@@ -11,7 +11,7 @@ export const getGroupsQuery = ({ category, isFilterCompleted, tag }: FilterGroup
       where('category', 'in', category),
       where('isCompleted', '==', false),
       where('tags', 'array-contains', tag),
-      orderBy('createdAt', 'asc'),
+      orderBy('createdAt', 'desc'),
     );
   }
 
@@ -20,7 +20,7 @@ export const getGroupsQuery = ({ category, isFilterCompleted, tag }: FilterGroup
       collectionRef('groups'),
       where('category', 'in', category),
       where('isCompleted', '==', false),
-      orderBy('createdAt', 'asc'),
+      orderBy('createdAt', 'desc'),
     );
   }
 
@@ -29,14 +29,14 @@ export const getGroupsQuery = ({ category, isFilterCompleted, tag }: FilterGroup
       collectionRef('groups'),
       where('category', 'in', category),
       where('tags', 'array-contains', tag),
-      orderBy('createdAt', 'asc'),
+      orderBy('createdAt', 'desc'),
     );
   }
 
   return query(
     collectionRef('groups'),
     where('category', 'in', category),
-    orderBy('createdAt', 'asc'),
+    orderBy('createdAt', 'desc'),
   );
 };
 

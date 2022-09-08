@@ -89,7 +89,7 @@ const SignInModalWrapper = styled.div`
   z-index: ${zIndexes.SignInModal};
   display: flex;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.4);
 `;
 
 const SignInModalBox = styled.div<{ isVisible: boolean }>`

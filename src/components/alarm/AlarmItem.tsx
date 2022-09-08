@@ -81,8 +81,9 @@ const AlarmItemWrapper = styled.a<{ isViewed: boolean; }>`
   flex-direction: row;
   padding: 24px 16px 24px 16px;
   border-bottom: 0.5px solid ${({ theme }) => theme.accent2};
+
   ${({ isViewed }) => !isViewed && css`
-    background-color: rgba(73, 157, 223, 0.08);
+    background-color: rgba(35, 205, 75, 0.08);
   `}
 `;
 
