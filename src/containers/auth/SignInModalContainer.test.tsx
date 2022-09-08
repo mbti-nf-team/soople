@@ -42,22 +42,6 @@ describe('SignInModalContainer', () => {
     });
   });
 
-  context('query에 error가 존재한 경우', () => {
-    given('isVisible', () => true);
-    given('query', () => ({
-      error: 'OAuthAccountNotLinked',
-    }));
-
-    describe('모달창이 에러 문구와 함께 나타난다', () => {
-      it('"이미 가입된 이메일입니다." 문구가 나타나야만 하고, replace가 호출되어야만 한다', () => {
-        const { container } = renderSignInModalContainer();
-
-        expect(mockReplace).toBeCalledWith('/', undefined, { shallow: true });
-        expect(container).toHaveTextContent('이미 가입된 이메일입니다.');
-      });
-    });
-  });
-
   context('SignIn 모달이 열린 경우', () => {
     given('isVisible', () => true);
     it('"소셜 계정으로 계속하기" 문구가 나타야만 한다', () => {

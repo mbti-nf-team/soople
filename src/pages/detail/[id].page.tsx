@@ -13,6 +13,7 @@ import DetailContentsContainer from '@/containers/detail/DetailContentsContainer
 import DetailHeaderContainer from '@/containers/detail/DetailHeaderContainer';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import useIncreaseView from '@/hooks/api/group/useIncreaseView';
+import useRenderErrorToast from '@/hooks/useRenderErrorToast';
 import { GroupQuery } from '@/models';
 import { Group } from '@/models/group';
 import { getGroupDetail } from '@/services/api/group';
@@ -46,8 +47,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function DetailPage(): ReactElement {
-  useIncreaseView();
   const { data: group } = useFetchGroup();
+
+  useIncreaseView();
+  useRenderErrorToast({
+    errorStatus: 'already-completed',
+    errorMessage: '이미 모집이 완료되었어요.',
+    replaceUrl: `/detail/${group.groupId}`,
+  });
 
   return (
     <>

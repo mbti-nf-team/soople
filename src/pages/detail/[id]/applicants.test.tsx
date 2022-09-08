@@ -86,7 +86,7 @@ describe('getServerSideProps', () => {
 
   context('이미 모집완료된 작성글인 경우', () => {
     const queryClient = new QueryClient();
-
+    const groupId = 1;
     const token = {
       uid: '1',
     };
@@ -94,6 +94,7 @@ describe('getServerSideProps', () => {
     beforeEach(() => {
       (getGroupDetail as jest.Mock).mockResolvedValue({
         isCompleted: true,
+        groupId,
       });
       (firebaseAdmin.auth as jest.Mock).mockImplementation(() => ({
         verifyIdToken: jest.fn().mockResolvedValue(token),
@@ -103,13 +104,13 @@ describe('getServerSideProps', () => {
       });
     });
 
-    it('redirect를 반환해야만 한다', async () => {
+    it('"already-completed" error와 함께 상세 페이지 redirect를 반환해야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
       expect(getGroupDetail).toBeCalledWith('id');
       expect(response.redirect).toEqual({
         permanent: false,
-        destination: '/?error=unauthenticated',
+        destination: `/detail/${groupId}/?error=already-completed`,
       });
     });
   });
@@ -138,7 +139,7 @@ describe('getServerSideProps', () => {
       });
     });
 
-    it('redirect를 반환해야만 한다', async () => {
+    it('"unauthenticated" 에러와 함께 redirect를 반환해야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
       expect(getGroupDetail).toBeCalledWith('id');
@@ -197,7 +198,7 @@ describe('getServerSideProps', () => {
       }));
     });
 
-    it('redirect를 반환해야만 한다', async () => {
+    it('"unauthenticated" 에러와 함께 redirect를 반환해야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
       expect(response.redirect).toEqual({
