@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
@@ -8,14 +8,20 @@ import RecruitPosts from '@/components/home/RecruitPosts';
 import RecruitPostsSkeletonLoader from '@/components/home/RecruitPostsSkeletonLoader';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchGroups from '@/hooks/api/group/useFetchGroups';
+import useRenderErrorToast from '@/hooks/useRenderErrorToast';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
-import { errorToast } from '@/utils/toast';
 
 function RecruitPostsContainer(): ReactElement {
-  const { query, replace, push } = useRouter();
+  const { push } = useRouter();
   const { data: groups, isLoading } = useFetchGroups();
   const { data: user } = useFetchUserProfile();
   const setSignInModalVisible = useSetRecoilState(signInModalVisibleState);
+
+  useRenderErrorToast({
+    errorStatus: 'unauthenticated',
+    errorMessage: '접근 권한이 없는 페이지에요.',
+    replaceUrl: '/',
+  });
 
   const onClickEmptyButton = useCallback(() => {
     if (user) {
@@ -25,13 +31,6 @@ function RecruitPostsContainer(): ReactElement {
 
     setSignInModalVisible(true);
   }, [user]);
-
-  useEffect(() => {
-    if (query.error === 'unauthenticated') {
-      errorToast('접근 권한이 없는 페이지에요.');
-      replace('/', undefined, { shallow: true });
-    }
-  }, [query]);
 
   if (isLoading) {
     return (

@@ -1,8 +1,5 @@
-import React, {
-  ReactElement, useEffect, useState,
-} from 'react';
+import React, { ReactElement, useState } from 'react';
 
-import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 
 import SignInError from '@/components/auth/SignInError';
@@ -12,7 +9,6 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
 
 function SignInModalContainer(): ReactElement | null {
-  const { query, replace } = useRouter();
   const [isVisible, setSignInModalVisible] = useRecoilState(signInModalVisibleState);
   const { data: profile } = useFetchUserProfile();
 
@@ -22,14 +18,6 @@ function SignInModalContainer(): ReactElement | null {
     setSignInModalVisible(false);
     setError('');
   };
-
-  useEffect(() => {
-    if (query?.error && query.error !== 'unauthenticated') {
-      setSignInModalVisible(true);
-      setError(query.error as string);
-      replace('/', undefined, { shallow: true });
-    }
-  }, [query]);
 
   if (profile) {
     return null;
