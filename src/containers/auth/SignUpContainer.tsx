@@ -68,7 +68,7 @@ const Title = styled.div`
 
 const SignUpFormLayout = styled(Layout)`
   ${mq({
-    width: ['calc(100% - 3rem)', '320px'],
+    width: ['calc(100% - 40px)', '320px'],
   })};
 
   display: flex;

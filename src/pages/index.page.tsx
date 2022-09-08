@@ -24,6 +24,6 @@ export default HomePage;
 
 const HomePageLayout = styled(Layout)`
   ${mq2({
-    width: ['calc(100% - 3rem)', 'calc(100% - 3rem)', 'calc(100% - 3rem)', '800px', '1040px'],
+    width: ['calc(100% - 40px)', 'calc(100% - 40px)', 'calc(100% - 40px)', '800px', '1040px'],
   })};
 `;

@@ -45,7 +45,7 @@ function Core(): ReactElement {
         hideProgressBar
         pauseOnFocusLoss
         draggable
-        position="top-right"
+        position="top-center"
         autoClose={3000}
         icon={false}
         isMobile={isMobile}

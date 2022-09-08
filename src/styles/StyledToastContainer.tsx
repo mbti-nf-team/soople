@@ -12,6 +12,21 @@ const StyledToastContainer = styled(ToastContainer)<{ isMobile: boolean; }>`
     width: [false, '328px'],
   })};
 
+  &.Toastify__toast-container--top-center {
+  ${mq({
+    top: ['20px'],
+    padding: ['0 20px', 0],
+  })};
+
+    & > div:not(div:last-of-type) {
+      margin-bottom: 8px;
+    }
+
+    & > div:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
   &.Toastify__toast-container--bottom-center {
   ${mq({
     bottom: ['80px', '0px'],
@@ -28,7 +43,7 @@ const StyledToastContainer = styled(ToastContainer)<{ isMobile: boolean; }>`
     `)}
 
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    background: rgba(35, 36, 38, 0.9);
+    background: rgba(35, 36, 38, 0.95);
     border-radius: 8px;
     display: flex;
     flex-direction: row;

@@ -22,7 +22,7 @@ function Layout({ children, ...rest }: PropsWithChildren<unknown>) {
 
 export const DetailLayout = styled(Layout)`
   ${mq2({
-    width: ['calc(100% - 3rem)', '686px'],
+    width: ['calc(100% - 2rem)', '686px'],
   })};
 `;
 
