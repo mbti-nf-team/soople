@@ -13,7 +13,11 @@ function RecruitedPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="soople - 내 정보, 모집한 팀"
+        title="모집한 팀 - soople"
+        openGraph={{
+          title: '모집한 팀 - soople',
+          url: `${process.env.NEXT_PUBLIC_ORIGIN}/myinfo/recruited`,
+        }}
       />
       <RecruitedGroupsContainer />
     </>

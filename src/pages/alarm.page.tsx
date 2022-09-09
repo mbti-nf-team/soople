@@ -14,7 +14,11 @@ function AlarmPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="soople - 알람"
+        title="내 알람 - soople"
+        openGraph={{
+          title: '내 알람 - soople',
+          url: `${process.env.NEXT_PUBLIC_ORIGIN}/alarm`,
+        }}
       />
       <HeaderContainer />
       <DetailLayout>

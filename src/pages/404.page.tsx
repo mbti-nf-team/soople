@@ -11,7 +11,7 @@ function Custom404(): ReactElement {
   return (
     <>
       <NextSeo
-        title="soople - 404"
+        title="404 - soople"
       />
       <HeaderWrapper
         hasBackground
