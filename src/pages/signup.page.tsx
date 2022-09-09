@@ -9,7 +9,11 @@ function SignUpPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="soople - 시작하기"
+        title="시작하기 - soople"
+        openGraph={{
+          title: '시작하기 - soople',
+          url: `${process.env.NEXT_PUBLIC_ORIGIN}/signup`,
+        }}
       />
       <HeaderContainer />
       <SignUpContainer />

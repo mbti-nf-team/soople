@@ -13,7 +13,11 @@ function AppliedPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="soople - 내 정보, 신청한 팀"
+        title="신청한 팀 - soople"
+        openGraph={{
+          title: '신청한 팀 - soople',
+          url: `${process.env.NEXT_PUBLIC_ORIGIN}/myinfo/applied`,
+        }}
       />
       <AppliedGroupsContainer />
     </>

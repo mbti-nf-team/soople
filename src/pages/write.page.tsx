@@ -16,7 +16,11 @@ function WritePage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="soople - 팀 모집하기"
+        title="팀 모집하기 - soople"
+        openGraph={{
+          title: '팀 모집하기 - soople',
+          url: `${process.env.NEXT_PUBLIC_ORIGIN}/write`,
+        }}
       />
       <WriteHeaderContainer />
       <DetailLayout>

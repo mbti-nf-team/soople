@@ -8,6 +8,7 @@ import nookies from 'nookies';
 
 import ApplicationStatusContainer from '@/containers/applicants/ApplicationStatusContainer';
 import ApplicationStatusHeaderContainer from '@/containers/applicants/ApplicationStatusHeaderContainer';
+import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import { GroupQuery } from '@/models';
 import { Group } from '@/models/group';
 import { getGroupDetail } from '@/services/api/group';
@@ -70,10 +71,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function ApplicantsPage(): ReactElement {
+  const { data: group } = useFetchGroup();
+
   return (
     <>
       <NextSeo
-        title="soople - 신청현황 보기"
+        title="신청현황 보기 - soople"
+        openGraph={{
+          title: '신청현황 보기 - soople',
+          url: `${process.env.NEXT_PUBLIC_ORIGIN}/detail/${group.groupId}/applicants`,
+        }}
       />
       <ApplicationStatusHeaderContainer />
       <ApplicationStatusContainer />

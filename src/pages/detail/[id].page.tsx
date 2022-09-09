@@ -18,6 +18,7 @@ import { GroupQuery } from '@/models';
 import { Group } from '@/models/group';
 import { getGroupDetail } from '@/services/api/group';
 import { DetailLayout } from '@/styles/Layout';
+import { emptyAThenB } from '@/utils/utils';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params! as GroupQuery;
@@ -49,6 +50,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 function DetailPage(): ReactElement {
   const { data: group } = useFetchGroup();
 
+  const detailPageSEO = {
+    title: group?.title,
+    description: group?.shortDescription,
+  };
+
   useIncreaseView();
   useRenderErrorToast({
     errorStatus: 'already-completed',
@@ -59,8 +65,19 @@ function DetailPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title={`soople - ${group?.title}`}
-        description={group?.shortDescription}
+        title={detailPageSEO.title}
+        description={detailPageSEO.description}
+        openGraph={{
+          url: `${process.env.NEXT_PUBLIC_ORIGIN}${`/detail/${group.groupId}`}`,
+          title: detailPageSEO.title,
+          description: detailPageSEO.description,
+          images: [{
+            url: emptyAThenB(`${process.env.NEXT_PUBLIC_ORIGIN}/meta_tag_default_image.png`, group.thumbnail),
+            width: 1200,
+            height: 630,
+            alt: detailPageSEO.title,
+          }],
+        }}
       />
       <HeaderContainer />
       <DetailLayout>

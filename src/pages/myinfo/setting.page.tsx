@@ -13,7 +13,11 @@ function SettingPage(): ReactElement {
   return (
     <>
       <NextSeo
-        title="soople - 내 정보, 내 정보 수정"
+        title="내 정보 수정 - soople"
+        openGraph={{
+          title: '내 정보 수정 - soople',
+          url: `${process.env.NEXT_PUBLIC_ORIGIN}/myinfo/setting`,
+        }}
       />
       <MyInfoSettingContainer />
     </>
