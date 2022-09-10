@@ -7,6 +7,9 @@ const firebaseAdmin = {
   auth: jest.fn().mockImplementation(() => ({
     verifyIdToken: jest.fn(),
   })),
+  firestore: jest.fn().mockImplementation(() => ({
+    collection: jest.fn(),
+  })),
 };
 
 export default firebaseAdmin;

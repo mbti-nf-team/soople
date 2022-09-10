@@ -32,7 +32,9 @@ describe('authenticatedServerSideProps', () => {
       );
 
       expect(response).toEqual({
-        props: {},
+        props: {
+          userUid: token.uid,
+        },
       });
     });
   });

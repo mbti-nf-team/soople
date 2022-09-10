@@ -18,7 +18,7 @@ import Input from '../common/Input';
 
 interface Props {
   onSubmit: (formData: SignUpAdditionalForm) => void;
-  fields: User;
+  fields: User | null;
 }
 
 const validationSchema = yup.object({
@@ -27,7 +27,6 @@ const validationSchema = yup.object({
 }).required();
 
 function SignUpForm({ onSubmit, fields }: Props): ReactElement {
-  const { displayName, email } = fields;
   const {
     register, handleSubmit, setValue, formState: { errors },
   } = useForm<SignUpAdditionalForm>({ resolver: yupResolver(validationSchema) });
@@ -54,7 +53,7 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         placeholder="닉네임을 입력해주세요"
         register={register('name')}
         onClear={() => setValue('name', '')}
-        defaultValue={stringToExcludeNull(displayName)}
+        defaultValue={stringToExcludeNull(fields?.displayName)}
         isError={!!errors.name}
         message={errors.name?.message}
         type="text"
@@ -63,7 +62,7 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         id="email"
         labelText="이메일"
         placeholder="이메일을 입력해주세요"
-        defaultValue={stringToExcludeNull(email)}
+        defaultValue={stringToExcludeNull(fields?.email)}
         type="email"
         disabled
       />
