@@ -1,12 +1,9 @@
-import React, {
-  ReactElement, useCallback, useMemo,
-} from 'react';
+import React, { ReactElement, useCallback } from 'react';
 
 import styled from '@emotion/styled';
 import { User } from 'firebase/auth';
 
 import SignUpForm from '@/components/auth/SignUpForm';
-import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useGetUser from '@/hooks/api/auth/useGetUser';
 import useSignUp from '@/hooks/api/auth/useSignUp';
 import { SignUpAdditionalForm } from '@/models/auth';
@@ -15,16 +12,11 @@ import Layout from '@/styles/Layout';
 import mq from '@/styles/responsive';
 
 function SignUpContainer(): ReactElement | null {
-  const profile = useFetchUserProfile();
-  const user = useGetUser();
+  const { data: user, isSuccess } = useGetUser();
   const { mutate } = useSignUp();
 
-  const isAllLoading = useMemo(() => [profile, user].some(({
-    isLoading,
-  }) => isLoading), [profile, user]);
-
   const onSubmit = useCallback((formData: SignUpAdditionalForm) => {
-    const { email, uid, photoURL } = user.data as User;
+    const { email, uid, photoURL } = user as User;
 
     mutate({
       email: email as string,
@@ -34,16 +26,8 @@ function SignUpContainer(): ReactElement | null {
     });
   }, [user, mutate]);
 
-  if (isAllLoading) {
+  if (!isSuccess) {
     return null;
-  }
-
-  if (profile.data) {
-    return <div>이미 가입이 완료되었어요!</div>;
-  }
-
-  if (!user.data) {
-    return <div>로그인부터 진행해주세요!</div>;
   }
 
   return (
@@ -51,7 +35,7 @@ function SignUpContainer(): ReactElement | null {
       <Title>시작하기</Title>
       <h4>수플을 시작하기 위해 정보를 입력해주세요.</h4>
       <SignUpForm
-        fields={user.data}
+        fields={user}
         onSubmit={onSubmit}
       />
     </SignUpFormLayout>

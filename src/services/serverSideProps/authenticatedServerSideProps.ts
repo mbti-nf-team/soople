@@ -21,7 +21,9 @@ const authenticatedServerSideProps = async (
     }
 
     return {
-      props: {},
+      props: {
+        userUid: token.uid,
+      },
     };
   } catch (error) {
     return {
