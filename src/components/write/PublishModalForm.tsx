@@ -47,6 +47,8 @@ function PublishModalForm({
     recruitmentEndSetting, recruitmentEndDate, title, shortDescription, category,
   } = fields;
 
+  const isValidWriteForm = !!category && !!title && (recruitmentEndSetting === 'manual' || (recruitmentEndSetting === 'automatic' && !!recruitmentEndDate));
+
   const defaultRecruitmentEndSetting = recruitmentEndSettingOption.find(({
     value,
   }) => value === recruitmentEndSetting);
@@ -72,7 +74,10 @@ function PublishModalForm({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit();
+
+    if (isValidWriteForm) {
+      onSubmit();
+    }
   };
 
   useEffect(() => {
@@ -83,7 +88,7 @@ function PublishModalForm({
     }
 
     setEndDateDisabled(false);
-  }, [recruitmentEndSetting]);
+  }, [recruitmentEndSetting, onChangeFields]);
 
   useEffect(() => {
     if (category) {
@@ -97,9 +102,16 @@ function PublishModalForm({
     <FormModal
       isVisible={isVisible}
       onClose={onClose}
-      title={`${title} ${isEdit ? '수정' : '등록'}`}
+      title={(
+        <>
+          <span>{title}</span>
+          &nbsp;
+          <TitleBranch>{isEdit ? '수정' : '등록'}</TitleBranch>
+        </>
+      )}
       onSubmit={handleSubmit}
       confirmText={`${isEdit ? '저장' : '등록'}하기`}
+      isDisabledConfirmButton={!isValidWriteForm}
     >
       <PublishModalFormWrapper>
         <DescriptionWrapper>
@@ -184,6 +196,11 @@ const RecruitmentEndDateInput = styled(Input)`
     position: absolute;
     right: 14px;
   }
+`;
+
+const TitleBranch = styled.strong`
+  font-weight: inherit;
+  white-space: nowrap;
 `;
 
 const PublishFormWrapper = styled.div`

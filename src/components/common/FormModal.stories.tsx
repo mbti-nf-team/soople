@@ -14,6 +14,9 @@ export default {
     isVisible: {
       control: { type: 'boolean' },
     },
+    isDisabledConfirmButton: {
+      control: { type: 'boolean' },
+    },
   },
   decorators: [(storyFn) => <div style={styles}>{storyFn()}</div>],
 } as ComponentMeta<typeof FormModal>;

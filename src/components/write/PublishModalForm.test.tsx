@@ -206,8 +206,19 @@ describe('PublishModalForm', () => {
     });
 
     describe('"등록하기" 버튼을 누른다', () => {
+      const validatedWriteFields: WriteFields = {
+        title: 'title',
+        content: '',
+        tags: [],
+        category: 'study',
+        recruitmentEndDate: '',
+        recruitmentEndSetting: 'manual',
+        shortDescription: '',
+        thumbnail: '',
+      };
+
       it('클릭 이벤트가 발생해야만 한다', () => {
-        renderPublishModalForm(WRITE_FIELDS_FIXTURE);
+        renderPublishModalForm(validatedWriteFields);
 
         fireEvent.click(screen.getByText('등록하기'));
 

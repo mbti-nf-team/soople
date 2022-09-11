@@ -111,17 +111,39 @@ describe('PublishModalContainer', () => {
           id: null,
         }));
 
-        it('등록 mutate 액션이 호출되어야만 한다', () => {
-          renderPublishModalContainer();
+        context('값 검증에 실패한 경우', () => {
+          it('등록 mutate 액션 호출되지 않아야만 한다', () => {
+            renderPublishModalContainer();
 
-          fireEvent.click(screen.getByText('등록하기'));
+            fireEvent.click(screen.getByText('등록하기'));
 
-          expect(mutate).toBeCalledWith({
-            writeFields: {
-              ...WRITE_FIELDS_FIXTURE,
-              title,
-            },
-            profile: 'user',
+            expect(mutate).not.toBeCalled();
+          });
+        });
+
+        context('값 검증에 성공한 경우', () => {
+          const writeFields = {
+            title,
+            content: '',
+            tags: [],
+            category: 'study',
+            recruitmentEndDate: '',
+            recruitmentEndSetting: 'manual',
+            shortDescription: '',
+            thumbnail: '',
+          };
+
+          given('writeFields', () => writeFields);
+
+          it('등록 mutate 액션이 호출되어야만 한다', () => {
+            renderPublishModalContainer();
+
+            fireEvent.click(screen.getByText('등록하기'));
+
+            expect(mutate).toBeCalledWith({
+              writeFields,
+              profile: 'user',
+            });
           });
         });
       });
@@ -130,26 +152,42 @@ describe('PublishModalContainer', () => {
         given('query', () => ({
           id: 'id',
         }));
-        given('writeFields', () => ({
-          ...WRITE_FIELDS_FIXTURE,
-          title,
-          tags: ['test'],
-        }));
         given('recruitmentStatus', () => ('automaticBeforeCompletedRecruitment'));
 
-        it('수정 mutate 액션이 호출되어야만 한다', () => {
-          renderPublishModalContainer();
+        context('값 검증에 실패한 경우', () => {
+          it('수정 mutate 액션 호출되지 않아야만 한다', () => {
+            renderPublishModalContainer();
 
-          fireEvent.click(screen.getByText('저장하기'));
+            fireEvent.click(screen.getByText('저장하기'));
 
-          expect(mutate).toBeCalledWith({
-            writeFields: {
-              ...WRITE_FIELDS_FIXTURE,
-              title,
-              tags: ['test'],
-            },
-            deleteTags: ['test'],
-            groupId: FIXTURE_GROUP.groupId,
+            expect(mutate).not.toBeCalled();
+          });
+        });
+
+        context('값 검증에 성공한 경우', () => {
+          const writeFields = {
+            title,
+            content: '',
+            tags: ['test'],
+            category: 'study',
+            recruitmentEndDate: '',
+            recruitmentEndSetting: 'manual',
+            shortDescription: '',
+            thumbnail: '',
+          };
+
+          given('writeFields', () => writeFields);
+
+          it('수정 mutate 액션이 호출되어야만 한다', () => {
+            renderPublishModalContainer();
+
+            fireEvent.click(screen.getByText('저장하기'));
+
+            expect(mutate).toBeCalledWith({
+              writeFields,
+              deleteTags: ['test'],
+              groupId: FIXTURE_GROUP.groupId,
+            });
           });
         });
       });
