@@ -28,8 +28,11 @@ const validationSchema = yup.object({
 
 function SignUpForm({ onSubmit, fields }: Props): ReactElement {
   const {
-    register, handleSubmit, setValue, formState: { errors },
-  } = useForm<SignUpAdditionalForm>({ resolver: yupResolver(validationSchema) });
+    register, handleSubmit, formState: { isValid, errors }, resetField,
+  } = useForm<SignUpAdditionalForm>({
+    resolver: yupResolver(validationSchema),
+    mode: 'onChange',
+  });
   const [, setIsSignUp] = useLocalStorage('isSignUp', false, {
     raw: true,
   });
@@ -52,7 +55,7 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         labelText="닉네임"
         placeholder="닉네임을 입력해주세요"
         register={register('name')}
-        onClear={() => setValue('name', '')}
+        onClear={() => resetField('name')}
         defaultValue={stringToExcludeNull(fields?.displayName)}
         isError={!!errors.name}
         message={errors.name?.message}
@@ -80,10 +83,10 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         labelOptionText="선택"
         placeholder="URL을 입력하세요"
         register={register('portfolioUrl')}
-        onClear={() => setValue('portfolioUrl', '')}
+        onClear={() => resetField('portfolioUrl')}
         type="url"
       />
-      <SubmitButton type="submit" color="success" size="large" disabled={!position}>
+      <SubmitButton type="submit" color="success" size="large" disabled={!isValid || !position}>
         확인
       </SubmitButton>
     </SignUpFormWrapper>

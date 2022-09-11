@@ -51,10 +51,10 @@ describe('SignUpContainer', () => {
       photoURL: PROFILE_FIXTURE.image,
     }));
 
-    it('회원가입 페이지에 대한 정보 나타나야만 한다', () => {
+    it('회원가입 페이지에 대한 정보 나타나야만 한다', async () => {
       const { container } = renderSignUpContainer();
 
-      expect(container).toHaveTextContent('시작하기');
+      await act(() => expect(container).toHaveTextContent('시작하기'));
     });
 
     describe('"확인" 버튼을 클릭한다', () => {
