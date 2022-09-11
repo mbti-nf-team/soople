@@ -86,8 +86,8 @@ describe('SignUpForm', () => {
 
     context('submit 호출에 실패했을 때', () => {
       context('닉네임을 입력하지 않은 경우', () => {
-        it('"닉네임을 입력해주세요." 에러 메시지가 보여진다', async () => {
-          const { container } = renderSignUpForm({
+        it('버튼은 disabled이어야만 한다', async () => {
+          renderSignUpForm({
             ...userFields,
             displayName: '',
           });
@@ -100,7 +100,8 @@ describe('SignUpForm', () => {
             await fireEvent.submit(button);
           });
 
-          expect(container).toHaveTextContent('닉네임을 입력해주세요.');
+          expect(handleSubmit).not.toBeCalled();
+          expect(button).toHaveAttribute('disabled');
         });
       });
 
@@ -117,6 +118,7 @@ describe('SignUpForm', () => {
           });
 
           expect(handleSubmit).not.toBeCalled();
+          expect(button).toHaveAttribute('disabled');
         });
       });
     });
