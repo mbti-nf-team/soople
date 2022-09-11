@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, {
-  FormEvent, KeyboardEvent, PropsWithChildren, ReactElement,
+  FormEvent, KeyboardEvent, PropsWithChildren, ReactElement, ReactNode,
 } from 'react';
 import { X as CloseSvg } from 'react-feather';
 
@@ -18,17 +18,27 @@ import Button from './Button';
 
 interface Props {
   isVisible: boolean;
-  title: string;
+  title: ReactNode;
   confirmText?: string;
   closeText?: string;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   onClose: () => void;
   size?: string;
   confirmButtonColor?: ButtonColorType;
+  isDisabledConfirmButton?: boolean;
 }
 
 function FormModal({
-  isVisible, title, confirmText = '확인', closeText = '닫기', onSubmit, onClose, confirmButtonColor = 'success', children, size = '600px',
+  isVisible,
+  title,
+  confirmText = '확인',
+  closeText = '닫기',
+  onSubmit,
+  onClose,
+  confirmButtonColor = 'success',
+  isDisabledConfirmButton = false,
+  size = '600px',
+  children,
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
   const { isClient, isMobile } = useResponsive();
@@ -58,7 +68,13 @@ function FormModal({
             {isClientDesktop && (
               <Button size="small" onClick={onClose} type="button">{closeText}</Button>
             )}
-            <SubmitButton size={isClientDesktop ? 'small' : 'large'} color={confirmButtonColor} type="submit" data-testid="apply-button">
+            <SubmitButton
+              size={isClientDesktop ? 'small' : 'large'}
+              color={confirmButtonColor}
+              type="submit"
+              data-testid="apply-button"
+              disabled={isDisabledConfirmButton}
+            >
               {confirmText}
             </SubmitButton>
           </FooterWrapper>
@@ -110,13 +126,27 @@ const HeaderWrapper = styled.div`
   box-shadow: 0px 1px 0px ${({ theme }) => theme.accent2};
 
   h4 {
-    margin: 0px;
     ${h4Font(true)};
+    margin: 0px;
+    display: inline-flex;
+
+    & > span {
+      word-break: break-all;
+      overflow-wrap: break-word;
+      text-overflow: ellipsis;
+      display: -webkit-inline-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 `;
 
 const CloseIcon = styled(CloseSvg)`
   cursor: pointer;
+  min-width: 24px;
+  min-height: 24px;
+  margin-left: 24px;
 `;
 
 const FooterWrapper = styled.div`

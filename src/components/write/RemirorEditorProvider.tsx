@@ -55,7 +55,7 @@ const extensions = () => [
   new UnderlineExtension(),
 ];
 
-function RemirorEditorProvider({ children }: PropsWithChildren<unknown>): ReactElement {
+function RemirorEditorProvider({ children }: PropsWithChildren): ReactElement {
   const writeFields = useRecoilValue(writeFieldsState);
 
   const { manager, state, onChange } = useRemirror({
