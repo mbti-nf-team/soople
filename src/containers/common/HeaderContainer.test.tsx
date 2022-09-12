@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 
@@ -25,6 +27,7 @@ describe('HeaderContainer', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
 
     (useSignOut as jest.Mock).mockImplementation(() => ({ mutate }));
     (useSetRecoilState as jest.Mock).mockImplementation(() => setSignInModalVisible);
@@ -38,6 +41,10 @@ describe('HeaderContainer', () => {
     (useFetchAlertAlarms as jest.Mock).mockImplementation(() => ({
       data: [1, 2, 3],
     }));
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
   });
 
   const renderHeaderContainer = () => render((
@@ -60,10 +67,13 @@ describe('HeaderContainer', () => {
     });
 
     context('스크롤 위치가 최상단이 아닐 경우', () => {
-      it(`box-shadow 속성이 ${lightTheme.accent2} 이어야 한다`, () => {
+      it(`box-shadow 속성이 ${lightTheme.accent2} 이어야 한다`, async () => {
         renderHeaderContainer();
 
-        fireEvent.scroll(window, { target: { scrollY: 200 } });
+        await act(async () => {
+          fireEvent.scroll(window, { target: { scrollY: 200 } });
+          await jest.advanceTimersByTime(200);
+        });
 
         expect(screen.getByTestId('header-block')).toHaveStyle({
           'box-shadow': `0 1px 0 0 ${lightTheme.accent2}`,

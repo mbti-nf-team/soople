@@ -8,19 +8,19 @@ import { lightTheme } from '@/styles/theme';
 
 import SuccessIcon from '../assets/icons/check.svg';
 
-export const errorToast = (message: string, toastOptions?: ToastOptions<{}>) => toast
+export const errorToast = (message: string, toastOptions?: ToastOptions) => toast
   .error(message, {
     icon: <StyledWarnIcon fill={lightTheme.warning} color={lightTheme.background} />,
     ...toastOptions,
   });
 
-export const successToast = (message: string, toastOptions?: ToastOptions<{}>) => toast
+export const successToast = (message: string, toastOptions?: ToastOptions) => toast
   .success(message, {
     icon: <SuccessIcon />,
     ...toastOptions,
   });
 
-export const defaultToast = (message: string, toastOptions?: ToastOptions<{}>) => toast
+export const defaultToast = (message: string, toastOptions?: ToastOptions) => toast
   .info(message, {
     icon: <StyledDefaultIcon fill={lightTheme.accent2} color={lightTheme.accent8} />,
     ...toastOptions,

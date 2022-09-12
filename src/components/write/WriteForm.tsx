@@ -50,6 +50,7 @@ export default WriteForm;
 const WriteFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   margin-bottom: 80px;
 `;
 
