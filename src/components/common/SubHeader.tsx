@@ -4,8 +4,10 @@ import { ChevronLeft } from 'react-feather';
 
 import styled from '@emotion/styled';
 
-import { h4Font } from '@/styles/fontStyles';
+import useActionKeyEvent from '@/hooks/useActionKeyEvent';
+import { body1Font, h4Font } from '@/styles/fontStyles';
 import Layout from '@/styles/Layout';
+import mq, { mediaQueries } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
 interface Props {
@@ -14,17 +16,30 @@ interface Props {
 }
 
 function SubHeader({ goBack, previousText, children }: PropsWithChildren<Props>): ReactElement {
+  const handleKeyDown = useActionKeyEvent<HTMLDivElement>('Enter', goBack);
+
   return (
     <>
       <HeaderBlock>
         <HeaderWrapper>
-          <div>
-            <ChevronLeft size={24} onClick={goBack} cursor="pointer" />
-            <GoBackButton onClick={goBack} type="button">
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={goBack}
+            onKeyDown={handleKeyDown}
+            style={{
+              cursor: 'pointer',
+            }}
+          >
+            <GoBackIcon size={24} />
+            <GoBackTitle data-testid="go-back-title">
               {previousText}
-            </GoBackButton>
+            </GoBackTitle>
           </div>
-          <div>
+          <div style={{
+            marginLeft: '40px',
+          }}
+          >
             {children}
           </div>
         </HeaderWrapper>
@@ -37,7 +52,9 @@ function SubHeader({ goBack, previousText, children }: PropsWithChildren<Props>)
 export default SubHeader;
 
 const Spacer = styled.div`
-  height: 4rem;
+  ${mq({
+    height: ['56px', '64px'],
+  })};
 `;
 
 const HeaderBlock = styled.div`
@@ -48,11 +65,15 @@ const HeaderBlock = styled.div`
 `;
 
 const HeaderWrapper = styled(Layout)`
+  ${mq({
+    height: ['56px', '64px'],
+  })};
+
+  width: calc(100% - 2rem);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 4rem;
 
   & > div {
     display: flex;
@@ -61,8 +82,28 @@ const HeaderWrapper = styled(Layout)`
   }
 `;
 
-const GoBackButton = styled.button`
-  ${h4Font(true)};
+const GoBackTitle = styled.div`
+  ${mediaQueries[0]} {
+    ${h4Font(true)};
+  }
+
+  ${body1Font(true)};
   background: transparent;
   color: ${({ theme }) => theme.foreground};
+  word-break: break-all;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-inline-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+const GoBackIcon = styled(ChevronLeft)`
+  ${mq({
+    marginRight: ['8px', '16px'],
+  })};
+
+  min-height: 24px;
+  min-width: 24px;
 `;

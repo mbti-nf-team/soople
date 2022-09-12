@@ -160,6 +160,7 @@ const RemirrorEditorWrapper = styled(CoreStyledComponent)`
     ${body1Font()}
     min-height: 258px;
     outline: none;
+    overflow-y: auto !important;
 
     &:focus-visible {
       outline: none;
