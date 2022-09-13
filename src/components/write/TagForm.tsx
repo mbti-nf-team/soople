@@ -116,15 +116,15 @@ const TagFormWrapper = styled.div`
   }
 `;
 
-const TagsWrapper = styled.div<{isHaveTag: boolean }>`
+const TagsWrapper = styled.div<{ isHaveTag: boolean; }>`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
   align-items: center;
-  padding-left: 8px;
-  padding-top: ${({ isHaveTag }) => (isHaveTag ? '5px' : '8px')};
-  padding-bottom: ${({ isHaveTag }) => (isHaveTag ? '5px' : '8px')};
+  padding-left:  ${({ isHaveTag }) => (isHaveTag ? '8px' : '16px')};
+  padding-top: ${({ isHaveTag }) => (isHaveTag ? '5px' : '11px')};
+  padding-bottom: ${({ isHaveTag }) => (isHaveTag ? '5px' : '11px')};
   background: ${({ theme }) => theme.background};
   border: 1px solid ${({ theme }) => theme.accent2};
   box-sizing: border-box;
@@ -141,11 +141,11 @@ const TagsWrapper = styled.div<{isHaveTag: boolean }>`
   }
 `;
 
-const TagInput = styled.input<{isHaveTag: boolean }>`
+const TagInput = styled.input<{ isHaveTag: boolean; }>`
   ${body1Font()};
   display: inline-flex;
   outline: none;
-  height: ${({ isHaveTag }) => (isHaveTag ? '40px' : '34px')};
+  height: ${({ isHaveTag }) => (isHaveTag ? '32px' : '28px')};
   min-width: 8rem;
   color: ${({ theme }) => theme.foreground};
   border: none;

@@ -95,7 +95,7 @@ function EditorToolbar(): ReactElement {
     >
       {isMobile && (
         <LeftShadowBlock
-          isHidden={toolbarScroll.scrollLeft === 0}
+          isHidden={toolbarScroll.scrollLeft <= 0}
           data-testid="left-shadow-block"
         >
           <div>
@@ -225,7 +225,7 @@ function EditorToolbar(): ReactElement {
 
       {isMobile && (
         <RightShadowBlock
-          isHidden={toolbarScroll.scrollLeft === toolbarScroll.maximumHorizontalScroll}
+          isHidden={toolbarScroll.scrollLeft >= toolbarScroll.maximumHorizontalScroll}
           data-testid="right-shadow-block"
         >
           <div>
