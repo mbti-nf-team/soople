@@ -1,5 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import InjectResponsiveContext from '@/test/InjectResponsiveContext';
+
 import ConfirmModal from './ConfirmModal';
 
 describe('ConfirmModal', () => {
@@ -7,13 +9,15 @@ describe('ConfirmModal', () => {
   const handleClose = jest.fn();
 
   const renderConfirmModal = () => render((
-    <ConfirmModal
-      isVisible={given.isVisible}
-      title="제목"
-      description="내용"
-      onClose={handleClose}
-      onConfirm={handleConfirm}
-    />
+    <InjectResponsiveContext width={given.width}>
+      <ConfirmModal
+        isVisible={given.isVisible}
+        title="제목"
+        description="내용"
+        onClose={handleClose}
+        onConfirm={handleConfirm}
+      />
+    </InjectResponsiveContext>
   ));
 
   context('isVisible이 true인 경우', () => {
@@ -36,6 +40,18 @@ describe('ConfirmModal', () => {
         fireEvent.click(screen.getByText('확인'));
 
         expect(handleConfirm).toBeCalledTimes(1);
+      });
+    });
+
+    context('모바일 화면인 경우', () => {
+      given('width', () => 400);
+
+      it('confirm 버튼의 width값은 70%가 되어야만 한다', () => {
+        renderConfirmModal();
+
+        expect(screen.getByTestId('confirm-button')).toHaveStyle({
+          width: '70%',
+        });
       });
     });
   });

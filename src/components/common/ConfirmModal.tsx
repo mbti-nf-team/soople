@@ -4,7 +4,9 @@ import { X as CloseSvg } from 'react-feather';
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import useResponsive from '@/hooks/useResponsive';
 import { body1Font, h4Font } from '@/styles/fontStyles';
+import mq from '@/styles/responsive';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
@@ -25,6 +27,7 @@ function ConfirmModal({
   isVisible, title, description, confirmText = '확인', closeText = '닫기', onConfirm, onClose, confirmButtonColor = 'success',
 }: Props): ReactElement | null {
   const theme = useTheme();
+  const { isMobile } = useResponsive();
 
   if (!isVisible) {
     return null;
@@ -46,15 +49,20 @@ function ConfirmModal({
           {description}
         </Description>
         <FooterWrapper>
-          <Button size="small" onClick={onClose}>{closeText}</Button>
-          <Button
-            size="small"
+          <CloseButton
+            size={isMobile ? 'large' : 'small'}
+            onClick={onClose}
+          >
+            {closeText}
+          </CloseButton>
+          <ConfirmButton
+            size={isMobile ? 'large' : 'small'}
             color={confirmButtonColor}
             onClick={onConfirm}
             data-testid="confirm-button"
           >
             {confirmText}
-          </Button>
+          </ConfirmButton>
         </FooterWrapper>
       </ConfirmModalBox>
     </ConfirmModalWrapper>
@@ -64,6 +72,10 @@ function ConfirmModal({
 export default ConfirmModal;
 
 const ConfirmModalWrapper = styled.div`
+  ${mq({
+    alignItems: ['flex-end', 'center'],
+  })};
+
   position: fixed;
   top: 0;
   left: 0;
@@ -71,16 +83,18 @@ const ConfirmModalWrapper = styled.div`
   height: 100%;
   z-index: ${zIndexes.ConfirmModal};
   display: flex;
-  align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
 `;
 
 const ConfirmModalBox = styled.div<{ isVisible: boolean }>`
-  width: 400px;
+  ${mq({
+    borderRadius: ['12px 12px 0px 0px', '8px'],
+    width: ['100%', '400px'],
+  })};
+
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
   background: ${({ theme }) => theme.background};
-  border-radius: 8px;
 
   ${({ isVisible }) => (isVisible && css`
     animation: ${transitions.fadeIn} 0.4s forwards ease-in-out;
@@ -88,10 +102,13 @@ const ConfirmModalBox = styled.div<{ isVisible: boolean }>`
 `;
 
 const HeaderWrapper = styled.div`
+  ${mq({
+    padding: ['20px 20px 16px 20px', '16px 20px'],
+  })};
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
 
   h4 {
     margin: 0px;
@@ -110,14 +127,31 @@ const Description = styled.div`
 `;
 
 const FooterWrapper = styled.div`
+  ${({ theme }) => mq({
+    boxShadow: ['none', `inset 0px 1px 0px ${theme.accent2}`],
+    padding: ['0 20px 20px 20px', '12px 16px 12px 16px'],
+  })};
+
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding: 16px 16px 16px 20px;
-  box-shadow: inset 0px 1px 0px ${({ theme }) => theme.accent2};
 
   button:first-of-type {
-    margin-right: 8px;
+  ${mq({
+    marginRight: ['12px', '8px'],
+  })}
   }
+`;
+
+const CloseButton = styled(Button)`
+  ${mq({
+    width: ['30%', 'initial'],
+  })}
+`;
+
+const ConfirmButton = styled(Button)`
+  ${mq({
+    width: ['70%', 'initial'],
+  })}
 `;
