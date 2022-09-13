@@ -20,7 +20,7 @@ describe('TagsForm', () => {
 
   describe('태그의 유무에 따라 인풋창의 스타일이 변경된다', () => {
     context('태그가 존재하지 않는 경우', () => {
-      const height = '34px';
+      const height = '28px';
 
       it(`인풋창의 "height"가 ${height}이어야 한다`, () => {
         renderTagsForm([]);
@@ -32,7 +32,7 @@ describe('TagsForm', () => {
     });
 
     context('태그가 존재하는 경우', () => {
-      const height = '40px';
+      const height = '32px';
 
       it(`인풋창의 "height"가 ${height}이어야 한다`, () => {
         renderTagsForm(['test']);

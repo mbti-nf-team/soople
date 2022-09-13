@@ -72,7 +72,7 @@ describe('EditorToolbar', () => {
         });
       });
 
-      context('스크롤 left값이 0인 경우', () => {
+      context('스크롤 left값이 0보다 작은 경우', () => {
         it('"left-shadow-block"의 opacity값은 0이여만 한다', () => {
           renderEditorToolbar();
 
@@ -84,7 +84,7 @@ describe('EditorToolbar', () => {
         });
       });
 
-      context('스크롤 left값이 툴바 최대 수평 길이와 같은 경우', () => {
+      context('스크롤 left값이 툴바 최대 수평 길이보다 큰 경우', () => {
         it('"right-shadow-block"의 opacity값은 0이여만 한다', () => {
           renderEditorToolbar();
 
