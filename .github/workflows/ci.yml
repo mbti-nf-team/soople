@@ -98,7 +98,8 @@ jobs:
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v2
-      - run: git fetch --no-tags --depth=1 origin main
+        with:
+          fetch-depth: 0
       - name: Set up Node
         uses: actions/setup-node@v2
         with:
