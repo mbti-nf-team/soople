@@ -6,11 +6,11 @@ import {
 import emotionNormalize from 'emotion-normalize';
 import { useRouter } from 'next/router';
 
-import { hasBackground } from '@/utils/utils';
-
 import {
   h1Font, h2Font, h3Font, h4Font,
 } from './fontStyles';
+
+const hasBackground = (pathname: string) => pathname === '/' || pathname === '/404' || pathname === '/500';
 
 export const setGlobalStyles = (pathname: string, theme: Theme) => css`
   ${emotionNormalize};
