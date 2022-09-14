@@ -6,7 +6,6 @@ import {
   checkEmpty,
   checkNumNull,
   emptyAThenB,
-  hasBackground,
   isCurrentTimeBeforeEndDate,
   isEmpty,
   isProdLevel,
@@ -85,24 +84,6 @@ describe('checkNumNull', () => {
       const result = checkNumNull(100);
 
       expect(result).toBe(100);
-    });
-  });
-});
-
-describe('hasBackground', () => {
-  context('pathname이 "/"이거나 "/404"이거나 "/500"인 경우', () => {
-    it('true를 반환해야만 한다', () => {
-      const result = hasBackground('/404');
-
-      expect(result).toBeTruthy();
-    });
-  });
-
-  context('pathname이 "/"이거나 "/404"이거나 "/500" 아닌 경우', () => {
-    it('false를 반환해야만 한다', () => {
-      const result = hasBackground('/detail');
-
-      expect(result).toBeFalsy();
     });
   });
 });

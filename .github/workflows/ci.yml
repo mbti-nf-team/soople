@@ -42,7 +42,6 @@ jobs:
     outputs:
       dependency_cache_key: ${{ steps.compute_lockfile_hash.outputs.hash }}
 
-
   job_build:
     name: Build
     needs: [job_install_dependencies]
@@ -112,10 +111,10 @@ jobs:
 
       - name: Check Lint
         if: ${{ github.event_name == 'pull_request' }}
-        run: yarn lint
+        run: yarn lint:changed-since
 
       - name: Check Unit Test
-        run: yarn test:coverage
+        run: yarn test:coverage:changed-since
 
       - name: Set unit test coverage
         uses: codecov/codecov-action@v2
