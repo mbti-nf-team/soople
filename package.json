@@ -16,7 +16,7 @@
     "test:watch:coverage": "jest --watch --coverage",
     "test:watchAll:coverage": "jest --watchAll --coverage",
     "test:coverage": "yarn test:unit --coverage",
-    "test:coverage:changed-since": "yarn test:coverage --changedSince=origin/main",
+    "test:coverage:changed-since": "jest --changedSince=origin/main --coverage",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:e2e": "start-server-and-test dev http://localhost:3000 cypress:run",
