@@ -9,7 +9,9 @@ import { checkEmpty } from '@/utils/utils';
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
 function useFetchTagsCount() {
-  const query = useQuery<TagCount[], FirestoreError>('tagsCount', () => getTagsCount());
+  const query = useQuery<TagCount[], FirestoreError>('tagsCount', getTagsCount, {
+    suspense: true,
+  });
 
   const { isError, error, data } = query;
 
