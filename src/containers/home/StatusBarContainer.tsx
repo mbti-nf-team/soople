@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, Suspense, useCallback } from 'react';
 import { useLocalStorage } from 'react-use';
 
 import styled from '@emotion/styled';
@@ -6,18 +6,15 @@ import dynamic from 'next/dynamic';
 import { useRecoilState } from 'recoil';
 
 import FilterBar from '@/components/home/FilterBar';
-import TagsBar from '@/components/home/TagsBar';
-import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
+import TagsBarSkeletonLoader from '@/components/home/skeleton/TagsBarSkeletonLoader';
 import useResponsive from '@/hooks/useResponsive';
 import { Category, FilterGroupsCondition } from '@/models/group';
 import { groupsConditionState } from '@/recoil/group/atom';
 import Divider from '@/styles/Divider';
 import { body1Font } from '@/styles/fontStyles';
 
-const SwitchButton = dynamic(
-  () => import('@/components/common/SwitchButton'),
-  { ssr: false },
-);
+const TagsBar = dynamic(() => import('@/components/home/TagsBar'), { suspense: true });
+const SwitchButton = dynamic(() => import('@/components/common/SwitchButton'), { ssr: false });
 
 type FilterCondition = {
   [K in keyof FilterGroupsCondition]?: FilterGroupsCondition[K];
@@ -26,7 +23,6 @@ type FilterCondition = {
 function StatusBarContainer(): ReactElement {
   const { isMobile, isClient } = useResponsive();
 
-  const { data: tagsCount, isLoading } = useFetchTagsCount();
   const [initFilterCompleted, toggleFilterCompleted] = useLocalStorage('isFilterCompleted', false);
   const [{
     isFilterCompleted, category: filterCategory,
@@ -61,10 +57,9 @@ function StatusBarContainer(): ReactElement {
         {(isClient && !isMobile) && (
           <>
             <StyledDivider />
-            <TagsBar
-              isLoading={isLoading}
-              tags={tagsCount}
-            />
+            <Suspense fallback={<TagsBarSkeletonLoader />}>
+              <TagsBar />
+            </Suspense>
           </>
         )}
       </div>

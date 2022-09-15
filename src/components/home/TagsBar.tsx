@@ -1,39 +1,17 @@
 import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { nanoid } from 'nanoid';
 import { useSetRecoilState } from 'recoil';
 
-import { TagCount } from '@/models/group';
+import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
 import { groupsConditionState } from '@/recoil/group/atom';
 
-import SkeletonItem from '../common/SkeletonItem';
 import Tag from '../common/Tag';
 
-interface Props {
-  tags: TagCount[];
-  isLoading: boolean;
-}
+function TagsBar(): ReactElement {
+  const { data: tags } = useFetchTagsCount();
 
-function TagsBar({ tags, isLoading }: Props): ReactElement {
   const setGroupsCondition = useSetRecoilState(groupsConditionState);
-
-  if (isLoading) {
-    return (
-      <TagsWrapper title="loading..." data-testid="loading-skeleton">
-        {['80px', '120px', '80px', '80px', '120px', '64px'].map((width) => (
-          <SkeletonItem
-            key={nanoid()}
-            styles={{
-              height: '36px',
-              width,
-              borderRadius: '6px',
-            }}
-          />
-        ))}
-      </TagsWrapper>
-    );
-  }
 
   return (
     <TagsWrapper>

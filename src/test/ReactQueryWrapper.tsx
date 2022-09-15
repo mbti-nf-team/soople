@@ -1,14 +1,29 @@
-import { PropsWithChildren, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement, Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-function ReactQueryWrapper({ children }: PropsWithChildren<unknown>): ReactElement {
+interface Props {
+  suspense?: boolean;
+}
+
+function ReactQueryWrapper({ suspense = false, children }: PropsWithChildren<Props>): ReactElement {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
         retry: false,
+        suspense,
       },
     },
   });
+
+  if (suspense) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <Suspense>
+          {children}
+        </Suspense>
+      </QueryClientProvider>
+    );
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

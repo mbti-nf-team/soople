@@ -1,68 +1,48 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
 import { groupsConditionState } from '@/recoil/group/atom';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 import RecoilObserver from '@/test/RecoilObserver';
 
 import TagsBar from './TagsBar';
 
-jest.mock('nanoid', () => ({
-  nanoid: jest.fn().mockImplementation(() => Math.random()),
-}));
+jest.mock('@/hooks/api/tagsCount/useFetchTagsCount');
 
 describe('TagsBar', () => {
   const handleClick = jest.fn();
+  const tagName = 'javascript';
 
   beforeEach(() => {
-    handleClick.mockClear();
-  });
+    jest.clearAllMocks();
 
-  const tags = [
-    { name: 'test', count: 1 },
-    { name: 'test1', count: 0 },
-  ];
+    (useFetchTagsCount as jest.Mock).mockImplementation(() => ({
+      data: [{ name: tagName }],
+      isError: false,
+      isLoading: false,
+    }));
+  });
 
   const renderTagsBar = () => render((
     <InjectTestingRecoilState>
-      <>
-        <RecoilObserver node={groupsConditionState} onChange={handleClick} />
-        <TagsBar
-          isLoading={given.isLoading}
-          tags={tags}
-        />
-      </>
+      <RecoilObserver node={groupsConditionState} onChange={handleClick} />
+      <TagsBar />
     </InjectTestingRecoilState>
   ));
 
-  context('로딩중인 경우', () => {
-    given('isLoading', () => true);
+  it('태그들이 나타나야만 한다', () => {
+    const { container } = renderTagsBar();
 
-    it('로딩 스켈레톤이 나타나야만 한다', () => {
-      renderTagsBar();
-
-      expect(screen.getByTitle('loading...')).toBeInTheDocument();
-    });
+    expect(container).toHaveTextContent(tagName);
   });
 
-  context('로딩중이 아닌 경우', () => {
-    it('태그들이 나타나야만 한다', () => {
-      const { container } = renderTagsBar();
+  describe('태그를 클릭한다', () => {
+    it('클릭 이벤트가 발생해야만 한다', () => {
+      renderTagsBar();
 
-      tags.forEach(({ name }) => {
-        expect(container).toHaveTextContent(name);
-      });
-    });
+      fireEvent.click(screen.getByText(`#${tagName}`));
 
-    describe('태그를 클릭한다', () => {
-      it('클릭 이벤트가 발생해야만 한다', () => {
-        renderTagsBar();
-
-        tags.forEach(({ name }) => {
-          fireEvent.click(screen.getByText(`#${name}`));
-
-          expect(handleClick).toBeCalled();
-        });
-      });
+      expect(handleClick).toBeCalled();
     });
   });
 });

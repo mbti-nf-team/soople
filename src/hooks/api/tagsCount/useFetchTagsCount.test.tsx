@@ -1,14 +1,20 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getTagsCount } from '@/services/api/tagsCount';
-import wrapper from '@/test/ReactQueryWrapper';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 
 import useFetchTagsCount from './useFetchTagsCount';
 
 jest.mock('@/services/api/tagsCount');
 
 describe('useFetchTagsCount', () => {
-  const useFetchTagsCountHook = () => renderHook(() => useFetchTagsCount(), { wrapper });
+  const useFetchTagsCountHook = () => renderHook(() => useFetchTagsCount(), {
+    wrapper: ({ children }) => (
+      <ReactQueryWrapper suspense>
+        {children}
+      </ReactQueryWrapper>
+    ),
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -24,7 +30,7 @@ describe('useFetchTagsCount', () => {
   given('tagsCount', () => tagsCount);
 
   it('태그에 대한 정보를 반환해야만 한다', async () => {
-    const { result, waitFor } = useFetchTagsCountHook();
+    const { result } = useFetchTagsCountHook();
 
     await waitFor(() => result.current.isSuccess);
 
