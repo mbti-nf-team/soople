@@ -115,8 +115,13 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: yarn lint:changed-since
 
-      - name: Check Unit Test
+      - name: Create Unit Test Coverage only changed
+        if: ${{ github.event_name == 'pull_request' }}
         run: yarn test:coverage:changed-since
+
+      - name: Create Unit Test Coverage
+        if: ${{ github.event_name == 'push' }}
+        run: yarn test:coverage
 
       - name: Set unit test coverage
         uses: codecov/codecov-action@v2
