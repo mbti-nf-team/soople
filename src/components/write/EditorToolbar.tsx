@@ -345,11 +345,12 @@ const ChevronRightIcon = styled(ChevronRight)`
   top: 12px;
 `;
 
-const shadowBlock = ({ isHidden }: {isHidden: boolean; }) => css`
+const shadowBlock = ({ isHidden }: { isHidden: boolean; }) => css`
   position: sticky;
   top: 0px;
-  transition: opacity .2s ease-in-out;
+  transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
   opacity: ${isHidden && 0};
+  visibility: ${isHidden && 'hidden'};
 
   & > div {
     position: absolute;
