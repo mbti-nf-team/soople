@@ -11,7 +11,7 @@ import mq, { mediaQueries } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
 interface Props {
-  previousText: string;
+  previousText?: string;
   goBack: () => void;
 }
 
@@ -32,7 +32,7 @@ function SubHeader({ goBack, previousText, children }: PropsWithChildren<Props>)
             }}
           >
             <GoBackIcon size={24} />
-            <GoBackTitle data-testid="go-back-title">
+            <GoBackTitle isHidden={!previousText} data-testid="go-back-title">
               {previousText}
             </GoBackTitle>
           </div>
@@ -82,12 +82,14 @@ const HeaderWrapper = styled(Layout)`
   }
 `;
 
-const GoBackTitle = styled.div`
+const GoBackTitle = styled.div<{ isHidden: boolean; }>`
   ${mediaQueries[0]} {
     ${h4Font(true)};
   }
 
   ${body1Font(true)};
+  transition: opacity 0.2s ease-in-out;
+  opacity: ${({ isHidden }) => isHidden && 0};
   background: transparent;
   color: ${({ theme }) => theme.foreground};
   word-break: break-all;
