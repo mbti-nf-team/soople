@@ -26,7 +26,7 @@ interface Props {
 function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
   const { push } = useRouter();
   const setGroupsCondition = useSetRecoilState(groupsConditionState);
-  const { content, tags } = group;
+  const { content, tags, thumbnail } = group;
 
   const handleClickTag = (name: string) => {
     push('/');
@@ -63,6 +63,11 @@ function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
               </div>
             )}
         </MemberMessageBlock>
+      )}
+      {thumbnail && (
+        <div className="post-thumbnail-wrapper">
+          <img src={thumbnail} alt="글 썸네일 이미지" />
+        </div>
       )}
       <DetailContentWrapper dangerouslySetInnerHTML={{ __html: convertedCleanHtml }} />
       <TagsWrapper>
@@ -128,6 +133,17 @@ const DetailContentsWrapper = styled.div`
   border-bottom: 0.5px solid ${({ theme }) => theme.accent2};
   padding-bottom: 40px;
   margin-bottom: 24px;
+
+  & > .post-thumbnail-wrapper {
+    width: 100%;
+
+    & > img {
+      display: block;
+      margin: 2rem auto;
+      max-width: 100%;
+      height: auto;
+    }
+  }
 `;
 
 const MemberMessageBlock = styled.div`
