@@ -37,6 +37,7 @@ describe('DetailContentsSection', () => {
           group={{
             ...GROUP_FIXTURE,
             tags: ['javascript'],
+            thumbnail: '/image/test',
             message: given.message,
           }}
           isGroupMember={given.isGroupMember}
