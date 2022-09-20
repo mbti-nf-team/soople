@@ -2,11 +2,14 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 
+import Button from '@/components/common/Button';
 import ProfileImage from '@/components/common/ProfileImage';
 import ViewModalWindow from '@/components/common/ViewModalWindow';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useResponsive from '@/hooks/useResponsive';
 import Divider from '@/styles/Divider';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
+import mq from '@/styles/responsive';
 import styledAnchor from '@/styles/styledAnchor';
 import { emptyAThenB } from '@/utils/utils';
 
@@ -17,6 +20,7 @@ interface Props {
 
 function MembersViewModal({ isVisible, onClose }: Props) {
   const { data: applicants } = useFetchApplicants();
+  const { isMobile, isClient } = useResponsive();
 
   const confirmedApplicants = applicants.filter(({ isConfirm }) => isConfirm);
 
@@ -29,12 +33,14 @@ function MembersViewModal({ isVisible, onClose }: Props) {
       <MembersListWrapper>
         {confirmedApplicants.map(({ uid, applicant }) => (
           <MemberWrapper key={uid}>
-            <ProfileImage src={applicant.image} size="48px" />
+            <ProfileImage src={applicant.image} size={isMobile ? '36px' : '48px'} />
             <MemberInformation>
               <div>{emptyAThenB(applicant.email, applicant.name)}</div>
               <MemberMetaData>
                 <div>{applicant.position}</div>
-                <Divider />
+                {isClient && !isMobile && (
+                  <Divider />
+                )}
                 {applicant.portfolioUrl && (
                   <a
                     href={applicant.portfolioUrl}
@@ -49,6 +55,18 @@ function MembersViewModal({ isVisible, onClose }: Props) {
           </MemberWrapper>
         ))}
       </MembersListWrapper>
+      {isMobile && (
+        <CloseButtonWrapper data-testid="close-button-wrapper">
+          <Button
+            type="button"
+            onClick={onClose}
+            size="large"
+            color="outlined"
+          >
+            닫기
+          </Button>
+        </CloseButtonWrapper>
+      )}
     </ViewModalWindow>
   );
 }
@@ -56,14 +74,20 @@ function MembersViewModal({ isVisible, onClose }: Props) {
 export default MembersViewModal;
 
 const MembersListWrapper = styled.div`
-  height: 350px;
+  ${mq({
+    height: ['calc(100% - 168px)', '350px'],
+  })};
+
   overflow-y: auto;
 `;
 
 const MemberWrapper = styled.div`
+  ${mq({
+    alignItems: ['flex-start', 'center'],
+  })};
+
   display: flex;
   flex-direction: row;
-  align-items: center;
   margin: 20px;
 `;
 
@@ -72,6 +96,7 @@ const MemberInformation = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-left: 12px;
+  word-break: break-all;
 
   & > div:first-of-type {
     ${body1Font(true)}
@@ -82,11 +107,27 @@ const MemberMetaData = styled.div`
   ${styledAnchor}
   ${subtitle1Font()}
 
+  ${mq({
+    marginTop: ['2px', 0],
+    flexDirection: ['column', 'row'],
+    alignItems: ['flex-start', 'center'],
+  })};
+
   display: flex;
-  flex-direction: row;
-  align-items: center;
 
   & > div:first-of-type {
+  ${mq({
+    marginBottom: ['2px', 0],
+  })}
+
     color: ${({ theme }) => theme.accent6};
+  }
+`;
+
+const CloseButtonWrapper = styled.div`
+  margin: 40px 20px 20px 20px;
+
+  & > button {
+    width: 100%;
   }
 `;

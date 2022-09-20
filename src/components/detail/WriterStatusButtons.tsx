@@ -104,7 +104,7 @@ const WriterButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   
-  & button {
+  & > button {
     margin-right: 8px;
   }
 
