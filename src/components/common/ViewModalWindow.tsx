@@ -1,13 +1,15 @@
 import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 import { X as CloseSvg } from 'react-feather';
-import { useClickAway } from 'react-use';
+import { useClickAway, useLockBodyScroll } from 'react-use';
 
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { h4Font } from '@/styles/fontStyles';
+import mq from '@/styles/responsive';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
+import { emptyAThenB } from '@/utils/utils';
 
 interface Props {
   isVisible: boolean;
@@ -25,6 +27,7 @@ function ViewModalWindow({
   const theme = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
 
+  useLockBodyScroll(isVisible);
   useClickAway(modalRef, onClose);
 
   if (!isVisible) {
@@ -65,11 +68,14 @@ const ViewModalWindowWrapper = styled.div`
 `;
 
 const ViewModalWindowBox = styled.div<{ size?: { height?: string; width?: string; }; isVisible: boolean }>`
+  ${({ size }) => mq({
+    width: ['100%', emptyAThenB('540px', size?.width)],
+    height: ['100%', emptyAThenB('410px', size?.height)],
+  })};
+
   background: ${({ theme }) => theme.background};
   border-radius: 8px;
   overflow: hidden;
-  width: ${({ size }) => size?.width || '540px'};
-  height: ${({ size }) => size?.height || '410px'};
 
   ${({ isVisible }) => (isVisible && css`
     animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;

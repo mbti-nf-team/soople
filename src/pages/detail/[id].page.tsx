@@ -18,6 +18,7 @@ import { GroupQuery } from '@/models';
 import { Group } from '@/models/group';
 import { getGroupDetail } from '@/services/api/group';
 import { DetailLayout } from '@/styles/Layout';
+import { removeAllHtml } from '@/utils/filter';
 import { emptyAThenB } from '@/utils/utils';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -52,7 +53,7 @@ function DetailPage(): ReactElement {
 
   const detailPageSEO = {
     title: group?.title,
-    description: group?.shortDescription,
+    description: emptyAThenB(removeAllHtml(group?.content).slice(0, 100), group?.shortDescription),
   };
 
   useIncreaseView();

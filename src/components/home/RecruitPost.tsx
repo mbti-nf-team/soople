@@ -38,7 +38,7 @@ function RecruitPost({ group }: Props): ReactElement {
               </ThumbnailWrapper>
             )}
             <Title>{title}</Title>
-            <Content>{shortDescription || removeAllHtml(content)}</Content>
+            <Content>{emptyAThenB(removeAllHtml(content), shortDescription)}</Content>
           </PostPreview>
           <PostMetaData>
             <ViewsIcon
