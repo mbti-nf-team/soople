@@ -122,18 +122,18 @@ describe('PublishModalForm', () => {
       context('소개글이 100자 이상인 경우', () => {
         const shortDescription = '소개합니다.'.repeat(50);
 
-        it('100자로 잘린 소개글이 changeFields 이벤트가 발생해야만 한다', () => {
+        it('changeFields 이벤트가 발생해야만 한다', () => {
           renderPublishModalForm(WRITE_FIELDS_FIXTURE);
 
           fireEvent.change(screen.getByLabelText('소개글'), { target: { value: shortDescription } });
 
-          expect(handleChangeFields).toBeCalledWith({ shortDescription: '소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니' });
+          expect(handleChangeFields).toBeCalledWith({ shortDescription });
         });
 
         it(`폰트 색상이 ${lightTheme.warning}이어야만 한다`, () => {
           renderPublishModalForm({
             ...WRITE_FIELDS_FIXTURE,
-            shortDescription: '소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니다.소개합니',
+            shortDescription,
           });
 
           expect(screen.getByTestId('short-description-length')).toHaveStyle({

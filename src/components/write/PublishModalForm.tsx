@@ -9,6 +9,7 @@ import {
   Category, RecruitmentEndSetting, WriteFields,
 } from '@/models/group';
 import { subtitle1Font } from '@/styles/fontStyles';
+import { mediaQueries } from '@/styles/responsive';
 import { stringToExcludeNull } from '@/utils/utils';
 
 import FormModal from '../common/FormModal';
@@ -47,7 +48,8 @@ function PublishModalForm({
     recruitmentEndSetting, recruitmentEndDate, title, shortDescription, category,
   } = fields;
 
-  const isValidWriteForm = !!category && !!title && (recruitmentEndSetting === 'manual' || (recruitmentEndSetting === 'automatic' && !!recruitmentEndDate));
+  const isErrorShortDescription = shortDescription.length > 100;
+  const isValidWriteForm = !!category && !!title && !isErrorShortDescription && (recruitmentEndSetting === 'manual' || (recruitmentEndSetting === 'automatic' && !!recruitmentEndDate));
 
   const defaultRecruitmentEndSetting = recruitmentEndSettingOption.find(({
     value,
@@ -55,11 +57,6 @@ function PublishModalForm({
 
   const handleChangeFields = (e: ChangeEvent<HTMLInputElement| HTMLTextAreaElement>) => {
     const { value, name } = e.target;
-
-    if (name === 'shortDescription') {
-      onChangeFields({ [name]: value.slice(0, 100) });
-      return;
-    }
 
     onChangeFields({ [name]: value });
   };
@@ -125,9 +122,9 @@ function PublishModalForm({
             height="128px"
             onChange={handleChangeFields}
             value={shortDescription}
-            isError={shortDescription.length === 100}
+            isError={isErrorShortDescription}
           />
-          <ShortDescriptionLength isError={shortDescription.length === 100} data-testid="short-description-length">
+          <ShortDescriptionLength isError={isErrorShortDescription} data-testid="short-description-length">
             {`${shortDescription.length} / 100`}
           </ShortDescriptionLength>
         </DescriptionWrapper>
@@ -172,10 +169,17 @@ function PublishModalForm({
 export default PublishModalForm;
 
 const PublishModalFormWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  grid-column-gap: 20px;
-  padding: 0px 24px 40px 24px;
+  ${mediaQueries[0]} {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    grid-column-gap: 20px;
+    padding: 0px 24px 40px 24px;
+  }
+
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  padding: 0px 20px 40px 20px;
 `;
 
 const DescriptionWrapper = styled.div`
@@ -207,7 +211,7 @@ const PublishFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  & > div:not(div:last-of-type) {
+  & > div {
     margin-bottom: 20px;
   }
 `;
