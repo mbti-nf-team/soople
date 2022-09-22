@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { X as CloseSvg } from 'react-feather';
+import { useLockBodyScroll } from 'react-use';
 
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -28,6 +29,8 @@ function ConfirmModal({
 }: Props): ReactElement | null {
   const theme = useTheme();
   const { isMobile } = useResponsive();
+
+  useLockBodyScroll(isVisible);
 
   if (!isVisible) {
     return null;
