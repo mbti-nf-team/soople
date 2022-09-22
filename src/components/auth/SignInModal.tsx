@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, ReactElement } from 'react';
 import { X as CloseSvg } from 'react-feather';
+import { useLockBodyScroll } from 'react-use';
 
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -20,6 +21,8 @@ function SignInModal({
   isVisible, onClose, children,
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
+
+  useLockBodyScroll(isVisible);
 
   if (!isVisible) {
     return null;

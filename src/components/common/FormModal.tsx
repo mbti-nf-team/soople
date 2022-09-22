@@ -3,6 +3,7 @@ import React, {
   FormEvent, KeyboardEvent, PropsWithChildren, ReactElement, ReactNode,
 } from 'react';
 import { X as CloseSvg } from 'react-feather';
+import { useLockBodyScroll } from 'react-use';
 
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -45,6 +46,8 @@ function FormModal({
 
   const isClientDesktop = isClient && !isMobile;
   const checkKeyDown = (e: KeyboardEvent<HTMLFormElement>) => e.code === 'Enter' && e.preventDefault();
+
+  useLockBodyScroll(isVisible);
 
   if (!isVisible) {
     return null;
