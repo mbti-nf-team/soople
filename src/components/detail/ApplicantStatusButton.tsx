@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import useBoolean from '@/hooks/useBoolean';
+import useResponsive from '@/hooks/useResponsive';
 import { Profile } from '@/models/auth';
 import { Applicant, ApplicantForm } from '@/models/group';
 
@@ -23,9 +24,13 @@ interface Props {
 function ApplicantStatusButton({
   isCompleted, onApply, user, onVisibleSignInModal, applicant, onCancelApply, isRecruiting,
 }: Props): ReactElement | null {
+  const { isMobile } = useResponsive();
+
   const [isVisibleApplicantsModal, openApplicantModal, closeApplicantModal] = useBoolean(false);
   const [isVisibleAskCancelModal, openAskCancelModal, closeAskCancelModal] = useBoolean(false);
   const [isVisibleApplyModal, openApplyModal, closeApplyModal] = useBoolean(false);
+
+  const buttonSize = isMobile ? 'small' : 'medium';
 
   const handleSubmit = (applyFields: ApplicantForm) => {
     onApply(applyFields);
@@ -44,7 +49,7 @@ function ApplicantStatusButton({
   if (isCompleted && applicant?.isConfirm) {
     return (
       <>
-        <Button color="primary" onClick={openApplicantModal}>
+        <Button color="primary" onClick={openApplicantModal} size={buttonSize}>
           팀원 보기
         </Button>
         <MembersViewModal
@@ -62,7 +67,7 @@ function ApplicantStatusButton({
   if (applicant) {
     return (
       <>
-        <Button color="primary" onClick={openAskCancelModal}>
+        <Button color="primary" onClick={openAskCancelModal} size={buttonSize}>
           신청 취소
         </Button>
         <AskApplyCancelModal
@@ -79,7 +84,7 @@ function ApplicantStatusButton({
 
   return (
     <>
-      <Button color="success" onClick={handleClick}>
+      <Button color="success" onClick={handleClick} size={buttonSize}>
         신청하기
       </Button>
       <ApplyFormModal

@@ -1,5 +1,7 @@
 import React, { ReactElement, useCallback } from 'react';
+import { Edit, Trash2 } from 'react-feather';
 
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
@@ -7,6 +9,7 @@ import { useSetRecoilState } from 'recoil';
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
 import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
 import useBoolean from '@/hooks/useBoolean';
+import useResponsive from '@/hooks/useResponsive';
 import { Group } from '@/models/group';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { stringToExcludeNull } from '@/utils/utils';
@@ -23,6 +26,9 @@ interface Props {
 
 function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
   const router = useRouter();
+  const theme = useTheme();
+  const { isMobile, isClient } = useResponsive();
+
   const { mutate: removeGroupMutate } = useRemoveGroup();
   const { mutate: removeGroupThumbnailMutate } = useRemoveGroupThumbnail();
 
@@ -33,6 +39,8 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
     isVisibleAskRemoveGroupModal, openAskRemoveGroupModal, closeAskRemoveGroupModal,
   ] = useBoolean(false);
 
+  const buttonSize = isMobile ? 'small' : 'medium';
+
   const handleRemove = useCallback(() => {
     removeGroupMutate(group);
 
@@ -41,7 +49,7 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
     }
   }, [group, removeGroupMutate, removeGroupThumbnailMutate]);
 
-  const onClickEdit = (initialWriteFields: Group) => {
+  const onClickEdit = (initialWriteFields: Group) => () => {
     const {
       category, content, tags, title, recruitmentEndDate, recruitmentEndSetting, groupId,
     } = initialWriteFields;
@@ -61,18 +69,42 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
 
   return (
     <WriterButtonWrapper>
-      <Button
-        type="button"
-        onClick={() => onClickEdit(group)}
-      >
-        수정
-      </Button>
-      <Button
-        type="button"
-        onClick={openAskRemoveGroupModal}
-      >
-        삭제
-      </Button>
+      {isMobile && (
+        <div data-testid="writer-action-wrapper">
+          <Edit
+            size={20}
+            role="button"
+            tabIndex={0}
+            color={theme.accent6}
+            cursor="pointer"
+            onClick={onClickEdit(group)}
+          />
+          <Trash2
+            size={20}
+            role="button"
+            tabIndex={0}
+            color={theme.accent6}
+            cursor="pointer"
+            onClick={openAskRemoveGroupModal}
+          />
+        </div>
+      )}
+      {!isMobile && isClient && (
+        <>
+          <Button
+            type="button"
+            onClick={onClickEdit(group)}
+          >
+            수정
+          </Button>
+          <Button
+            type="button"
+            onClick={openAskRemoveGroupModal}
+          >
+            삭제
+          </Button>
+        </>
+      )}
       <AskRemoveGroupModal
         isVisible={isVisibleAskRemoveGroupModal}
         onClose={closeAskRemoveGroupModal}
@@ -83,6 +115,7 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
           <Button
             color="primary"
             onClick={openApplicantModal}
+            size={buttonSize}
           >
             팀원 보기
           </Button>
@@ -92,7 +125,13 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
           />
         </>
       ) : (
-        <Button href={`/detail/${group.groupId}/applicants`} color="primary">신청현황 보기</Button>
+        <Button
+          href={`/detail/${group.groupId}/applicants`}
+          color="primary"
+          size={buttonSize}
+        >
+          신청현황 보기
+        </Button>
       )}
     </WriterButtonWrapper>
   );
@@ -101,6 +140,31 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
 export default WriterStatusButtons;
 
 const WriterButtonWrapper = styled.div`
+  @media (max-width: 450px) {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    bottom: 0;
+    width: 100%;
+    right: 0;
+    box-sizing: border-box;
+    background: ${({ theme }) => theme.background};
+    border-top: 1px solid ${({ theme }) => theme.accent2};
+    padding: 12px 16px;
+
+    & > div:first-of-type {
+      & > svg {
+        padding: 6px;
+      }
+
+      & > svg:first-of-type {
+        margin-right: 4px;
+      }
+    }
+  }
+
   display: flex;
   flex-direction: row;
   

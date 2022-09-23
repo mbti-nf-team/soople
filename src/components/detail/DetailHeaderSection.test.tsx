@@ -1,17 +1,37 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
+import InjectResponsiveContext from '@/test/InjectResponsiveContext';
 import { tomorrow, yesterday } from '@/utils/utils';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
+import FIXTURE_PROFILE from '../../../fixtures/profile';
 
 import DetailHeaderSection from './DetailHeaderSection';
 
 describe('DetailHeaderSection', () => {
   const renderDetailHeaderSection = (group = GROUP_FIXTURE) => render((
-    <DetailHeaderSection
-      group={group}
-    />
+    <InjectResponsiveContext width={given.width}>
+      <DetailHeaderSection
+        group={group}
+      />
+    </InjectResponsiveContext>
   ));
+
+  context('모바일인 경우', () => {
+    given('width', () => 400);
+
+    it('프로필 이미지 사이즈는 36px이어야만 한다', () => {
+      renderDetailHeaderSection({
+        ...GROUP_FIXTURE,
+        writer: {
+          ...FIXTURE_PROFILE,
+          image: '',
+        },
+      });
+
+      expect(screen.getByTestId('default-profile-icon')).toHaveAttribute('width', '36px');
+    });
+  });
 
   describe('모집 완료 상태에 따라 다르게 보인다', () => {
     context('모집 완료인 경우', () => {

@@ -48,7 +48,7 @@ describe('WriterStatusButtons', () => {
   });
 
   const renderWriterStatusButtons = (isCompleted = false) => render((
-    <InjectMockProviders>
+    <InjectMockProviders width={given.width}>
       <WriterStatusButtons
         group={given.group}
         isCompleted={isCompleted}
@@ -56,74 +56,87 @@ describe('WriterStatusButtons', () => {
     </InjectMockProviders>
   ));
 
-  describe('수정 버튼을 클릭한다', () => {
+  context('모바일인 경우', () => {
+    given('width', () => 400);
     given('group', () => (FIXTURE_GROUP));
 
-    it('router.push가 호출되어야만 한다', () => {
+    it('수정, 삭제 아이콘 버튼이 나타나야만 한다', () => {
       renderWriterStatusButtons();
 
-      fireEvent.click(screen.getByText('수정'));
-
-      expect(mockPush).toBeCalledWith(`/write?id=${FIXTURE_GROUP.groupId}`);
+      expect(screen.getByTestId('writer-action-wrapper')).toBeInTheDocument();
     });
   });
 
-  describe('삭제 버튼을 클릭한다', () => {
-    given('group', () => (FIXTURE_GROUP));
+  context('모바일이 아닌 경우', () => {
+    describe('수정 버튼을 클릭한다', () => {
+      given('group', () => (FIXTURE_GROUP));
 
-    it('삭제하기 모달창이 나타나야만 한다', () => {
-      const { container } = renderWriterStatusButtons();
+      it('router.push가 호출되어야만 한다', () => {
+        renderWriterStatusButtons();
 
-      fireEvent.click(screen.getByText('삭제'));
+        fireEvent.click(screen.getByText('수정'));
 
-      expect(container).toHaveTextContent('이 글을 정말 삭제하시겠습니까? 삭제하시면 다시 되돌릴 수 없습니다.');
+        expect(mockPush).toBeCalledWith(`/write?id=${FIXTURE_GROUP.groupId}`);
+      });
     });
 
-    describe('삭제하기 모달창에서 "닫기" 버튼을 클릭한다', () => {
-      it('삭제하기 모달창이 안보여야만 한다', () => {
+    describe('삭제 버튼을 클릭한다', () => {
+      given('group', () => (FIXTURE_GROUP));
+
+      it('삭제하기 모달창이 나타나야만 한다', () => {
         const { container } = renderWriterStatusButtons();
 
         fireEvent.click(screen.getByText('삭제'));
-        fireEvent.click(screen.getByText('닫기'));
 
-        expect(container).not.toHaveTextContent('이 글을 정말 삭제하시겠습니까? 삭제하시면 다시 되돌릴 수 없습니다.');
+        expect(container).toHaveTextContent('이 글을 정말 삭제하시겠습니까? 삭제하시면 다시 되돌릴 수 없습니다.');
       });
-    });
 
-    describe('삭제하기 모달창에서 "삭제하기" 버튼을 클릭한다', () => {
-      context('썸네일이 존재하는 경우', () => {
-        const thumbnail = 'www.test.com';
-
-        given('group', () => ({
-          ...FIXTURE_GROUP,
-          thumbnail,
-        }));
-
-        it('group mutate와 thumbnail mutate가 호출되어야만 한다', () => {
-          renderWriterStatusButtons();
+      describe('삭제하기 모달창에서 "닫기" 버튼을 클릭한다', () => {
+        it('삭제하기 모달창이 안보여야만 한다', () => {
+          const { container } = renderWriterStatusButtons();
 
           fireEvent.click(screen.getByText('삭제'));
-          fireEvent.click(screen.getByTestId('confirm-button'));
+          fireEvent.click(screen.getByText('닫기'));
 
-          expect(removeGroupMutate).toBeCalledWith({
-            ...FIXTURE_GROUP,
-            thumbnail,
-          });
-          expect(removeGroupThumbnailMutate).toBeCalledWith(thumbnail);
+          expect(container).not.toHaveTextContent('이 글을 정말 삭제하시겠습니까? 삭제하시면 다시 되돌릴 수 없습니다.');
         });
       });
 
-      context('썸네일이 존재하지 않는 경우', () => {
-        given('group', () => (FIXTURE_GROUP));
+      describe('삭제하기 모달창에서 "삭제하기" 버튼을 클릭한다', () => {
+        context('썸네일이 존재하는 경우', () => {
+          const thumbnail = 'www.test.com';
 
-        it('thumbnail mutate가 호출되지 않아야만 한다', () => {
-          renderWriterStatusButtons();
+          given('group', () => ({
+            ...FIXTURE_GROUP,
+            thumbnail,
+          }));
 
-          fireEvent.click(screen.getByText('삭제'));
-          fireEvent.click(screen.getByTestId('confirm-button'));
+          it('group mutate와 thumbnail mutate가 호출되어야만 한다', () => {
+            renderWriterStatusButtons();
 
-          expect(removeGroupMutate).toBeCalledWith(FIXTURE_GROUP);
-          expect(removeGroupThumbnailMutate).not.toBeCalled();
+            fireEvent.click(screen.getByText('삭제'));
+            fireEvent.click(screen.getByTestId('confirm-button'));
+
+            expect(removeGroupMutate).toBeCalledWith({
+              ...FIXTURE_GROUP,
+              thumbnail,
+            });
+            expect(removeGroupThumbnailMutate).toBeCalledWith(thumbnail);
+          });
+        });
+
+        context('썸네일이 존재하지 않는 경우', () => {
+          given('group', () => (FIXTURE_GROUP));
+
+          it('thumbnail mutate가 호출되지 않아야만 한다', () => {
+            renderWriterStatusButtons();
+
+            fireEvent.click(screen.getByText('삭제'));
+            fireEvent.click(screen.getByTestId('confirm-button'));
+
+            expect(removeGroupMutate).toBeCalledWith(FIXTURE_GROUP);
+            expect(removeGroupThumbnailMutate).not.toBeCalled();
+          });
         });
       });
     });

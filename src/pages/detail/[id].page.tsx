@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { dehydrate, QueryClient } from 'react-query';
 
+import styled from '@emotion/styled';
 import { FirebaseError } from 'firebase/app';
 import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
@@ -81,15 +82,23 @@ function DetailPage(): ReactElement {
         }}
       />
       <HeaderContainer />
-      <DetailLayout>
+      <DetailPageLayout>
         <DetailHeaderContainer />
         <DetailContentsContainer />
         <CommentsContainer />
         <RecruitCompleteModal />
         <RecruitCompleteCanvasConfetti />
-      </DetailLayout>
+      </DetailPageLayout>
     </>
   );
 }
 
 export default DetailPage;
+
+const DetailPageLayout = styled(DetailLayout)`
+  @media (min-width: 700px) {
+    width: 686px;
+  }
+  
+  width: calc(100% - 2.5rem);
+`;

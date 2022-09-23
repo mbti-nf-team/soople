@@ -12,7 +12,7 @@ const mq2 = facepaint([
   '@media(min-width: 700px)',
 ]);
 
-function Layout({ children, ...rest }: PropsWithChildren<unknown>) {
+function Layout({ children, ...rest }: PropsWithChildren) {
   return (
     <LayoutWrapper {...rest}>
       {children}

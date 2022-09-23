@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 
+import styled from '@emotion/styled';
+
 import useCurrentTime from '@/hooks/useCurrentTime';
 import { Profile } from '@/models/auth';
 import { Applicant, ApplicantForm, Group } from '@/models/group';
 import { isRecruiting } from '@/utils/utils';
-
-import Button from '../common/Button';
 
 import ApplicantStatusButton from './ApplicantStatusButton';
 import WriterStatusButtons from './WriterStatusButtons';
@@ -22,7 +22,7 @@ interface Props {
 
 function DetailStatusButton({
   group, user, onApply, onVisibleSignInModal, applicants, onCancelApply, isApplicantsLoading,
-}: Props): ReactElement {
+}: Props): ReactElement | null {
   const { writer, isCompleted } = group;
 
   const currentTime = useCurrentTime(group);
@@ -39,20 +39,39 @@ function DetailStatusButton({
   }
 
   if (isApplicantsLoading) {
-    return <Button disabled>로딩중...</Button>;
+    return null;
   }
 
   return (
-    <ApplicantStatusButton
-      user={user}
-      onApply={onApply}
-      isCompleted={isCompleted}
-      applicant={findApplicant}
-      isRecruiting={isRecruiting(group, currentTime)}
-      onCancelApply={onCancelApply}
-      onVisibleSignInModal={onVisibleSignInModal}
-    />
+    <ApplicantStatusButtonWrapper>
+      <ApplicantStatusButton
+        user={user}
+        onApply={onApply}
+        isCompleted={isCompleted}
+        applicant={findApplicant}
+        isRecruiting={isRecruiting(group, currentTime)}
+        onCancelApply={onCancelApply}
+        onVisibleSignInModal={onVisibleSignInModal}
+      />
+    </ApplicantStatusButtonWrapper>
   );
 }
 
 export default DetailStatusButton;
+
+const ApplicantStatusButtonWrapper = styled.div`
+  @media (max-width: 450px) {
+    position: fixed;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    bottom: 0;
+    width: 100%;
+    right: 0;
+    box-sizing: border-box;
+    background: ${({ theme }) => theme.background};
+    border-top: 1px solid ${({ theme }) => theme.accent2};
+    padding: 12px 16px;
+  }
+`;

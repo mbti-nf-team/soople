@@ -5,9 +5,13 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
+import useResponsive from '@/hooks/useResponsive';
 import { Group } from '@/models/group';
 import Divider from '@/styles/Divider';
-import { body1Font, h2Font, subtitle1Font } from '@/styles/fontStyles';
+import {
+  body1Font, h2Font, h3Font, subtitle1Font,
+} from '@/styles/fontStyles';
+import { mediaQueries } from '@/styles/responsive';
 import { emptyAThenB } from '@/utils/utils';
 
 import ProfileImage from '../common/ProfileImage';
@@ -22,6 +26,8 @@ function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): Rea
   } = group;
 
   const theme = useTheme();
+  const { isMobile } = useResponsive();
+
   const recruitDate = useRecruitDateStatus(group);
 
   return (
@@ -31,7 +37,7 @@ function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): Rea
         <WriterProfile>
           <ProfileImage
             src={writer.image}
-            size="48px"
+            size={isMobile ? '36px' : '48px'}
           />
           <WriterProfileTextWrapper>
             <span>
@@ -66,7 +72,13 @@ const DetailHeaderSectionWrapper = styled.section`
   margin-bottom: 40px;
 
   h2 {
-    ${h2Font(true)};
+    ${mediaQueries[0]} {
+      ${h2Font(true)};
+      margin-bottom: 12px;
+    };
+
+    ${h3Font(true)};
+    margin-bottom: 16px;
   }
 `;
 
