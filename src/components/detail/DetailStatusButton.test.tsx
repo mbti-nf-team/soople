@@ -52,10 +52,10 @@ describe('DetailStatusButton', () => {
     context('로딩중인 경우', () => {
       given('isApplicantsLoading', () => true);
 
-      it('"로딩중..." 버튼이 니타나야만 한다', () => {
+      it('아무것도 나타나지 않아야만 한다', () => {
         const { container } = renderDetailStatusButton(group);
 
-        expect(container).toHaveTextContent('로딩중...');
+        expect(container).toBeEmptyDOMElement();
       });
     });
 

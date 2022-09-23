@@ -3,6 +3,7 @@ import {
 } from '@testing-library/react';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import InjectResponsiveContext from '@/test/InjectResponsiveContext';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -28,16 +29,33 @@ describe('ApplicantStatusButton', () => {
   });
 
   const renderApplicantStatusButton = () => render((
-    <ApplicantStatusButton
-      onApply={handleApply}
-      isCompleted={given.isCompleted}
-      onVisibleSignInModal={handleVisibleSignInModal}
-      applicant={given.applicant}
-      user={given.user}
-      isRecruiting={given.isRecruiting}
-      onCancelApply={handleCancelApply}
-    />
+    <InjectResponsiveContext width={given.width}>
+      <ApplicantStatusButton
+        onApply={handleApply}
+        isCompleted={given.isCompleted}
+        onVisibleSignInModal={handleVisibleSignInModal}
+        applicant={given.applicant}
+        user={given.user}
+        isRecruiting={given.isRecruiting}
+        onCancelApply={handleCancelApply}
+      />
+    </InjectResponsiveContext>
   ));
+
+  context('모바일인 경우', () => {
+    given('width', () => 400);
+    given('isCompleted', () => false);
+    given('isRecruiting', () => true);
+    given('applicant', () => false);
+
+    it('버튼 height는 32px이어야만 한다', () => {
+      renderApplicantStatusButton();
+
+      expect(screen.getByText('신청하기')).toHaveStyle({
+        height: '32px',
+      });
+    });
+  });
 
   context('isCompleted가 false인 경우', () => {
     given('isCompleted', () => false);
