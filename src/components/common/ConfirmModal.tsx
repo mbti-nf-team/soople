@@ -124,8 +124,11 @@ const CloseIcon = styled(CloseSvg)`
 `;
 
 const Description = styled.div`
+  ${mq({
+    whiteSpace: ['initial', 'pre-line'],
+  })};
+
   ${body1Font()};
-  white-space: pre-line;
   margin: 0 20px 24px 20px;
 `;
 

@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import useCurrentTime from '@/hooks/useCurrentTime';
 import { Profile } from '@/models/auth';
 import { Applicant, ApplicantForm, Group } from '@/models/group';
+import zIndexes from '@/styles/zIndexes';
 import { isRecruiting } from '@/utils/utils';
 
 import ApplicantStatusButton from './ApplicantStatusButton';
@@ -73,5 +74,6 @@ const ApplicantStatusButtonWrapper = styled.div`
     background: ${({ theme }) => theme.background};
     border-top: 1px solid ${({ theme }) => theme.accent2};
     padding: 12px 16px;
+    z-index: ${zIndexes.BottomFixed};
   }
 `;

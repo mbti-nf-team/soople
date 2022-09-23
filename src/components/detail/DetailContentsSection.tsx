@@ -1,7 +1,6 @@
 import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { extensionEmojiStyledCss } from '@remirror/styles/emotion';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import rehypeParse from 'rehype-parse';
@@ -11,6 +10,7 @@ import { unified } from 'unified';
 import { Group } from '@/models/group';
 import { groupsConditionState } from '@/recoil/group/atom';
 import { body1Font, body2Font } from '@/styles/fontStyles';
+import mq from '@/styles/responsive';
 import styledAnchor from '@/styles/styledAnchor';
 import { filteredWithSanitizeHtml } from '@/utils/filter';
 import rehypePrism from '@/utils/rehypePrism';
@@ -96,7 +96,10 @@ const TagsWrapper = styled.div`
 `;
 
 const DetailContentWrapper = styled.div`
-  ${extensionEmojiStyledCss}
+  ${mq({
+    minHeight: ['260px', 'auto'],
+  })};
+
   margin-bottom: 36px;
 
   p {

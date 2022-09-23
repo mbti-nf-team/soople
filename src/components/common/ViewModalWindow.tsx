@@ -71,10 +71,10 @@ const ViewModalWindowBox = styled.div<{ size?: { height?: string; width?: string
   ${({ size }) => mq({
     width: ['100%', emptyAThenB('540px', size?.width)],
     height: ['100%', emptyAThenB('410px', size?.height)],
+    borderRadius: ['0', '8px'],
   })};
 
   background: ${({ theme }) => theme.background};
-  border-radius: 8px;
   overflow: hidden;
 
   ${({ isVisible }) => (isVisible && css`
