@@ -12,6 +12,7 @@ import useBoolean from '@/hooks/useBoolean';
 import useResponsive from '@/hooks/useResponsive';
 import { Group } from '@/models/group';
 import { writeFieldsState } from '@/recoil/group/atom';
+import zIndexes from '@/styles/zIndexes';
 import { stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
@@ -153,6 +154,7 @@ const WriterButtonWrapper = styled.div`
     background: ${({ theme }) => theme.background};
     border-top: 1px solid ${({ theme }) => theme.accent2};
     padding: 12px 16px;
+    z-index: ${zIndexes.BottomFixed};
 
     & > div:first-of-type {
       & > svg {

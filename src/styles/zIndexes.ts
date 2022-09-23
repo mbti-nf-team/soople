@@ -3,6 +3,7 @@ const zIndexes = {
   PublishModal: 20,
   ConfirmModal: 20,
   FormModal: 20,
+  BottomFixed: 19,
   TopNavigation: 18,
   MyInfoNavTab: 15,
 };

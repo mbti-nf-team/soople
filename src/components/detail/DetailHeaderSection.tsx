@@ -47,6 +47,10 @@ function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): Rea
               <div className="view-wrapper">
                 <ViewsIcon
                   size={16}
+                  style={{
+                    minHeight: 16,
+                    minWidth: 16,
+                  }}
                   color={theme.background}
                   fill={theme.accent6}
                 />
@@ -55,7 +59,7 @@ function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): Rea
               <Divider />
               <div>{recruitDate}</div>
               <Divider />
-              <div>{isCompleted ? `${numberApplicants}명 모집` : `${numberApplicants}명 신청 중`}</div>
+              <div className="number-applicant">{isCompleted ? `${numberApplicants}명 모집` : `${numberApplicants}명 신청 중`}</div>
             </MetadataWrapper>
           </WriterProfileTextWrapper>
         </WriterProfile>
@@ -119,6 +123,7 @@ const MetadataWrapper = styled.div`
   & > :not(:last-of-type) {
     ${subtitle1Font()};
     color: ${({ theme }) => theme.accent6};
+    white-space: nowrap;
   }
 
   & > :last-of-type {
@@ -134,5 +139,15 @@ const MetadataWrapper = styled.div`
     svg {
       margin-right: 4px;
     }
+  }
+
+  .number-applicant {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 `;
