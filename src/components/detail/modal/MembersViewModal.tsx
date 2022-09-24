@@ -75,7 +75,7 @@ export default MembersViewModal;
 
 const MembersListWrapper = styled.div`
   ${mq({
-    height: ['calc(100% - 168px)', '350px'],
+    height: ['calc(100% - 128px)', '350px'],
   })};
 
   overflow-y: auto;
@@ -125,7 +125,7 @@ const MemberMetaData = styled.div`
 `;
 
 const CloseButtonWrapper = styled.div`
-  margin: 40px 20px 20px 20px;
+  margin: 0 20px 20px 20px;
 
   & > button {
     width: 100%;

@@ -12,6 +12,7 @@ import useBoolean from '@/hooks/useBoolean';
 import useResponsive from '@/hooks/useResponsive';
 import { Group } from '@/models/group';
 import { writeFieldsState } from '@/recoil/group/atom';
+import { mobileMediaQuery } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 import { stringToExcludeNull } from '@/utils/utils';
 
@@ -141,7 +142,7 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
 export default WriterStatusButtons;
 
 const WriterButtonWrapper = styled.div`
-  @media (max-width: 450px) {
+  ${mobileMediaQuery} {
     position: fixed;
     display: flex;
     flex-direction: row;

@@ -56,7 +56,7 @@ function FormModal({
   return (
     <FormModalWrapper>
       <FormModalBox size={size} isVisible={isVisible} data-testid="form-modal-box">
-        <form onSubmit={onSubmit} onKeyDown={checkKeyDown}>
+        <StyledForm onSubmit={onSubmit} onKeyDown={checkKeyDown}>
           <HeaderWrapper>
             <h4>{title}</h4>
             <CloseIcon
@@ -81,13 +81,17 @@ function FormModal({
               {confirmText}
             </SubmitButton>
           </FooterWrapper>
-        </form>
+        </StyledForm>
       </FormModalBox>
     </FormModalWrapper>
   );
 }
 
 export default FormModal;
+
+const StyledForm = styled.form`
+  height: 100%;
+`;
 
 const FormModalWrapper = styled.div`
   position: fixed;
@@ -120,7 +124,7 @@ const FormModalBox = styled.div<{ size: string; isVisible: boolean; }>`
 const HeaderWrapper = styled.div`
   ${mq({
     padding: ['14px 20px 14px 20px', '16px 20px 12px 20px'],
-    marginBottom: ['16px', '20px'],
+    marginBottom: ['0', '20px'],
   })};
 
   display: flex;

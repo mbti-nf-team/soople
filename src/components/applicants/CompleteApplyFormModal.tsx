@@ -112,7 +112,7 @@ const StyledInfoIcon = styled(InfoIcon)`
 
 const FormContentsWrapper = styled.div`
   ${mq({
-    margin: ['0 20px', '0 24px'],
+    margin: ['16px 20px', '0 24px'],
   })};
 
   display: flex;

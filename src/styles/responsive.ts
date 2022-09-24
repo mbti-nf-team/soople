@@ -4,6 +4,8 @@ const breakpoints = ['450', '650', '850', '1100'];
 
 export const mediaQueries = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
+export const mobileMediaQuery = '@media (max-width: 450px)';
+
 const mq = facepaint([
   mediaQueries[0],
   mediaQueries[1],

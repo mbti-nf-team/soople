@@ -77,7 +77,7 @@ function ApplyFormModal({
 export default ApplyFormModal;
 
 const ContentsFormWrapper = styled.div`
-  margin: 0 24px 32px 24px;
+  margin: 16px 24px 32px 24px;
 
   & > :not(div:first-of-type) {
     margin-top: 20px;
