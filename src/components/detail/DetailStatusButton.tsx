@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import useCurrentTime from '@/hooks/useCurrentTime';
 import { Profile } from '@/models/auth';
 import { Applicant, ApplicantForm, Group } from '@/models/group';
+import { mobileMediaQuery } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 import { isRecruiting } from '@/utils/utils';
 
@@ -61,7 +62,7 @@ function DetailStatusButton({
 export default DetailStatusButton;
 
 const ApplicantStatusButtonWrapper = styled.div`
-  @media (max-width: 450px) {
+  ${mobileMediaQuery} {
     position: fixed;
     display: flex;
     flex-direction: row-reverse;

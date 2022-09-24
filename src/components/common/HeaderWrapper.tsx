@@ -48,7 +48,6 @@ function HeaderWrapper({
 export default memo(HeaderWrapper);
 
 const LogoIcon = styled(LogoSvg)`
-  width: 96px;
   height: 24px;
 `;
 

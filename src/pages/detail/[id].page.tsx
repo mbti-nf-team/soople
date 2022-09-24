@@ -19,6 +19,7 @@ import { GroupQuery } from '@/models';
 import { Group } from '@/models/group';
 import { getGroupDetail } from '@/services/api/group';
 import { DetailLayout } from '@/styles/Layout';
+import { mobileMediaQuery } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
 import { emptyAThenB } from '@/utils/utils';
 
@@ -88,6 +89,7 @@ function DetailPage(): ReactElement {
         <CommentsContainer />
         <RecruitCompleteModal />
         <RecruitCompleteCanvasConfetti />
+        <Spacer />
       </DetailPageLayout>
     </>
   );
@@ -101,4 +103,10 @@ const DetailPageLayout = styled(DetailLayout)`
   }
   
   width: calc(100% - 2.5rem);
+`;
+
+const Spacer = styled.div`
+  ${mobileMediaQuery} {
+    height: 4rem;
+  }
 `;
