@@ -127,6 +127,8 @@ const HeaderWrapper = styled.div`
     marginBottom: ['0', '20px'],
   })};
 
+  position: relative;
+  z-index: ${zIndexes.FormModal};
   display: flex;
   align-items: center;
   justify-content: space-between;
