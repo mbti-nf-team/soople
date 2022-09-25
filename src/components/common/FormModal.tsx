@@ -47,7 +47,7 @@ function FormModal({
   const isClientDesktop = isClient && !isMobile;
   const checkKeyDown = (e: KeyboardEvent<HTMLFormElement>) => e.code === 'Enter' && e.preventDefault();
 
-  useLockBodyScroll(isVisible);
+  useLockBodyScroll(isClientDesktop && isVisible);
 
   if (!isVisible) {
     return null;
