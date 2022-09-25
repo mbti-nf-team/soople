@@ -65,6 +65,16 @@ export const setGlobalStyles = (pathname: string, theme: Theme) => css`
   input:read-only, textarea:read-only {
     pointer-events: none;
   }
+
+  input[type="datetime-local"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  input[type="date"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+  }
 `;
 
 function GlobalStyles(): ReactElement {
