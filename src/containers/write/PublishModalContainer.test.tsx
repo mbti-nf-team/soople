@@ -1,5 +1,7 @@
 import { useHelpers, useRemirrorContext } from '@remirror/react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
@@ -96,10 +98,22 @@ describe('PublishModalContainer', () => {
     });
 
     describe('닫기 버튼을 클릭한다', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+
+      afterEach(() => {
+        jest.clearAllTimers();
+      });
+
       it('아무것도 보이지 않아야만 한다', () => {
         const { container } = renderPublishModalContainer();
 
         fireEvent.click(screen.getByText('닫기'));
+
+        act(() => {
+          jest.advanceTimersByTime(400);
+        });
 
         expect(container).toBeEmptyDOMElement();
       });

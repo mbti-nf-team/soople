@@ -8,9 +8,10 @@ import { useLockBodyScroll } from 'react-use';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import useDelayVisible from '@/hooks/useDelayVisible';
 import useResponsive from '@/hooks/useResponsive';
 import { h4Font } from '@/styles/fontStyles';
-import mq from '@/styles/responsive';
+import mq, { mediaQueries } from '@/styles/responsive';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
@@ -43,18 +44,19 @@ function FormModal({
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
   const { isClient, isMobile } = useResponsive();
+  const isOpen = useDelayVisible(isVisible, 400);
 
   const isClientDesktop = isClient && !isMobile;
   const checkKeyDown = (e: KeyboardEvent<HTMLFormElement>) => e.code === 'Enter' && e.preventDefault();
 
   useLockBodyScroll(isClientDesktop && isVisible);
 
-  if (!isVisible) {
+  if (!isOpen) {
     return null;
   }
 
   return (
-    <FormModalWrapper>
+    <FormModalWrapper isVisible={isVisible}>
       <FormModalBox size={size} isVisible={isVisible} data-testid="form-modal-box">
         <StyledForm onSubmit={onSubmit} onKeyDown={checkKeyDown}>
           <HeaderWrapper>
@@ -93,7 +95,13 @@ const StyledForm = styled.form`
   height: 100%;
 `;
 
-const FormModalWrapper = styled.div`
+const FormModalWrapper = styled.div<{ isVisible: boolean; }>`
+  ${mediaQueries[0]} {
+    background: rgba(0, 0, 0, 0.4);
+    transition: visibility 0.4s ease-out;
+  }
+
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   position: fixed;
   top: 0;
   left: 0;
@@ -103,7 +111,6 @@ const FormModalWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.4);
 `;
 
 const FormModalBox = styled.div<{ size: string; isVisible: boolean; }>`
@@ -115,9 +122,21 @@ const FormModalBox = styled.div<{ size: string; isVisible: boolean; }>`
   })};
 
   background: ${({ theme }) => theme.background};
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  transition: visibility 0.4s ease-out;
+
+  ${({ isVisible }) => !isVisible && mq({
+    animation: [
+      `${transitions.mobilePopOutToBottom} 0.4s forwards ease-in-out`,
+      `${transitions.popOutToBottom} 0.4s forwards ease-in-out`,
+    ],
+  })};
 
   ${({ isVisible }) => isVisible && mq({
-    animation: [`${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`, `${transitions.popInFromBottom} 0.4s forwards ease-in-out`],
+    animation: [
+      `${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`,
+      `${transitions.popInFromBottom} 0.4s forwards ease-in-out`,
+    ],
   })};
 `;
 

@@ -28,6 +28,7 @@ describe('WriterStatusButtons', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
 
     (useRouter as jest.Mock).mockImplementation(() => ({
       query: {
@@ -47,6 +48,10 @@ describe('WriterStatusButtons', () => {
     (useFetchApplicants as jest.Mock).mockImplementation(() => ({
       data: [FIXTURE_APPLICANT],
     }));
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
   });
 
   const renderWriterStatusButtons = (isCompleted = false) => render((
@@ -99,6 +104,10 @@ describe('WriterStatusButtons', () => {
 
           fireEvent.click(screen.getByText('삭제'));
           fireEvent.click(screen.getByText('닫기'));
+
+          act(() => {
+            jest.advanceTimersByTime(400);
+          });
 
           expect(container).not.toHaveTextContent('이 글을 정말 삭제하시겠습니까? 삭제하시면 다시 되돌릴 수 없습니다.');
         });

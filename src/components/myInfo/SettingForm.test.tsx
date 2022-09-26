@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
@@ -9,6 +11,11 @@ describe('SettingForm', () => {
 
   beforeEach(() => {
     handleWithdrawal.mockClear();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
   });
 
   const renderSettingForm = () => render((
@@ -57,6 +64,10 @@ describe('SettingForm', () => {
 
       fireEvent.click(screen.getByText('회원 탈퇴하기'));
       fireEvent.click(screen.getByText('닫기'));
+
+      act(() => {
+        jest.advanceTimersByTime(400);
+      });
 
       expect(container).not.toHaveTextContent('탈퇴하시면 내 정보에 등록된 계정 정보가 모두 삭제돼요.');
     });

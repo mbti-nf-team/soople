@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
@@ -16,6 +18,7 @@ describe('SignInModalContainer', () => {
 
   beforeEach(() => {
     mockReplace.mockClear();
+    jest.useFakeTimers();
 
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: given.user,
@@ -24,6 +27,10 @@ describe('SignInModalContainer', () => {
       replace: mockReplace,
       query: given.query,
     }));
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
   });
 
   const renderSignInModalContainer = () => render((
@@ -55,6 +62,10 @@ describe('SignInModalContainer', () => {
         const { container } = renderSignInModalContainer();
 
         fireEvent.click(screen.getByTestId('close-icon'));
+
+        act(() => {
+          jest.advanceTimersByTime(400);
+        });
 
         expect(container).toBeEmptyDOMElement();
       });
