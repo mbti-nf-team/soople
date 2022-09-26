@@ -2,7 +2,7 @@ import React, { PropsWithChildren, ReactElement } from 'react';
 import { X as CloseSvg } from 'react-feather';
 import { useLockBodyScroll } from 'react-use';
 
-import { css, useTheme } from '@emotion/react';
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { body1Font } from '@/styles/fontStyles';
@@ -108,7 +108,7 @@ const SignInModalBox = styled.div<{ isVisible: boolean }>`
   align-items: center;
   flex-direction: column;
 
-  ${({ isVisible }) => (isVisible && css`
-    animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;
-  `)};
+  ${({ isVisible }) => isVisible && mq({
+    animation: [`${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`, `${transitions.popInFromBottom} 0.4s forwards ease-in-out`],
+  })};
 `;

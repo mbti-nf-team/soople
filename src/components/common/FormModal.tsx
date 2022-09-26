@@ -5,7 +5,7 @@ import React, {
 import { X as CloseSvg } from 'react-feather';
 import { useLockBodyScroll } from 'react-use';
 
-import { css, useTheme } from '@emotion/react';
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import useResponsive from '@/hooks/useResponsive';
@@ -116,9 +116,9 @@ const FormModalBox = styled.div<{ size: string; isVisible: boolean; }>`
 
   background: ${({ theme }) => theme.background};
 
-  ${({ isVisible }) => (isVisible && css`
-    animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;
-  `)};
+  ${({ isVisible }) => isVisible && mq({
+    animation: [`${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`, `${transitions.popInFromBottom} 0.4s forwards ease-in-out`],
+  })};
 `;
 
 const HeaderWrapper = styled.div`

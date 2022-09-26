@@ -1,12 +1,15 @@
-import React, { PropsWithChildren, ReactElement, useRef } from 'react';
+import React, {
+  PropsWithChildren, ReactElement, useRef,
+} from 'react';
 import { X as CloseSvg } from 'react-feather';
 import { useClickAway, useLockBodyScroll } from 'react-use';
 
-import { css, useTheme } from '@emotion/react';
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import useDelayVisible from '@/hooks/useDelayVisible';
 import { h4Font } from '@/styles/fontStyles';
-import mq from '@/styles/responsive';
+import mq, { mediaQueries } from '@/styles/responsive';
 import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 import { emptyAThenB } from '@/utils/utils';
@@ -26,16 +29,17 @@ function ViewModalWindow({
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
+  const isOpen = useDelayVisible(isVisible, 400);
 
   useLockBodyScroll(isVisible);
   useClickAway(modalRef, onClose);
 
-  if (!isVisible) {
+  if (!isOpen) {
     return null;
   }
 
   return (
-    <ViewModalWindowWrapper>
+    <ViewModalWindowWrapper isVisible={isVisible}>
       <ViewModalWindowBox size={size} isVisible={isVisible} ref={modalRef} data-testid="modal-box">
         <HeaderWrapper>
           <h4>{title}</h4>
@@ -54,7 +58,13 @@ function ViewModalWindow({
 
 export default ViewModalWindow;
 
-const ViewModalWindowWrapper = styled.div`
+const ViewModalWindowWrapper = styled.div<{ isVisible: boolean; }>`
+  ${mediaQueries[0]} {
+    background: rgba(0, 0, 0, 0.4);
+    transition: visibility 0.4s ease-out;
+  }
+
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   position: fixed;
   top: 0;
   left: 0;
@@ -76,10 +86,22 @@ const ViewModalWindowBox = styled.div<{ size?: { height?: string; width?: string
 
   background: ${({ theme }) => theme.background};
   overflow: hidden;
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  transition: visibility 0.4s ease-out;
 
-  ${({ isVisible }) => (isVisible && css`
-    animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;
-  `)};
+  ${({ isVisible }) => !isVisible && mq({
+    animation: [
+      `${transitions.mobilePopOutToBottom} 0.4s forwards ease-in-out`,
+      `${transitions.popOutToBottom} 0.4s forwards ease-in-out`,
+    ],
+  })};
+
+  ${({ isVisible }) => isVisible && mq({
+    animation: [
+      `${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`,
+      `${transitions.popInFromBottom} 0.4s forwards ease-in-out`,
+    ],
+  })};
 `;
 
 const HeaderWrapper = styled.div`

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { X as CloseSvg } from 'react-feather';
 import { useLockBodyScroll } from 'react-use';
 
-import { css, useTheme } from '@emotion/react';
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import useResponsive from '@/hooks/useResponsive';
@@ -99,9 +99,9 @@ const ConfirmModalBox = styled.div<{ isVisible: boolean }>`
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
   background: ${({ theme }) => theme.background};
 
-  ${({ isVisible }) => (isVisible && css`
-    animation: ${transitions.fadeIn} 0.4s forwards ease-in-out;
-  `)};
+  ${({ isVisible }) => isVisible && mq({
+    animation: [`${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`, `${transitions.fadeIn} 0.4s forwards ease-in-out`],
+  })};
 `;
 
 const HeaderWrapper = styled.div`

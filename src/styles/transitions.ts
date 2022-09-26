@@ -30,6 +30,32 @@ const blink = keyframes`
   }
 `;
 
+const mobilePopInFromBottom = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(-16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`;
+
+const mobilePopOutToBottom = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+`;
+
 const popInFromBottom = keyframes`
   0% {
     opacity: 0;
@@ -42,7 +68,8 @@ const popInFromBottom = keyframes`
   100% {
     opacity: 1;
     transform: translateY(0px);
-  }`;
+  }
+`;
 
 const popOutToBottom = keyframes`
   0% {
@@ -52,13 +79,16 @@ const popOutToBottom = keyframes`
   100% {
     opacity: 0;
     transform: translateY(400px) scale(0.75);
-  }`;
+  }
+`;
 
 const transitions = {
   fadeIn,
   fadeOut,
   popInFromBottom,
   popOutToBottom,
+  mobilePopInFromBottom,
+  mobilePopOutToBottom,
   blink,
 };
 
