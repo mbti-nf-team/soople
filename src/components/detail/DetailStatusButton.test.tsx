@@ -62,10 +62,23 @@ describe('DetailStatusButton', () => {
     context('로딩중이 아닌 경우', () => {
       given('isApplicantsLoading', () => false);
 
-      it('"신청하기" 버튼이 나타나야만 한다', () => {
-        const { container } = renderDetailStatusButton(group);
+      context('모집이 완료되지 않았고 모집중이 아닐 경우', () => {
+        it('아무것도 나타나지 않아야만 한다', () => {
+          const { container } = renderDetailStatusButton({
+            ...group,
+            isCompleted: false,
+          });
 
-        expect(container).toHaveTextContent('신청하기');
+          expect(container).toBeEmptyDOMElement();
+        });
+      });
+
+      context('모집이 완료되었거나 모집중인 경우', () => {
+        it('"신청하기" 버튼이 나타나야만 한다', () => {
+          const { container } = renderDetailStatusButton(group);
+
+          expect(container).toHaveTextContent('신청하기');
+        });
       });
     });
   });

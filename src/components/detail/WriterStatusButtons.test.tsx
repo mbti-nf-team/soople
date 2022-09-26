@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
@@ -166,11 +168,23 @@ describe('WriterStatusButtons', () => {
       });
 
       describe('모달창이 열린 상태에서 "X" 아이콘을 클릭한다', () => {
-        it('모달창이 사라저야만 한다', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(() => {
+          jest.clearAllTimers();
+        });
+
+        it('모달창이 사라저야만 한다', async () => {
           const { container } = renderWriterStatusButtons(true);
 
           fireEvent.click(screen.getByText('팀원 보기'));
           fireEvent.click(screen.getByTestId('close-icon'));
+
+          await act(async () => {
+            jest.advanceTimersByTime(400);
+          });
 
           expect(container).not.toHaveTextContent('팀원 0명');
         });

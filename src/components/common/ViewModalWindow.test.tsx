@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 
 import InjectMockProviders from '@/test/InjectMockProviders';
 
@@ -7,6 +9,15 @@ import ViewModalWindow from './ViewModalWindow';
 describe('ViewModalWindow', () => {
   const handleClose = jest.fn();
   const MockComponent = () => <>Test</>;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
+  });
 
   const renderViewModalWindow = () => render((
     <InjectMockProviders>
@@ -37,8 +48,12 @@ describe('ViewModalWindow', () => {
   context('isVisible이 false인 경우', () => {
     given('isVisible', () => false);
 
-    it('아무것도 나타나지 않아야만 한다', () => {
+    it('아무것도 나타나지 않아야만 한다', async () => {
       const { container } = renderViewModalWindow();
+
+      await act(async () => {
+        jest.advanceTimersByTime(400);
+      });
 
       expect(container).toBeEmptyDOMElement();
     });

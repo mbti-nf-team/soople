@@ -19,6 +19,7 @@ describe('ApplicantStatusButton', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
 
     (useFetchApplicants as jest.Mock).mockImplementation(() => ({
       data: [{
@@ -26,6 +27,10 @@ describe('ApplicantStatusButton', () => {
         isConfirm: true,
       }],
     }));
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
   });
 
   const renderApplicantStatusButton = () => render((
@@ -193,11 +198,15 @@ describe('ApplicantStatusButton', () => {
     });
 
     describe('팀원보기 모달창에서 닫기 버튼을 클릭한다', () => {
-      it('모달창이 사라져야만 한다', () => {
+      it('모달창이 사라져야만 한다', async () => {
         const { container } = renderApplicantStatusButton();
 
         fireEvent.click(screen.getByText('팀원 보기'));
         fireEvent.click(screen.getByTestId('close-icon'));
+
+        await act(async () => {
+          jest.advanceTimersByTime(400);
+        });
 
         expect(container).not.toHaveTextContent('팀원 1명');
       });
