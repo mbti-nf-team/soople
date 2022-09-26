@@ -95,6 +95,8 @@ describe('ApplicantStatusButton', () => {
 
                 fireEvent.click(screen.getByText('신청하기'));
                 await act(async () => {
+                  jest.advanceTimersByTime(400);
+
                   await fireEvent.change(screen.getByPlaceholderText('간단한 소개글을 입력하세요'), {
                     target: { value: 'test' },
                   });
@@ -112,6 +114,10 @@ describe('ApplicantStatusButton', () => {
 
                 fireEvent.click(screen.getByText('신청하기'));
                 fireEvent.click(screen.getByText('닫기'));
+
+                act(() => {
+                  jest.advanceTimersByTime(400);
+                });
 
                 expect(container).not.toHaveTextContent(/소개글/);
               });
@@ -151,6 +157,10 @@ describe('ApplicantStatusButton', () => {
 
             fireEvent.click(screen.getByText('신청 취소'));
             fireEvent.click(screen.getByText('닫기'));
+
+            act(() => {
+              jest.advanceTimersByTime(400);
+            });
 
             expect(container).not.toHaveTextContent(/신청 취소하기/);
           });

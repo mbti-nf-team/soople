@@ -5,6 +5,7 @@ import { useLockBodyScroll } from 'react-use';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import useDelayVisible from '@/hooks/useDelayVisible';
 import { body1Font } from '@/styles/fontStyles';
 import mq from '@/styles/responsive';
 import transitions from '@/styles/transitions';
@@ -21,15 +22,16 @@ function SignInModal({
   isVisible, onClose, children,
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
+  const isOpen = useDelayVisible(isVisible, 400);
 
   useLockBodyScroll(isVisible);
 
-  if (!isVisible) {
+  if (!isOpen) {
     return null;
   }
 
   return (
-    <SignInModalWrapper>
+    <SignInModalWrapper isVisible={isVisible}>
       <SignInModalBox isVisible={isVisible}>
         <HeaderWrapper>
           <LogoIcon />
@@ -79,11 +81,13 @@ const SignInDescription = styled.p`
   margin-bottom: 2rem;
 `;
 
-const SignInModalWrapper = styled.div`
+const SignInModalWrapper = styled.div<{ isVisible: boolean; }>`
   ${mq({
     alignItems: ['flex-end', 'center'],
   })};
 
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  transition: visibility 0.4s ease-out;
   position: fixed;
   top: 0;
   left: 0;
@@ -107,8 +111,20 @@ const SignInModalBox = styled.div<{ isVisible: boolean }>`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  transition: visibility 0.4s ease-out;
+
+  ${({ isVisible }) => !isVisible && mq({
+    animation: [
+      `${transitions.mobilePopOutToBottom} 0.4s forwards ease-in-out`,
+      `${transitions.popOutToBottom} 0.4s forwards ease-in-out`,
+    ],
+  })};
 
   ${({ isVisible }) => isVisible && mq({
-    animation: [`${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`, `${transitions.popInFromBottom} 0.4s forwards ease-in-out`],
+    animation: [
+      `${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`,
+      `${transitions.popInFromBottom} 0.4s forwards ease-in-out`,
+    ],
   })};
 `;

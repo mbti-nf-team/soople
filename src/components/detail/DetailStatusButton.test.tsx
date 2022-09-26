@@ -1,6 +1,7 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
+import { yesterday } from '@/utils/utils';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -23,7 +24,7 @@ describe('DetailStatusButton', () => {
       <DetailStatusButton
         user={PROFILE_FIXTURE}
         group={group}
-        applicants={[]}
+        applicants={given.applicants || []}
         isApplicantsLoading={given.isApplicantsLoading}
         onVisibleSignInModal={handleVisibleSignInModal}
         onApply={handleApply}
@@ -63,21 +64,46 @@ describe('DetailStatusButton', () => {
       given('isApplicantsLoading', () => false);
 
       context('모집이 완료되지 않았고 모집중이 아닐 경우', () => {
-        it('아무것도 나타나지 않아야만 한다', () => {
-          const { container } = renderDetailStatusButton({
+        it('display은 "none"가 되어야만 한다', () => {
+          renderDetailStatusButton({
             ...group,
-            isCompleted: false,
+            recruitmentEndSetting: 'automatic',
+            recruitmentEndDate: yesterday(new Date()),
           });
 
-          expect(container).toBeEmptyDOMElement();
+          expect(screen.getByTestId('applicant-status-button-wrapper')).toHaveStyle({
+            display: 'none',
+          });
         });
       });
 
-      context('모집이 완료되었거나 모집중인 경우', () => {
-        it('"신청하기" 버튼이 나타나야만 한다', () => {
-          const { container } = renderDetailStatusButton(group);
+      context('모집이 완료된 경우', () => {
+        given('applicants', () => ([{
+          applicant: {
+            uid: '1',
+            isConfirm: true,
+          },
+        }]));
 
-          expect(container).toHaveTextContent('신청하기');
+        it('display은 "flex"가 되어야만 한다', () => {
+          renderDetailStatusButton({
+            ...group,
+            isCompleted: true,
+          });
+
+          expect(screen.getByTestId('applicant-status-button-wrapper')).toHaveStyle({
+            display: 'flex',
+          });
+        });
+      });
+
+      context('모집중인 경우', () => {
+        it('display은 "flex"가 되어야만 한다', () => {
+          renderDetailStatusButton(group);
+
+          expect(screen.getByTestId('applicant-status-button-wrapper')).toHaveStyle({
+            display: 'flex',
+          });
         });
       });
     });

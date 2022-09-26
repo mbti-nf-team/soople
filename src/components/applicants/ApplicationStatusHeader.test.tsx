@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 
 import { Applicant } from '@/models/group';
 
@@ -12,6 +14,11 @@ describe('ApplicationStatusHeader', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
   });
 
   const renderApplicationStatusHeader = (applicant: Applicant) => render((
@@ -57,6 +64,10 @@ describe('ApplicationStatusHeader', () => {
 
         fireEvent.click(screen.getByText('모집 완료'));
         fireEvent.click(screen.getByText('닫기'));
+
+        act(() => {
+          jest.advanceTimersByTime(400);
+        });
 
         expect(container).not.toHaveTextContent('완료하기');
       });

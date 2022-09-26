@@ -46,6 +46,7 @@ function DetailStatusButton({
 
   return (
     <ApplicantStatusButtonWrapper
+      data-testid="applicant-status-button-wrapper"
       isVisible={(isCompleted && findApplicant?.isConfirm) || isRecruiting(group, currentTime)}
     >
       <ApplicantStatusButton
@@ -64,9 +65,10 @@ function DetailStatusButton({
 export default DetailStatusButton;
 
 const ApplicantStatusButtonWrapper = styled.div<{ isVisible: boolean; }>`
+  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+
   ${mobileMediaQuery} {
     position: fixed;
-    display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
     flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
