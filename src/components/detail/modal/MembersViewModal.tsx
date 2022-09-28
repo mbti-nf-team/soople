@@ -42,13 +42,13 @@ function MembersViewModal({ isVisible, onClose }: Props) {
                   <Divider />
                 )}
                 {applicant.portfolioUrl && (
-                  <a
+                  <PortfolioUrl
                     href={applicant.portfolioUrl}
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                      {applicant.portfolioUrl}
-                  </a>
+                    {applicant.portfolioUrl}
+                  </PortfolioUrl>
                 )}
               </MemberMetaData>
             </MemberInformation>
@@ -56,16 +56,19 @@ function MembersViewModal({ isVisible, onClose }: Props) {
         ))}
       </MembersListWrapper>
       {isMobile && (
-        <CloseButtonWrapper data-testid="close-button-wrapper">
-          <Button
-            type="button"
-            onClick={onClose}
-            size="large"
-            color="outlined"
-          >
-            닫기
-          </Button>
-        </CloseButtonWrapper>
+        <>
+          <GradientBlock />
+          <CloseButtonWrapper data-testid="close-button-wrapper">
+            <Button
+              type="button"
+              onClick={onClose}
+              size="large"
+              color="outlined"
+            >
+              닫기
+            </Button>
+          </CloseButtonWrapper>
+        </>
       )}
     </ViewModalWindow>
   );
@@ -120,6 +123,7 @@ const MemberMetaData = styled.div`
     marginBottom: ['2px', 0],
   })}
 
+    white-space: nowrap;
     color: ${({ theme }) => theme.accent6};
   }
 `;
@@ -130,4 +134,22 @@ const CloseButtonWrapper = styled.div`
   & > button {
     width: 100%;
   }
+`;
+
+const PortfolioUrl = styled.a`
+  word-break: break-all;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-inline-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+const GradientBlock = styled.div`
+  position: absolute;
+  bottom: 67px;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
 `;
