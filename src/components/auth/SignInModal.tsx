@@ -1,6 +1,6 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement, useRef } from 'react';
 import { X as CloseSvg } from 'react-feather';
-import { useLockBodyScroll } from 'react-use';
+import { useClickAway, useLockBodyScroll } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -22,9 +22,11 @@ function SignInModal({
   isVisible, onClose, children,
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
+  const modalRef = useRef<HTMLDivElement>(null);
   const isOpen = useDelayVisible(isVisible, 400);
 
   useLockBodyScroll(isVisible);
+  useClickAway(modalRef, onClose);
 
   if (!isOpen) {
     return null;
@@ -32,7 +34,7 @@ function SignInModal({
 
   return (
     <SignInModalWrapper isVisible={isVisible}>
-      <SignInModalBox isVisible={isVisible}>
+      <SignInModalBox isVisible={isVisible} ref={modalRef}>
         <HeaderWrapper>
           <LogoIcon />
           <CloseIcon
@@ -84,10 +86,10 @@ const SignInDescription = styled.p`
 const SignInModalWrapper = styled.div<{ isVisible: boolean; }>`
   ${mq({
     alignItems: ['flex-end', 'center'],
+    transition: ['visibility 0.4s ease-out', 'visibility 0.2s ease-out'],
   })};
 
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  transition: visibility 0.4s ease-out;
   position: fixed;
   top: 0;
   left: 0;
@@ -103,6 +105,7 @@ const SignInModalBox = styled.div<{ isVisible: boolean }>`
   ${mq({
     borderRadius: ['24px 24px 0px 0px', '8px'],
     width: ['100%', '400px'],
+    transition: ['visibility 0.4s ease-out', 'visibility 0.2s ease-out'],
   })};
 
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
@@ -112,19 +115,18 @@ const SignInModalBox = styled.div<{ isVisible: boolean }>`
   align-items: center;
   flex-direction: column;
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  transition: visibility 0.4s ease-out;
 
   ${({ isVisible }) => !isVisible && mq({
     animation: [
       `${transitions.mobilePopOutToBottom} 0.4s forwards ease-in-out`,
-      `${transitions.popOutToBottom} 0.4s forwards ease-in-out`,
+      `${transitions.fadeOut} 0.2s forwards ease-in-out`,
     ],
   })};
 
   ${({ isVisible }) => isVisible && mq({
     animation: [
       `${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`,
-      `${transitions.popInFromBottom} 0.4s forwards ease-in-out`,
+      `${transitions.fadeIn} 0.2s forwards ease-in-out`,
     ],
   })};
 `;
