@@ -107,5 +107,6 @@ const MetadataWrapper = styled.div`
 `;
 
 const IntroduceBlock = styled.div`
-  ${body2Font()}
+  ${body2Font()};
+  white-space: pre;
 `;

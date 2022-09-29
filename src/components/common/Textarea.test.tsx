@@ -20,6 +20,16 @@ describe('Textarea', () => {
     </MockTheme>
   ));
 
+  context('textarea에서 Enter 키를 클릭했을 경우', () => {
+    it('change 이벤트는 호출되지 않아먄 한다', async () => {
+      renderTextarea();
+
+      fireEvent.keyDown(screen.getByPlaceholderText('test'), { key: 'Enter', code: 'Enter', charCode: 13 });
+
+      expect(handleChange).not.toBeCalled();
+    });
+  });
+
   context('error가 존재하지 않는 경우', () => {
     given('isError', () => false);
 
