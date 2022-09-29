@@ -98,7 +98,7 @@ const StyledForm = styled.form`
 const FormModalWrapper = styled.div<{ isVisible: boolean; }>`
   ${mediaQueries[0]} {
     background: rgba(0, 0, 0, 0.4);
-    transition: visibility 0.4s ease-out;
+    transition: visibility 0.2s ease-out;
   }
 
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
@@ -119,23 +119,23 @@ const FormModalBox = styled.div<{ size: string; isVisible: boolean; }>`
     height: ['100%', 'auto'],
     borderRadius: ['0px', '8px'],
     boxShadow: ['none', '0 2px 12px 0 rgb(0 0 0 / 9%)'],
+    transition: ['visibility 0.4s ease-out', 'visibility 0.2s ease-out'],
   })};
 
   background: ${({ theme }) => theme.background};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  transition: visibility 0.4s ease-out;
 
   ${({ isVisible }) => !isVisible && mq({
     animation: [
       `${transitions.mobilePopOutToBottom} 0.4s forwards ease-in-out`,
-      `${transitions.popOutToBottom} 0.4s forwards ease-in-out`,
+      `${transitions.fadeOut} 0.2s forwards ease-in-out`,
     ],
   })};
 
   ${({ isVisible }) => isVisible && mq({
     animation: [
       `${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`,
-      `${transitions.popInFromBottom} 0.4s forwards ease-in-out`,
+      `${transitions.fadeIn} 0.2s forwards ease-in-out`,
     ],
   })};
 `;

@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import { X as CloseSvg } from 'react-feather';
-import { useLockBodyScroll } from 'react-use';
+import { useClickAway, useLockBodyScroll } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -29,10 +29,12 @@ function ConfirmModal({
   isVisible, title, description, confirmText = '확인', closeText = '닫기', onConfirm, onClose, confirmButtonColor = 'success',
 }: Props): ReactElement | null {
   const theme = useTheme();
+  const modalRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useResponsive();
   const isOpen = useDelayVisible(isVisible, 400);
 
   useLockBodyScroll(isVisible);
+  useClickAway(modalRef, onClose);
 
   if (!isOpen) {
     return null;
@@ -40,7 +42,7 @@ function ConfirmModal({
 
   return (
     <ConfirmModalWrapper isVisible={isVisible}>
-      <ConfirmModalBox isVisible={isVisible}>
+      <ConfirmModalBox isVisible={isVisible} ref={modalRef}>
         <HeaderWrapper>
           <h4>{title}</h4>
           <CloseIcon

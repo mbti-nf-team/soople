@@ -3,18 +3,22 @@ import { keyframes } from '@emotion/react';
 const fadeIn = keyframes`
   0% {
     opacity: 0;
+    transform: scale(0.9);
   }
   100% {
     opacity: 1;
+    transform: scale(1.0);
   }
 `;
 
 const fadeOut = keyframes`
   0% {
     opacity: 1;
+    transform: scale(1.0);
   }
   100% {
     opacity: 0;
+    transform: scale(0.9);
   }
 `;
 
@@ -34,10 +38,6 @@ const mobilePopInFromBottom = keyframes`
   0% {
     opacity: 0;
     transform: translateY(100%);
-  }
-  75% {
-    opacity: 1;
-    transform: translateY(-16px);
   }
   100% {
     opacity: 1;
