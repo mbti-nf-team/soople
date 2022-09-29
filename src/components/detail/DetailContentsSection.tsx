@@ -53,7 +53,7 @@ function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
                 <MemberMessageTitle>
                   멤버들에게 보내는 메시지
                 </MemberMessageTitle>
-                <p>{group.message}</p>
+                <MemberMessage>{group.message}</MemberMessage>
               </div>
             ) : (
               <div>
@@ -161,12 +161,6 @@ const MemberMessageBlock = styled.div`
   & > div {
     margin-left: 12px;
   }
-
-  & > div > p {
-    ${body2Font()}
-    margin: 0px;
-    color: ${({ theme }) => theme.accent6};
-  }
 `;
 
 const MemberMessageTitle = styled.h6`
@@ -178,4 +172,11 @@ const MemberMessageTitle = styled.h6`
     color: ${({ theme }) => theme.accent5};
     margin: 0px;
   }
+`;
+
+const MemberMessage = styled.div`
+  ${body2Font()}
+  white-space: pre;
+  color: ${({ theme }) => theme.accent6};
+  margin: 0px;
 `;

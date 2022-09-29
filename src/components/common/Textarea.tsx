@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, {
-  DetailedHTMLProps, ForwardedRef, forwardRef, ReactElement, TextareaHTMLAttributes,
+  DetailedHTMLProps, ForwardedRef, forwardRef, KeyboardEvent, ReactElement, TextareaHTMLAttributes,
 } from 'react';
 
 import { css } from '@emotion/react';
@@ -29,6 +29,8 @@ function Textarea({
   disabled,
   isError, height, id, labelText, labelOptionText, message, ...rest
 }: Props, ref: ForwardedRef<HTMLTextAreaElement>): ReactElement {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => e.code === 'Enter' && e.stopPropagation();
+
   return (
     <TextareaWrapper isError={isError}>
       {labelText && (
@@ -43,6 +45,7 @@ function Textarea({
         id={id}
         value={value}
         onChange={onChange}
+        onKeyDown={handleKeyDown}
         placeholder={placeholder}
         disabled={disabled}
         isError={isError}

@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import { Profile } from '@/models/auth';
 import { Comment } from '@/models/group';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
+import { filteredWithSanitizeHtml } from '@/utils/filter';
 import { emptyAThenB } from '@/utils/utils';
 
 import ProfileImage from '../common/ProfileImage';
@@ -45,7 +46,7 @@ function CommentView({
             </RemoveCommentButton>
           )}
         </CommentStatus>
-        <CommentContent dangerouslySetInnerHTML={{ __html: content }} />
+        <CommentContent dangerouslySetInnerHTML={{ __html: filteredWithSanitizeHtml(content) }} />
       </div>
     </CommentViewWrapper>
   );
