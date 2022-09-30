@@ -14,6 +14,7 @@ import Divider from '@/styles/Divider';
 import {
   body1Font, body2Font, h3Font,
 } from '@/styles/fontStyles';
+import mq, { mobileMediaQuery } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
 
 interface Props {
@@ -76,10 +77,13 @@ function MyGroup({ group }: Props, ref: ForwardedRef<HTMLAnchorElement>): ReactE
 export default memo(forwardRef<HTMLAnchorElement, Props>(MyGroup));
 
 const MyGroupWrapper = styled.a`
+  ${mq({
+    flexDirection: ['column', 'row'],
+  })};
+
   cursor: pointer;
   outline: none;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
 `;
@@ -138,7 +142,16 @@ const Thumbnail = styled.img`
 `;
 
 const ThumbnailWrapper = styled.div`
+  ${mobileMediaQuery} {
+    width: 100%;
+    padding-top: calc(100% - 154px);
+    margin-top: 24px;
+    margin-left: 0px;
+  }
+
   position: relative;
   padding-top: 96px;
   width: 174px;
+  min-width: 174px;
+  margin-left: 24px;
 `;
