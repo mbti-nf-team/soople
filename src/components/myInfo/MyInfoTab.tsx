@@ -5,7 +5,8 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import type { ActiveMyInfoTab } from '@/containers/myInfo/MyInfoTabContainer';
-import { h4Font } from '@/styles/fontStyles';
+import { body1Font, h4Font } from '@/styles/fontStyles';
+import mq, { mobileMediaQuery } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
 interface Props {
@@ -34,12 +35,23 @@ export default MyInfoTab;
 
 const StyledLink = styled.a<{ pathName: ActiveMyInfoTab; activeTab: ActiveMyInfoTab; }>`
   transition: border-color .2s ease-in-out;
-  padding: 9px 12px;
+  ${mq({
+    padding: ['11px 12px', '12px'],
+  })};
+
   ${({ pathName, activeTab, theme }) => (pathName === activeTab ? css`
     border-bottom: 2px solid ${theme.foreground};
-    ${h4Font(true)}
+    ${mobileMediaQuery} {
+      ${body1Font(true)};
+    }
+
+    ${h4Font(true)};
   ` : css`
-    ${h4Font()}
+    ${mobileMediaQuery} {
+      ${body1Font()};
+    }
+
+    ${h4Font()};
     border-bottom: 2px solid transparent;
     color: ${theme.accent6};
   `)};
@@ -56,6 +68,8 @@ const MyInfoNav = styled.nav`
   justify-content: center;
 
   & > :not(a:last-of-type) {
-    margin-right: 16px;
+  ${mq({
+    marginRight: ['0', '16px'],
+  })};
   }
 `;

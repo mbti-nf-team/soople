@@ -15,13 +15,13 @@ interface Props {
 function MyInfoTabContainer({ activeTab }: Props): ReactElement {
   const { data: user } = useFetchUserProfile();
   const { data: appliedGroupCount } = useFetchUserAppliedGroupCount(user?.uid);
-  const { data: recruitedGroups } = useFetchUserRecruitedGroupCount(user?.uid);
+  const { data: recruitedGroupCount } = useFetchUserRecruitedGroupCount(user?.uid);
 
   return (
     <MyInfoTab
       activeTab={activeTab}
       numberAppliedGroups={checkNumNull(appliedGroupCount)}
-      numberRecruitedGroups={checkNumNull(recruitedGroups)}
+      numberRecruitedGroups={checkNumNull(recruitedGroupCount)}
     />
   );
 }
