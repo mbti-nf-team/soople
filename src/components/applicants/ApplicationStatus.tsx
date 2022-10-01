@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
 
 import { Applicant } from '@/models/group';
+import { mobileMediaQuery } from '@/styles/responsive';
 import { isEmpty } from '@/utils/utils';
 
 import EmptyStateArea from '../common/EmptyStateArea';
@@ -42,7 +43,12 @@ function ApplicationStatus({ applicants, onToggleConfirm, goBack }: Props): Reac
 export default ApplicationStatus;
 
 const ApplicationStatusSection = styled.section`
+  ${mobileMediaQuery} {
+    margin-top: 0px;
+  }
+
   margin-top: 24px;
+  overflow-y: auto;
 
   & > :not(:last-of-type) {
     border-bottom: 0.5px solid ${({ theme }) => theme.accent2};

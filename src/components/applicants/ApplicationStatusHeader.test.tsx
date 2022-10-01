@@ -3,6 +3,7 @@ import {
 } from '@testing-library/react';
 
 import { Applicant } from '@/models/group';
+import InjectResponsiveContext from '@/test/InjectResponsiveContext';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 
@@ -22,13 +23,43 @@ describe('ApplicationStatusHeader', () => {
   });
 
   const renderApplicationStatusHeader = (applicant: Applicant) => render((
-    <ApplicationStatusHeader
-      timeRemaining={null}
-      onSubmit={handleSubmit}
-      goBack={handleGoBack}
-      applicants={[applicant]}
-    />
+    <InjectResponsiveContext width={given.width}>
+      <ApplicationStatusHeader
+        timeRemaining={null}
+        onSubmit={handleSubmit}
+        goBack={handleGoBack}
+        applicants={[applicant]}
+      />
+    </InjectResponsiveContext>
   ));
+
+  describe('디바이스 크키 상타에 따라 버튼 문구가 달라진다', () => {
+    context('모바일인 경우', () => {
+      given('width', () => 400);
+
+      it('"~명 모집 완료" 문구 버튼이 나타나야만 한다', () => {
+        const { container } = renderApplicationStatusHeader({
+          ...APPLICANT_FIXTURE,
+          isConfirm: true,
+        });
+
+        expect(container).toHaveTextContent(/1명 모집 완료/i);
+      });
+    });
+
+    context('모바일이 아닌 경우', () => {
+      given('width', () => 700);
+
+      it('"모집 완료" 문구 버튼이 나타나야만 한다', () => {
+        const { container } = renderApplicationStatusHeader({
+          ...APPLICANT_FIXTURE,
+          isConfirm: true,
+        });
+
+        expect(container).toHaveTextContent(/모집 완료/i);
+      });
+    });
+  });
 
   describe('"1명의 신청현황"을 클릭한다', () => {
     it('goback함수가 호출되어야만 한다', () => {

@@ -2,9 +2,11 @@ import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
+import useResponsive from '@/hooks/useResponsive';
 import { Applicant } from '@/models/group';
 import Divider from '@/styles/Divider';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
+import mq, { mobileMediaQuery } from '@/styles/responsive';
 import styledAnchor from '@/styles/styledAnchor';
 import { emptyAThenB, stringToExcludeNull } from '@/utils/utils';
 
@@ -17,6 +19,7 @@ interface Props {
 }
 
 function ApplicantItem({ applicationForm, onToggle }: Props): ReactElement {
+  const { isMobile, isClient } = useResponsive();
   const {
     portfolioUrl, applicant, introduce, isConfirm,
   } = applicationForm;
@@ -28,30 +31,34 @@ function ApplicantItem({ applicationForm, onToggle }: Props): ReactElement {
     <ApplicantItemWrapper>
       <ApplicantSubInformation>
         <ApplicantProfile>
-          <ProfileImage size="48px" src={image} />
+          <ProfileImage size={isMobile ? '36px' : '48px'} src={image} />
           <ApplicantTextWrapper>
             <span>{emptyAThenB(email, name)}</span>
             <MetadataWrapper>
               <span>{position}</span>
-              <Divider />
-              <a
+              {!isMobile && isClient && (
+                <Divider />
+              )}
+              <PortfolioUrl
                 href={stringToExcludeNull(portfolioUrl)}
                 rel="noopener noreferrer"
                 target="_blank"
               >
                 {portfolioUrl}
-              </a>
+              </PortfolioUrl>
             </MetadataWrapper>
           </ApplicantTextWrapper>
         </ApplicantProfile>
-        <Button
-          type="button"
-          size="small"
-          color={isConfirm ? 'primary' : 'outlined'}
-          onClick={() => onToggle(applicationForm)}
-        >
-          {isConfirm ? '해제' : '선택'}
-        </Button>
+        <div>
+          <Button
+            type="button"
+            size="small"
+            color={isConfirm ? 'primary' : 'outlined'}
+            onClick={() => onToggle(applicationForm)}
+          >
+            {isConfirm ? '해제' : '선택'}
+          </Button>
+        </div>
       </ApplicantSubInformation>
       <IntroduceBlock>
         {introduce}
@@ -63,9 +70,12 @@ function ApplicantItem({ applicationForm, onToggle }: Props): ReactElement {
 export default memo(ApplicantItem);
 
 const ApplicantItemWrapper = styled.div`
+  ${mq({
+    marginTop: ['24px', '16px'],
+  })}
+
   display: flex;
   flex-direction: column;
-  margin-top: 16px;
 
   & > div {
     margin-bottom: 16px;
@@ -73,6 +83,10 @@ const ApplicantItemWrapper = styled.div`
 `;
 
 const ApplicantSubInformation = styled.div`
+  ${mobileMediaQuery} {
+    align-items: flex-start;
+  }
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -100,7 +114,16 @@ const ApplicantTextWrapper = styled.div`
 `;
 
 const MetadataWrapper = styled.div`
-  ${styledAnchor}
+  ${styledAnchor};
+  ${mobileMediaQuery} {
+    flex-direction: column;
+    align-items: flex-start;
+
+    & > span:first-of-type {
+      margin-bottom: 2px;
+    }
+  }
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -109,4 +132,14 @@ const MetadataWrapper = styled.div`
 const IntroduceBlock = styled.div`
   ${body2Font()};
   white-space: pre;
+`;
+
+const PortfolioUrl = styled.a`
+  word-break: break-all;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-inline-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;

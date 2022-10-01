@@ -3,8 +3,10 @@ import React, { memo } from 'react';
 import styled from '@emotion/styled';
 
 import useBoolean from '@/hooks/useBoolean';
+import useResponsive from '@/hooks/useResponsive';
 import { Applicant, CompletedGroupForm } from '@/models/group';
 import { body2Font } from '@/styles/fontStyles';
+import { mobileMediaQuery } from '@/styles/responsive';
 
 import Button from '../common/Button';
 import SubHeader from '../common/SubHeader';
@@ -21,6 +23,7 @@ interface Props{
 function ApplicationStatusHeader({
   goBack, onSubmit, applicants, timeRemaining,
 }: Props) {
+  const { isMobile, isClient } = useResponsive();
   const [
     isVisibleCompleteApplyFormModal, openCompleteApplyFormModal, closeCompleteApplyFormModal,
   ] = useBoolean(false);
@@ -39,18 +42,22 @@ function ApplicationStatusHeader({
         previousText={`${applicants.length}명의 신청현황`}
       >
         <>
-          <SelectApplicantStatus>
-            {`${numberConfirmApplicants}명 선택`}
-          </SelectApplicantStatus>
-          <Button
-            type="button"
-            size="small"
-            color="success"
-            disabled={!numberConfirmApplicants}
-            onClick={openCompleteApplyFormModal}
-          >
-            모집 완료
-          </Button>
+          {!isMobile && isClient && (
+            <SelectApplicantStatus>
+              {`${numberConfirmApplicants}명 선택`}
+            </SelectApplicantStatus>
+          )}
+          <SubmitButtonWrapper>
+            <Button
+              type="button"
+              size={isMobile ? 'large' : 'small'}
+              color="success"
+              disabled={!numberConfirmApplicants}
+              onClick={openCompleteApplyFormModal}
+            >
+              {isMobile ? `${numberConfirmApplicants}명 모집 완료` : '모집 완료'}
+            </Button>
+          </SubmitButtonWrapper>
         </>
       </SubHeader>
       <CompleteApplyFormModal
@@ -69,4 +76,17 @@ export default memo(ApplicationStatusHeader);
 const SelectApplicantStatus = styled.span`
   ${body2Font()};
   margin-right: 16px;
+`;
+
+const SubmitButtonWrapper = styled.div`
+  ${mobileMediaQuery} {
+    width: calc(100% - 40px);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    & > button {
+      width: 100%;
+    }
+  }
 `;
