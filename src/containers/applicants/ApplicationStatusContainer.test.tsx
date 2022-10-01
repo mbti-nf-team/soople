@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';
+import InjectResponsiveContext from '@/test/InjectResponsiveContext';
 import { errorToast } from '@/utils/toast';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
@@ -41,7 +42,9 @@ describe('ApplicationStatusContainer', () => {
   });
 
   const renderApplicationStatusContainer = () => render((
-    <ApplicationStatusContainer />
+    <InjectResponsiveContext width={given.width}>
+      <ApplicationStatusContainer />
+    </InjectResponsiveContext>
   ));
 
   context('로딩중인 경우', () => {
@@ -57,6 +60,16 @@ describe('ApplicationStatusContainer', () => {
   context('로딩중이 아닌 경우', () => {
     given('isLoading', () => false);
     given('applicants', () => [APPLICANT_FIXTURE]);
+
+    context('모바일인 경우', () => {
+      given('width', () => 400);
+
+      it('gradient block이 나타나야만 한다', () => {
+        renderApplicationStatusContainer();
+
+        expect(screen.getByTestId('gradient-block')).toBeInTheDocument();
+      });
+    });
 
     describe('"선택" 버튼을 클릭한다', () => {
       it('toggleConfirm mutate 액션이 호출되어야만 한다', () => {

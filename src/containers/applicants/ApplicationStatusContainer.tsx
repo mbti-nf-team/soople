@@ -1,16 +1,20 @@
 import React, { ReactElement, useCallback, useEffect } from 'react';
 
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
 import ApplicationStatus from '@/components/applicants/ApplicationStatus';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';
+import useResponsive from '@/hooks/useResponsive';
 import { Applicant } from '@/models/group';
 import { DetailLayout } from '@/styles/Layout';
+import { mq2 } from '@/styles/responsive';
 import { errorToast } from '@/utils/toast';
 
 function ApplicationStatusContainer(): ReactElement {
   const { query, back } = useRouter();
+  const { isMobile } = useResponsive();
   const { data: applicants, isLoading, isSuccess } = useFetchApplicants();
   const { mutate } = useUpdateApplicant();
 
@@ -36,14 +40,35 @@ function ApplicationStatusContainer(): ReactElement {
   }
 
   return (
-    <DetailLayout>
+    <ApplicationStatusDetailLayout>
       <ApplicationStatus
         goBack={back}
         applicants={applicants}
         onToggleConfirm={onToggleConfirm}
       />
-    </DetailLayout>
+      {isMobile && (
+        <GradientBlock data-testid="gradient-block" />
+      )}
+    </ApplicationStatusDetailLayout>
   );
 }
 
 export default ApplicationStatusContainer;
+
+const ApplicationStatusDetailLayout = styled(DetailLayout)`
+  ${mq2({
+    height: ['calc(100vh - 124px)', 'auto'],
+  })};
+
+  max-width: 686px;
+  width: calc(100% - 2.5rem);
+  overflow-y: auto;
+`;
+
+const GradientBlock = styled.div`
+  position: absolute;
+  bottom: 68px;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+`;
