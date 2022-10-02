@@ -5,6 +5,7 @@ import { plugin as cypressFirebasePlugin } from 'cypress-firebase';
 import admin from 'firebase-admin';
 
 export default defineConfig({
+  projectId: 'oj7cg1',
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
