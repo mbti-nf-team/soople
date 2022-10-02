@@ -49,10 +49,11 @@ describe('auth API', () => {
     beforeEach(() => {
       (getDoc as jest.Mock).mockImplementationOnce(() => ({
         data: jest.fn().mockReturnValue(mockResponse),
+        exists: jest.fn().mockImplementation(() => given.isExist),
       }));
     });
 
-    context('uid가 null인 경우', () => {
+    context('uid가 존재하지 않는 경우', () => {
       it('null을 반환해야만 한다', async () => {
         const response = await getUserProfile();
 
@@ -61,11 +62,25 @@ describe('auth API', () => {
     });
 
     context('uid가 존재하는 경우', () => {
-      it('해당 detail 글 정보가 나타나야만 한다', async () => {
-        const response = await getUserProfile('id');
+      context('user 정보가 존재하지 않는 경우', () => {
+        given('isExist', () => false);
 
-        expect(getDoc).toBeCalled();
-        expect(response).toEqual(mockResponse);
+        it('null을 반환해야만 한다', async () => {
+          const response = await getUserProfile('id');
+
+          expect(response).toBeNull();
+        });
+      });
+
+      context('user 정보가 존재하는 경우', () => {
+        given('isExist', () => true);
+
+        it('해당 detail 글 정보가 나타나야만 한다', async () => {
+          const response = await getUserProfile('id');
+
+          expect(getDoc).toBeCalled();
+          expect(response).toEqual(mockResponse);
+        });
       });
     });
   });
@@ -79,17 +94,33 @@ describe('auth API', () => {
   });
 
   describe('getAuthRedirectResult', () => {
-    beforeEach(() => {
-      (getRedirectResult as jest.Mock).mockImplementation(() => ({
-        user: FIXTURE_PROFILE,
-      }));
+    context('user 정보가 없는 경우', () => {
+      beforeEach(() => {
+        (getRedirectResult as jest.Mock).mockImplementation(() => ({
+          user: null,
+        }));
+      });
+
+      it('null을 반환애야만 한다', async () => {
+        const user = await getAuthRedirectResult();
+
+        expect(user).toBeNull();
+      });
     });
 
-    it('"getRedirectResult"이 호출되어야만 한다', async () => {
-      const user = await getAuthRedirectResult();
+    context('user 정보가 존재하는 경우', () => {
+      beforeEach(() => {
+        (getRedirectResult as jest.Mock).mockImplementation(() => ({
+          user: FIXTURE_PROFILE,
+        }));
+      });
 
-      expect(getRedirectResult).toBeCalled();
-      expect(user).toEqual(FIXTURE_PROFILE);
+      it('"getRedirectResult"이 호출되어야만 한다', async () => {
+        const user = await getAuthRedirectResult();
+
+        expect(getRedirectResult).toBeCalled();
+        expect(user).toEqual(FIXTURE_PROFILE);
+      });
     });
   });
 

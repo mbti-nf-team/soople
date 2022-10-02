@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { deleteGroupComment } from '@/services/api/comment';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -27,7 +27,7 @@ describe('useDeleteComment', () => {
       });
     });
 
-    expect(result.current.isSuccess).toBeTruthy();
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(deleteGroupComment).toBeCalled();
   });
 });

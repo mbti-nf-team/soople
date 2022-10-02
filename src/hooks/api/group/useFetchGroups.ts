@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
-import { useQuery } from 'react-query';
-
+import { useQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 import { useRecoilValue } from 'recoil';
 
@@ -16,19 +14,13 @@ function useFetchGroups() {
 
   const query = useQuery<Group[], FirestoreError>(['groups', groupsCondition], () => fetchGroups(groupsCondition));
 
-  const {
-    isError, error, data, refetch,
-  } = query;
+  const { isError, error, data } = query;
 
   useCatchFirestoreErrorWithToast({
     isError,
     error,
     defaultErrorMessage: '팀 리스트를 불러오는데 실패했어요! 다시 시도해주세요!',
   });
-
-  useEffect(() => {
-    refetch();
-  }, [groupsCondition]);
 
   return {
     ...query,

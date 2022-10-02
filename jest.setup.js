@@ -1,6 +1,3 @@
-/* eslint-disable no-console */
-import { setLogger } from 'react-query';
-
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -28,12 +25,6 @@ jest.mock('next/dynamic', () => ({
     return RequiredComponent;
   },
 }));
-
-setLogger({
-  log: console.log,
-  warn: console.warn,
-  error: () => {},
-});
 
 dayjs.locale('ko');
 dayjs.extend(relativeTime);

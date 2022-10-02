@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
-import { dehydrate, QueryClient } from 'react-query';
 
 import styled from '@emotion/styled';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { FirebaseError } from 'firebase/app';
 import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';

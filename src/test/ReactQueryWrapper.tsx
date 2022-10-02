@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactElement, Suspense } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 interface Props {
   suspense?: boolean;
@@ -12,6 +13,11 @@ function ReactQueryWrapper({ suspense = false, children }: PropsWithChildren<Pro
         retry: false,
         suspense,
       },
+    },
+    logger: {
+      log: console.log,
+      warn: console.warn,
+      error: () => {},
     },
   });
 

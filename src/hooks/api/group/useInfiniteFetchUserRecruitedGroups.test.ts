@@ -27,37 +27,18 @@ describe('useInfiniteFetchUserRecruitedGroups', () => {
 
     (useInView as jest.Mock).mockImplementation(() => ({
       ref: jest.fn(),
-      inView: given.inView,
+      inView: false,
     }));
 
     (getUserRecruitedGroups as jest.Mock).mockImplementation(() => (responseGroups));
   });
 
-  context('inView가 true인 경우', () => {
-    given('inView', () => true);
+  it('getUserRecruitedGroups를 한 번 호출 후 반환해야만 한다', async () => {
+    const { result, waitFor } = useInfiniteFetchUserRecruitedGroupsHook();
 
-    it('getUserRecruitedGroups가 두 번 호출 후 반환해야만 한다', async () => {
-      const { result, waitFor } = useInfiniteFetchUserRecruitedGroupsHook();
+    await waitFor(() => result.current.query.isSuccess);
 
-      await waitFor(() => result.current.query.isSuccess);
-
-      expect(getUserRecruitedGroups).toBeCalledTimes(2);
-      expect(result.current.query.data?.pages).toEqual([
-        responseGroups, responseGroups,
-      ]);
-    });
-  });
-
-  context('inView가 false인 경우', () => {
-    given('inView', () => false);
-
-    it('getUserRecruitedGroups를 한 번 호출 후 반환해야만 한다', async () => {
-      const { result, waitFor } = useInfiniteFetchUserRecruitedGroupsHook();
-
-      await waitFor(() => result.current.query.isSuccess);
-
-      expect(getUserRecruitedGroups).toBeCalledTimes(1);
-      expect(result.current.query.data?.pages).toEqual([responseGroups]);
-    });
+    expect(getUserRecruitedGroups).toBeCalledTimes(1);
+    expect(result.current.query.data?.pages).toEqual([responseGroups]);
   });
 });

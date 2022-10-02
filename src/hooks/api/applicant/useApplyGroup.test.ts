@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { postAddAlarm } from '@/services/api/alarm';
 import { postAddApplicant } from '@/services/api/applicants';
@@ -39,7 +39,7 @@ describe('useApplyGroup', () => {
       });
     });
 
-    expect(result.current.isSuccess).toBeTruthy();
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(result.current.data).toEqual([
       response,
       ALARM_FIXTURE,

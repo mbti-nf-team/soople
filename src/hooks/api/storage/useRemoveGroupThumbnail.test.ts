@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { deleteGroupThumbnail } from '@/services/api/storage';
 import wrapper from '@/test/InjectMockProviders';
@@ -27,7 +27,7 @@ describe('useRemoveGroupThumbnail', () => {
       await result.current.mutate(thumbnailUrl);
     });
 
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(deleteGroupThumbnail).toBeCalledWith(thumbnailUrl);
-    expect(result.current.isSuccess).toBeTruthy();
   });
 });

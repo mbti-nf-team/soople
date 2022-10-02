@@ -31,6 +31,10 @@ export const getUserProfile = async (uid?: string): Promise<Profile | null> => {
 
   const user = await getDoc(docRef('users', uid));
 
+  if (!user.exists()) {
+    return null;
+  }
+
   return user.data() as Profile;
 };
 
@@ -38,10 +42,14 @@ export const postSignOut = async () => {
   await signOut(firebaseAuth);
 };
 
-export const getAuthRedirectResult = async (): Promise<User | undefined> => {
+export const getAuthRedirectResult = async (): Promise<User | null> => {
   const user = await getRedirectResult(firebaseAuth);
 
-  return user?.user;
+  if (!user?.user) {
+    return null;
+  }
+
+  return user.user;
 };
 
 export const postReauthenticateWithProvider = async () => {

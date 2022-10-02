@@ -13,7 +13,7 @@ function RecruitedGroupsContainer(): ReactElement {
     perPage: 10,
   });
 
-  if (query.isLoading || query.isIdle) {
+  if (query.isLoading && ['fetching', 'idle'].includes(query.fetchStatus)) {
     return <MyGroupsSkeletonLoader />;
   }
 

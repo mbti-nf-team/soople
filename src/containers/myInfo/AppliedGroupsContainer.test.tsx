@@ -23,7 +23,7 @@ describe('AppliedGroupsContainer', () => {
           }],
         },
         isLoading: given.isLoading,
-        isIdle: false,
+        fetchStatus: 'idle',
       },
       refState: {
         lastItemRef: jest.fn(),

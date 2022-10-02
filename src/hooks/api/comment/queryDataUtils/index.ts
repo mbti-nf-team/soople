@@ -1,4 +1,4 @@
-import { InfiniteData } from 'react-query';
+import { InfiniteData } from '@tanstack/react-query';
 
 import { InfiniteResponse } from '@/models';
 import { Comment, CommentForm } from '@/models/group';

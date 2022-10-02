@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useQuery } from 'react-query';
+import { useEffectOnce } from 'react-use';
 
+import { useQuery } from '@tanstack/react-query';
 import { AuthError, User } from 'firebase/auth';
 import { useRouter } from 'next/router';
 
@@ -12,19 +13,19 @@ function useAuthRedirectResult() {
   const { data: profile, isSuccess } = useFetchUserProfile();
   const router = useRouter();
 
-  const query = useQuery<User | undefined, AuthError>(['authRedirectResult'], () => getAuthRedirectResult(), {
+  const query = useQuery<User | null, AuthError>(['authRedirectResult'], getAuthRedirectResult, {
     enabled: false,
   });
 
-  useEffect(() => {
+  useEffectOnce(() => {
     query.refetch();
-  }, []);
+  });
 
   useEffect(() => {
     if (query.isSuccess && query.data && isSuccess && !profile) {
       router.push('/signup');
     }
-  }, [query.data, query.isSuccess, isSuccess, profile]);
+  }, [query.data, query.isSuccess, isSuccess, profile, router]);
 
   return query;
 }

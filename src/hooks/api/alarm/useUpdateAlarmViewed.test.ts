@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { patchAlarmViewed } from '@/services/api/alarm';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -23,7 +23,7 @@ describe('useUpdateAlarmViewed', () => {
       await result.current.mutate('alarmUid');
     });
 
-    expect(result.current.isSuccess).toBeTruthy();
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(patchAlarmViewed).toBeCalledTimes(1);
   });
 });

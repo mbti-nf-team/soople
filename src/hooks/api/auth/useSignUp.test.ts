@@ -37,7 +37,6 @@ describe('useSignUp', () => {
     });
 
     expect(postUserProfile).toBeCalledWith(PROFILE_FIXTURE);
-    expect(result.current.isSuccess).toBeTruthy();
     expect(replace).toBeCalledWith('/');
   });
 });

@@ -11,7 +11,7 @@ function AlarmListContainer(): ReactElement {
 
   const onClickAlarm = useCallback((alarmUid: string) => updateAlarm(alarmUid), [updateAlarm]);
 
-  if (query.isLoading || query.isIdle) {
+  if (query.isLoading && ['fetching', 'idle'].includes(query.fetchStatus)) {
     return <AlarmsSkeletonLoader />;
   }
 

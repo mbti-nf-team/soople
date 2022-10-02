@@ -1,5 +1,4 @@
-import { useMutation, useQueryClient } from 'react-query';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
@@ -38,7 +37,7 @@ function useUpdateCompletedApply() {
         isCompleted: true,
       }));
 
-      queryClient.invalidateQueries('alarms');
+      queryClient.invalidateQueries(['alarms']);
 
       router.replace(`/detail/${groupId}`);
       setIsVisibleRecruitCompleteModal(true);

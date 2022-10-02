@@ -31,11 +31,11 @@ function CommentsContainer(): ReactElement {
   const onSubmit = useCallback((commentForm: CommentFields) => addCommentMutate({
     ...commentForm,
     groupId,
-  }), [groupId]);
+  }), [groupId, addCommentMutate]);
 
   const onRemoveComment = useCallback((commentId: string) => deleteCommentMutate({
     commentId, groupId,
-  }), [groupId]);
+  }), [groupId, deleteCommentMutate]);
 
   return (
     <>
@@ -47,7 +47,7 @@ function CommentsContainer(): ReactElement {
       <CommentsView
         user={user}
         comments={query.data.pages}
-        isLoading={query.isLoading || query.isIdle}
+        isLoading={query.isLoading && ['idle', 'fetching'].includes(query.fetchStatus)}
         onRemove={onRemoveComment}
         refState={refState}
       />
