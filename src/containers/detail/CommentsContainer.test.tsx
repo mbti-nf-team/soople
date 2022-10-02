@@ -48,7 +48,7 @@ describe('CommentsContainer', () => {
           }],
         },
         isLoading: given.isLoading,
-        isIdle: false,
+        fetchStatus: 'idle',
       },
       refState: {
         lastItemRef: jest.fn(),
@@ -64,43 +64,57 @@ describe('CommentsContainer', () => {
     <CommentsContainer />
   ));
 
-  describe('"댓글 남기기" 버튼을 클릭한다', () => {
-    const commentValue = '댓글 내용';
-    const writer = {
-      name: 'test',
-      uid: '12345678',
-    };
+  context('로딩중인 경우', () => {
+    given('isLoading', () => true);
 
-    context('사용자가 로그인 상태인 경우', () => {
-      given('user', () => (writer));
+    it('스켈레톤 로딩이 나타나야만 한다', () => {
+      renderCommentsContainer();
 
-      it('mutate 액션이 호출되야만 한다', () => {
-        renderCommentsContainer();
+      expect(screen.getByTestId('comments-skeleton-loading')).toBeInTheDocument();
+    });
+  });
 
-        fireEvent.change(screen.getByPlaceholderText('댓글을 입력하세요'), {
-          target: {
-            value: commentValue,
-          },
-        });
+  context('로딩중이 아닌 경우', () => {
+    given('isLoading', () => false);
 
-        fireEvent.click(screen.getByText('댓글 남기기'));
+    describe('"댓글 남기기" 버튼을 클릭한다', () => {
+      const commentValue = '댓글 내용';
+      const writer = {
+        name: 'test',
+        uid: '12345678',
+      };
 
-        expect(mutate).toBeCalledWith({
-          content: commentValue,
-          writer,
-          groupId: '1',
-        });
-      });
+      context('사용자가 로그인 상태인 경우', () => {
+        given('user', () => (writer));
 
-      describe('삭제 모달창의 "삭제하기" 버튼을 클릭한다', () => {
-        it('remove mutate 액션이 호출되어야만 한다', () => {
+        it('mutate 액션이 호출되야만 한다', () => {
           renderCommentsContainer();
 
-          fireEvent.click(screen.getByText('삭제'));
+          fireEvent.change(screen.getByPlaceholderText('댓글을 입력하세요'), {
+            target: {
+              value: commentValue,
+            },
+          });
+
+          fireEvent.click(screen.getByText('댓글 남기기'));
 
           expect(mutate).toBeCalledWith({
-            commentId: COMMENT_FIXTURE.commentId,
+            content: commentValue,
+            writer,
             groupId: '1',
+          });
+        });
+
+        describe('삭제 모달창의 "삭제하기" 버튼을 클릭한다', () => {
+          it('remove mutate 액션이 호출되어야만 한다', () => {
+            renderCommentsContainer();
+
+            fireEvent.click(screen.getByText('삭제'));
+
+            expect(mutate).toBeCalledWith({
+              commentId: COMMENT_FIXTURE.commentId,
+              groupId: '1',
+            });
           });
         });
       });

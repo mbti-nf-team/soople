@@ -1,5 +1,4 @@
-import { useMutation } from 'react-query';
-
+import { useMutation } from '@tanstack/react-query';
 import { StorageError } from 'firebase/storage';
 import { useSetRecoilState } from 'recoil';
 

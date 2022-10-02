@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { putApplicant } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -19,7 +19,7 @@ describe('useUpdateApplicant', () => {
       await result.current.mutate(FIXTURE_APPLICANT);
     });
 
-    expect(result.current.isSuccess).toBeTruthy();
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(putApplicant).toBeCalledWith(FIXTURE_APPLICANT);
   });
 });

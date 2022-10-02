@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
+
 import {
   QueryKey, useQuery, useQueryClient, UseQueryOptions, UseQueryResult,
-} from 'react-query';
-
+} from '@tanstack/react-query';
 import {
   Auth, AuthError, IdTokenResult, Unsubscribe,
 } from 'firebase/auth';

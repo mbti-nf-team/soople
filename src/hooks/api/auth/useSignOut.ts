@@ -1,5 +1,4 @@
-import { useMutation, useQueryClient } from 'react-query';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AuthError, IdTokenResult, User } from 'firebase/auth';
 import { useRouter } from 'next/router';
 

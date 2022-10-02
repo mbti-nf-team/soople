@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 import { postSignOut } from '@/services/api/auth';
@@ -34,8 +34,8 @@ describe('useSignOut', () => {
       await result.current.mutate();
     });
 
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(postSignOut).toBeCalled();
-    expect(result.current.isSuccess).toBeTruthy();
     expect(replace).toBeCalledWith('/', undefined, { shallow: true });
   });
 });

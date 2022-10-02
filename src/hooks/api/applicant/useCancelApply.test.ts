@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { deleteApplicant } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -32,7 +32,7 @@ describe('useCancelApply', () => {
       await result.current.mutate('applicant');
     });
 
-    expect(result.current.isSuccess).toBeTruthy();
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(result.current.data).toBe(5);
   });
 });

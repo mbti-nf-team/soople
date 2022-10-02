@@ -1,5 +1,4 @@
-import { InfiniteData, useMutation, useQueryClient } from 'react-query';
-
+import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 
 import { InfiniteResponse } from '@/models';

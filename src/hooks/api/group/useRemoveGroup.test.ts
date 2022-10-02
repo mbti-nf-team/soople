@@ -33,6 +33,5 @@ describe('useRemoveGroup', () => {
 
     expect(deleteGroup).toBeCalled();
     expect(deleteTagCount).toBeCalled();
-    expect(result.current.isSuccess).toBeTruthy();
   });
 });

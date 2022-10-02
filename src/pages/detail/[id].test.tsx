@@ -1,8 +1,8 @@
 import { ParsedUrlQuery } from 'querystring';
 
 import { createRef } from 'react';
-import { QueryClient } from 'react-query';
 
+import { QueryClient } from '@tanstack/react-query';
 import { act, render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 
