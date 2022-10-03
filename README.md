@@ -86,7 +86,7 @@
   <img src="https://img.shields.io/github/package-json/dependency-version/jenny-harang/soople/react?logo=react&style=for-the-badge">
 </a>
 <a href="#">
-  <img src="https://img.shields.io/github/package-json/dependency-version/jenny-harang/soople/react-query?logo=react-query&style=for-the-badge">
+  <img src="https://img.shields.io/github/package-json/dependency-version/jenny-harang/soople/@tanstack/react-query?logo=react-query&style=for-the-badge">
 </a>
 <a href="#">
   <img src="https://img.shields.io/github/package-json/dependency-version/jenny-harang/soople/recoil?style=for-the-badge">
