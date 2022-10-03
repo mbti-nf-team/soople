@@ -9,6 +9,7 @@ import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';
 import useResponsive from '@/hooks/useResponsive';
 import { Applicant } from '@/models/group';
+import GradientBlock from '@/styles/GradientBlock';
 import { DetailLayout } from '@/styles/Layout';
 import { mq2 } from '@/styles/responsive';
 import { errorToast } from '@/utils/toast';
@@ -64,12 +65,4 @@ const ApplicationStatusDetailLayout = styled(DetailLayout)`
   max-width: 686px;
   width: calc(100% - 2.5rem);
   overflow-y: auto;
-`;
-
-const GradientBlock = styled.div`
-  position: absolute;
-  bottom: 68px;
-  width: 100%;
-  height: 40px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
 `;
