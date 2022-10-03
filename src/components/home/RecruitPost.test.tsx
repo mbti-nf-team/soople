@@ -24,6 +24,19 @@ describe('RecruitPost', () => {
     });
   });
 
+  context('썸네일이 존재하지 않는 경우', () => {
+    given('group', () => ({
+      ...GROUP_FIXTURE,
+      thumbnail: '',
+    }));
+
+    it('썸네일은 존재하지 않아만 한다', () => {
+      renderRecruitPost();
+
+      expect(screen.queryByAltText('thumbnail')).not.toBeInTheDocument();
+    });
+  });
+
   context('짧은 소개글이 존재하는 경우', () => {
     const shortDescription = '짧은 소개글입니다.';
 

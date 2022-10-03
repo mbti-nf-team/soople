@@ -39,7 +39,9 @@ function RecruitPost({ group }: Props): ReactElement {
               </ThumbnailWrapper>
             )}
             <Title>{title}</Title>
-            <Content>{emptyAThenB(removeAllHtml(content), shortDescription)}</Content>
+            <Content hasThumbnail={!!thumbnail} data-testid="content">
+              {emptyAThenB(removeAllHtml(content), shortDescription)}
+            </Content>
           </PostPreview>
           <PostMetaData>
             <ViewsIcon
@@ -92,14 +94,14 @@ const Title = styled.div`
   ${h4Font(true)};
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ hasThumbnail: boolean; }>`
   ${body2Font()};
   color: ${({ theme }) => theme.accent7};
   word-break: break-all;
   overflow-wrap: break-word;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: ${({ hasThumbnail }) => (hasThumbnail ? 2 : 4)};
   -webkit-box-orient: vertical;
   overflow: hidden;
 `;
