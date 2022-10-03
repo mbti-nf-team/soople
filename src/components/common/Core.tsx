@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
 import { Bounce } from 'react-toastify';
 
-import { useTheme } from '@emotion/react';
 import NextNProgress from 'nextjs-progressbar';
+
+import { useTheme } from '@emotion/react';
 
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
 import useCheckSignUp from '@/hooks/api/auth/useCheckSignUp';

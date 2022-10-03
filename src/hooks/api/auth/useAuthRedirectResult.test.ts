@@ -1,5 +1,6 @@
-import { renderHook, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/router';
+
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getAuthRedirectResult } from '@/services/api/auth';
 import wrapper from '@/test/ReactQueryWrapper';

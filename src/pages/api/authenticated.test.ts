@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { NextApiRequest, NextApiResponse } from 'next';
+
 import { createMocks } from 'node-mocks-http';
 
 import firebaseAdmin from '@/services/firebase/firebaseAdmin';

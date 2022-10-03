@@ -1,8 +1,9 @@
+import { useRouter } from 'next/router';
+
 import {
   fireEvent, render, screen,
 } from '@testing-library/react';
 import { act } from '@testing-library/react-hooks';
-import { useRouter } from 'next/router';
 
 import useAccountWithdrawal from '@/hooks/api/auth/useAccountWithdrawal';
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';

@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
 
+import { useRouter } from 'next/router';
+
 import {
   css, Global, Theme, useTheme,
 } from '@emotion/react';
 import emotionNormalize from 'emotion-normalize';
-import { useRouter } from 'next/router';
 
 import {
   h1Font, h2Font, h3Font, h4Font,

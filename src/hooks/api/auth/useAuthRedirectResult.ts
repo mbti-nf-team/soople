@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useEffectOnce } from 'react-use';
 
+import { useRouter } from 'next/router';
+
 import { useQuery } from '@tanstack/react-query';
 import { AuthError, User } from 'firebase/auth';
-import { useRouter } from 'next/router';
 
 import { getAuthRedirectResult } from '@/services/api/auth';
 

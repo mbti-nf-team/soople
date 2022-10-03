@@ -4,9 +4,10 @@ import React, {
 import { Bell as AlarmIcon } from 'react-feather';
 import { useClickAway } from 'react-use';
 
+import Link from 'next/link';
+
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import Link from 'next/link';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 import useBoolean from '@/hooks/useBoolean';

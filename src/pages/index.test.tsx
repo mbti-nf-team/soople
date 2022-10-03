@@ -1,5 +1,6 @@
-import { act, render } from '@testing-library/react';
 import { useRouter } from 'next/router';
+
+import { act, render } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useGetUser from '@/hooks/api/auth/useGetUser';

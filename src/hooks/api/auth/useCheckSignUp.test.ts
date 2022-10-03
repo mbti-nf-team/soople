@@ -1,5 +1,6 @@
-import { renderHook, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/router';
+
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { postSignOut } from '@/services/api/auth';
 import { loadItem, removeItem } from '@/services/storage';

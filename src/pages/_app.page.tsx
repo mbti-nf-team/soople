@@ -1,14 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { ReactElement, ReactNode, useState } from 'react';
 
+import type { NextPage } from 'next';
+import type { AppProps } from 'next/app';
+import { DefaultSeo } from 'next-seo';
+
 import { ThemeProvider } from '@emotion/react';
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import type { NextPage } from 'next';
-import type { AppProps } from 'next/app';
-import { DefaultSeo } from 'next-seo';
 import { RecoilRoot } from 'recoil';
 
 import Core from '@/components/common/Core';

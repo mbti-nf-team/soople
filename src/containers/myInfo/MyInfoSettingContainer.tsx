@@ -1,8 +1,9 @@
 import React, { ReactElement, useCallback, useEffect } from 'react';
 import { useLocalStorage } from 'react-use';
 
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+
+import styled from '@emotion/styled';
 
 import ImageSetting from '@/components/myInfo/ImageSetting';
 import SettingForm from '@/components/myInfo/SettingForm';

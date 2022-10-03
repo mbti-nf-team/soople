@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
 
+import Link from 'next/link';
+
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Link from 'next/link';
 
 import type { ActiveMyInfoTab } from '@/containers/myInfo/MyInfoTabContainer';
 import { body1Font, h4Font } from '@/styles/fontStyles';

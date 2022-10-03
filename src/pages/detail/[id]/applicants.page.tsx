@@ -1,9 +1,10 @@
 import React, { ReactElement } from 'react';
 
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { FirebaseError } from 'firebase/app';
 import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
+
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { FirebaseError } from 'firebase/app';
 import nookies from 'nookies';
 
 import ApplicationStatusContainer from '@/containers/applicants/ApplicationStatusContainer';

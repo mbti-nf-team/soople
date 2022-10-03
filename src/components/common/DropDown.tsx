@@ -1,8 +1,9 @@
 import React, { memo, ReactElement } from 'react';
 
+import Link from 'next/link';
+
 import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
-import Link from 'next/link';
 
 import { body1Font, subtitle1Font, subtitle2Font } from '@/styles/fontStyles';
 

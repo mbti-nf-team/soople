@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext } from 'next';
+
 import nookies from 'nookies';
 
 import firebaseAdmin from '@/services/firebase/firebaseAdmin';

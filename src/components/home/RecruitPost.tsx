@@ -1,9 +1,10 @@
 import React, { memo, ReactElement } from 'react';
 import { Eye as ViewsIcon } from 'react-feather';
 
+import Link from 'next/link';
+
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import Link from 'next/link';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';

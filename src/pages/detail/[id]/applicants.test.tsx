@@ -1,6 +1,7 @@
+import { GetServerSidePropsContext } from 'next';
+
 import { QueryClient } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
-import { GetServerSidePropsContext } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';

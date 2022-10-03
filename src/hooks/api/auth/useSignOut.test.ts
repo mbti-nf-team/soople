@@ -1,5 +1,6 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/router';
+
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { postSignOut } from '@/services/api/auth';
 import wrapper from '@/test/ReactQueryWrapper';
