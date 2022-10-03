@@ -1,7 +1,8 @@
 import { ParsedUrlQuery } from 'querystring';
 
-import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
+
+import { render } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useGetUser from '@/hooks/api/auth/useGetUser';

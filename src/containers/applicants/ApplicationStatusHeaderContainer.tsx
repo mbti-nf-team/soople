@@ -2,8 +2,9 @@ import React, {
   ReactElement, useCallback, useMemo,
 } from 'react';
 
-import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
+
+import dayjs from 'dayjs';
 
 import ApplicationStatusHeader from '@/components/applicants/ApplicationStatusHeader';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';

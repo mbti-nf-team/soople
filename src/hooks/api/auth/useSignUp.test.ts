@@ -1,5 +1,6 @@
-import { act, renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
+
+import { act, renderHook } from '@testing-library/react';
 
 import { postUserProfile } from '@/services/api/auth';
 import wrapper from '@/test/ReactQueryWrapper';

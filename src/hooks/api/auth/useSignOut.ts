@@ -1,6 +1,7 @@
+import { useRouter } from 'next/router';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AuthError, IdTokenResult, User } from 'firebase/auth';
-import { useRouter } from 'next/router';
 
 import { Profile } from '@/models/auth';
 import { postSignOut } from '@/services/api/auth';

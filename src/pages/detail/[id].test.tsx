@@ -2,9 +2,10 @@ import { ParsedUrlQuery } from 'querystring';
 
 import { createRef } from 'react';
 
+import { GetServerSidePropsContext } from 'next';
+
 import { QueryClient } from '@tanstack/react-query';
 import { act, render } from '@testing-library/react';
-import { GetServerSidePropsContext } from 'next';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 import useApplyGroup from '@/hooks/api/applicant/useApplyGroup';

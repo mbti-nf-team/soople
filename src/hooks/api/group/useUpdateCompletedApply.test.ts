@@ -1,5 +1,6 @@
-import { act, renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
+
+import { act, renderHook } from '@testing-library/react';
 
 import { postAddAlarm } from '@/services/api/alarm';
 import { patchCompletedGroup } from '@/services/api/group';

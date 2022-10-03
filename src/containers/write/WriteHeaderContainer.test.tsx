@@ -1,7 +1,8 @@
+import { useRouter } from 'next/router';
+
 import {
   act, fireEvent, render, screen,
 } from '@testing-library/react';
-import { useRouter } from 'next/router';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import InjectResponsiveContext from '@/test/InjectResponsiveContext';

@@ -1,7 +1,8 @@
+import { useRouter } from 'next/router';
+
 import {
   act, fireEvent, render, screen,
 } from '@testing-library/react';
-import { useRouter } from 'next/router';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';

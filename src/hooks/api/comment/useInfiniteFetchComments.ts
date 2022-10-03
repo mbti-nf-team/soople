@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
-import { useRouter } from 'next/router';
 
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { GroupQuery, InfiniteRequest, InfiniteResponse } from '@/models';

@@ -1,5 +1,6 @@
-import { act, renderHook } from '@testing-library/react';
 import { useRouter } from 'next/router';
+
+import { act, renderHook } from '@testing-library/react';
 
 import { postNewGroup } from '@/services/api/group';
 import wrapper from '@/test/InjectMockProviders';

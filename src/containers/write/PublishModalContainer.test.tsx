@@ -1,8 +1,9 @@
+import { useRouter } from 'next/router';
+
 import { useHelpers, useRemirrorContext } from '@remirror/react';
 import {
   act, fireEvent, render, screen,
 } from '@testing-library/react';
-import { useRouter } from 'next/router';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useEditGroup from '@/hooks/api/group/useEditGroup';

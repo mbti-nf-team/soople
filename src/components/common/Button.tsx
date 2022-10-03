@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { HTMLProps, PropsWithChildren, ReactElement } from 'react';
 
+import Link from 'next/link';
+
 import { css, Theme } from '@emotion/react';
 import styled from '@emotion/styled';
-import Link from 'next/link';
 
 import { body1Font, body2Font, h4Font } from '@/styles/fontStyles';
 

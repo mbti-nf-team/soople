@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
+
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchGroups from '@/hooks/api/group/useFetchGroups';

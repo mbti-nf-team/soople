@@ -2,10 +2,11 @@ import React, {
   ForwardedRef, forwardRef, memo, ReactElement,
 } from 'react';
 
+import Link from 'next/link';
+
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import Link from 'next/link';
 
 import useCurrentTime from '@/hooks/useCurrentTime';
 import useGroupRecruitmentStatus from '@/hooks/useGroupRecruitmentStatus';

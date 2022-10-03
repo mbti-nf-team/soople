@@ -1,7 +1,8 @@
 import React, { ReactElement, useCallback } from 'react';
 
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+
+import styled from '@emotion/styled';
 
 import CommentForm from '@/components/detail/CommentForm';
 import CommentsView from '@/components/detail/CommentsView';

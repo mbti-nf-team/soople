@@ -2,10 +2,11 @@ import React, {
   ForwardedRef, forwardRef, memo, ReactElement,
 } from 'react';
 
+import Link from 'next/link';
+
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import Link from 'next/link';
 
 import { Alarm, AlarmType } from '@/models/alarm';
 import { Category } from '@/models/group';

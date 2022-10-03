@@ -1,7 +1,8 @@
 import React, { memo, ReactElement } from 'react';
 
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+
+import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
 import rehypeParse from 'rehype-parse';
 import rehypeStringify from 'rehype-stringify';

@@ -1,8 +1,9 @@
 import React, { ReactElement, Suspense, useCallback } from 'react';
 import { useLocalStorage } from 'react-use';
 
-import styled from '@emotion/styled';
 import dynamic from 'next/dynamic';
+
+import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 
 import FilterBar from '@/components/home/FilterBar';

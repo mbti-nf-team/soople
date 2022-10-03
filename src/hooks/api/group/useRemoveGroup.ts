@@ -1,6 +1,7 @@
+import { useRouter } from 'next/router';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
-import { useRouter } from 'next/router';
 
 import { Group } from '@/models/group';
 import { deleteGroup } from '@/services/api/group';

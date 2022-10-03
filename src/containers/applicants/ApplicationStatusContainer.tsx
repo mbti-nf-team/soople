@@ -1,7 +1,8 @@
 import React, { ReactElement, useCallback, useEffect } from 'react';
 
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+
+import styled from '@emotion/styled';
 
 import ApplicationStatus from '@/components/applicants/ApplicationStatus';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
