@@ -9,6 +9,7 @@ import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useResponsive from '@/hooks/useResponsive';
 import Divider from '@/styles/Divider';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
+import GradientBlock from '@/styles/GradientBlock';
 import mq from '@/styles/responsive';
 import styledAnchor from '@/styles/styledAnchor';
 import { emptyAThenB } from '@/utils/utils';
@@ -144,12 +145,4 @@ const PortfolioUrl = styled.a`
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
-`;
-
-const GradientBlock = styled.div`
-  position: absolute;
-  bottom: 67px;
-  width: 100%;
-  height: 40px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
 `;
