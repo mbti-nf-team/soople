@@ -9,6 +9,8 @@ import useAccountWithdrawal from '@/hooks/api/auth/useAccountWithdrawal';
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWithProvider';
+import useUpdateUser from '@/hooks/api/auth/useUpdateUser';
+import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
@@ -18,7 +20,9 @@ import MyInfoSettingContainer from './MyInfoSettingContainer';
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/auth/useAccountWithdrawal');
 jest.mock('@/hooks/api/auth/useAuthRedirectResult');
+jest.mock('@/hooks/api/storage/useDeleteStorageFile');
 jest.mock('@/hooks/api/auth/useReauthenticateWithProvider');
+jest.mock('@/hooks/api/auth/useUpdateUser');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
@@ -43,6 +47,12 @@ describe('MyInfoSettingContainer', () => {
     }));
     (useFetchUserProfile as jest.Mock).mockImplementation(() => (given.profileStatus));
     (useAccountWithdrawal as jest.Mock).mockImplementation(() => ({
+      mutate,
+    }));
+    (useDeleteStorageFile as jest.Mock).mockImplementation(() => ({
+      mutate,
+    }));
+    (useUpdateUser as jest.Mock).mockImplementation(() => ({
       mutate,
     }));
   });
@@ -92,6 +102,59 @@ describe('MyInfoSettingContainer', () => {
       const { container } = renderMyInfoSettingContainer();
 
       await act(() => expect(container).toHaveTextContent(`${FIXTURE_PROFILE.position}`));
+    });
+
+    describe('"이미지 삭제" 버튼을 클릭한다', () => {
+      context('이미지 url이 "https://firebasestorage.googleapis.com"로 시작하는 경우', () => {
+        const imageUrl = 'https://firebasestorage.googleapis.com/test';
+
+        given('profileStatus', () => ({
+          data: {
+            ...FIXTURE_PROFILE,
+            image: imageUrl,
+          },
+          isLoading: false,
+          isSuccess: true,
+        }));
+
+        it('storage image 삭제 mutate와 delete profile image mutate가 호출되어야만 한다', () => {
+          renderMyInfoSettingContainer();
+
+          fireEvent.click(screen.getByText('이미지 삭제'));
+
+          expect(mutate).toBeCalledTimes(2);
+          expect(mutate).toBeCalledWith(imageUrl);
+          expect(mutate).toBeCalledWith({
+            ...FIXTURE_PROFILE,
+            image: null,
+          });
+        });
+      });
+
+      context('이미지 url이 "https://firebasestorage.googleapis.com"로 시작하지 않는 경우', () => {
+        const imageUrl = 'https://test.com/test';
+
+        given('profileStatus', () => ({
+          data: {
+            ...FIXTURE_PROFILE,
+            image: imageUrl,
+          },
+          isLoading: false,
+          isSuccess: true,
+        }));
+
+        it('delete profile image mutate가 호출되어야만 한다', () => {
+          renderMyInfoSettingContainer();
+
+          fireEvent.click(screen.getByText('이미지 삭제'));
+
+          expect(mutate).toBeCalledTimes(1);
+          expect(mutate).toBeCalledWith({
+            ...FIXTURE_PROFILE,
+            image: null,
+          });
+        });
+      });
     });
 
     describe('회원 탈퇴 모달창에서 "탈퇴하기" 버튼을 클릭한다', () => {
