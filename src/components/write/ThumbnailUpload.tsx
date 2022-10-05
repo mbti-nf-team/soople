@@ -8,11 +8,12 @@ import { useEffectOnce } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useRecoilValue } from 'recoil';
+import { nanoid } from 'nanoid';
+import { useRecoilState } from 'recoil';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
-import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
+import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
+import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { body2Font, subtitle1Font } from '@/styles/fontStyles';
 import { isEmpty } from '@/utils/utils';
@@ -23,10 +24,13 @@ import Label from '../common/Label';
 
 function ThumbnailUpload(): ReactElement {
   const theme = useTheme();
-  const { mutate: onUploadThumbnail } = useUploadGroupThumbnail();
-  const { mutate: onRemoveThumbnail } = useRemoveGroupThumbnail();
+  const {
+    data: thumbnailUrl, mutate: onUploadThumbnail, isSuccess: isSuccessUploadThumbnail,
+  } = useUploadStorageFile();
+  const { mutate: onRemoveThumbnail } = useDeleteStorageFile();
   const { data: user } = useFetchUserProfile();
-  const { thumbnail } = useRecoilValue(writeFieldsState);
+
+  const [{ thumbnail }, setWriteFieldsState] = useRecoilState(writeFieldsState);
   const [images, setImages] = useState<ImageListType>([]);
   const [isError, setIsError] = useState<boolean>();
 
@@ -47,7 +51,10 @@ function ThumbnailUpload(): ReactElement {
 
   useEffect(() => {
     if (!isEmpty(images) && images[0].file) {
-      onUploadThumbnail({ userUid: user?.uid as string, thumbnail: images[0].file });
+      onUploadThumbnail({
+        storagePath: `thumbnail/${user?.uid}/${nanoid()}/${images[0].file.name}`,
+        file: images[0].file,
+      });
       setIsError(false);
     }
   }, [user, images]);
@@ -57,6 +64,15 @@ function ThumbnailUpload(): ReactElement {
       setImages([{ dataURL: thumbnail }]);
     }
   });
+
+  useEffect(() => {
+    if (isSuccessUploadThumbnail) {
+      setWriteFieldsState((prev) => ({
+        ...prev,
+        thumbnail: thumbnailUrl,
+      }));
+    }
+  }, [isSuccessUploadThumbnail, thumbnailUrl]);
 
   return (
     <ThumbnailFromWrapper>

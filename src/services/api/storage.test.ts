@@ -2,7 +2,7 @@ import { deleteObject, getDownloadURL, uploadBytes } from 'firebase/storage';
 
 import { storageRef } from '../firebase';
 
-import { deleteGroupThumbnail, uploadGroupThumbnail } from './storage';
+import { deleteStorageFile, uploadStorageFile } from './storage';
 
 jest.mock('../firebase');
 jest.mock('nanoid', () => ({
@@ -10,36 +10,36 @@ jest.mock('nanoid', () => ({
 }));
 
 describe('storage API', () => {
-  const thumbnailUrl = 'www.test.com';
+  const fileUrl = 'www.test.com';
 
-  describe('uploadGroupThumbnail', () => {
+  describe('uploadStorageFile', () => {
     beforeEach(() => {
       (storageRef as jest.Mock).mockImplementationOnce(() => ('thumbnail'));
       (uploadBytes as jest.Mock).mockImplementation(() => ({
         ref: jest.fn(),
       }));
-      (getDownloadURL as jest.Mock).mockImplementation(() => thumbnailUrl);
+      (getDownloadURL as jest.Mock).mockImplementation(() => fileUrl);
     });
 
     it('썸네일 URL 주소가 반환되어야만 한다', async () => {
-      const response = await uploadGroupThumbnail({
-        userUid: 'userUid',
-        thumbnail: { name: 'thumbnail' } as File,
+      const response = await uploadStorageFile({
+        storagePath: '/test/1',
+        file: { name: 'thumbnail' } as File,
       });
 
-      expect(response).toBe(thumbnailUrl);
+      expect(response).toBe(fileUrl);
     });
   });
 
-  describe('deleteGroupThumbnail', () => {
+  describe('deleteStorageFile', () => {
     beforeEach(() => {
-      (storageRef as jest.Mock).mockImplementationOnce(() => (thumbnailUrl));
+      (storageRef as jest.Mock).mockImplementationOnce(() => (fileUrl));
     });
 
     it('deleteObject가 호출되어야만 한다', async () => {
-      await deleteGroupThumbnail(thumbnailUrl);
+      await deleteStorageFile(fileUrl);
 
-      expect(deleteObject).toBeCalledWith(thumbnailUrl);
+      expect(deleteObject).toBeCalledWith(fileUrl);
     });
   });
 });

@@ -19,7 +19,7 @@ import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useInfiniteFetchComments from '@/hooks/api/comment/useInfiniteFetchComments';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
-import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
+import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import { getGroupDetail } from '@/services/api/group';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
@@ -48,7 +48,7 @@ jest.mock('@/hooks/api/auth/useGetUser');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/auth/useSignOut');
 jest.mock('@/hooks/api/group/useRemoveGroup');
-jest.mock('@/hooks/api/storage/useRemoveGroupThumbnail');
+jest.mock('@/hooks/api/storage/useDeleteStorageFile');
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
@@ -98,7 +98,7 @@ describe('DetailPage', () => {
       data: FIXTURE_PROFILE,
     }));
 
-    (useRemoveGroupThumbnail as jest.Mock).mockImplementation(() => ({ mutate }));
+    (useDeleteStorageFile as jest.Mock).mockImplementation(() => ({ mutate }));
     (useRemoveGroup as jest.Mock).mockImplementation(() => ({ mutate }));
     (useSignOut as jest.Mock).mockImplementation(() => ({ mutate }));
     (useApplyGroup as jest.Mock).mockImplementation(() => ({ mutate }));

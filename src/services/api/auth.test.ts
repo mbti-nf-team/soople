@@ -1,7 +1,7 @@
 import {
   deleteUser, getRedirectResult, reauthenticateWithRedirect, signOut,
 } from 'firebase/auth';
-import { getDoc, setDoc } from 'firebase/firestore';
+import { getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 import { docRef, firebaseAuth } from '../firebase';
@@ -13,6 +13,7 @@ import {
   postReauthenticateWithProvider,
   postSignOut,
   postUserProfile,
+  updateUserProfile,
 } from './auth';
 
 jest.mock('../firebase');
@@ -33,10 +34,24 @@ describe('auth API', () => {
       (docRef as jest.Mock).mockReturnValueOnce(userRef);
     });
 
-    it('updateDoc 함수가 호출되어야만 한다', async () => {
+    it('setDoc 함수가 호출되어야만 한다', async () => {
       await postUserProfile(FIXTURE_PROFILE);
 
       expect(setDoc).toBeCalledWith(userRef, FIXTURE_PROFILE);
+    });
+  });
+
+  describe('updateUserProfile', () => {
+    const userRef = 'userRef';
+
+    beforeEach(() => {
+      (docRef as jest.Mock).mockReturnValueOnce(userRef);
+    });
+
+    it('updateDoc 함수가 호출되어야만 한다', async () => {
+      await updateUserProfile(FIXTURE_PROFILE);
+
+      expect(updateDoc).toBeCalledWith(userRef, FIXTURE_PROFILE);
     });
   });
 
