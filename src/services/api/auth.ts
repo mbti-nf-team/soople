@@ -1,7 +1,7 @@
 import {
   deleteUser, getRedirectResult, reauthenticateWithRedirect, signOut, updateProfile, User,
 } from 'firebase/auth';
-import { getDoc, setDoc } from 'firebase/firestore';
+import { getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 import { Profile } from '@/models/auth';
 
@@ -22,6 +22,23 @@ export const postUserProfile = async (profile: Profile) => {
   });
 
   await setDoc(userRef, profile);
+};
+
+export const updateUserProfile = async (profile: Profile) => {
+  const { uid, name, image } = profile;
+
+  const user = firebaseAuth.currentUser as User;
+
+  const userRef = docRef('users', uid);
+
+  await updateProfile(user, {
+    displayName: name,
+    photoURL: image,
+  });
+
+  await updateDoc(userRef, {
+    ...profile,
+  });
 };
 
 export const getUserProfile = async (uid?: string): Promise<Profile | null> => {

@@ -6,7 +6,7 @@ import {
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
-import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
+import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import InjectMockProviders from '@/test/InjectMockProviders';
 
 import FIXTURE_APPLICANT from '../../../fixtures/applicant';
@@ -15,7 +15,7 @@ import FIXTURE_GROUP from '../../../fixtures/group';
 import WriterStatusButtons from './WriterStatusButtons';
 
 jest.mock('@/hooks/api/group/useRemoveGroup');
-jest.mock('@/hooks/api/storage/useRemoveGroupThumbnail');
+jest.mock('@/hooks/api/storage/useDeleteStorageFile');
 jest.mock('@/hooks/api/applicant/useFetchApplicants');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -42,7 +42,7 @@ describe('WriterStatusButtons', () => {
       mutate: removeGroupMutate,
     }));
 
-    (useRemoveGroupThumbnail as jest.Mock).mockImplementation(() => ({
+    (useDeleteStorageFile as jest.Mock).mockImplementation(() => ({
       mutate: removeGroupThumbnailMutate,
     }));
 

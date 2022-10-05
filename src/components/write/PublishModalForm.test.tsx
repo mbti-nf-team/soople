@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
+import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { WriteFields } from '@/models/group';
 import { lightTheme } from '@/styles/theme';
 import InjectMockProviders from '@/test/InjectMockProviders';
@@ -11,7 +11,7 @@ import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
 
 import PublishModalForm from './PublishModalForm';
 
-jest.mock('@/hooks/api/storage/useUploadGroupThumbnail');
+jest.mock('@/hooks/api/storage/useUploadStorageFile');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 
 describe('PublishModalForm', () => {
@@ -26,7 +26,7 @@ describe('PublishModalForm', () => {
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: FIXTURE_PROFILE,
     }));
-    (useUploadGroupThumbnail as jest.Mock).mockImplementation(() => ({
+    (useUploadStorageFile as jest.Mock).mockImplementation(() => ({
       mutate,
     }));
   });

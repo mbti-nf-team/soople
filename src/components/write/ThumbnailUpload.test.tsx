@@ -1,33 +1,43 @@
 import {
   act, fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
+import { nanoid } from 'nanoid';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
-import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
+import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
+import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { initialWriteFieldsState } from '@/models/group';
+import { writeFieldsState } from '@/recoil/group/atom';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+import RecoilObserver from '@/test/RecoilObserver';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
 import ThumbnailUpload from './ThumbnailUpload';
 
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
-jest.mock('@/hooks/api/storage/useUploadGroupThumbnail');
-jest.mock('@/hooks/api/storage/useRemoveGroupThumbnail');
+jest.mock('@/hooks/api/storage/useUploadStorageFile');
+jest.mock('@/hooks/api/storage/useDeleteStorageFile');
+jest.mock('nanoid', () => ({
+  nanoid: jest.fn().mockReturnValue(1),
+}));
 
 describe('ThumbnailUpload', () => {
   const mutate = jest.fn();
   const removeMutate = jest.fn();
+  const handleChangeWriteFields = jest.fn();
+  const fileUrl = '/test/1';
 
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (useRemoveGroupThumbnail as jest.Mock).mockImplementation(() => ({
+    (useDeleteStorageFile as jest.Mock).mockImplementation(() => ({
       mutate: removeMutate,
     }));
-    (useUploadGroupThumbnail as jest.Mock).mockImplementation(() => ({
+    (useUploadStorageFile as jest.Mock).mockImplementation(() => ({
+      data: fileUrl,
       mutate,
+      isSuccess: given.isSuccessUploadThumbnail,
     }));
     (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
       data: FIXTURE_PROFILE,
@@ -40,6 +50,7 @@ describe('ThumbnailUpload', () => {
       thumbnail: given.thumbnail,
     }}
     >
+      <RecoilObserver node={writeFieldsState} onChange={handleChangeWriteFields} />
       <ThumbnailUpload />
     </InjectTestingRecoilState>
   ));
@@ -55,7 +66,7 @@ describe('ThumbnailUpload', () => {
       const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
       Object.defineProperty(file, 'size', { value: 100000000 });
 
-      it('upload mutate 액션이 발생해야만 한다', async () => {
+      it('"10MB 이하의 이미지만 등록할 수 있어요." 에러 문구가 나타나야만 한다', async () => {
         const { container } = renderThumbnailUpload();
 
         act(() => {
@@ -82,9 +93,22 @@ describe('ThumbnailUpload', () => {
 
         await waitFor(
           async () => expect(mutate).toBeCalledWith({
-            userUid: FIXTURE_PROFILE.uid, thumbnail: file,
+            storagePath: `thumbnail/${FIXTURE_PROFILE.uid}/${nanoid()}/${file.name}`, file,
           }),
         );
+      });
+    });
+
+    context('썸네일 업로드에 성공한 경우', () => {
+      given('isSuccessUploadThumbnail', () => true);
+
+      it('recoil write fields state가 호출되어야만 한다', () => {
+        renderThumbnailUpload();
+
+        expect(handleChangeWriteFields).toBeCalledWith({
+          ...initialWriteFieldsState,
+          thumbnail: fileUrl,
+        });
       });
     });
   });
@@ -108,7 +132,7 @@ describe('ThumbnailUpload', () => {
 
         await waitFor(
           async () => expect(mutate).toBeCalledWith({
-            userUid: FIXTURE_PROFILE.uid, thumbnail: file,
+            storagePath: `thumbnail/${FIXTURE_PROFILE.uid}/${nanoid()}/${file.name}`, file,
           }),
         );
 
@@ -133,7 +157,7 @@ describe('ThumbnailUpload', () => {
         });
 
         await waitFor(async () => expect(mutate).toBeCalledWith({
-          userUid: FIXTURE_PROFILE.uid, thumbnail: file,
+          storagePath: `thumbnail/${FIXTURE_PROFILE.uid}/${nanoid()}/${file.name}`, file,
         }));
 
         act(() => {

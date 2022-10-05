@@ -9,7 +9,7 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useEditGroup from '@/hooks/api/group/useEditGroup';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
-import useUploadGroupThumbnail from '@/hooks/api/storage/useUploadGroupThumbnail';
+import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import useGroupRecruitmentStatus from '@/hooks/useGroupRecruitmentStatus';
 import { writeFieldsState } from '@/recoil/group/atom';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
@@ -26,7 +26,7 @@ jest.mock('@/hooks/api/group/useFetchGroup');
 jest.mock('@/hooks/api/group/useEditGroup');
 jest.mock('@/hooks/useGroupRecruitmentStatus');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
-jest.mock('@/hooks/api/storage/useUploadGroupThumbnail');
+jest.mock('@/hooks/api/storage/useUploadStorageFile');
 jest.mock('@remirror/react', () => ({
   useRemirrorContext: jest.fn(),
   useHelpers: jest.fn(),
@@ -64,7 +64,7 @@ describe('PublishModalContainer', () => {
     (useHelpers as jest.Mock).mockImplementation(() => ({
       getHTML: jest.fn().mockReturnValue(WRITE_FIELDS_FIXTURE.content),
     }));
-    (useUploadGroupThumbnail as jest.Mock).mockImplementation(() => ({
+    (useUploadStorageFile as jest.Mock).mockImplementation(() => ({
       mutate,
     }));
   });

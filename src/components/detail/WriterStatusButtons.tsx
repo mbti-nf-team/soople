@@ -8,7 +8,7 @@ import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
 
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
-import useRemoveGroupThumbnail from '@/hooks/api/storage/useRemoveGroupThumbnail';
+import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import useBoolean from '@/hooks/useBoolean';
 import useResponsive from '@/hooks/useResponsive';
 import { Group } from '@/models/group';
@@ -33,7 +33,7 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
   const { isMobile, isClient } = useResponsive();
 
   const { mutate: removeGroupMutate } = useRemoveGroup();
-  const { mutate: removeGroupThumbnailMutate } = useRemoveGroupThumbnail();
+  const { mutate: removeGroupThumbnailMutate } = useDeleteStorageFile();
 
   const setWriteFields = useSetRecoilState(writeFieldsState);
 
