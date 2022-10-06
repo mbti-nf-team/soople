@@ -6,13 +6,14 @@ import Button from '../common/Button';
 import ProfileImage from '../common/ProfileImage';
 
 interface Props {
-  image?: string | null;
+  imageUrl?: string | null;
+  onDelete: () => void;
 }
 
-function ImageSetting({ image }: Props):ReactElement {
+function ImageSetting({ imageUrl, onDelete }: Props):ReactElement {
   return (
     <ImageSettingWrapper>
-      <ProfileImage src={image} size="96px" alt="프로필 이미지" />
+      <ProfileImage src={imageUrl} size="96px" alt="프로필 이미지" />
       <Button
         size="small"
         color="primary"
@@ -22,6 +23,7 @@ function ImageSetting({ image }: Props):ReactElement {
       <Button
         size="small"
         color="ghost"
+        onClick={onDelete}
       >
         이미지 삭제
       </Button>

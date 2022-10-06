@@ -11,6 +11,9 @@ import useAccountWithdrawal from '@/hooks/api/auth/useAccountWithdrawal';
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWithProvider';
+import useUpdateUser from '@/hooks/api/auth/useUpdateUser';
+import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
+import { Profile } from '@/models/auth';
 import { DetailLayout } from '@/styles/Layout';
 
 function MyInfoSettingContainer(): ReactElement | null {
@@ -21,11 +24,24 @@ function MyInfoSettingContainer(): ReactElement | null {
   const { data: auth } = useAuthRedirectResult();
   const { mutate: reauthenticate } = useReauthenticateWithProvider();
   const { mutate: deleteUser } = useAccountWithdrawal();
+  const { mutate: deleteStorageUserImage } = useDeleteStorageFile();
+  const { mutate: deleteProfileImage } = useUpdateUser();
 
   const onWithdrawal = useCallback(() => {
     setIsReauthenticate(true);
     reauthenticate();
   }, []);
+
+  const onDeleteProfileImage = useCallback(() => {
+    if (user?.image?.startsWith('https://firebasestorage.googleapis.com')) {
+      deleteStorageUserImage(user.image);
+    }
+
+    deleteProfileImage({
+      ...user as Profile,
+      image: null,
+    });
+  }, [user, deleteStorageUserImage, deleteProfileImage]);
 
   useEffect(() => {
     if (!isLoading && isSuccess && !user) {
@@ -45,7 +61,7 @@ function MyInfoSettingContainer(): ReactElement | null {
 
   return (
     <SettingFormLayout>
-      <ImageSetting image={user?.image} />
+      <ImageSetting imageUrl={user?.image} onDelete={onDeleteProfileImage} />
       <SettingForm user={user} onWithdrawal={onWithdrawal} />
     </SettingFormLayout>
   );
