@@ -2,6 +2,7 @@ import React, { ChangeEvent, ReactElement, useState } from 'react';
 
 import styled from '@emotion/styled';
 
+import useResponsive from '@/hooks/useResponsive';
 import { Profile } from '@/models/auth';
 import { CommentFields } from '@/models/group';
 
@@ -15,6 +16,7 @@ interface Props {
 
 function CommentForm({ onSubmit, user }: Props): ReactElement {
   const [content, setContent] = useState<string>('');
+  const { isMobile, isClient } = useResponsive();
 
   const textareaPlaceholderText = user ? '댓글을 입력하세요' : '댓글을 남기려면 로그인이 필요합니다.';
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
@@ -35,8 +37,8 @@ function CommentForm({ onSubmit, user }: Props): ReactElement {
         onChange={handleChange}
         disabled={!user}
       />
-      {user && (
-        <Button color="primary" onClick={() => handleSubmit(user)} disabled={!content.trim()}>
+      {user && isClient && (
+        <Button color="primary" size={isMobile ? 'small' : 'medium'} onClick={() => handleSubmit(user)} disabled={!content.trim()}>
           댓글 남기기
         </Button>
       )}
