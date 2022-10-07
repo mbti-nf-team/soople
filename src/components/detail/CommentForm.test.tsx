@@ -1,5 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import InjectResponsiveContext from '@/test/InjectResponsiveContext';
+
 import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import CommentForm from './CommentForm';
@@ -12,14 +14,28 @@ describe('CommentForm', () => {
   });
 
   const renderCommentForm = () => render((
-    <CommentForm
-      user={given.user}
-      onSubmit={handleSubmit}
-    />
+    <InjectResponsiveContext width={given.width}>
+      <CommentForm
+        user={given.user}
+        onSubmit={handleSubmit}
+      />
+    </InjectResponsiveContext>
   ));
 
   context('사용자가 로그인한 경우', () => {
     given('user', () => PROFILE_FIXTURE);
+
+    context('모바일인 경우', () => {
+      given('width', () => 400);
+
+      it('"댓글 남기기" 버튼의 height는 "32px"이어야만 한다', () => {
+        renderCommentForm();
+
+        expect(screen.getByText('댓글 남기기')).toHaveStyle({
+          height: '32px',
+        });
+      });
+    });
 
     describe('Textarea change 이벤트가 발생한다', () => {
       const content = '댓글 내용';
