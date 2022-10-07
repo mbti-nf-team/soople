@@ -26,7 +26,7 @@ function useFetchUserProfile() {
   return {
     ...query,
     data: query.data || null,
-    isLoading: isLoading || query.isLoading,
+    isLoading: isLoading || (query.isLoading && query.fetchStatus === 'fetching'),
   };
 }
 
