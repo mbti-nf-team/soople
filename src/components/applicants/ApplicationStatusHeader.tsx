@@ -48,15 +48,17 @@ function ApplicationStatusHeader({
             </SelectApplicantStatus>
           )}
           <SubmitButtonWrapper>
-            <Button
-              type="button"
-              size={isMobile ? 'large' : 'small'}
-              color="success"
-              disabled={!numberConfirmApplicants}
-              onClick={openCompleteApplyFormModal}
-            >
-              {isMobile ? `${numberConfirmApplicants}명 모집 완료` : '모집 완료'}
-            </Button>
+            {isClient && (
+              <Button
+                type="button"
+                size={isMobile ? 'large' : 'small'}
+                color="success"
+                disabled={!numberConfirmApplicants}
+                onClick={openCompleteApplyFormModal}
+              >
+                {isMobile ? `${numberConfirmApplicants}명 모집 완료` : '모집 완료'}
+              </Button>
+            )}
           </SubmitButtonWrapper>
         </>
       </SubHeader>
