@@ -3,6 +3,24 @@ import { keyframes } from '@emotion/react';
 const fadeIn = keyframes`
   0% {
     opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const zoomIn = keyframes`
+  0% {
+    opacity: 0;
     transform: scale(0.9);
   }
   100% {
@@ -11,7 +29,7 @@ const fadeIn = keyframes`
   }
 `;
 
-const fadeOut = keyframes`
+const zoomOut = keyframes`
   0% {
     opacity: 1;
     transform: scale(1.0);
@@ -85,6 +103,8 @@ const popOutToBottom = keyframes`
 const transitions = {
   fadeIn,
   fadeOut,
+  zoomIn,
+  zoomOut,
   popInFromBottom,
   popOutToBottom,
   mobilePopInFromBottom,

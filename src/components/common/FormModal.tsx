@@ -10,9 +10,9 @@ import styled from '@emotion/styled';
 
 import useDelayVisible from '@/hooks/useDelayVisible';
 import useResponsive from '@/hooks/useResponsive';
+import animations from '@/styles/animations';
 import { h4Font } from '@/styles/fontStyles';
 import mq, { mediaQueries } from '@/styles/responsive';
-import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
 import type { ColorType as ButtonColorType } from './Button';
@@ -101,7 +101,7 @@ const FormModalWrapper = styled.div<{ isVisible: boolean; }>`
     transition: visibility 0.2s ease-out;
   }
 
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  ${animations.modalBackground};
   position: fixed;
   top: 0;
   left: 0;
@@ -119,25 +119,10 @@ const FormModalBox = styled.div<{ size: string; isVisible: boolean; }>`
     height: ['100%', 'auto'],
     borderRadius: ['0px', '8px'],
     boxShadow: ['none', '0 2px 12px 0 rgb(0 0 0 / 9%)'],
-    transition: ['visibility 0.4s ease-out', 'visibility 0.2s ease-out'],
   })};
 
+  ${animations.modalBox};
   background: ${({ theme }) => theme.background};
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-
-  ${({ isVisible }) => !isVisible && mq({
-    animation: [
-      `${transitions.mobilePopOutToBottom} 0.4s forwards ease-in-out`,
-      `${transitions.fadeOut} 0.2s forwards ease-in-out`,
-    ],
-  })};
-
-  ${({ isVisible }) => isVisible && mq({
-    animation: [
-      `${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`,
-      `${transitions.fadeIn} 0.2s forwards ease-in-out`,
-    ],
-  })};
 `;
 
 const HeaderWrapper = styled.div`
