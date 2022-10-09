@@ -7,9 +7,9 @@ import styled from '@emotion/styled';
 
 import useDelayVisible from '@/hooks/useDelayVisible';
 import useResponsive from '@/hooks/useResponsive';
+import animations from '@/styles/animations';
 import { body1Font, h4Font } from '@/styles/fontStyles';
 import mq from '@/styles/responsive';
-import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 
 import Button from './Button';
@@ -84,7 +84,7 @@ const ConfirmModalWrapper = styled.div<{ isVisible: boolean; }>`
     transition: ['visibility 0.4s ease-out', 'visibility 0.2s ease-out'],
   })};
 
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  ${animations.modalBackground};
   position: fixed;
   top: 0;
   left: 0;
@@ -100,26 +100,11 @@ const ConfirmModalBox = styled.div<{ isVisible: boolean }>`
   ${mq({
     borderRadius: ['12px 12px 0px 0px', '8px'],
     width: ['100%', '400px'],
-    transition: ['visibility 0.4s ease-out', 'visibility 0.2s ease-out'],
   })};
 
+  ${animations.modalBox};
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.09);
   background: ${({ theme }) => theme.background};
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-
-  ${({ isVisible }) => isVisible && mq({
-    animation: [
-      `${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`,
-      `${transitions.fadeIn} 0.2s forwards ease-in-out`,
-    ],
-  })};
-
-  ${({ isVisible }) => !isVisible && mq({
-    animation: [
-      `${transitions.mobilePopOutToBottom} 0.4s forwards ease-in-out`,
-      `${transitions.fadeOut} 0.2s forwards ease-in-out`,
-    ],
-  })};
 `;
 
 const HeaderWrapper = styled.div`

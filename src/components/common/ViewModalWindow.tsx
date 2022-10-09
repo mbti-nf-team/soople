@@ -8,9 +8,9 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import useDelayVisible from '@/hooks/useDelayVisible';
+import animations from '@/styles/animations';
 import { h4Font } from '@/styles/fontStyles';
 import mq, { mediaQueries } from '@/styles/responsive';
-import transitions from '@/styles/transitions';
 import zIndexes from '@/styles/zIndexes';
 import { emptyAThenB } from '@/utils/utils';
 
@@ -64,7 +64,7 @@ const ViewModalWindowWrapper = styled.div<{ isVisible: boolean; }>`
     transition: visibility 0.2s ease-out;
   }
 
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  ${animations.modalBackground};
   position: fixed;
   top: 0;
   left: 0;
@@ -81,26 +81,11 @@ const ViewModalWindowBox = styled.div<{ size?: { height?: string; width?: string
     width: ['100%', emptyAThenB('540px', size?.width)],
     height: ['100%', emptyAThenB('410px', size?.height)],
     borderRadius: ['0', '8px'],
-    transition: ['visibility 0.4s ease-out', 'visibility 0.2s ease-out'],
   })};
 
+  ${animations.modalBox};
   background: ${({ theme }) => theme.background};
   overflow: hidden;
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-
-  ${({ isVisible }) => !isVisible && mq({
-    animation: [
-      `${transitions.mobilePopOutToBottom} 0.4s forwards ease-in-out`,
-      `${transitions.fadeOut} 0.2s forwards ease-in-out`,
-    ],
-  })};
-
-  ${({ isVisible }) => isVisible && mq({
-    animation: [
-      `${transitions.mobilePopInFromBottom} 0.4s forwards ease-in-out`,
-      `${transitions.fadeIn} 0.2s forwards ease-in-out`,
-    ],
-  })};
 `;
 
 const HeaderWrapper = styled.div`
