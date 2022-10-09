@@ -121,7 +121,7 @@ const StyledSelect = styled(Select)<{ size: Size; isError: boolean; }>`
     `};
 
     ${({ size }) => size === 'medium' && css`
-      width: 100px;
+      width: 104px;
       height: 36px;
     `};
 
@@ -199,10 +199,31 @@ const StyledSelect = styled(Select)<{ size: Size; isError: boolean; }>`
   }
 
   & .select__value-container {
-    padding: 0 0 0 16px;
+    ${({ size }) => size === 'large' && css`
+      padding: 0 0 0 16px;
+    `};
+
+    ${({ size }) => size === 'medium' && css`
+      padding: 0 0 0 12px;
+    `};
   }
 
   & .select__indicator {
-    padding: 0 16px 0 0;
+    & > svg {
+      fill: ${({ theme }) => theme.accent6};
+    }
+
+    ${({ size }) => size === 'large' && css`
+      padding: 0 16px 0 0;
+    `};
+
+    ${({ size }) => size === 'medium' && css`
+      padding: 0 12px 0 0;
+
+      & > svg {
+        width: 16px;
+        height: 16px;
+      }
+    `};
   }
 `;
