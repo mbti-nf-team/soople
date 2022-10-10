@@ -16,6 +16,7 @@ import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { body2Font, subtitle1Font } from '@/styles/fontStyles';
+import mq from '@/styles/responsive';
 import { isEmpty } from '@/utils/utils';
 
 import CloseSvg from '../../assets/icons/close.svg';
@@ -169,11 +170,14 @@ const EmptyBox = styled.div`
 `;
 
 const ThumbnailUploadBox = styled.div<{ isError?: boolean; }>`
+  ${mq({
+    paddingTop: ['154px', '144px'],
+  })};
+  
   cursor: pointer;
   position: relative;
   overflow: hidden;
   width: 100%;
-  padding-top: 144px;
   border: 1px solid ${({ isError, theme }) => (isError ? theme.warning : theme.accent2)};
   box-sizing: border-box;
   border-radius: 8px;
