@@ -15,7 +15,7 @@ describe('useResponsive', () => {
     ),
   });
 
-  context('화면 크기가 450px보다 작은 경우', () => {
+  context('화면 크기가 500px보다 작은 경우', () => {
     given('width', () => 400);
 
     it('isMobile은 true이여야만 한다', () => {
@@ -30,8 +30,8 @@ describe('useResponsive', () => {
     });
   });
 
-  context('화면 크기가 450px보다 크고 650px보다 작은 경우', () => {
-    given('width', () => 500);
+  context('화면 크기가 500px보다 크고 650px보다 작은 경우', () => {
+    given('width', () => 600);
 
     it('isTablet은 true이여야만 한다', () => {
       const { result: { current } } = useResponsiveHook();

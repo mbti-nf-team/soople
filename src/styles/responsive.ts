@@ -1,10 +1,10 @@
 import facepaint from 'facepaint';
 
-const breakpoints = ['450', '650', '850', '1100'];
+const breakpoints = ['500', '650', '850', '1100'];
 
 export const mediaQueries = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 
-export const mobileMediaQuery = '@media (max-width: 450px)';
+export const mobileMediaQuery = '@media (max-width: 500px)';
 
 const mq = facepaint([
   mediaQueries[0],
@@ -17,7 +17,7 @@ export const mq2 = facepaint([
 ]);
 
 export const breakpoint = {
-  mobile: 450,
+  mobile: 500,
   tablet: 650,
 };
 
