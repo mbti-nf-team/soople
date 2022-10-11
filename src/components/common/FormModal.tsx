@@ -8,7 +8,6 @@ import { useLockBodyScroll } from 'react-use';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import useDelayVisible from '@/hooks/useDelayVisible';
 import useResponsive from '@/hooks/useResponsive';
 import animations from '@/styles/animations';
 import { h4Font } from '@/styles/fontStyles';
@@ -17,6 +16,8 @@ import zIndexes from '@/styles/zIndexes';
 
 import type { ColorType as ButtonColorType } from './Button';
 import Button from './Button';
+import DelayRenderComponent from './DelayRenderComponent';
+import ModalPortal from './ModalPortal';
 
 interface Props {
   isVisible: boolean;
@@ -44,48 +45,52 @@ function FormModal({
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
   const { isClient, isMobile } = useResponsive();
-  const isOpen = useDelayVisible(isVisible, 400);
 
   const isClientDesktop = isClient && !isMobile;
   const checkKeyDown = (e: KeyboardEvent<HTMLFormElement>) => e.code === 'Enter' && e.preventDefault();
 
   useLockBodyScroll(isClientDesktop && isVisible);
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <FormModalWrapper isVisible={isVisible}>
-      <FormModalBox size={size} isVisible={isVisible} data-testid="form-modal-box">
-        <StyledForm onSubmit={onSubmit} onKeyDown={checkKeyDown}>
-          <HeaderWrapper>
-            <h4>{title}</h4>
-            <CloseIcon
-              size={24}
-              color={theme.accent6}
-              onClick={onClose}
-              data-testid="close-icon"
-            />
-          </HeaderWrapper>
-          {children}
-          <FooterWrapper>
-            {isClientDesktop && (
-              <Button size="small" onClick={onClose} type="button">{closeText}</Button>
-            )}
-            <SubmitButton
-              size={isClientDesktop ? 'small' : 'large'}
-              color={confirmButtonColor}
-              type="submit"
-              data-testid="apply-button"
-              disabled={isDisabledConfirmButton}
-            >
-              {confirmText}
-            </SubmitButton>
-          </FooterWrapper>
-        </StyledForm>
-      </FormModalBox>
-    </FormModalWrapper>
+    <DelayRenderComponent isVisible={isVisible}>
+      <ModalPortal>
+        <FormModalWrapper isVisible={isVisible}>
+          <FormModalBox
+            size={size}
+            isVisible={isVisible}
+            role="dialog"
+            data-testid="form-modal-box"
+          >
+            <StyledForm onSubmit={onSubmit} onKeyDown={checkKeyDown}>
+              <HeaderWrapper>
+                <h4>{title}</h4>
+                <CloseIcon
+                  size={24}
+                  color={theme.accent6}
+                  onClick={onClose}
+                  data-testid="close-icon"
+                />
+              </HeaderWrapper>
+              {children}
+              <FooterWrapper>
+                {isClientDesktop && (
+                  <Button size="small" onClick={onClose} type="button">{closeText}</Button>
+                )}
+                <SubmitButton
+                  size={isClientDesktop ? 'small' : 'large'}
+                  color={confirmButtonColor}
+                  type="submit"
+                  data-testid="apply-button"
+                  disabled={isDisabledConfirmButton}
+                >
+                  {confirmText}
+                </SubmitButton>
+              </FooterWrapper>
+            </StyledForm>
+          </FormModalBox>
+        </FormModalWrapper>
+      </ModalPortal>
+    </DelayRenderComponent>
   );
 }
 

@@ -5,13 +5,14 @@ import { useClickAway, useLockBodyScroll } from 'react-use';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import useDelayVisible from '@/hooks/useDelayVisible';
 import animations from '@/styles/animations';
 import { body1Font } from '@/styles/fontStyles';
 import mq from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
 import LogoSvg from '../../assets/icons/img_logo_soople.svg';
+import DelayRenderComponent from '../common/DelayRenderComponent';
+import ModalPortal from '../common/ModalPortal';
 
 interface Props {
   isVisible: boolean;
@@ -23,35 +24,34 @@ function SignInModal({
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
-  const isOpen = useDelayVisible(isVisible, 400);
 
   useLockBodyScroll(isVisible);
   useClickAway(modalRef, onClose);
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <SignInModalWrapper isVisible={isVisible}>
-      <SignInModalBox isVisible={isVisible} ref={modalRef}>
-        <HeaderWrapper>
-          <LogoIcon />
-          <CloseIcon
-            size={24}
-            color={theme.accent6}
-            onClick={onClose}
-            data-testid="close-icon"
-          />
-        </HeaderWrapper>
-        {children}
-        <SignInDescription>
-          스터디와 사이드 프로젝트
-          <br />
-          수플과 함께 시작해요
-        </SignInDescription>
-      </SignInModalBox>
-    </SignInModalWrapper>
+    <DelayRenderComponent isVisible={isVisible}>
+      <ModalPortal>
+        <SignInModalWrapper isVisible={isVisible}>
+          <SignInModalBox isVisible={isVisible} ref={modalRef} role="dialog">
+            <HeaderWrapper>
+              <LogoIcon />
+              <CloseIcon
+                size={24}
+                color={theme.accent6}
+                onClick={onClose}
+                data-testid="close-icon"
+              />
+            </HeaderWrapper>
+            {children}
+            <SignInDescription>
+              스터디와 사이드 프로젝트
+              <br />
+              수플과 함께 시작해요
+            </SignInDescription>
+          </SignInModalBox>
+        </SignInModalWrapper>
+      </ModalPortal>
+    </DelayRenderComponent>
   );
 }
 

@@ -1,6 +1,4 @@
-import {
-  act, fireEvent, render, screen,
-} from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import { useSetRecoilState } from 'recoil';
 
 import useApplyGroup from '@/hooks/api/applicant/useApplyGroup';
@@ -8,6 +6,7 @@ import useCancelApply from '@/hooks/api/applicant/useCancelApply';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
+import renderWithPortal from '@/test/renderWithPortal';
 import { successToast } from '@/utils/toast';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
@@ -52,7 +51,7 @@ describe('DetailHeaderContainer', () => {
     }));
   });
 
-  const renderDetailHeaderContainer = () => render((
+  const renderDetailHeaderContainer = () => renderWithPortal((
     <DetailHeaderContainer />
   ));
 

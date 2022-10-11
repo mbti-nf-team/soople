@@ -63,7 +63,7 @@ function DetailPage(): ReactElement {
   useRenderErrorToast({
     errorStatus: 'already-completed',
     errorMessage: '이미 모집이 완료되었어요.',
-    replaceUrl: `/detail/${group.groupId}`,
+    replaceUrl: `/detail/${group?.groupId}`,
   });
 
   return (
@@ -72,11 +72,11 @@ function DetailPage(): ReactElement {
         title={detailPageSEO.title}
         description={detailPageSEO.description}
         openGraph={{
-          url: `${process.env.NEXT_PUBLIC_ORIGIN}${`/detail/${group.groupId}`}`,
+          url: `${process.env.NEXT_PUBLIC_ORIGIN}${`/detail/${group?.groupId}`}`,
           title: detailPageSEO.title,
           description: detailPageSEO.description,
           images: [{
-            url: emptyAThenB(`${process.env.NEXT_PUBLIC_ORIGIN}/meta_tag_default_image.png`, group.thumbnail),
+            url: emptyAThenB(`${process.env.NEXT_PUBLIC_ORIGIN}/meta_tag_default_image.png`, group?.thumbnail),
             width: 1200,
             height: 630,
             alt: detailPageSEO.title,

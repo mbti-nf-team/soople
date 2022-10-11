@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
+
+import renderWithPortal from '@/test/renderWithPortal';
 
 import SignInModal from './SignInModal';
 
@@ -6,7 +8,7 @@ describe('SignInModal', () => {
   const handleClose = jest.fn();
   const MockComponent = () => <>Mock</>;
 
-  const renderSignInModal = () => render((
+  const renderSignInModal = () => renderWithPortal((
     <SignInModal
       isVisible={given.isVisible}
       onClose={handleClose}

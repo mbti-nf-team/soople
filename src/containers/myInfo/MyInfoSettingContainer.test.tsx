@@ -1,9 +1,6 @@
 import { useRouter } from 'next/router';
 
-import {
-  fireEvent, render, screen,
-} from '@testing-library/react';
-import { act } from '@testing-library/react-hooks';
+import { act, fireEvent, screen } from '@testing-library/react';
 
 import useAccountWithdrawal from '@/hooks/api/auth/useAccountWithdrawal';
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
@@ -12,6 +9,7 @@ import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWit
 import useUpdateUser from '@/hooks/api/auth/useUpdateUser';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
@@ -57,7 +55,7 @@ describe('MyInfoSettingContainer', () => {
     }));
   });
 
-  const renderMyInfoSettingContainer = () => render((
+  const renderMyInfoSettingContainer = () => renderWithPortal((
     <ReactQueryWrapper>
       <MyInfoSettingContainer />
     </ReactQueryWrapper>

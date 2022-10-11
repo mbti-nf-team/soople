@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
+
+import renderWithPortal from '@/test/renderWithPortal';
 
 import AskApplyCancelModal from './AskApplyCancelModal';
 
@@ -6,7 +8,7 @@ describe('AskApplyCancelModal', () => {
   const handleCancel = jest.fn();
   const handleClose = jest.fn();
 
-  const renderAskApplyCancelModal = () => render((
+  const renderAskApplyCancelModal = () => renderWithPortal((
     <AskApplyCancelModal
       isVisible={given.isVisible}
       onClose={handleClose}

@@ -1,13 +1,12 @@
 import { useRouter } from 'next/router';
 
-import {
-  act, fireEvent, render, screen,
-} from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import InjectMockProviders from '@/test/InjectMockProviders';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import FIXTURE_APPLICANT from '../../../fixtures/applicant';
 import FIXTURE_GROUP from '../../../fixtures/group';
@@ -55,7 +54,7 @@ describe('WriterStatusButtons', () => {
     jest.clearAllTimers();
   });
 
-  const renderWriterStatusButtons = (isCompleted = false) => render((
+  const renderWriterStatusButtons = (isCompleted = false) => renderWithPortal((
     <InjectMockProviders width={given.width}>
       <WriterStatusButtons
         group={given.group}

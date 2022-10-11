@@ -7,12 +7,14 @@ import { useClickAway, useLockBodyScroll } from 'react-use';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import useDelayVisible from '@/hooks/useDelayVisible';
 import animations from '@/styles/animations';
 import { h4Font } from '@/styles/fontStyles';
 import mq, { mediaQueries } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 import { emptyAThenB } from '@/utils/utils';
+
+import DelayRenderComponent from './DelayRenderComponent';
+import ModalPortal from './ModalPortal';
 
 interface Props {
   isVisible: boolean;
@@ -29,30 +31,35 @@ function ViewModalWindow({
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
-  const isOpen = useDelayVisible(isVisible, 400);
 
   useLockBodyScroll(isVisible);
   useClickAway(modalRef, onClose);
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <ViewModalWindowWrapper isVisible={isVisible}>
-      <ViewModalWindowBox size={size} isVisible={isVisible} ref={modalRef} data-testid="modal-box">
-        <HeaderWrapper>
-          <h4>{title}</h4>
-          <CloseIcon
-            size={24}
-            color={theme.accent6}
-            onClick={onClose}
-            data-testid="close-icon"
-          />
-        </HeaderWrapper>
-        {children}
-      </ViewModalWindowBox>
-    </ViewModalWindowWrapper>
+    <DelayRenderComponent isVisible={isVisible}>
+      <ModalPortal>
+        <ViewModalWindowWrapper isVisible={isVisible}>
+          <ViewModalWindowBox
+            size={size}
+            isVisible={isVisible}
+            ref={modalRef}
+            role="dialog"
+            data-testid="modal-box"
+          >
+            <HeaderWrapper>
+              <h4>{title}</h4>
+              <CloseIcon
+                size={24}
+                color={theme.accent6}
+                onClick={onClose}
+                data-testid="close-icon"
+              />
+            </HeaderWrapper>
+            {children}
+          </ViewModalWindowBox>
+        </ViewModalWindowWrapper>
+      </ModalPortal>
+    </DelayRenderComponent>
   );
 }
 

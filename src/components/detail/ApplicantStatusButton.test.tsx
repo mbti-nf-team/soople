@@ -1,9 +1,8 @@
-import {
-  act, fireEvent, render, screen,
-} from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import InjectResponsiveContext from '@/test/InjectResponsiveContext';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -33,7 +32,7 @@ describe('ApplicantStatusButton', () => {
     jest.clearAllTimers();
   });
 
-  const renderApplicantStatusButton = () => render((
+  const renderApplicantStatusButton = () => renderWithPortal((
     <InjectResponsiveContext width={given.width}>
       <ApplicantStatusButton
         onApply={handleApply}
@@ -91,9 +90,10 @@ describe('ApplicantStatusButton', () => {
 
             describe('신청 모달창에서 "신청하기"를 클릭한다', () => {
               it('클릭 이벤트가 호출되어야만 한다', async () => {
-                const { container } = renderApplicantStatusButton();
+                renderApplicantStatusButton();
 
                 fireEvent.click(screen.getByText('신청하기'));
+
                 await act(async () => {
                   jest.advanceTimersByTime(400);
 
@@ -104,7 +104,6 @@ describe('ApplicantStatusButton', () => {
                 });
 
                 expect(handleApply).toBeCalledTimes(1);
-                expect(container).not.toHaveTextContent(/소개글/);
               });
             });
 

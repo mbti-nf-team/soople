@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 
 import {
-  act, fireEvent, render, screen,
+  act, fireEvent, screen,
 } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import SignInModalContainer from './SignInModalContainer';
 
@@ -34,7 +35,7 @@ describe('SignInModalContainer', () => {
     jest.clearAllTimers();
   });
 
-  const renderSignInModalContainer = () => render((
+  const renderSignInModalContainer = () => renderWithPortal((
     <InjectTestingRecoilState signInModalVisible={given.isVisible}>
       <SignInModalContainer />
     </InjectTestingRecoilState>
@@ -52,6 +53,7 @@ describe('SignInModalContainer', () => {
 
   context('SignIn 모달이 열린 경우', () => {
     given('isVisible', () => true);
+
     it('"소셜 계정으로 계속하기" 문구가 나타야만 한다', () => {
       const { container } = renderSignInModalContainer();
 

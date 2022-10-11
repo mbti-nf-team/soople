@@ -1,6 +1,7 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 import InjectResponsiveContext from '@/test/InjectResponsiveContext';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import ConfirmModal from './ConfirmModal';
 
@@ -8,7 +9,7 @@ describe('ConfirmModal', () => {
   const handleConfirm = jest.fn();
   const handleClose = jest.fn();
 
-  const renderConfirmModal = () => render((
+  const renderConfirmModal = () => renderWithPortal((
     <InjectResponsiveContext width={given.width}>
       <ConfirmModal
         isVisible={given.isVisible}

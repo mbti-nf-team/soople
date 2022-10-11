@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
+
+import renderWithPortal from '@/test/renderWithPortal';
 
 import AskMemberWithdrawalModal from './AskMemberWithdrawalModal';
 
@@ -6,7 +8,7 @@ describe('AskMemberWithdrawalModal', () => {
   const handleWithdrawal = jest.fn();
   const handleClose = jest.fn();
 
-  const renderAskMemberWithdrawalModal = () => render((
+  const renderAskMemberWithdrawalModal = () => renderWithPortal((
     <AskMemberWithdrawalModal
       isVisible={given.isVisible}
       onClose={handleClose}

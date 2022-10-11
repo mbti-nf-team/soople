@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import useUpdateCompletedApply from '@/hooks/api/group/useUpdateCompletedApply';
+import renderWithPortal from '@/test/renderWithPortal';
 import { tomorrow } from '@/utils/utils';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
@@ -47,7 +48,7 @@ describe('ApplicationStatusHeaderContainer', () => {
     }));
   });
 
-  const renderApplicationStatusHeaderContainer = () => render((
+  const renderApplicationStatusHeaderContainer = () => renderWithPortal((
     <ApplicationStatusHeaderContainer />
   ));
 

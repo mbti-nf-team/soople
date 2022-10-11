@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { useHelpers, useRemirrorContext } from '@remirror/react';
-import {
-  act, fireEvent, render, screen,
-} from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useEditGroup from '@/hooks/api/group/useEditGroup';
@@ -15,6 +13,7 @@ import { writeFieldsState } from '@/recoil/group/atom';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import RecoilObserver from '@/test/RecoilObserver';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import FIXTURE_GROUP from '../../../fixtures/group';
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
@@ -69,7 +68,7 @@ describe('PublishModalContainer', () => {
     }));
   });
 
-  const renderPublishModalContainer = () => render((
+  const renderPublishModalContainer = () => renderWithPortal((
     <ReactQueryWrapper>
       <InjectTestingRecoilState
         publishModalVisible={given.isVisible}
