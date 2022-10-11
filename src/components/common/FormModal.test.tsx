@@ -1,7 +1,8 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 import InjectResponsiveContext from '@/test/InjectResponsiveContext';
 import MockTheme from '@/test/MockTheme';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import FormModal from './FormModal';
 
@@ -14,7 +15,7 @@ describe('FormModal', () => {
     jest.clearAllMocks();
   });
 
-  const renderFormModal = () => render((
+  const renderFormModal = () => renderWithPortal((
     <InjectResponsiveContext width={given.width}>
       <MockTheme>
         <FormModal

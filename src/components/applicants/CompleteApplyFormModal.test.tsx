@@ -1,6 +1,7 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 import InjectResponsiveContext from '@/test/InjectResponsiveContext';
+import renderWithPortal from '@/test/renderWithPortal';
 import { defaultToast } from '@/utils/toast';
 
 import CompleteApplyFormModal from './CompleteApplyFormModal';
@@ -15,7 +16,7 @@ describe('CompleteApplyFormModal', () => {
     jest.clearAllMocks();
   });
 
-  const renderCompleteApplyFormModal = () => render((
+  const renderCompleteApplyFormModal = () => renderWithPortal((
     <InjectResponsiveContext width={given.width}>
       <CompleteApplyFormModal
         isVisible

@@ -5,7 +5,6 @@ import { useClickAway, useLockBodyScroll } from 'react-use';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import useDelayVisible from '@/hooks/useDelayVisible';
 import useResponsive from '@/hooks/useResponsive';
 import animations from '@/styles/animations';
 import { body1Font, h4Font } from '@/styles/fontStyles';
@@ -13,6 +12,8 @@ import mq from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
 import Button from './Button';
+import DelayRenderComponent from './DelayRenderComponent';
+import ModalPortal from './ModalPortal';
 
 interface Props {
   isVisible: boolean;
@@ -31,48 +32,47 @@ function ConfirmModal({
   const theme = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
   const { isMobile } = useResponsive();
-  const isOpen = useDelayVisible(isVisible, 400);
 
   useLockBodyScroll(isVisible);
   useClickAway(modalRef, onClose);
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <ConfirmModalWrapper isVisible={isVisible}>
-      <ConfirmModalBox isVisible={isVisible} ref={modalRef}>
-        <HeaderWrapper>
-          <h4>{title}</h4>
-          <CloseIcon
-            size={24}
-            color={theme.accent6}
-            onClick={onClose}
-            data-testid="close-icon"
-          />
-        </HeaderWrapper>
-        <Description>
-          {description}
-        </Description>
-        <FooterWrapper>
-          <CloseButton
-            size={isMobile ? 'large' : 'small'}
-            onClick={onClose}
-          >
-            {closeText}
-          </CloseButton>
-          <ConfirmButton
-            size={isMobile ? 'large' : 'small'}
-            color={confirmButtonColor}
-            onClick={onConfirm}
-            data-testid="confirm-button"
-          >
-            {confirmText}
-          </ConfirmButton>
-        </FooterWrapper>
-      </ConfirmModalBox>
-    </ConfirmModalWrapper>
+    <DelayRenderComponent isVisible={isVisible}>
+      <ModalPortal>
+        <ConfirmModalWrapper isVisible={isVisible}>
+          <ConfirmModalBox isVisible={isVisible} ref={modalRef} role="dialog">
+            <HeaderWrapper>
+              <h4>{title}</h4>
+              <CloseIcon
+                size={24}
+                color={theme.accent6}
+                onClick={onClose}
+                data-testid="close-icon"
+              />
+            </HeaderWrapper>
+            <Description>
+              {description}
+            </Description>
+            <FooterWrapper>
+              <CloseButton
+                size={isMobile ? 'large' : 'small'}
+                onClick={onClose}
+              >
+                {closeText}
+              </CloseButton>
+              <ConfirmButton
+                size={isMobile ? 'large' : 'small'}
+                color={confirmButtonColor}
+                onClick={onConfirm}
+                data-testid="confirm-button"
+              >
+                {confirmText}
+              </ConfirmButton>
+            </FooterWrapper>
+          </ConfirmModalBox>
+        </ConfirmModalWrapper>
+      </ModalPortal>
+    </DelayRenderComponent>
   );
 }
 

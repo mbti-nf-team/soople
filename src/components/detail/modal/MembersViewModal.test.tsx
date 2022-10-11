@@ -1,7 +1,8 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import InjectResponsiveContext from '@/test/InjectResponsiveContext';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import FIXTURE_APPLICANT from '../../../../fixtures/applicant';
 
@@ -21,7 +22,7 @@ describe('MembersViewModal', () => {
     }));
   });
 
-  const renderMembersViewModal = () => render((
+  const renderMembersViewModal = () => renderWithPortal((
     <InjectResponsiveContext width={given.width}>
       <MembersViewModal
         isVisible

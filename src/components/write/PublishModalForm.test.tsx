@@ -1,10 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { WriteFields } from '@/models/group';
 import { lightTheme } from '@/styles/theme';
 import InjectMockProviders from '@/test/InjectMockProviders';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 import WRITE_FIELDS_FIXTURE from '../../../fixtures/writeFields';
@@ -31,7 +32,7 @@ describe('PublishModalForm', () => {
     }));
   });
 
-  const renderPublishModalForm = (fields: WriteFields) => render((
+  const renderPublishModalForm = (fields: WriteFields) => renderWithPortal((
     <InjectMockProviders>
       <PublishModalForm
         isEdit={given.isEdit}

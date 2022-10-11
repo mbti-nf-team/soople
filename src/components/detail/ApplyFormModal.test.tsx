@@ -1,6 +1,8 @@
 import { act } from 'react-dom/test-utils';
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
+
+import renderWithPortal from '@/test/renderWithPortal';
 
 import ApplyFormModal from './ApplyFormModal';
 
@@ -13,7 +15,7 @@ describe('ApplyFormModal', () => {
     handleClose.mockClear();
   });
 
-  const renderApplyFormModal = () => render((
+  const renderApplyFormModal = () => renderWithPortal((
     <ApplyFormModal
       isVisible
       initPortfolioUrl=""

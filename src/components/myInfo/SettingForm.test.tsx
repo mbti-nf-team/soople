@@ -1,6 +1,6 @@
-import {
-  act, fireEvent, render, screen,
-} from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
+
+import renderWithPortal from '@/test/renderWithPortal';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
@@ -18,7 +18,7 @@ describe('SettingForm', () => {
     jest.clearAllTimers();
   });
 
-  const renderSettingForm = () => render((
+  const renderSettingForm = () => renderWithPortal((
     <SettingForm
       user={{
         ...FIXTURE_PROFILE,

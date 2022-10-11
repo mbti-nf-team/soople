@@ -1,8 +1,7 @@
-import {
-  act, fireEvent, render, screen,
-} from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 
 import InjectMockProviders from '@/test/InjectMockProviders';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import ViewModalWindow from './ViewModalWindow';
 
@@ -19,7 +18,7 @@ describe('ViewModalWindow', () => {
     jest.clearAllTimers();
   });
 
-  const renderViewModalWindow = () => render((
+  const renderViewModalWindow = () => renderWithPortal((
     <InjectMockProviders>
       <ViewModalWindow
         isVisible={given.isVisible}

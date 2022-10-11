@@ -1,9 +1,8 @@
-import {
-  act, fireEvent, render, screen,
-} from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 
 import { Applicant } from '@/models/group';
 import InjectResponsiveContext from '@/test/InjectResponsiveContext';
+import renderWithPortal from '@/test/renderWithPortal';
 
 import APPLICANT_FIXTURE from '../../../fixtures/applicant';
 
@@ -22,7 +21,7 @@ describe('ApplicationStatusHeader', () => {
     jest.clearAllTimers();
   });
 
-  const renderApplicationStatusHeader = (applicant: Applicant) => render((
+  const renderApplicationStatusHeader = (applicant: Applicant) => renderWithPortal((
     <InjectResponsiveContext width={given.width}>
       <ApplicationStatusHeader
         timeRemaining={null}

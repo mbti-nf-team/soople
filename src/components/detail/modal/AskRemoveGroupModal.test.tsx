@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
+
+import renderWithPortal from '@/test/renderWithPortal';
 
 import AskRemoveGroupModal from './AskRemoveGroupModal';
 
@@ -6,7 +8,7 @@ describe('AskRemoveGroupModal', () => {
   const handleConfirm = jest.fn();
   const handleClose = jest.fn();
 
-  const renderAskRemoveGroupModal = () => render((
+  const renderAskRemoveGroupModal = () => renderWithPortal((
     <AskRemoveGroupModal
       isVisible={given.isVisible}
       onClose={handleClose}
