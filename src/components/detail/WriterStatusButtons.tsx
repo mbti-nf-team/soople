@@ -9,6 +9,7 @@ import { useSetRecoilState } from 'recoil';
 
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
+import useActionKeyEvent from '@/hooks/useActionKeyEvent';
 import useBoolean from '@/hooks/useBoolean';
 import useResponsive from '@/hooks/useResponsive';
 import { Group } from '@/models/group';
@@ -42,16 +43,6 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
     isVisibleAskRemoveGroupModal, openAskRemoveGroupModal, closeAskRemoveGroupModal,
   ] = useBoolean(false);
 
-  const buttonSize = isMobile ? 'small' : 'medium';
-
-  const handleRemove = useCallback(() => {
-    removeGroupMutate(group);
-
-    if (group.thumbnail) {
-      removeGroupThumbnailMutate(group.thumbnail);
-    }
-  }, [group, removeGroupMutate, removeGroupThumbnailMutate]);
-
   const onClickEdit = (initialWriteFields: Group) => () => {
     const {
       category, content, tags, title, recruitmentEndDate, recruitmentEndSetting, groupId,
@@ -70,6 +61,19 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
     router.push(`/write?id=${groupId}`);
   };
 
+  const handleKeyDownEditIcon = useActionKeyEvent<SVGElement>(['Enter', 'NumpadEnter'], onClickEdit(group));
+  const handleKeyDownRemoveIcon = useActionKeyEvent<SVGElement>(['Enter', 'NumpadEnter'], openAskRemoveGroupModal);
+
+  const buttonSize = isMobile ? 'small' : 'medium';
+
+  const handleRemove = useCallback(() => {
+    removeGroupMutate(group);
+
+    if (group.thumbnail) {
+      removeGroupThumbnailMutate(group.thumbnail);
+    }
+  }, [group, removeGroupMutate, removeGroupThumbnailMutate]);
+
   return (
     <WriterButtonWrapper>
       {isMobile && (
@@ -80,6 +84,7 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
             tabIndex={0}
             color={theme.accent6}
             cursor="pointer"
+            onKeyDown={handleKeyDownEditIcon}
             onClick={onClickEdit(group)}
           />
           <Trash2
@@ -88,6 +93,7 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
             tabIndex={0}
             color={theme.accent6}
             cursor="pointer"
+            onKeyDown={handleKeyDownRemoveIcon}
             onClick={openAskRemoveGroupModal}
           />
         </div>
