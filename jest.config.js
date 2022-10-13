@@ -5,6 +5,9 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
+  setupFiles: [
+    '<rootDir>/__mocks__/setEnvVars.js',
+  ],
   setupFilesAfterEnv: [
     '<rootDir>/jest.setup.js',
   ],

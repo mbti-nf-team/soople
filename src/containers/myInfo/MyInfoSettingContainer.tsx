@@ -33,7 +33,7 @@ function MyInfoSettingContainer(): ReactElement | null {
   }, []);
 
   const onDeleteProfileImage = useCallback(() => {
-    if (user?.image?.startsWith('https://firebasestorage.googleapis.com')) {
+    if (user?.image?.startsWith(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL)) {
       deleteStorageUserImage(user.image);
     }
 

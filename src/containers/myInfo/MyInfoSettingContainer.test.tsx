@@ -103,8 +103,8 @@ describe('MyInfoSettingContainer', () => {
     });
 
     describe('"이미지 삭제" 버튼을 클릭한다', () => {
-      context('이미지 url이 "https://firebasestorage.googleapis.com"로 시작하는 경우', () => {
-        const imageUrl = 'https://firebasestorage.googleapis.com/test';
+      context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하는 경우`, () => {
+        const imageUrl = `${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}/test`;
 
         given('profileStatus', () => ({
           data: {
@@ -129,8 +129,8 @@ describe('MyInfoSettingContainer', () => {
         });
       });
 
-      context('이미지 url이 "https://firebasestorage.googleapis.com"로 시작하지 않는 경우', () => {
-        const imageUrl = 'https://test.com/test';
+      context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하지 않는 경우`, () => {
+        const imageUrl = 'https://test';
 
         given('profileStatus', () => ({
           data: {
