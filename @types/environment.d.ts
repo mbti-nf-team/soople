@@ -9,5 +9,6 @@ namespace NodeJS {
     KAKAO_ID: string;
     KAKAO_SECRET: string;
     NEXT_PUBLIC_ORIGIN: string;
+    NEXT_PUBLIC_FIREBASE_STORAGE_URL: string;
   }
 }
