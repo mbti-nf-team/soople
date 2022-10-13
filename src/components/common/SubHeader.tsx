@@ -16,7 +16,7 @@ interface Props {
 }
 
 function SubHeader({ goBack, previousText, children }: PropsWithChildren<Props>): ReactElement {
-  const handleKeyDown = useActionKeyEvent<HTMLDivElement>('Enter', goBack);
+  const handleKeyDown = useActionKeyEvent<HTMLDivElement>(['Enter', 'NumpadEnter'], goBack);
 
   return (
     <>
