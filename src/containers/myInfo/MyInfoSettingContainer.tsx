@@ -13,7 +13,6 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWithProvider';
 import useUpdateUser from '@/hooks/api/auth/useUpdateUser';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
-import { Profile } from '@/models/auth';
 import { DetailLayout } from '@/styles/Layout';
 
 function MyInfoSettingContainer(): ReactElement | null {
@@ -33,12 +32,16 @@ function MyInfoSettingContainer(): ReactElement | null {
   }, []);
 
   const onDeleteProfileImage = useCallback(() => {
-    if (user?.image?.startsWith(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL)) {
+    if (!user?.image) {
+      return;
+    }
+
+    if (user.image.startsWith(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL)) {
       deleteStorageUserImage(user.image);
     }
 
     deleteProfileImage({
-      ...user as Profile,
+      ...user,
       image: null,
     });
   }, [user, deleteStorageUserImage, deleteProfileImage]);

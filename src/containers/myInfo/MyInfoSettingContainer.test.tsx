@@ -103,6 +103,25 @@ describe('MyInfoSettingContainer', () => {
     });
 
     describe('"이미지 삭제" 버튼을 클릭한다', () => {
+      context('이미지가 존재하지 않는 경우', () => {
+        given('profileStatus', () => ({
+          data: {
+            ...FIXTURE_PROFILE,
+            image: null,
+          },
+          isLoading: false,
+          isSuccess: true,
+        }));
+
+        it('mutate가 호출되지 않아야만 한다', () => {
+          renderMyInfoSettingContainer();
+
+          fireEvent.click(screen.getByText('이미지 삭제'));
+
+          expect(mutate).not.toBeCalled();
+        });
+      });
+
       context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하는 경우`, () => {
         const imageUrl = `${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}/test`;
 
