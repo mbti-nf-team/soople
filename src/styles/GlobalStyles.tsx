@@ -63,7 +63,7 @@ export const setGlobalStyles = (pathname: string, theme: Theme) => css`
     cursor: not-allowed;
   }
 
-  input:read-only, textarea:read-only {
+  input:not([type="file"]):read-only, textarea:read-only {
     pointer-events: none;
   }
 

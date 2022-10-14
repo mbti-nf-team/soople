@@ -13,6 +13,7 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWithProvider';
 import useUpdateUser from '@/hooks/api/auth/useUpdateUser';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
+import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { DetailLayout } from '@/styles/Layout';
 
 function MyInfoSettingContainer(): ReactElement | null {
@@ -24,7 +25,10 @@ function MyInfoSettingContainer(): ReactElement | null {
   const { mutate: reauthenticate } = useReauthenticateWithProvider();
   const { mutate: deleteUser } = useAccountWithdrawal();
   const { mutate: deleteStorageUserImage } = useDeleteStorageFile();
-  const { mutate: deleteProfileImage } = useUpdateUser();
+  const {
+    data: profileImageUrl, mutate: uploadStorageUserImage, isSuccess: isSuccessUpload,
+  } = useUploadStorageFile();
+  const { mutate: updateProfile } = useUpdateUser();
 
   const onWithdrawal = useCallback(() => {
     setIsReauthenticate(true);
@@ -40,11 +44,22 @@ function MyInfoSettingContainer(): ReactElement | null {
       deleteStorageUserImage(user.image);
     }
 
-    deleteProfileImage({
+    updateProfile({
       ...user,
       image: null,
     });
-  }, [user, deleteStorageUserImage, deleteProfileImage]);
+  }, [user, deleteStorageUserImage, updateProfile]);
+
+  const onUploadProfileImage = useCallback((file: File) => {
+    if (user?.image?.startsWith(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL)) {
+      deleteStorageUserImage(user.image);
+    }
+
+    uploadStorageUserImage({
+      file,
+      storagePath: `profile/${user?.uid}/${Date.now()}-${file.name}`,
+    });
+  }, [user, uploadStorageUserImage, deleteStorageUserImage]);
 
   useEffect(() => {
     if (!isLoading && isSuccess && !user) {
@@ -58,13 +73,26 @@ function MyInfoSettingContainer(): ReactElement | null {
     }
   }, [isReauthenticate, auth]);
 
+  useEffect(() => {
+    if (isSuccessUpload && user) {
+      updateProfile({
+        ...user,
+        image: profileImageUrl,
+      });
+    }
+  }, [isSuccessUpload, user, profileImageUrl]);
+
   if (isLoading || !isSuccess) {
     return null;
   }
 
   return (
     <SettingFormLayout>
-      <ImageSetting imageUrl={user?.image} onDelete={onDeleteProfileImage} />
+      <ImageSetting
+        imageUrl={user?.image}
+        onDelete={onDeleteProfileImage}
+        onUpload={onUploadProfileImage}
+      />
       <SettingForm user={user} onWithdrawal={onWithdrawal} />
     </SettingFormLayout>
   );

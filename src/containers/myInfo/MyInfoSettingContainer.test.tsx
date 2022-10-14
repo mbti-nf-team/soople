@@ -8,6 +8,7 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWithProvider';
 import useUpdateUser from '@/hooks/api/auth/useUpdateUser';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
+import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import renderWithPortal from '@/test/renderWithPortal';
 
@@ -20,6 +21,7 @@ jest.mock('@/hooks/api/auth/useAccountWithdrawal');
 jest.mock('@/hooks/api/auth/useAuthRedirectResult');
 jest.mock('@/hooks/api/storage/useDeleteStorageFile');
 jest.mock('@/hooks/api/auth/useReauthenticateWithProvider');
+jest.mock('@/hooks/api/storage/useUploadStorageFile');
 jest.mock('@/hooks/api/auth/useUpdateUser');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -28,6 +30,7 @@ jest.mock('next/router', () => ({
 describe('MyInfoSettingContainer', () => {
   const mockReplace = jest.fn();
   const mutate = jest.fn();
+  const uploadProfileImageUrl = 'https://test.test';
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -51,6 +54,11 @@ describe('MyInfoSettingContainer', () => {
       mutate,
     }));
     (useUpdateUser as jest.Mock).mockImplementation(() => ({
+      mutate,
+    }));
+    (useUploadStorageFile as jest.Mock).mockImplementation(() => ({
+      data: uploadProfileImageUrl,
+      isSuccess: given.isSuccessUpload,
       mutate,
     }));
   });
@@ -169,6 +177,85 @@ describe('MyInfoSettingContainer', () => {
           expect(mutate).toBeCalledWith({
             ...FIXTURE_PROFILE,
             image: null,
+          });
+        });
+      });
+    });
+
+    describe('"이미지 선택" 버튼을 클릭하여 이미지를 업로드한다', () => {
+      const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
+
+      context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하는 경우`, () => {
+        const imageUrl = `${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}/test`;
+
+        given('profileStatus', () => ({
+          data: {
+            ...FIXTURE_PROFILE,
+            image: imageUrl,
+          },
+          isLoading: false,
+          isSuccess: true,
+        }));
+
+        it('storage image 삭제 mutate 호출 후 upload storage image mutate가 호출되어야만 한다', () => {
+          renderMyInfoSettingContainer();
+
+          act(() => {
+            fireEvent.change(screen.getByTestId('upload-profile-image-input'), {
+              target: { files: [file] },
+            });
+          });
+
+          expect(mutate).toBeCalledTimes(2);
+          expect(mutate).toBeCalledWith(imageUrl);
+        });
+      });
+
+      context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하지 않는 경우`, () => {
+        const imageUrl = 'https://test';
+
+        given('profileStatus', () => ({
+          data: {
+            ...FIXTURE_PROFILE,
+            image: imageUrl,
+          },
+          isLoading: false,
+          isSuccess: true,
+        }));
+
+        it('upload storage image mutate가 호출되어야만 한다', () => {
+          renderMyInfoSettingContainer();
+
+          act(() => {
+            fireEvent.change(screen.getByTestId('upload-profile-image-input'), {
+              target: { files: [file] },
+            });
+          });
+
+          expect(mutate).toBeCalledTimes(1);
+        });
+      });
+
+      context('이미지 업로드에 성공한 경우', () => {
+        const imageUrl = 'https://test.com';
+
+        given('isSuccessUpload', () => true);
+        given('profileStatus', () => ({
+          data: {
+            ...FIXTURE_PROFILE,
+            image: imageUrl,
+          },
+          isLoading: false,
+          isSuccess: true,
+        }));
+
+        it('upload profile image mutate가 호출되어야만 한다', () => {
+          renderMyInfoSettingContainer();
+
+          expect(mutate).toBeCalledTimes(1);
+          expect(mutate).toBeCalledWith({
+            ...FIXTURE_PROFILE,
+            image: uploadProfileImageUrl,
           });
         });
       });
