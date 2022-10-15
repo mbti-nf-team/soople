@@ -1,4 +1,6 @@
-import React, { ReactElement, useCallback, useEffect } from 'react';
+import React, {
+  ReactElement, useCallback, useEffect, useState,
+} from 'react';
 import { useLocalStorage } from 'react-use';
 
 import { useRouter } from 'next/router';
@@ -14,6 +16,7 @@ import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWit
 import useUpdateUser from '@/hooks/api/auth/useUpdateUser';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
+import useRenderSuccessToast from '@/hooks/useRenderSuccessToast';
 import { DetailLayout } from '@/styles/Layout';
 
 function MyInfoSettingContainer(): ReactElement | null {
@@ -28,7 +31,13 @@ function MyInfoSettingContainer(): ReactElement | null {
   const {
     data: profileImageUrl, mutate: uploadStorageUserImage, isSuccess: isSuccessUpload,
   } = useUploadStorageFile();
-  const { mutate: updateProfile } = useUpdateUser();
+  const { mutate: updateProfile, isSuccess: isSuccessUpdate } = useUpdateUser();
+
+  const [imageActionType, setImageActionType] = useState<'삭제' | '수정'>();
+
+  useRenderSuccessToast(isSuccessUpdate, {
+    message: `이미지가 ${imageActionType}되었어요.`,
+  });
 
   const onWithdrawal = useCallback(() => {
     setIsReauthenticate(true);
@@ -48,6 +57,7 @@ function MyInfoSettingContainer(): ReactElement | null {
       ...user,
       image: null,
     });
+    setImageActionType('삭제');
   }, [user, deleteStorageUserImage, updateProfile]);
 
   const onUploadProfileImage = useCallback((file: File) => {
@@ -79,6 +89,7 @@ function MyInfoSettingContainer(): ReactElement | null {
         ...user,
         image: profileImageUrl,
       });
+      setImageActionType('수정');
     }
   }, [isSuccessUpload, user, profileImageUrl]);
 

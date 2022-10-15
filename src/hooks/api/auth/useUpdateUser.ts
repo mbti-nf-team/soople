@@ -23,7 +23,7 @@ function useUpdateUser() {
   useCatchAuthErrorWithToast({
     isError,
     error,
-    defaultErrorMessage: '프로필 이미지 삭제에 실패했어요!',
+    defaultErrorMessage: '정보 수정에 실패했어요!',
   });
 
   return mutation;

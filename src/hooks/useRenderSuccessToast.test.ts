@@ -15,7 +15,7 @@ describe('useRenderSuccessToast', () => {
 
   const useRenderSuccessToastHook = () => renderHook(() => useRenderSuccessToast(
     given.isSuccess,
-    message,
+    { message },
   ));
 
   context('isSuccess가 true인 경우', () => {
@@ -24,7 +24,7 @@ describe('useRenderSuccessToast', () => {
     it('"successToast"가 메시지와 함꼐 호출되어야만 한다', () => {
       useRenderSuccessToastHook();
 
-      expect(successToast).toBeCalledWith(message);
+      expect(successToast).toBeCalledWith(message, undefined);
     });
   });
 

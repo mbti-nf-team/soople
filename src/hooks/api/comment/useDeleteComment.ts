@@ -33,7 +33,9 @@ function useDeleteComment(perPage: number) {
 
   const { isError, error, isSuccess } = mutation;
 
-  useRenderSuccessToast(isSuccess, '댓글을 삭제했어요.');
+  useRenderSuccessToast(isSuccess, {
+    message: '댓글을 삭제했어요.',
+  });
 
   useCatchFirestoreErrorWithToast({
     isError,
