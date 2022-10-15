@@ -1,4 +1,6 @@
-import React, { ChangeEvent, ReactElement, useRef } from 'react';
+import React, {
+  ChangeEvent, memo, ReactElement, useRef,
+} from 'react';
 
 import styled from '@emotion/styled';
 
@@ -53,7 +55,7 @@ function ImageSetting({ imageUrl, onDelete, onUpload }: Props):ReactElement {
   );
 }
 
-export default ImageSetting;
+export default memo(ImageSetting);
 
 const ImageSettingWrapper = styled.div`
   display: inline-flex;

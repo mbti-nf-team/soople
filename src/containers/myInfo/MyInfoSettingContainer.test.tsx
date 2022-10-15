@@ -55,6 +55,7 @@ describe('MyInfoSettingContainer', () => {
     }));
     (useUpdateUser as jest.Mock).mockImplementation(() => ({
       mutate,
+      isSuccess: false,
     }));
     (useUploadStorageFile as jest.Mock).mockImplementation(() => ({
       data: uploadProfileImageUrl,
