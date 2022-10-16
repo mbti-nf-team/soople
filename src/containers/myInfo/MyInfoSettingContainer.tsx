@@ -16,8 +16,8 @@ import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWit
 import useUpdateUser from '@/hooks/api/auth/useUpdateUser';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
-import useRenderSuccessToast from '@/hooks/useRenderSuccessToast';
 import { DetailLayout } from '@/styles/Layout';
+import { successToast } from '@/utils/toast';
 
 function MyInfoSettingContainer(): ReactElement | null {
   const { replace } = useRouter();
@@ -29,15 +29,14 @@ function MyInfoSettingContainer(): ReactElement | null {
   const { mutate: deleteUser } = useAccountWithdrawal();
   const { mutate: deleteStorageUserImage } = useDeleteStorageFile();
   const {
-    data: profileImageUrl, mutate: uploadStorageUserImage, isSuccess: isSuccessUpload,
+    data: profileImageUrl, mutate: uploadStorageUserImage,
+    isSuccess: isSuccessUpload, reset: resetUploadStorage,
   } = useUploadStorageFile();
-  const { mutate: updateProfile, isSuccess: isSuccessUpdate } = useUpdateUser();
+  const {
+    mutate: updateProfile, isSuccess: isSuccessUpdate, reset: resetUpdateProfile,
+  } = useUpdateUser();
 
   const [imageActionType, setImageActionType] = useState<'삭제' | '수정'>();
-
-  useRenderSuccessToast(isSuccessUpdate, {
-    message: `이미지가 ${imageActionType}되었어요.`,
-  });
 
   const onWithdrawal = useCallback(() => {
     setIsReauthenticate(true);
@@ -84,14 +83,23 @@ function MyInfoSettingContainer(): ReactElement | null {
   }, [isReauthenticate, auth]);
 
   useEffect(() => {
-    if (isSuccessUpload && user) {
+    if (isSuccessUpload && profileImageUrl && user) {
       updateProfile({
         ...user,
         image: profileImageUrl,
       });
       setImageActionType('수정');
+      resetUploadStorage();
     }
   }, [isSuccessUpload, user, profileImageUrl]);
+
+  useEffect(() => {
+    if (isSuccessUpdate) {
+      successToast(`이미지가 ${imageActionType}되었어요.`);
+      setImageActionType(undefined);
+      resetUpdateProfile();
+    }
+  }, [isSuccessUpdate, imageActionType]);
 
   if (isLoading || !isSuccess) {
     return null;

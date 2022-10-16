@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AuthError } from 'firebase/auth';
+import { AuthError, User } from 'firebase/auth';
 
 import { Profile } from '@/models/auth';
 import { updateUserProfile } from '@/services/api/auth';
@@ -11,10 +11,10 @@ function useUpdateUser() {
 
   const mutation = useMutation<void, AuthError, Profile>((profile) => updateUserProfile(profile), {
     onSuccess: () => {
+      queryClient.setQueryData<User | null>(['authRedirectResult'], () => null);
+      queryClient.invalidateQueries(['token']);
       queryClient.invalidateQueries(['user']);
       queryClient.invalidateQueries(['profile']);
-      queryClient.invalidateQueries(['token']);
-      queryClient.invalidateQueries(['authRedirectResult']);
     },
   });
 
