@@ -11,6 +11,7 @@ import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import renderWithPortal from '@/test/renderWithPortal';
+import { successToast } from '@/utils/toast';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
@@ -23,6 +24,7 @@ jest.mock('@/hooks/api/storage/useDeleteStorageFile');
 jest.mock('@/hooks/api/auth/useReauthenticateWithProvider');
 jest.mock('@/hooks/api/storage/useUploadStorageFile');
 jest.mock('@/hooks/api/auth/useUpdateUser');
+jest.mock('@/utils/toast');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
@@ -30,6 +32,7 @@ jest.mock('next/router', () => ({
 describe('MyInfoSettingContainer', () => {
   const mockReplace = jest.fn();
   const mutate = jest.fn();
+  const reset = jest.fn();
   const uploadProfileImageUrl = 'https://test.test';
 
   beforeEach(() => {
@@ -55,12 +58,14 @@ describe('MyInfoSettingContainer', () => {
     }));
     (useUpdateUser as jest.Mock).mockImplementation(() => ({
       mutate,
-      isSuccess: false,
+      isSuccess: given.isSuccessUpdate,
+      reset,
     }));
     (useUploadStorageFile as jest.Mock).mockImplementation(() => ({
       data: uploadProfileImageUrl,
       isSuccess: given.isSuccessUpload,
       mutate,
+      reset,
     }));
   });
 
@@ -181,6 +186,17 @@ describe('MyInfoSettingContainer', () => {
           });
         });
       });
+
+      context('프로필 업데이트에 성공한 경우', () => {
+        given('isSuccessUpdate', () => true);
+
+        it('토스트 메시지가 호출되어야만 한다', () => {
+          renderMyInfoSettingContainer();
+
+          expect(successToast).toBeCalledTimes(1);
+          expect(reset).toBeCalledTimes(1);
+        });
+      });
     });
 
     describe('"이미지 선택" 버튼을 클릭하여 이미지를 업로드한다', () => {
@@ -258,6 +274,17 @@ describe('MyInfoSettingContainer', () => {
             ...FIXTURE_PROFILE,
             image: uploadProfileImageUrl,
           });
+        });
+      });
+
+      context('프로필 업데이트에 성공한 경우', () => {
+        given('isSuccessUpdate', () => true);
+
+        it('토스트 메시지가 호출되어야만 한다', () => {
+          renderMyInfoSettingContainer();
+
+          expect(successToast).toBeCalledTimes(1);
+          expect(reset).toBeCalledTimes(1);
         });
       });
     });
