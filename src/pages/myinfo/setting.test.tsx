@@ -2,12 +2,14 @@ import { act, render } from '@testing-library/react';
 
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
+import authenticatedServerSideProps from '@/services/serverSideProps/authenticatedServerSideProps';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 
-import SettingPage from './setting.page';
+import SettingPage, { getServerSideProps } from './setting.page';
 
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/auth/useAuthRedirectResult');
+jest.mock('@/services/serverSideProps/authenticatedServerSideProps');
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
     replace: jest.fn(),
@@ -37,5 +39,13 @@ describe('SettingPage', () => {
     const { container } = renderSettingPage();
 
     await act(() => expect(container).toHaveTextContent('저장하기'));
+  });
+});
+
+describe('getServerSideProps', () => {
+  it('authenticatedServerSideProps 함수를 반환해야만 한다', () => {
+    const result = getServerSideProps;
+
+    expect(result).toBe(authenticatedServerSideProps);
   });
 });

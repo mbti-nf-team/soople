@@ -1,6 +1,5 @@
-const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
-const withPlugins = require('next-compose-plugins');
+const withPWA = require('next-pwa');
 const { withSentryConfig } = require('@sentry/nextjs');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -25,6 +24,9 @@ const nextConfig = {
       exclude: ['error'],
     },
     emotion: true,
+  },
+  sentry: {
+    hideSourceMaps: true,
   },
   webpack: (config) => {
     config.module.rules.push({
@@ -51,16 +53,11 @@ const sentryWebpackPluginOptions = {
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
 module.exports = withSentryConfig(
-  withPlugins([
-    [withBundleAnalyzer],
-    [withPWA, {
-      pwa: {
-        dest: 'public',
-        maximumFileSizeToCacheInBytes: 7000000,
-        disable: process.env.NODE_ENV === 'development',
-        runtimeCaching,
-      },
-    }],
-  ], nextConfig),
+  withBundleAnalyzer(withPWA({
+    dest: 'public',
+    maximumFileSizeToCacheInBytes: 7000000,
+    disable: process.env.NODE_ENV === 'development',
+    runtimeCaching,
+  })(nextConfig)),
   sentryWebpackPluginOptions,
 );

@@ -4,6 +4,7 @@ import { FilterGroupsCondition } from '@/models/group';
 
 import { collectionRef } from '.';
 
+// eslint-disable-next-line import/prefer-default-export
 export const getGroupsQuery = ({ category, isFilterCompleted, tag }: FilterGroupsCondition) => {
   if (isFilterCompleted && tag) {
     return query(
@@ -39,6 +40,3 @@ export const getGroupsQuery = ({ category, isFilterCompleted, tag }: FilterGroup
     orderBy('createdAt', 'desc'),
   );
 };
-
-// TODO - 추후 삭제
-export const temp = [];

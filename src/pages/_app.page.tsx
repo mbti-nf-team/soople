@@ -6,7 +6,9 @@ import type { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
 
 import { ThemeProvider } from '@emotion/react';
-import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  DehydratedState, Hydrate, QueryClient, QueryClientProvider,
+} from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -22,12 +24,16 @@ import defaultNextSeoConfig from '../../next-seo.config';
 
 import '../assets/css/dracula-prism.min.css';
 
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode
+type PageProps = {
+  dehydratedState?: DehydratedState;
+};
+
+type NextPageWithLayout = NextPage<PageProps> & {
+  getLayout?: (page: ReactElement) => ReactNode;
 }
 
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
+type AppPropsWithLayout = AppProps<PageProps> & {
+  Component: NextPageWithLayout;
 }
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
