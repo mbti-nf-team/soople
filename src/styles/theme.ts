@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const lightTheme = {
   /* primary */
   background: '#FFFFFF',
@@ -19,5 +20,3 @@ export const lightTheme = {
   warning: '#DC4146',
   warning10: '#CD2328',
 };
-
-export const darkTheme = {};
