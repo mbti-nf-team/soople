@@ -96,10 +96,10 @@ describe('MyInfoSettingContainer', () => {
       isSuccess: true,
     }));
 
-    it('replace가 "/?error=unauthenticated"와 함께 호출되어야만 한다', () => {
+    it('replace가 "/?error=unauthenticated"와 함께 호출되어야만 한다', async () => {
       renderMyInfoSettingContainer();
 
-      expect(mockReplace).toBeCalledWith('/?error=unauthenticated');
+      await act(() => expect(mockReplace).toBeCalledWith('/?error=unauthenticated'));
     });
   });
 
@@ -127,12 +127,12 @@ describe('MyInfoSettingContainer', () => {
           isSuccess: true,
         }));
 
-        it('mutate가 호출되지 않아야만 한다', () => {
+        it('mutate가 호출되지 않아야만 한다', async () => {
           renderMyInfoSettingContainer();
 
           fireEvent.click(screen.getByText('이미지 삭제'));
 
-          expect(mutate).not.toBeCalled();
+          await act(() => expect(mutate).not.toBeCalled());
         });
       });
 
@@ -148,16 +148,18 @@ describe('MyInfoSettingContainer', () => {
           isSuccess: true,
         }));
 
-        it('storage image 삭제 mutate와 delete profile image mutate가 호출되어야만 한다', () => {
+        it('storage image 삭제 mutate와 delete profile image mutate가 호출되어야만 한다', async () => {
           renderMyInfoSettingContainer();
 
           fireEvent.click(screen.getByText('이미지 삭제'));
 
-          expect(mutate).toBeCalledTimes(2);
-          expect(mutate).toBeCalledWith(imageUrl);
-          expect(mutate).toBeCalledWith({
-            ...FIXTURE_PROFILE,
-            image: null,
+          await act(() => {
+            expect(mutate).toBeCalledTimes(2);
+            expect(mutate).toBeCalledWith(imageUrl);
+            expect(mutate).toBeCalledWith({
+              ...FIXTURE_PROFILE,
+              image: null,
+            });
           });
         });
       });
@@ -174,15 +176,17 @@ describe('MyInfoSettingContainer', () => {
           isSuccess: true,
         }));
 
-        it('delete profile image mutate가 호출되어야만 한다', () => {
+        it('delete profile image mutate가 호출되어야만 한다', async () => {
           renderMyInfoSettingContainer();
 
           fireEvent.click(screen.getByText('이미지 삭제'));
 
-          expect(mutate).toBeCalledTimes(1);
-          expect(mutate).toBeCalledWith({
-            ...FIXTURE_PROFILE,
-            image: null,
+          await act(() => {
+            expect(mutate).toBeCalledTimes(1);
+            expect(mutate).toBeCalledWith({
+              ...FIXTURE_PROFILE,
+              image: null,
+            });
           });
         });
       });
@@ -190,11 +194,13 @@ describe('MyInfoSettingContainer', () => {
       context('프로필 업데이트에 성공한 경우', () => {
         given('isSuccessUpdate', () => true);
 
-        it('토스트 메시지가 호출되어야만 한다', () => {
+        it('토스트 메시지가 호출되어야만 한다', async () => {
           renderMyInfoSettingContainer();
 
-          expect(successToast).toBeCalledTimes(1);
-          expect(reset).toBeCalledTimes(1);
+          await act(() => {
+            expect(successToast).toBeCalledTimes(1);
+            expect(reset).toBeCalledTimes(1);
+          });
         });
       });
     });
@@ -214,7 +220,7 @@ describe('MyInfoSettingContainer', () => {
           isSuccess: true,
         }));
 
-        it('storage image 삭제 mutate 호출 후 upload storage image mutate가 호출되어야만 한다', () => {
+        it('storage image 삭제 mutate 호출 후 upload storage image mutate가 호출되어야만 한다', async () => {
           renderMyInfoSettingContainer();
 
           act(() => {
@@ -223,8 +229,10 @@ describe('MyInfoSettingContainer', () => {
             });
           });
 
-          expect(mutate).toBeCalledTimes(2);
-          expect(mutate).toBeCalledWith(imageUrl);
+          await act(() => {
+            expect(mutate).toBeCalledTimes(2);
+            expect(mutate).toBeCalledWith(imageUrl);
+          });
         });
       });
 
@@ -240,7 +248,7 @@ describe('MyInfoSettingContainer', () => {
           isSuccess: true,
         }));
 
-        it('upload storage image mutate가 호출되어야만 한다', () => {
+        it('upload storage image mutate가 호출되어야만 한다', async () => {
           renderMyInfoSettingContainer();
 
           act(() => {
@@ -249,7 +257,9 @@ describe('MyInfoSettingContainer', () => {
             });
           });
 
-          expect(mutate).toBeCalledTimes(1);
+          await act(() => {
+            expect(mutate).toBeCalledTimes(1);
+          });
         });
       });
 
@@ -266,13 +276,15 @@ describe('MyInfoSettingContainer', () => {
           isSuccess: true,
         }));
 
-        it('upload profile image mutate가 호출되어야만 한다', () => {
+        it('upload profile image mutate가 호출되어야만 한다', async () => {
           renderMyInfoSettingContainer();
 
-          expect(mutate).toBeCalledTimes(1);
-          expect(mutate).toBeCalledWith({
-            ...FIXTURE_PROFILE,
-            image: uploadProfileImageUrl,
+          await act(() => {
+            expect(mutate).toBeCalledTimes(1);
+            expect(mutate).toBeCalledWith({
+              ...FIXTURE_PROFILE,
+              image: uploadProfileImageUrl,
+            });
           });
         });
       });
@@ -280,11 +292,13 @@ describe('MyInfoSettingContainer', () => {
       context('프로필 업데이트에 성공한 경우', () => {
         given('isSuccessUpdate', () => true);
 
-        it('토스트 메시지가 호출되어야만 한다', () => {
+        it('토스트 메시지가 호출되어야만 한다', async () => {
           renderMyInfoSettingContainer();
 
-          expect(successToast).toBeCalledTimes(1);
-          expect(reset).toBeCalledTimes(1);
+          await act(() => {
+            expect(successToast).toBeCalledTimes(1);
+            expect(reset).toBeCalledTimes(1);
+          });
         });
       });
     });
@@ -296,7 +310,7 @@ describe('MyInfoSettingContainer', () => {
         fireEvent.click(screen.getByText('회원 탈퇴하기'));
         fireEvent.click(screen.getByText('탈퇴하기'));
 
-        expect(mutate).toBeCalledTimes(2);
+        await act(() => expect(mutate).toBeCalledTimes(2));
       });
     });
   });

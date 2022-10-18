@@ -124,12 +124,6 @@ const SettingFormLayout = styled(DetailLayout)`
   margin-bottom: 72px;
   width: 320px !important;
   display: flex;
-
   flex-direction: column;
   align-items: center;
-
-  & > div {
-    width: 100%;
-    margin-bottom: 20px;
-  }
 `;
