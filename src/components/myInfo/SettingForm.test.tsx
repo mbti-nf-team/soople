@@ -102,7 +102,7 @@ describe('SettingForm', () => {
     });
   });
 
-  describe('"확인" 버튼을 클릭한다', () => {
+  describe('"저장하기" 버튼을 클릭한다', () => {
     context('submit 호출에 성공했을 때', () => {
       given('position', () => '프론트엔드');
 
