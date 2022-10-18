@@ -116,6 +116,55 @@ describe('MyInfoSettingContainer', () => {
       await act(() => expect(container).toHaveTextContent(`${FIXTURE_PROFILE.position}`));
     });
 
+    describe('"저장하기" 버튼을 클릭한다', () => {
+      given('profileStatus', () => ({
+        data: FIXTURE_PROFILE,
+        isLoading: false,
+        isSuccess: true,
+      }));
+
+      it('mutate가 호출되야만 한다', async () => {
+        renderMyInfoSettingContainer();
+
+        const button = screen.getByText('저장하기');
+        const input = screen.getByRole('combobox');
+
+        fireEvent.focus(input);
+        fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+        fireEvent.click(screen.getByText('백엔드'));
+
+        await act(async () => {
+          fireEvent.submit(button);
+        });
+
+        await act(() => expect(mutate).toBeCalled());
+      });
+
+      context('프로필 업데이트에 성공한 경우', () => {
+        given('isSuccessUpdate', () => true);
+
+        it('토스트 메시지가 호출되어야만 한다', async () => {
+          renderMyInfoSettingContainer();
+
+          const button = screen.getByText('저장하기');
+          const input = screen.getByRole('combobox');
+
+          fireEvent.focus(input);
+          fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+          fireEvent.click(screen.getByText('백엔드'));
+
+          await act(async () => {
+            fireEvent.submit(button);
+          });
+
+          await act(() => {
+            expect(successToast).toBeCalledTimes(1);
+            expect(reset).toBeCalledTimes(1);
+          });
+        });
+      });
+    });
+
     describe('"이미지 삭제" 버튼을 클릭한다', () => {
       context('이미지가 존재하지 않는 경우', () => {
         given('profileStatus', () => ({
@@ -187,19 +236,6 @@ describe('MyInfoSettingContainer', () => {
               ...FIXTURE_PROFILE,
               image: null,
             });
-          });
-        });
-      });
-
-      context('프로필 업데이트에 성공한 경우', () => {
-        given('isSuccessUpdate', () => true);
-
-        it('토스트 메시지가 호출되어야만 한다', async () => {
-          renderMyInfoSettingContainer();
-
-          await act(() => {
-            expect(successToast).toBeCalledTimes(1);
-            expect(reset).toBeCalledTimes(1);
           });
         });
       });
@@ -285,19 +321,6 @@ describe('MyInfoSettingContainer', () => {
               ...FIXTURE_PROFILE,
               image: uploadProfileImageUrl,
             });
-          });
-        });
-      });
-
-      context('프로필 업데이트에 성공한 경우', () => {
-        given('isSuccessUpdate', () => true);
-
-        it('토스트 메시지가 호출되어야만 한다', async () => {
-          renderMyInfoSettingContainer();
-
-          await act(() => {
-            expect(successToast).toBeCalledTimes(1);
-            expect(reset).toBeCalledTimes(1);
           });
         });
       });

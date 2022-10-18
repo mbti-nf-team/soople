@@ -16,6 +16,7 @@ import useReauthenticateWithProvider from '@/hooks/api/auth/useReauthenticateWit
 import useUpdateUser from '@/hooks/api/auth/useUpdateUser';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
 import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
+import { SignUpAdditionalForm } from '@/models/auth';
 import { DetailLayout } from '@/styles/Layout';
 import { successToast } from '@/utils/toast';
 
@@ -36,7 +37,17 @@ function MyInfoSettingContainer(): ReactElement | null {
     mutate: updateProfile, isSuccess: isSuccessUpdate, reset: resetUpdateProfile,
   } = useUpdateUser();
 
-  const [imageActionType, setImageActionType] = useState<'삭제' | '수정'>();
+  const [toastMessage, setToastMessage] = useState<string>();
+
+  const onSubmit = useCallback((formData: SignUpAdditionalForm) => {
+    if (user) {
+      updateProfile({
+        ...user,
+        ...formData,
+      });
+      setToastMessage('수정된 정보를 저장했어요.');
+    }
+  }, [user, updateProfile]);
 
   const onWithdrawal = useCallback(() => {
     setIsReauthenticate(true);
@@ -56,7 +67,7 @@ function MyInfoSettingContainer(): ReactElement | null {
       ...user,
       image: null,
     });
-    setImageActionType('삭제');
+    setToastMessage('이미지가 삭제되었어요.');
   }, [user, deleteStorageUserImage, updateProfile]);
 
   const onUploadProfileImage = useCallback((file: File) => {
@@ -88,18 +99,18 @@ function MyInfoSettingContainer(): ReactElement | null {
         ...user,
         image: profileImageUrl,
       });
-      setImageActionType('수정');
+      setToastMessage('이미지가 수정되었어요.');
       resetUploadStorage();
     }
   }, [isSuccessUpload, user, profileImageUrl]);
 
   useEffect(() => {
-    if (isSuccessUpdate) {
-      successToast(`이미지가 ${imageActionType}되었어요.`);
-      setImageActionType(undefined);
+    if (isSuccessUpdate && toastMessage) {
+      successToast(toastMessage);
+      setToastMessage(undefined);
       resetUpdateProfile();
     }
-  }, [isSuccessUpdate, imageActionType]);
+  }, [isSuccessUpdate, toastMessage]);
 
   if (isLoading || !isSuccess) {
     return null;
@@ -112,7 +123,11 @@ function MyInfoSettingContainer(): ReactElement | null {
         onDelete={onDeleteProfileImage}
         onUpload={onUploadProfileImage}
       />
-      <SettingForm user={user} onWithdrawal={onWithdrawal} />
+      <SettingForm
+        user={user}
+        onSubmit={onSubmit}
+        onWithdrawal={onWithdrawal}
+      />
     </SettingFormLayout>
   );
 }

@@ -1,4 +1,6 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, {
+  memo, ReactElement, useEffect, useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
 
@@ -21,7 +23,7 @@ import AskMemberWithdrawalModal from './modal/AskMemberWithdrawalModal';
 interface Props {
   user: Profile | null;
   onWithdrawal: () => void;
-  onSubmit?: (formData: SignUpAdditionalForm) => void;
+  onSubmit: (formData: SignUpAdditionalForm) => void;
 }
 
 const validationSchema = yup.object({
@@ -44,13 +46,6 @@ function SettingForm({ user, onWithdrawal, onSubmit }: Props): ReactElement {
   const [position, setPosition] = useState<Position | undefined>(defaultPosition?.value);
   const [isVisibleWithdrawalModal, openWithDrawalModal, closeWithDrawalModal] = useBoolean(false);
 
-  const handleSubmitAction = (formData: SignUpAdditionalForm) => {
-    // TODO - 추후 submit 액션 구현
-    console.log(formData);
-
-    onSubmit?.(formData);
-  };
-
   useEffect(() => {
     if (user) {
       const { name, portfolioUrl } = user;
@@ -72,7 +67,7 @@ function SettingForm({ user, onWithdrawal, onSubmit }: Props): ReactElement {
 
   return (
     <SettingFormWrapper>
-      <form onSubmit={handleSubmit(handleSubmitAction)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="name"
           labelText="닉네임"
@@ -134,7 +129,7 @@ function SettingForm({ user, onWithdrawal, onSubmit }: Props): ReactElement {
   );
 }
 
-export default SettingForm;
+export default memo(SettingForm);
 
 const MemberWithdrawalButton = styled(Button)`
   color: ${({ theme }) => theme.accent6};
