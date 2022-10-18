@@ -168,12 +168,20 @@ const StyledSelect = styled(CreatableSelect)<{ size: Size; isError: boolean; }>`
     ${({ isError, theme }) => !isError && css`
       border-color: ${theme.success};
     `}
+
+    ${({ isError, theme }) => isError && css`
+      border-color: ${theme.warning};
+    `}
     box-shadow: none;
   }
 
   & .select__control--is-focused:hover {
     ${({ isError, theme }) => !isError && css`
       border-color: ${theme.success};
+    `}
+
+    ${({ isError, theme }) => isError && css`
+      border-color: ${theme.warning};
     `}
     box-shadow: none;
   }
