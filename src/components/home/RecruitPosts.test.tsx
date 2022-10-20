@@ -1,20 +1,27 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import useFetchGroups from '@/hooks/api/group/useFetchGroups';
+
 import GROUP_FIXTURE from '../../../fixtures/group';
 
 import RecruitPosts from './RecruitPosts';
+
+jest.mock('@/hooks/api/group/useFetchGroups');
 
 describe('RecruitPosts', () => {
   const handleClickEmptyButton = jest.fn();
 
   beforeEach(() => {
-    handleClickEmptyButton.mockClear();
+    jest.clearAllMocks();
+
+    (useFetchGroups as jest.Mock).mockImplementation(() => ({
+      data: given.groups,
+    }));
   });
 
   const renderRecruitPosts = () => render((
     <RecruitPosts
       onClickEmptyButton={handleClickEmptyButton}
-      groups={given.groups}
     />
   ));
 

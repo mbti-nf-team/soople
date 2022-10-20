@@ -4,6 +4,7 @@ import { act, render } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useGetUser from '@/hooks/api/auth/useGetUser';
+import useFetchGroups from '@/hooks/api/group/useFetchGroups';
 import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
 import InjectMockProviders from '@/test/InjectMockProviders';
 
@@ -19,6 +20,7 @@ jest.mock('nanoid', () => ({
 jest.mock('@/hooks/api/auth/useGetUser');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/tagsCount/useFetchTagsCount');
+jest.mock('@/hooks/api/group/useFetchGroups');
 
 describe('HomePage', () => {
   beforeEach(() => {
@@ -27,6 +29,10 @@ describe('HomePage', () => {
       query: {
         error: null,
       },
+    }));
+
+    (useFetchGroups as jest.Mock).mockImplementation(() => ({
+      data: [],
     }));
 
     (useGetUser as jest.Mock).mockImplementation(() => ({

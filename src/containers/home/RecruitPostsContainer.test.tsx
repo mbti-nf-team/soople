@@ -34,7 +34,6 @@ describe('RecruitPostsContainer', () => {
 
     (useFetchGroups as jest.Mock).mockImplementation(() => ({
       data: given.groups,
-      isLoading: given.isLoading,
     }));
 
     (useRouter as jest.Mock).mockImplementation(() => ({
@@ -48,23 +47,10 @@ describe('RecruitPostsContainer', () => {
 
   const renderRecruitPostsContainer = () => render((
     <InjectTestingRecoilState>
-      <>
-        <RecoilObserver node={signInModalVisibleState} onChange={handleSignInModalVisible} />
-        <RecruitPostsContainer />
-      </>
+      <RecoilObserver node={signInModalVisibleState} onChange={handleSignInModalVisible} />
+      <RecruitPostsContainer />
     </InjectTestingRecoilState>
   ));
-
-  context('로딩중인 경우', () => {
-    given('isLoading', () => true);
-    given('groups', () => []);
-
-    it('로딩 스켈레톤이 나타나야만 한다', () => {
-      renderRecruitPostsContainer();
-
-      expect(screen.getByTitle('loading...')).toBeInTheDocument();
-    });
-  });
 
   describe('신청현황 페이지에서 권한이 없어서 Redirect여부에 따라 메시지가 보인다', () => {
     given('groups', () => []);

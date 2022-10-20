@@ -14,7 +14,7 @@ import { groupsConditionState } from '@/recoil/group/atom';
 import Divider from '@/styles/Divider';
 import { body1Font } from '@/styles/fontStyles';
 
-const TagsBar = dynamic(() => import('@/components/home/TagsBar'), { suspense: true });
+const TagsBar = dynamic(() => import('@/components/home/TagsBar'), { ssr: false });
 const SwitchButton = dynamic(() => import('@/components/common/SwitchButton'), { ssr: false });
 
 type FilterCondition = {

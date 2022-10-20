@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -45,7 +45,7 @@ function EmptyStateArea({
   );
 }
 
-export default EmptyStateArea;
+export default memo(EmptyStateArea);
 
 const EmptyStateWrapper = styled.section<{ marginTop: string; }>`
   display: flex;

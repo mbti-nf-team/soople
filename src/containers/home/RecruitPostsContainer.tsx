@@ -1,20 +1,21 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, Suspense, useCallback } from 'react';
 
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
 
-import RecruitPosts from '@/components/home/RecruitPosts';
+import ClientOnly from '@/components/common/ClientOnly';
 import RecruitPostsSkeletonLoader from '@/components/home/RecruitPostsSkeletonLoader';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useFetchGroups from '@/hooks/api/group/useFetchGroups';
 import useRenderErrorToast from '@/hooks/useRenderErrorToast';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
 
-function RecruitPostsContainer(): ReactElement {
+const RecruitPosts = dynamic(() => import('@/components/home/RecruitPosts'), { suspense: true });
+
+function RecruitPostsContainer(): ReactElement | null {
   const { push } = useRouter();
-  const { data: groups, isLoading } = useFetchGroups();
   const { data: user } = useFetchUserProfile();
   const setSignInModalVisible = useSetRecoilState(signInModalVisibleState);
 
@@ -33,21 +34,16 @@ function RecruitPostsContainer(): ReactElement {
     setSignInModalVisible(true);
   }, [user]);
 
-  if (isLoading) {
-    return (
-      <RecruitPostsWrapper>
-        <RecruitPostsSkeletonLoader />
-      </RecruitPostsWrapper>
-    );
-  }
-
   return (
-    <RecruitPostsWrapper>
-      <RecruitPosts
-        groups={groups}
-        onClickEmptyButton={onClickEmptyButton}
-      />
-    </RecruitPostsWrapper>
+    <ClientOnly>
+      <RecruitPostsWrapper>
+        <Suspense fallback={<RecruitPostsSkeletonLoader />}>
+          <RecruitPosts
+            onClickEmptyButton={onClickEmptyButton}
+          />
+        </Suspense>
+      </RecruitPostsWrapper>
+    </ClientOnly>
   );
 }
 
