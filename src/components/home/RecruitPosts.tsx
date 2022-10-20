@@ -2,7 +2,7 @@ import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
-import { Group } from '@/models/group';
+import useFetchGroups from '@/hooks/api/group/useFetchGroups';
 import { isEmpty } from '@/utils/utils';
 
 import EmptyFrameSvg from '../../assets/icons/empty-frame.svg';
@@ -11,11 +11,12 @@ import EmptyStateArea from '../common/EmptyStateArea';
 import RecruitPost from './RecruitPost';
 
 interface Props {
-  groups: Group[];
   onClickEmptyButton: () => void;
 }
 
-function RecruitPosts({ groups, onClickEmptyButton }: Props): ReactElement {
+function RecruitPosts({ onClickEmptyButton }: Props): ReactElement {
+  const { data: groups } = useFetchGroups();
+
   if (isEmpty(groups)) {
     return (
       <EmptyStateArea

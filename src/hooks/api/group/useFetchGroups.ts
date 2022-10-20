@@ -12,7 +12,9 @@ import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast'
 function useFetchGroups() {
   const groupsCondition = useRecoilValue(groupsConditionState);
 
-  const query = useQuery<Group[], FirestoreError>(['groups', groupsCondition], () => fetchGroups(groupsCondition));
+  const query = useQuery<Group[], FirestoreError>(['groups', groupsCondition], () => fetchGroups(groupsCondition), {
+    suspense: true,
+  });
 
   const { isError, error, data } = query;
 

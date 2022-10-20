@@ -1,7 +1,7 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
 
 import { fetchGroups } from '@/services/api/group';
-import wrapper from '@/test/InjectMockProviders';
+import renderSuspenseHook from '@/test/renderSuspenseHook';
 
 import FIXTURE_GROUP from '../../../../fixtures/group';
 
@@ -10,7 +10,7 @@ import useFetchGroups from './useFetchGroups';
 jest.mock('@/services/api/group');
 
 describe('useFetchGroups', () => {
-  const useFetchGroupsHook = () => renderHook(() => useFetchGroups(), { wrapper });
+  const useFetchGroupsHook = () => renderSuspenseHook(useFetchGroups);
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -21,7 +21,7 @@ describe('useFetchGroups', () => {
   given('groups', () => [FIXTURE_GROUP]);
 
   it('groups에 대한 정보를 반환해야만 한다', async () => {
-    const { result, waitFor } = useFetchGroupsHook();
+    const { result } = useFetchGroupsHook();
 
     await waitFor(() => result.current.isSuccess);
 

@@ -1,20 +1,14 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 import { getTagsCount } from '@/services/api/tagsCount';
-import ReactQueryWrapper from '@/test/ReactQueryWrapper';
+import renderSuspenseHook from '@/test/renderSuspenseHook';
 
 import useFetchTagsCount from './useFetchTagsCount';
 
 jest.mock('@/services/api/tagsCount');
 
 describe('useFetchTagsCount', () => {
-  const useFetchTagsCountHook = () => renderHook(() => useFetchTagsCount(), {
-    wrapper: ({ children }) => (
-      <ReactQueryWrapper suspense>
-        {children}
-      </ReactQueryWrapper>
-    ),
-  });
+  const useFetchTagsCountHook = () => renderSuspenseHook(useFetchTagsCount);
 
   beforeEach(() => {
     jest.clearAllMocks();
