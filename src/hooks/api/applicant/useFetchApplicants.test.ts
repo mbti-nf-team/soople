@@ -23,7 +23,9 @@ describe('useFetchApplicants', () => {
     (getApplicants as jest.Mock).mockImplementation(() => (given.applicants));
   });
 
-  const useFetchApplicantsHook = () => renderHook(() => useFetchApplicants(), { wrapper });
+  const useFetchApplicantsHook = () => renderHook(() => useFetchApplicants({
+    suspense: false,
+  }), { wrapper });
 
   given('applicants', () => [FIXTURE_APPLICANT]);
 

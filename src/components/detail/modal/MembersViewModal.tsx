@@ -20,7 +20,7 @@ interface Props {
 }
 
 function MembersViewModal({ isVisible, onClose }: Props) {
-  const { data: applicants } = useFetchApplicants();
+  const { data: applicants } = useFetchApplicants({ suspense: false });
   const { isMobile, isClient } = useResponsive();
 
   const confirmedApplicants = applicants.filter(({ isConfirm }) => isConfirm);
