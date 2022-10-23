@@ -1,28 +1,48 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useCallback, useEffect } from 'react';
+
+import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
 
+import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
+import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';
 import { Applicant } from '@/models/group';
 import { mobileMediaQuery } from '@/styles/responsive';
+import { errorToast } from '@/utils/toast';
 import { isEmpty } from '@/utils/utils';
 
 import EmptyStateArea from '../common/EmptyStateArea';
 
 import ApplicantItem from './ApplicantItem';
 
-interface Props {
-  applicants: Applicant[];
-  onToggleConfirm: (applicant: Applicant) => void;
-  goBack: () => void;
-}
+function ApplicationStatus(): ReactElement {
+  const { query, back } = useRouter();
+  const { data: applicants } = useFetchApplicants({ suspense: true });
+  const { mutate } = useUpdateApplicant();
 
-function ApplicationStatus({ applicants, onToggleConfirm, goBack }: Props): ReactElement {
+  const onToggleConfirm = useCallback((applicant: Applicant) => mutate({
+    ...applicant,
+    isConfirm: !applicant.isConfirm,
+  }), [mutate]);
+
+  useEffect(() => {
+    if (!query?.applicant) {
+      return;
+    }
+
+    const isApplicant = applicants.some(({ applicant }) => applicant.uid === query.applicant);
+
+    if (!isApplicant) {
+      errorToast('신청을 취소한 사용자에요.');
+    }
+  }, [query, applicants]);
+
   if (isEmpty(applicants)) {
     return (
       <EmptyStateArea
         emptyText="신청한 사람이 없어요."
         buttonText="돌아가기"
-        onClick={goBack}
+        onClick={back}
       />
     );
   }

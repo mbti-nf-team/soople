@@ -17,7 +17,7 @@ import { isCurrentTimeBeforeEndDate } from '@/utils/utils';
 
 function ApplicationStatusHeaderContainer(): ReactElement {
   const { back } = useRouter();
-  const { data: applicants } = useFetchApplicants();
+  const { data: applicants } = useFetchApplicants({ suspense: false });
   const { data: group } = useFetchGroup();
   const { mutate } = useUpdateCompletedApply();
   const currentTime = useCurrentTime(group);

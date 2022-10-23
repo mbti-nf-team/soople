@@ -18,7 +18,7 @@ function DetailHeaderContainer(): ReactElement {
   const { data: user } = useFetchUserProfile();
   const setSignInModalVisible = useSetRecoilState(signInModalVisibleState);
   const { data: group } = useFetchGroup();
-  const { data: applicants, isLoading } = useFetchApplicants();
+  const { data: applicants, isLoading } = useFetchApplicants({ suspense: false });
   const { mutate: applyMutate, isSuccess: isSuccessApply } = useApplyGroup();
   const { mutate: applyCancelMutate, isSuccess: isSuccessCancelApply } = useCancelApply();
 

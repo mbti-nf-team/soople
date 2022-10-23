@@ -7,7 +7,7 @@ import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 
 function DetailContentsContainer(): ReactElement {
   const { data: group } = useFetchGroup();
-  const { data: applicants } = useFetchApplicants();
+  const { data: applicants } = useFetchApplicants({ suspense: false });
   const { data: user } = useFetchUserProfile();
 
   const isGroupMember = useMemo(() => {
