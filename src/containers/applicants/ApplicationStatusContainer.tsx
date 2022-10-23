@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 
 import styled from '@emotion/styled';
 
+import ApplicationStatusSkeletonLoader from '@/components/applicants/ApplicationStatusSkeletonLoader';
 import ClientOnly from '@/components/common/ClientOnly';
 import useResponsive from '@/hooks/useResponsive';
 import GradientBlock from '@/styles/GradientBlock';
@@ -18,7 +19,7 @@ function ApplicationStatusContainer(): ReactElement {
   return (
     <ClientOnly>
       <ApplicationStatusDetailLayout>
-        <Suspense fallback="로딩중...">
+        <Suspense fallback={<ApplicationStatusSkeletonLoader isMobile={isMobile} />}>
           <ApplicationStatus />
         </Suspense>
         {isMobile && (
