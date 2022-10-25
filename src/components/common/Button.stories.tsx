@@ -24,6 +24,7 @@ Default.args = {
   color: 'outlined',
   size: 'medium',
   disabled: false,
+  isLoading: false,
 };
 
 export const Success = Template.bind({});

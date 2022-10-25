@@ -21,6 +21,8 @@ describe('ImageSetting', () => {
       imageUrl="/test"
       onUpload={handleUpload}
       onDelete={handleDelete}
+      isLoadingDeleteUserImage={false}
+      isLoadingUpload={false}
     />
   ));
 

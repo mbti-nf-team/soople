@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { HTMLProps, PropsWithChildren, ReactElement } from 'react';
+import FadeLoader from 'react-spinners/FadeLoader';
 
 import Link from 'next/link';
 
-import { css, Theme } from '@emotion/react';
+import { css, Theme, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { body1Font, body2Font, h4Font } from '@/styles/fontStyles';
@@ -14,6 +15,7 @@ type ButtonSize = 'small' | 'medium' | 'large';
 interface Props extends Omit<HTMLProps<HTMLButtonElement | HTMLAnchorElement>, 'size'> {
   color?: ColorType;
   size?: ButtonSize;
+  isLoading?: boolean;
 }
 
 interface StyledButtonProps {
@@ -23,8 +25,9 @@ interface StyledButtonProps {
 }
 
 function Button({
-  color = 'outlined', size = 'medium', href, children, type = 'button', ...rest
+  color = 'outlined', size = 'medium', href, children, type = 'button', isLoading = false, disabled, ...rest
 }: PropsWithChildren<Props>): ReactElement {
+  const theme = useTheme();
   const htmlProps = rest as any;
 
   if (href) {
@@ -46,8 +49,21 @@ function Button({
       color={color}
       size={size}
       type={type}
+      disabled={disabled || isLoading}
       {...htmlProps}
     >
+      <FadeLoader
+        height={size === 'large' ? 5.4 : 4}
+        margin={size === 'large' ? -11 : -12}
+        width={size === 'large' ? 2 : 1.6}
+        color={theme.accent4}
+        cssOverride={{
+          top: size === 'large' ? '18px' : '19px',
+          left: '21px',
+          marginRight: size === 'large' ? '8px' : '4px',
+        }}
+        loading={isLoading}
+      />
       {children}
     </StyledButton>
   );

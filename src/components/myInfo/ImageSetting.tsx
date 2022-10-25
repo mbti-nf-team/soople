@@ -13,11 +13,15 @@ interface Props {
   imageUrl?: string | null;
   onDelete: () => void;
   onUpload: (image: File) => void;
+  isLoadingDeleteUserImage: boolean;
+  isLoadingUpload: boolean;
 }
 
 const IMAGE_MAX_SIZE = 5242880;
 
-function ImageSetting({ imageUrl, onDelete, onUpload }: Props):ReactElement {
+function ImageSetting({
+  imageUrl, onDelete, onUpload, isLoadingDeleteUserImage, isLoadingUpload,
+}: Props):ReactElement {
   const fileUploadInputRef = useRef<HTMLInputElement>(null);
 
   const handleClickSelectImage = () => fileUploadInputRef.current?.click();
@@ -41,6 +45,7 @@ function ImageSetting({ imageUrl, onDelete, onUpload }: Props):ReactElement {
       <Button
         size="small"
         color="primary"
+        isLoading={isLoadingUpload}
         onClick={handleClickSelectImage}
       >
         이미지 선택
@@ -57,6 +62,7 @@ function ImageSetting({ imageUrl, onDelete, onUpload }: Props):ReactElement {
         size="small"
         color="ghost"
         onClick={onDelete}
+        isLoading={isLoadingDeleteUserImage}
       >
         이미지 삭제
       </Button>
