@@ -27,6 +27,7 @@ describe('SettingForm', () => {
       }}
       onWithdrawal={handleWithdrawal}
       onSubmit={handleSubmit}
+      isLoading={false}
     />
   ));
 

@@ -24,6 +24,7 @@ interface Props {
   user: Profile | null;
   onWithdrawal: () => void;
   onSubmit: (formData: SignUpAdditionalForm) => void;
+  isLoading: boolean;
 }
 
 const validationSchema = yup.object({
@@ -31,7 +32,9 @@ const validationSchema = yup.object({
   portfolioUrl: yup.string().trim().notRequired().nullable(),
 }).required();
 
-function SettingForm({ user, onWithdrawal, onSubmit }: Props): ReactElement {
+function SettingForm({
+  user, onWithdrawal, onSubmit, isLoading,
+}: Props): ReactElement {
   const {
     register, handleSubmit, formState: { isValid, errors, isDirty }, resetField, setValue,
   } = useForm<SignUpAdditionalForm>({
@@ -109,6 +112,7 @@ function SettingForm({ user, onWithdrawal, onSubmit }: Props): ReactElement {
           color="success"
           size="large"
           disabled={!isValid || !position || !isDirty}
+          isLoading={isLoading}
         >
           저장하기
         </Button>

@@ -55,15 +55,18 @@ describe('MyInfoSettingContainer', () => {
     }));
     (useDeleteStorageFile as jest.Mock).mockImplementation(() => ({
       mutate,
+      isLoading: given.isLoadingDelete,
     }));
     (useUpdateUser as jest.Mock).mockImplementation(() => ({
       mutate,
       isSuccess: given.isSuccessUpdate,
+      isLoading: given.isLoadingUpdate,
       reset,
     }));
     (useUploadStorageFile as jest.Mock).mockImplementation(() => ({
       data: uploadProfileImageUrl,
       isSuccess: given.isSuccessUpload,
+      isLoading: given.isLoadingUpload,
       mutate,
       reset,
     }));
@@ -123,21 +126,47 @@ describe('MyInfoSettingContainer', () => {
         isSuccess: true,
       }));
 
-      it('mutate가 호출되야만 한다', async () => {
-        renderMyInfoSettingContainer();
+      context('로딩중인 경우', () => {
+        given('isLoadingUpdate', () => true);
 
-        const button = screen.getByText('저장하기');
-        const input = screen.getByRole('combobox');
+        it('버튼은 disabled 상태이고 mutate가 호출되지 않아야만 한다', async () => {
+          renderMyInfoSettingContainer();
 
-        fireEvent.focus(input);
-        fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
-        fireEvent.click(screen.getByText('백엔드'));
+          const button = screen.getByText('저장하기');
+          const input = screen.getByRole('combobox');
 
-        await act(async () => {
-          fireEvent.submit(button);
+          fireEvent.focus(input);
+          fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+          fireEvent.click(screen.getByText('백엔드'));
+
+          await act(async () => {
+            fireEvent.submit(button);
+          });
+
+          await act(() => expect(mutate).toBeCalled());
+          expect(button).toHaveAttribute('disabled');
         });
+      });
 
-        await act(() => expect(mutate).toBeCalled());
+      context('로딩중이 아닌 경우', () => {
+        given('isLoadingUpdate', () => false);
+
+        it('mutate가 호출되야만 한다', async () => {
+          renderMyInfoSettingContainer();
+
+          const button = screen.getByText('저장하기');
+          const input = screen.getByRole('combobox');
+
+          fireEvent.focus(input);
+          fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
+          fireEvent.click(screen.getByText('백엔드'));
+
+          await act(async () => {
+            fireEvent.submit(button);
+          });
+
+          await act(() => expect(mutate).toBeCalled());
+        });
       });
 
       context('프로필 업데이트에 성공한 경우', () => {
@@ -185,9 +214,10 @@ describe('MyInfoSettingContainer', () => {
         });
       });
 
-      context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하는 경우`, () => {
-        const imageUrl = `${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}/test`;
+      context('로딩중인 경우', () => {
+        const imageUrl = 'https://test';
 
+        given('isLoadingDelete', () => true);
         given('profileStatus', () => ({
           data: {
             ...FIXTURE_PROFILE,
@@ -197,44 +227,74 @@ describe('MyInfoSettingContainer', () => {
           isSuccess: true,
         }));
 
-        it('storage image 삭제 mutate와 delete profile image mutate가 호출되어야만 한다', async () => {
+        it('"이미지 삭제" 버튼은 disabled 상태이고 delete profile image mutate가 호출되지 않아야만 한다', async () => {
           renderMyInfoSettingContainer();
 
-          fireEvent.click(screen.getByText('이미지 삭제'));
+          const deleteImageButton = screen.getByText('이미지 삭제');
+
+          fireEvent.click(deleteImageButton);
 
           await act(() => {
-            expect(mutate).toBeCalledTimes(2);
-            expect(mutate).toBeCalledWith(imageUrl);
-            expect(mutate).toBeCalledWith({
-              ...FIXTURE_PROFILE,
-              image: null,
-            });
+            expect(mutate).not.toBeCalled();
+            expect(deleteImageButton).toHaveAttribute('disabled');
           });
         });
       });
 
-      context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하지 않는 경우`, () => {
-        const imageUrl = 'https://test';
+      context('로딩중이 아닌 경우', () => {
+        given('isLoadingDelete', () => false);
 
-        given('profileStatus', () => ({
-          data: {
-            ...FIXTURE_PROFILE,
-            image: imageUrl,
-          },
-          isLoading: false,
-          isSuccess: true,
-        }));
+        context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하는 경우`, () => {
+          const imageUrl = `${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}/test`;
 
-        it('delete profile image mutate가 호출되어야만 한다', async () => {
-          renderMyInfoSettingContainer();
-
-          fireEvent.click(screen.getByText('이미지 삭제'));
-
-          await act(() => {
-            expect(mutate).toBeCalledTimes(1);
-            expect(mutate).toBeCalledWith({
+          given('profileStatus', () => ({
+            data: {
               ...FIXTURE_PROFILE,
-              image: null,
+              image: imageUrl,
+            },
+            isLoading: false,
+            isSuccess: true,
+          }));
+
+          it('storage image 삭제 mutate와 delete profile image mutate가 호출되어야만 한다', async () => {
+            renderMyInfoSettingContainer();
+
+            fireEvent.click(screen.getByText('이미지 삭제'));
+
+            await act(() => {
+              expect(mutate).toBeCalledTimes(2);
+              expect(mutate).toBeCalledWith(imageUrl);
+              expect(mutate).toBeCalledWith({
+                ...FIXTURE_PROFILE,
+                image: null,
+              });
+            });
+          });
+        });
+
+        context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하지 않는 경우`, () => {
+          const imageUrl = 'https://test';
+
+          given('profileStatus', () => ({
+            data: {
+              ...FIXTURE_PROFILE,
+              image: imageUrl,
+            },
+            isLoading: false,
+            isSuccess: true,
+          }));
+
+          it('delete profile image mutate가 호출되어야만 한다', async () => {
+            renderMyInfoSettingContainer();
+
+            fireEvent.click(screen.getByText('이미지 삭제'));
+
+            await act(() => {
+              expect(mutate).toBeCalledTimes(1);
+              expect(mutate).toBeCalledWith({
+                ...FIXTURE_PROFILE,
+                image: null,
+              });
             });
           });
         });
@@ -243,6 +303,16 @@ describe('MyInfoSettingContainer', () => {
 
     describe('"이미지 선택" 버튼을 클릭하여 이미지를 업로드한다', () => {
       const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
+
+      context('로딩중인 경우', () => {
+        given('isLoadingUpload', () => true);
+
+        it('"이미지 선택" 버튼은 disabled 상태여야만 한다', async () => {
+          renderMyInfoSettingContainer();
+
+          await act(() => expect(screen.getByText('이미지 선택')).toHaveAttribute('disabled'));
+        });
+      });
 
       context(`이미지 url이 ${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}로 시작하는 경우`, () => {
         const imageUrl = `${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_URL}/test`;

@@ -19,6 +19,9 @@ import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { SignUpAdditionalForm } from '@/models/auth';
 import { DetailLayout } from '@/styles/Layout';
 import { successToast } from '@/utils/toast';
+import { stringToExcludeNull } from '@/utils/utils';
+
+type MyInfoActionType = 'deleteImage' | 'uploadImage' | 'updateUser';
 
 function MyInfoSettingContainer(): ReactElement | null {
   const { replace } = useRouter();
@@ -28,16 +31,25 @@ function MyInfoSettingContainer(): ReactElement | null {
   const { data: auth } = useAuthRedirectResult();
   const { mutate: reauthenticate } = useReauthenticateWithProvider();
   const { mutate: deleteUser } = useAccountWithdrawal();
-  const { mutate: deleteStorageUserImage } = useDeleteStorageFile();
+  const {
+    mutate: deleteStorageUserImage, isLoading: isLoadingDeleteUserImage,
+  } = useDeleteStorageFile();
   const {
     data: profileImageUrl, mutate: uploadStorageUserImage,
-    isSuccess: isSuccessUpload, reset: resetUploadStorage,
+    isSuccess: isSuccessUpload, reset: resetUploadStorage, isLoading: isLoadingUpload,
   } = useUploadStorageFile();
   const {
-    mutate: updateProfile, isSuccess: isSuccessUpdate, reset: resetUpdateProfile,
+    mutate: updateProfile, isSuccess: isSuccessUpdate,
+    reset: resetUpdateProfile, isLoading: isLoadingUpdate,
   } = useUpdateUser();
 
-  const [toastMessage, setToastMessage] = useState<string>();
+  const toastMessage: Partial<Record<MyInfoActionType, string>> = {
+    deleteImage: '이미지가 삭제되었어요.',
+    updateUser: '수정된 정보를 저장했어요.',
+    uploadImage: '이미지가 수정되었어요.',
+  };
+
+  const [myInfoActionType, setMyInfoActionType] = useState<MyInfoActionType>();
 
   const onSubmit = useCallback((formData: SignUpAdditionalForm) => {
     if (user) {
@@ -45,7 +57,7 @@ function MyInfoSettingContainer(): ReactElement | null {
         ...user,
         ...formData,
       });
-      setToastMessage('수정된 정보를 저장했어요.');
+      setMyInfoActionType('updateUser');
     }
   }, [user, updateProfile]);
 
@@ -67,7 +79,7 @@ function MyInfoSettingContainer(): ReactElement | null {
       ...user,
       image: null,
     });
-    setToastMessage('이미지가 삭제되었어요.');
+    setMyInfoActionType('deleteImage');
   }, [user, deleteStorageUserImage, updateProfile]);
 
   const onUploadProfileImage = useCallback((file: File) => {
@@ -99,18 +111,18 @@ function MyInfoSettingContainer(): ReactElement | null {
         ...user,
         image: profileImageUrl,
       });
-      setToastMessage('이미지가 수정되었어요.');
+      setMyInfoActionType('uploadImage');
       resetUploadStorage();
     }
   }, [isSuccessUpload, user, profileImageUrl]);
 
   useEffect(() => {
-    if (isSuccessUpdate && toastMessage) {
-      successToast(toastMessage);
-      setToastMessage(undefined);
+    if (isSuccessUpdate && toastMessage && myInfoActionType) {
+      successToast(stringToExcludeNull(toastMessage[myInfoActionType]));
+      setMyInfoActionType(undefined);
       resetUpdateProfile();
     }
-  }, [isSuccessUpdate, toastMessage]);
+  }, [isSuccessUpdate, toastMessage, myInfoActionType]);
 
   if (isLoading || !isSuccess) {
     return null;
@@ -122,11 +134,14 @@ function MyInfoSettingContainer(): ReactElement | null {
         imageUrl={user?.image}
         onDelete={onDeleteProfileImage}
         onUpload={onUploadProfileImage}
+        isLoadingDeleteUserImage={isLoadingDeleteUserImage || (isLoadingUpdate && myInfoActionType === 'deleteImage')}
+        isLoadingUpload={isLoadingUpload || (isLoadingUpdate && myInfoActionType === 'uploadImage')}
       />
       <SettingForm
         user={user}
         onSubmit={onSubmit}
         onWithdrawal={onWithdrawal}
+        isLoading={isLoadingUpdate && myInfoActionType === 'updateUser'}
       />
     </SettingFormLayout>
   );
