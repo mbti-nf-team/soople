@@ -1,7 +1,7 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
 
 import { getGroupComments } from '@/services/api/comment';
-import wrapper from '@/test/InjectMockProviders';
+import renderSuspenseHook from '@/test/renderSuspenseHook';
 
 import FIXTURE_COMMENT from '../../../../fixtures/comment';
 
@@ -23,9 +23,9 @@ describe('useInfiniteFetchComments', () => {
     lastUid: '1',
   };
 
-  const useInfiniteFetchCommentsHook = () => renderHook(() => useInfiniteFetchComments({
+  const useInfiniteFetchCommentsHook = () => renderSuspenseHook(() => useInfiniteFetchComments({
     perPage: 15,
-  }), { wrapper });
+  }));
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -34,7 +34,7 @@ describe('useInfiniteFetchComments', () => {
   });
 
   it('comments에 대한 정보를 반환해야만 한다', async () => {
-    const { result, waitFor } = useInfiniteFetchCommentsHook();
+    const { result } = useInfiniteFetchCommentsHook();
 
     await waitFor(() => result.current.query.isSuccess);
 

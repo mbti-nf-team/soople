@@ -7,6 +7,7 @@ import useAddComment from '@/hooks/api/comment/useAddComment';
 import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useFetchCommentCount from '@/hooks/api/comment/useFetchCommentCount';
 import useInfiniteFetchComments from '@/hooks/api/comment/useInfiniteFetchComments';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 
@@ -47,8 +48,7 @@ describe('CommentsContainer', () => {
             items: [COMMENT_FIXTURE],
           }],
         },
-        isLoading: given.isLoading,
-        fetchStatus: 'idle',
+        isFetchingNextPage: false,
       },
       refState: {
         lastItemRef: jest.fn(),
@@ -61,60 +61,48 @@ describe('CommentsContainer', () => {
   });
 
   const renderCommentsContainer = () => render((
-    <CommentsContainer />
+    <ReactQueryWrapper>
+      <CommentsContainer />
+    </ReactQueryWrapper>
   ));
 
-  context('로딩중인 경우', () => {
-    given('isLoading', () => true);
+  describe('"댓글 남기기" 버튼을 클릭한다', () => {
+    const commentValue = '댓글 내용';
+    const writer = {
+      name: 'test',
+      uid: '12345678',
+    };
 
-    it('스켈레톤 로딩이 나타나야만 한다', () => {
-      renderCommentsContainer();
+    context('사용자가 로그인 상태인 경우', () => {
+      given('user', () => writer);
 
-      expect(screen.getByTestId('comments-skeleton-loading')).toBeInTheDocument();
-    });
-  });
+      it('mutate 액션이 호출되야만 한다', () => {
+        renderCommentsContainer();
 
-  context('로딩중이 아닌 경우', () => {
-    given('isLoading', () => false);
-
-    describe('"댓글 남기기" 버튼을 클릭한다', () => {
-      const commentValue = '댓글 내용';
-      const writer = {
-        name: 'test',
-        uid: '12345678',
-      };
-
-      context('사용자가 로그인 상태인 경우', () => {
-        given('user', () => (writer));
-
-        it('mutate 액션이 호출되야만 한다', () => {
-          renderCommentsContainer();
-
-          fireEvent.change(screen.getByPlaceholderText('댓글을 입력하세요'), {
-            target: {
-              value: commentValue,
-            },
-          });
-
-          fireEvent.click(screen.getByText('댓글 남기기'));
-
-          expect(mutate).toBeCalledWith({
-            content: commentValue,
-            writer,
-            groupId: '1',
-          });
+        fireEvent.change(screen.getByPlaceholderText('댓글을 입력하세요'), {
+          target: {
+            value: commentValue,
+          },
         });
 
-        describe('삭제 모달창의 "삭제하기" 버튼을 클릭한다', () => {
-          it('remove mutate 액션이 호출되어야만 한다', () => {
-            renderCommentsContainer();
+        fireEvent.click(screen.getByText('댓글 남기기'));
 
-            fireEvent.click(screen.getByText('삭제'));
+        expect(mutate).toBeCalledWith({
+          content: commentValue,
+          writer,
+          groupId: '1',
+        });
+      });
 
-            expect(mutate).toBeCalledWith({
-              commentId: COMMENT_FIXTURE.commentId,
-              groupId: '1',
-            });
+      describe('삭제 모달창의 "삭제하기" 버튼을 클릭한다', () => {
+        it('remove mutate 액션이 호출되어야만 한다', () => {
+          renderCommentsContainer();
+
+          fireEvent.click(screen.getByText('삭제'));
+
+          expect(mutate).toBeCalledWith({
+            commentId: COMMENT_FIXTURE.commentId,
+            groupId: '1',
           });
         });
       });

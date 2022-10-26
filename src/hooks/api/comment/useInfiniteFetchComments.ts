@@ -27,6 +27,7 @@ function useInfiniteFetchComments({ perPage }: InfiniteRequest) {
     {
       getNextPageParam: ({ lastUid }) => lastUid,
       enabled: !!id && !!perPage,
+      suspense: true,
     },
   );
 

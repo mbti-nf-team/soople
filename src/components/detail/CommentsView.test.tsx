@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import useInfiniteFetchComments from '@/hooks/api/comment/useInfiniteFetchComments';
 import { Profile } from '@/models/auth';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
@@ -7,26 +8,38 @@ import PROFILE_FIXTURE from '../../../fixtures/profile';
 
 import CommentsView from './CommentsView';
 
+jest.mock('@/hooks/api/comment/useInfiniteFetchComments');
+
 describe('CommentsView', () => {
   const handleRemove = jest.fn();
   const lastItemRef = jest.fn();
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    (useInfiniteFetchComments as jest.Mock).mockImplementation(() => ({
+      query: {
+        data: {
+          pages: [{ items: [COMMENT_FIXTURE] }],
+        },
+        isFetchingNextPage: given.isFetchingNextPage,
+      },
+      refState: {
+        lastItemRef,
+      },
+    }));
+  });
+
   const renderCommentsView = () => render((
     <CommentsView
-      isLoading={given.isLoading}
-      refState={{
-        lastItemRef,
-      }}
+      perPage={15}
       user={PROFILE_FIXTURE as Profile}
       onRemove={handleRemove}
-      comments={[{
-        items: [COMMENT_FIXTURE],
-      }]}
     />
   ));
 
-  context('로딩중인 경우', () => {
-    given('isLoading', () => true);
+  context('다음 댓글 로딩중인 경우', () => {
+    given('isFetchingNextPage', () => true);
 
     it('스켈레톤 로딩이 나타나야만 한다', () => {
       renderCommentsView();
@@ -35,17 +48,13 @@ describe('CommentsView', () => {
     });
   });
 
-  context('로딩중이 아닌 경우', () => {
-    given('isLoading', () => false);
+  describe('댓글 작성자가 삭제하기 버튼을 클릭한다', () => {
+    it('클릭 이벤트가 발생해야만 한다', () => {
+      renderCommentsView();
 
-    describe('댓글 작성자가 삭제하기 버튼을 클릭한다', () => {
-      it('클릭 이벤트가 발생해야만 한다', () => {
-        renderCommentsView();
+      fireEvent.click(screen.getByText('삭제'));
 
-        fireEvent.click(screen.getByText('삭제'));
-
-        expect(handleRemove).toBeCalledWith(COMMENT_FIXTURE.commentId);
-      });
+      expect(handleRemove).toBeCalledWith(COMMENT_FIXTURE.commentId);
     });
   });
 });
