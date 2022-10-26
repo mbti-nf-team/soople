@@ -2,28 +2,25 @@ import React, { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
-import { InfiniteRefState, InfiniteResponse } from '@/models';
+import useInfiniteFetchComments from '@/hooks/api/comment/useInfiniteFetchComments';
 import { Profile } from '@/models/auth';
-import { Comment } from '@/models/group';
 import { targetFalseThenValue } from '@/utils/utils';
 
 import CommentSkeletonLoader from './CommentSkeletonLoader';
 import CommentView from './CommentView';
 
 interface Props {
-  comments: InfiniteResponse<Comment>[];
-  refState: InfiniteRefState<HTMLDivElement>;
   user: Profile | null;
+  perPage: number;
   onRemove: (commentId: string) => void;
-  isLoading: boolean;
 }
 
-function CommentsView({
-  isLoading, comments, user, onRemove, refState,
-}: Props): ReactElement {
-  if (isLoading) {
-    return <CommentSkeletonLoader />;
-  }
+function CommentsView({ user, perPage, onRemove }: Props): ReactElement {
+  const { query: { data, isFetchingNextPage }, refState } = useInfiniteFetchComments({
+    perPage,
+  });
+
+  const comments = data.pages;
 
   return (
     <CommentsViewWrapper>
@@ -42,6 +39,9 @@ function CommentsView({
           );
         })
       ))}
+      {isFetchingNextPage && (
+        <CommentSkeletonLoader />
+      )}
     </CommentsViewWrapper>
   );
 }
