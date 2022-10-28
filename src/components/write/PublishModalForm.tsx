@@ -198,8 +198,6 @@ const DescriptionWrapper = styled.div`
 `;
 
 const RecruitmentEndDateInput = styled(Input)`
-  width: 100%;
-  position: relative;
   padding: 11px 7px 11px 16px;
 
   &:focus-within {
