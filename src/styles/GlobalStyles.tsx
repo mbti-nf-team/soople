@@ -68,13 +68,14 @@ export const setGlobalStyles = (pathname: string, theme: Theme) => css`
   }
 
   input[type="datetime-local"] {
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
+    display: block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
   }
 
   input[type="date"] {
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    -moz-appearance: none;
   }
 `;
 
