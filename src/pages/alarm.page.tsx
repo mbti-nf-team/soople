@@ -1,12 +1,16 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Suspense } from 'react';
 
 import { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 
-import AlarmListContainer from '@/containers/alarm/AlarmListContainer';
+import AlarmsSkeletonLoader from '@/components/alarm/AlarmsSkeletonLoader';
+import ClientOnly from '@/components/common/ClientOnly';
 import HeaderContainer from '@/containers/common/HeaderContainer';
 import authenticatedServerSideProps from '@/services/serverSideProps/authenticatedServerSideProps';
 import { DetailLayout } from '@/styles/Layout';
+
+const AlarmListContainer = dynamic(() => import('@/containers/alarm/AlarmListContainer'), { suspense: true });
 
 export const getServerSideProps: GetServerSideProps = authenticatedServerSideProps;
 
@@ -22,7 +26,11 @@ function AlarmPage(): ReactElement {
       />
       <HeaderContainer />
       <DetailLayout>
-        <AlarmListContainer />
+        <ClientOnly>
+          <Suspense fallback={<AlarmsSkeletonLoader />}>
+            <AlarmListContainer />
+          </Suspense>
+        </ClientOnly>
       </DetailLayout>
     </>
   );
