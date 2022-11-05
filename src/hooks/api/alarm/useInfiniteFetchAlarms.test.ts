@@ -1,7 +1,7 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
 
 import { getUserAlarms } from '@/services/api/alarm';
-import wrapper from '@/test/ReactQueryWrapper';
+import renderSuspenseHook from '@/test/renderSuspenseHook';
 
 import ALARM_FIXTURE from '../../../../fixtures/alarm';
 import PROFILE_FIXTURE from '../../../../fixtures/profile';
@@ -19,7 +19,9 @@ describe('useInfiniteFetchAlarms', () => {
     lastUid: '1',
   };
 
-  const useInfiniteFetchAlarmsHook = () => renderHook(() => useInfiniteFetchAlarms(), { wrapper });
+  const useInfiniteFetchAlarmsHook = () => renderSuspenseHook(() => useInfiniteFetchAlarms({
+    userUid: 'userUid',
+  }));
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -31,7 +33,7 @@ describe('useInfiniteFetchAlarms', () => {
   });
 
   it('alarms에 대한 정보를 반환해야만 한다', async () => {
-    const { result, waitFor } = useInfiniteFetchAlarmsHook();
+    const { result } = useInfiniteFetchAlarmsHook();
 
     await waitFor(() => result.current.query.isSuccess);
 

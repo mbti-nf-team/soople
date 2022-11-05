@@ -4,13 +4,16 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import useInfiniteFetchAlarms from '@/hooks/api/alarm/useInfiniteFetchAlarms';
 import useUpdateAlarmViewed from '@/hooks/api/alarm/useUpdateAlarmViewed';
+import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 
 import ALARM_FIXTURE from '../../../fixtures/alarm';
+import FIXTURE_PROFILE from '../../../fixtures/profile';
 
 import AlarmListContainer from './AlarmListContainer';
 
 jest.mock('@/hooks/api/alarm/useInfiniteFetchAlarms');
 jest.mock('@/hooks/api/alarm/useUpdateAlarmViewed');
+jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('next/link', () => ({ children }: any) => children);
 
 describe('AlarmListContainer', () => {
@@ -19,6 +22,10 @@ describe('AlarmListContainer', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
+    (useFetchUserProfile as jest.Mock).mockImplementation(() => ({
+      data: FIXTURE_PROFILE,
+    }));
+
     (useInfiniteFetchAlarms as jest.Mock).mockImplementation(() => ({
       query: {
         data: {
@@ -26,8 +33,6 @@ describe('AlarmListContainer', () => {
             items: [ALARM_FIXTURE],
           }],
         },
-        isLoading: given.isLoading,
-        fetchStatus: 'idle',
       },
       refState: {
         lastItemRef: jest.fn(),
@@ -43,34 +48,20 @@ describe('AlarmListContainer', () => {
     <AlarmListContainer />
   ));
 
-  context('로딩중인 경우', () => {
-    given('isLoading', () => true);
+  it('알람 리스트에 대한 정보가 나타나야만 한다', () => {
+    const { container } = renderAlarmListContainer();
 
-    it('로딩 스켈레톤이 나타나야만 한다', () => {
-      renderAlarmListContainer();
-
-      expect(screen.getByTitle('loading...')).toBeInTheDocument();
-    });
+    expect(useInfiniteFetchAlarms).toBeCalled();
+    expect(container).toHaveTextContent(ALARM_FIXTURE.group.title);
   });
 
-  context('로딩중이 아닌 경우', () => {
-    given('isLoading', () => false);
+  describe('알람을 클릭한다', () => {
+    it('mutate 액션이 호출되어야만 한다', () => {
+      renderAlarmListContainer();
 
-    it('알람 리스트에 대한 정보가 나타나야만 한다', () => {
-      const { container } = renderAlarmListContainer();
+      fireEvent.click(screen.getByText(ALARM_FIXTURE.group.title));
 
-      expect(useInfiniteFetchAlarms).toBeCalled();
-      expect(container).toHaveTextContent(ALARM_FIXTURE.group.title);
-    });
-
-    describe('알람을 클릭한다', () => {
-      it('mutate 액션이 호출되어야만 한다', () => {
-        renderAlarmListContainer();
-
-        fireEvent.click(screen.getByText(ALARM_FIXTURE.group.title));
-
-        expect(mutate).toBeCalledWith(ALARM_FIXTURE.uid);
-      });
+      expect(mutate).toBeCalledWith(ALARM_FIXTURE.uid);
     });
   });
 });

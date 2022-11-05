@@ -41,8 +41,6 @@ describe('AlarmPage', () => {
             items: [ALARM_FIXTURE],
           }],
         },
-        isLoading: given.isLoading,
-        isIdle: false,
       },
       refState: {
         lastItemRef: jest.fn(),

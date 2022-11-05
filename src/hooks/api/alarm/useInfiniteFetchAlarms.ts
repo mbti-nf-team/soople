@@ -9,20 +9,18 @@ import { Alarm } from '@/models/alarm';
 import { getUserAlarms } from '@/services/api/alarm';
 import { checkEmpty } from '@/utils/utils';
 
-import useFetchUserProfile from '../auth/useFetchUserProfile';
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
-function useInfiniteFetchAlarms() {
-  const { data: user } = useFetchUserProfile();
-
+function useInfiniteFetchAlarms({ userUid }: { userUid?: string }) {
   const query = useInfiniteQuery<InfiniteResponse<Alarm>, FirestoreError>(['alarms'], ({
     pageParam,
-  }) => getUserAlarms(user?.uid as string, {
+  }) => getUserAlarms(userUid as string, {
     perPage: 15,
     lastUid: pageParam,
   }), {
     getNextPageParam: ({ lastUid }) => lastUid,
-    enabled: !!user,
+    enabled: !!userUid,
+    suspense: true,
   });
 
   const {
