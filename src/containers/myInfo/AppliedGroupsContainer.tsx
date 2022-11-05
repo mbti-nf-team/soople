@@ -2,20 +2,15 @@ import React, { ReactElement } from 'react';
 
 import EmptyStateArea from '@/components/common/EmptyStateArea';
 import MyGroups from '@/components/myInfo/MyGroups';
-import MyGroupsSkeletonLoader from '@/components/myInfo/MyGroupsSkeletonLoader';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useInfiniteFetchUserAppliedGroups from '@/hooks/api/group/useInfiniteFetchUserAppliedGroups';
 
 function AppliedGroupsContainer(): ReactElement {
-  const { data: user } = useFetchUserProfile();
+  const { data: user } = useFetchUserProfile({ suspense: true });
   const { query, refState } = useInfiniteFetchUserAppliedGroups({
     userUid: user?.uid,
     perPage: 10,
   });
-
-  if (query.isLoading && ['fetching', 'idle'].includes(query.fetchStatus)) {
-    return <MyGroupsSkeletonLoader />;
-  }
 
   return (
     <MyGroups
