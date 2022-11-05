@@ -23,8 +23,6 @@ describe('RecruitedPage', () => {
             items: [FIXTURE_GROUP],
           }],
         },
-        isLoading: given.isLoading,
-        isIdle: false,
       },
       refState: {
         lastItemRef: jest.fn(),

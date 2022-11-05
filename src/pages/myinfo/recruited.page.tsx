@@ -1,11 +1,15 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Suspense } from 'react';
 
 import { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 
+import ClientOnly from '@/components/common/ClientOnly';
+import MyGroupsSkeletonLoader from '@/components/myInfo/MyGroupsSkeletonLoader';
 import getMyInfoLayout from '@/components/myInfo/MyInfoLayout';
-import RecruitedGroupsContainer from '@/containers/myInfo/RecruitedGroupsContainer';
 import authenticatedServerSideProps from '@/services/serverSideProps/authenticatedServerSideProps';
+
+const RecruitedGroupsContainer = dynamic(() => import('@/containers/myInfo/RecruitedGroupsContainer'), { suspense: true });
 
 export const getServerSideProps: GetServerSideProps = authenticatedServerSideProps;
 
@@ -19,7 +23,11 @@ function RecruitedPage(): ReactElement {
           url: `${process.env.NEXT_PUBLIC_ORIGIN}/myinfo/recruited`,
         }}
       />
-      <RecruitedGroupsContainer />
+      <ClientOnly>
+        <Suspense fallback={<MyGroupsSkeletonLoader />}>
+          <RecruitedGroupsContainer />
+        </Suspense>
+      </ClientOnly>
     </>
   );
 }

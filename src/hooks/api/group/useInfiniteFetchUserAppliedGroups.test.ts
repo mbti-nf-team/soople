@@ -1,9 +1,9 @@
 import { useInView } from 'react-intersection-observer';
 
-import { renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
 
 import { getUserAppliedGroups } from '@/services/api/applicants';
-import wrapper from '@/test/ReactQueryWrapper';
+import renderSuspenseHook from '@/test/renderSuspenseHook';
 
 import FIXTURE_GROUP from '../../../../fixtures/group';
 
@@ -17,9 +17,8 @@ describe('useInfiniteFetchUserAppliedGroups', () => {
     lastUid: '1',
   };
 
-  const useInfiniteFetchUserAppliedGroupsHook = () => renderHook(
+  const useInfiniteFetchUserAppliedGroupsHook = () => renderSuspenseHook(
     () => useInfiniteFetchUserAppliedGroups({ perPage: 10, userUid: 'userUid' }),
-    { wrapper },
   );
 
   beforeEach(() => {
@@ -34,7 +33,7 @@ describe('useInfiniteFetchUserAppliedGroups', () => {
   });
 
   it('getUserAppliedGroups를 한 번 호출 후 반환해야만 한다', async () => {
-    const { result, waitFor } = useInfiniteFetchUserAppliedGroupsHook();
+    const { result } = useInfiniteFetchUserAppliedGroupsHook();
 
     await waitFor(() => result.current.query.isSuccess);
 
