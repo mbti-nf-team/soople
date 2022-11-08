@@ -1,4 +1,5 @@
-const TsconfigPathsPlugin  = require('tsconfig-paths-webpack-plugin');
+const path = require('path');
+const tsconfigPaths = require('vite-tsconfig-paths').default;
 
 module.exports = {
   staticDirs: ['../public'],
@@ -14,11 +15,15 @@ module.exports = {
   ],
   "framework": "@storybook/react",
   "core": {
-    "builder": "@storybook/builder-webpack5"
+    "builder": "@storybook/builder-vite"
   },
-  webpackFinal: async (config) => {
-    config.resolve.plugins = [new TsconfigPathsPlugin()];
-
+  viteFinal: async (config) => {
+    config.plugins.push(
+      tsconfigPaths({
+        projects: [path.resolve(path.dirname(__dirname), 'tsconfig.json')],
+      })
+    );
+    
     return config;
   },
   babel: async (options) => {
