@@ -17,11 +17,7 @@ module.exports = {
   "core": {
     "builder": "@storybook/builder-vite"
   },
-  viteFinal: async (config, { configType }) => {
-    if (configType === "PRODUCTION") {
-      config.build.sourcemap = false;
-    }
-
+  viteFinal: async (config) => {
     return mergeConfig(config, {
       resolve: {
         alias: {
