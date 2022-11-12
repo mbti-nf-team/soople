@@ -17,7 +17,11 @@ module.exports = {
   "core": {
     "builder": "@storybook/builder-vite"
   },
-  viteFinal: async (config) => {
+  viteFinal: async (config, { configType }) => {
+    if (configType === "PRODUCTION") {
+      config.build.sourcemap = false;
+    }
+
     config.plugins.push(
       tsconfigPaths({
         projects: [path.resolve(path.dirname(__dirname), 'tsconfig.json')],
