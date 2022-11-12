@@ -120,7 +120,6 @@
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "babel-loader": "^8.2.5",
-    "babel-plugin-inline-react-svg": "^2.0.1",
     "cypress": "^10.1.0",
     "cypress-firebase": "^2.2.1",
     "eslint": "^8.20.0",
@@ -148,8 +147,7 @@
     "react-test-renderer": "^18.2.0",
     "start-server-and-test": "^1.14.0",
     "typescript": "^4.6.4",
-    "vite": "^3.2.3",
-    "vite-tsconfig-paths": "^3.5.2"
+    "vite": "^3.2.3"
   },
   "browserslist": [
     "since 2017"

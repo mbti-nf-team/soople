@@ -1,5 +1,5 @@
-const path = require('path');
-const tsconfigPaths = require('vite-tsconfig-paths').default;
+const { resolve } = require('path');
+const { mergeConfig } = require("vite");
 
 module.exports = {
   staticDirs: ['../public'],
@@ -22,17 +22,12 @@ module.exports = {
       config.build.sourcemap = false;
     }
 
-    config.plugins.push(
-      tsconfigPaths({
-        projects: [path.resolve(path.dirname(__dirname), 'tsconfig.json')],
-      })
-    );
-    
-    return config;
-  },
-  babel: async (options) => {
-    options.plugins.push("babel-plugin-inline-react-svg");
-
-    return options;
+    return mergeConfig(config, {
+      resolve: {
+        alias: {
+          "@": resolve(__dirname, "/src"),
+        },
+      },
+    });
   },
 }
