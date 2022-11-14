@@ -7,8 +7,13 @@ function useActionKeyEvent<T = Element>(
 ): KeyboardEventHandler<T> {
   const onKeyEvent: KeyboardEventHandler<T> = useCallback((event: KeyboardEvent<T>) => {
     const isArray = Array.isArray(targetKeys);
+    const isMultipleKeyEvent = isArray && (
+      targetKeys.includes(event.code) || targetKeys.includes(event.key)
+    );
 
-    if ((isArray && targetKeys.includes(event.code)) || (!isArray && event.code === targetKeys)) {
+    const isKeyEvent = !isArray && (event.code === targetKeys || event.key === targetKeys);
+
+    if (isMultipleKeyEvent || isKeyEvent) {
       callback?.(event);
     }
   }, [targetKeys, callback]);
