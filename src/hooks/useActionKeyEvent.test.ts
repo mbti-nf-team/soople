@@ -14,23 +14,44 @@ describe('useActionKeyEvent', () => {
   const useActionKeyEventHook = () => renderHook(() => useActionKeyEvent(given.code, callback));
 
   context('key code가 같은 경우', () => {
-    const mockEvent = {
-      code: 'Enter',
-    } as KeyboardEvent;
-
     context('target 키가 배열인 경우', () => {
       given('code', () => ['Enter', 'NumpadEnter']);
 
-      it('callback 함수가 호출되어야만 한다', () => {
-        const { result } = useActionKeyEventHook();
+      context('key가 같은 경우', () => {
+        const mockEvent = {
+          key: 'Enter',
+        } as KeyboardEvent;
 
-        act(() => result.current(mockEvent));
+        it('callback 함수가 호출되어야만 한다', () => {
+          const { result } = useActionKeyEventHook();
 
-        expect(callback).toBeCalledTimes(1);
+          act(() => result.current(mockEvent));
+
+          expect(callback).toBeCalledTimes(1);
+        });
+      });
+
+      context('code가 같은 경우', () => {
+        const mockEvent = {
+          code: 'Enter',
+        } as KeyboardEvent;
+
+        it('callback 함수가 호출되어야만 한다', () => {
+          const { result } = useActionKeyEventHook();
+
+          act(() => result.current(mockEvent));
+
+          expect(callback).toBeCalledTimes(1);
+        });
       });
     });
 
     context('target 키가 문자열인 경우', () => {
+      const mockEvent = {
+        code: 'Enter',
+        key: 'Enter',
+      } as KeyboardEvent;
+
       given('code', () => 'Enter');
 
       it('callback 함수가 호출되어야만 한다', () => {
@@ -48,6 +69,7 @@ describe('useActionKeyEvent', () => {
 
     const mockEvent = {
       code: 'Escape',
+      key: 'Escape',
     } as KeyboardEvent;
 
     it('callback 함수가 호출되지 않아야만 한다', () => {
