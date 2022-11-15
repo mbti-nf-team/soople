@@ -24,6 +24,10 @@ module.exports = {
           "@": resolve(__dirname, "/src"),
         },
       },
+      // NOTE - https://github.com/storybookjs/storybook/issues/18920
+      define: {
+        "process.env": {},
+      },
     });
   },
 }
