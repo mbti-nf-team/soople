@@ -17,10 +17,6 @@ import { body1Font } from '@/styles/fontStyles';
 const TagsBar = dynamic(() => import('@/components/home/TagsBar'), { ssr: false });
 const SwitchButton = dynamic(() => import('@/components/common/SwitchButton'), { ssr: false });
 
-type FilterCondition = {
-  [K in keyof FilterGroupsCondition]?: FilterGroupsCondition[K];
-};
-
 function StatusBarContainer(): ReactElement {
   const { isMobile, isClient } = useResponsive();
 
@@ -29,10 +25,12 @@ function StatusBarContainer(): ReactElement {
     isFilterCompleted, category: filterCategory,
   }, setCondition] = useRecoilState(groupsConditionState);
 
-  const setGroupsCondition = (condition: FilterCondition) => setCondition((prevCondition) => ({
+  const setGroupsCondition = useCallback((
+    condition: Partial<FilterGroupsCondition>,
+  ) => setCondition((prevCondition) => ({
     ...prevCondition,
     ...condition,
-  }));
+  })), [setCondition]);
 
   const onChange = useCallback((category: string) => {
     if (category === 'all') {

@@ -4,7 +4,7 @@ import React, {
 
 import styled from '@emotion/styled';
 
-import { KeyPair, SelectOption } from '@/models';
+import { SelectOption } from '@/models';
 import {
   Category, RecruitmentEndSetting, WriteFields,
 } from '@/models/group';
@@ -21,7 +21,7 @@ import ThumbnailUpload from './ThumbnailUpload';
 
 interface Props {
   fields: WriteFields;
-  onChangeFields: (form: KeyPair<WriteFields>) => void;
+  onChangeFields: (form: Partial<WriteFields>) => void;
   onSubmit: () => void;
   isVisible: boolean;
   isRecruiting: boolean;

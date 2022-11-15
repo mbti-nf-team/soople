@@ -2,7 +2,6 @@ import React, { ChangeEvent, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
-import { KeyPair } from '@/models';
 import { WriteFields } from '@/models/group';
 import { h2Font, h3Font } from '@/styles/fontStyles';
 import mq, { mediaQueries } from '@/styles/responsive';
@@ -12,7 +11,7 @@ import WriteEditor from './WriteEditor';
 
 interface Props {
   fields: WriteFields;
-  onChange: (form: KeyPair<WriteFields>) => void;
+  onChange: (form: Partial<WriteFields>) => void;
 }
 
 function WriteForm({ fields, onChange }: Props): ReactElement {
