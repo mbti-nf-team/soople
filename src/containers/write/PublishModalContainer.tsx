@@ -14,7 +14,6 @@ import useEditGroup from '@/hooks/api/group/useEditGroup';
 import useFetchGroup from '@/hooks/api/group/useFetchGroup';
 import usePublishNewGroup from '@/hooks/api/group/usePublishNewGroup';
 import useGroupRecruitmentStatus from '@/hooks/useGroupRecruitmentStatus';
-import { KeyPair } from '@/models';
 import { Profile } from '@/models/auth';
 import { WriteFields } from '@/models/group';
 import { writeFieldsState } from '@/recoil/group/atom';
@@ -62,7 +61,7 @@ function PublishModalContainer(): ReactElement {
     });
   }, [writeFields, group, editGroup, getHTML, getState, deleteTags]);
 
-  const onChangeFields = useCallback((form: KeyPair<WriteFields>) => changeFields((prevState) => ({
+  const onChangeFields = useCallback((form: Partial<WriteFields>) => changeFields((prevState) => ({
     ...prevState, ...form,
   })), [changeFields]);
 
