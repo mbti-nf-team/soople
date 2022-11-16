@@ -23,7 +23,7 @@ const groupsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     category: category.split(',') as Category[],
     isFilterCompleted: isFilterCompleted === 'true',
     tag,
-  });
+  }, []);
 
   res.status(200).json(data);
 };

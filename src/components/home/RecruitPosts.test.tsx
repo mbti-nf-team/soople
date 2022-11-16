@@ -1,12 +1,14 @@
+import { createRef } from 'react';
+
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import useFetchGroups from '@/hooks/api/group/useFetchGroups';
+import useInfiniteFetchGroups from '@/hooks/api/group/useInfiniteFetchGroups';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 
 import RecruitPosts from './RecruitPosts';
 
-jest.mock('@/hooks/api/group/useFetchGroups');
+jest.mock('@/hooks/api/group/useInfiniteFetchGroups');
 
 describe('RecruitPosts', () => {
   const handleClickEmptyButton = jest.fn();
@@ -14,8 +16,19 @@ describe('RecruitPosts', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (useFetchGroups as jest.Mock).mockImplementation(() => ({
-      data: given.groups,
+    (useInfiniteFetchGroups as jest.Mock).mockImplementation(() => ({
+      query: {
+        data: {
+          pages: [{
+            items: given.groups,
+          }],
+        },
+        isFetchingNextPage: given.isFetchingNextPage,
+      },
+      refState: {
+        lastItemRef: jest.fn(),
+        wrapperRef: createRef(),
+      },
     }));
   });
 
@@ -32,6 +45,16 @@ describe('RecruitPosts', () => {
       const { container } = renderRecruitPosts();
 
       expect(container).toHaveTextContent('title');
+    });
+
+    context('다음 리스트가 패칭중인 경우', () => {
+      given('isFetchingNextPage', () => true);
+
+      it('로딩 스켈레톤이 나타나야만 한다', () => {
+        renderRecruitPosts();
+
+        expect(screen.getByTitle('loading...')).toBeInTheDocument();
+      });
     });
   });
 

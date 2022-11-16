@@ -1,9 +1,11 @@
+import { createRef } from 'react';
+
 import { useRouter } from 'next/router';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
-import useFetchGroups from '@/hooks/api/group/useFetchGroups';
+import useInfiniteFetchGroups from '@/hooks/api/group/useInfiniteFetchGroups';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';
 import RecoilObserver from '@/test/RecoilObserver';
@@ -14,7 +16,7 @@ import FIXTURE_PROFILE from '../../../fixtures/profile';
 
 import RecruitPostsContainer from './RecruitPostsContainer';
 
-jest.mock('@/hooks/api/group/useFetchGroups');
+jest.mock('@/hooks/api/group/useInfiniteFetchGroups');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -32,8 +34,18 @@ describe('RecruitPostsContainer', () => {
       data: given.user,
     }));
 
-    (useFetchGroups as jest.Mock).mockImplementation(() => ({
-      data: given.groups,
+    (useInfiniteFetchGroups as jest.Mock).mockImplementation(() => ({
+      query: {
+        data: {
+          pages: [{
+            items: given.groups,
+          }],
+        },
+      },
+      refState: {
+        lastItemRef: jest.fn(),
+        wrapperRef: createRef(),
+      },
     }));
 
     (useRouter as jest.Mock).mockImplementation(() => ({

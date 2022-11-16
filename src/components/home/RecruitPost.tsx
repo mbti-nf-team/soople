@@ -1,4 +1,6 @@
-import React, { memo, ReactElement } from 'react';
+import React, {
+  ForwardedRef, forwardRef, memo, ReactElement,
+} from 'react';
 import { Eye as ViewsIcon } from 'react-feather';
 
 import Link from 'next/link';
@@ -20,7 +22,7 @@ interface Props {
   group: Group;
 }
 
-function RecruitPost({ group }: Props): ReactElement {
+function RecruitPost({ group }: Props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const {
     title, content, groupId, writer, views, shortDescription, thumbnail,
   } = group;
@@ -29,7 +31,7 @@ function RecruitPost({ group }: Props): ReactElement {
   const recruitDate = useRecruitDateStatus(group);
 
   return (
-    <RecruitPostWrapper>
+    <RecruitPostWrapper ref={ref}>
       <Link href={`/detail/${groupId}`} passHref>
         <RecruitPostContents>
           <PostPreview>
@@ -66,7 +68,7 @@ function RecruitPost({ group }: Props): ReactElement {
   );
 }
 
-export default memo(RecruitPost);
+export default memo(forwardRef<HTMLDivElement, Props>(RecruitPost));
 
 export const RecruitPostWrapper = styled.div`
   ${mq2({

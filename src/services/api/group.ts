@@ -1,11 +1,13 @@
 import {
   addDoc,
   deleteDoc,
+  DocumentData,
   getDoc,
   getDocs,
   limit,
   orderBy,
   query,
+  QueryDocumentSnapshot,
   serverTimestamp,
   startAfter,
   updateDoc,
@@ -70,9 +72,10 @@ export const getGroups = async (condition: FilterGroupsCondition) => {
   return response.docs;
 };
 
-export const getFilteredGroups = async (condition: FilterGroupsCondition) => {
-  const groups = await getGroups(condition);
-
+export const getFilteredGroups = (
+  condition: FilterGroupsCondition,
+  groups: QueryDocumentSnapshot<DocumentData>[],
+) => {
   const filteredGroups = (groups.map(formatGroup) as Group[]).filter((group) => {
     if (condition.isFilterCompleted && isRecruiting(group)) {
       return group;
@@ -92,6 +95,46 @@ export const fetchGroups = async (condition: FilterGroupsCondition): Promise<Gro
   const groups = await response.json();
 
   return groups;
+};
+
+export const getPaginationGroups = async (condition: FilterGroupsCondition, {
+  perPage = 20, lastUid,
+}: InfiniteRequest): Promise<InfiniteResponse<Group>> => {
+  const isLengthLessThanPerPage = isLessThanPerPage(perPage);
+
+  if (!lastUid) {
+    const getQuery = getGroupsQuery(condition, [limit(perPage)]);
+
+    const response = await getDocs(getQuery);
+
+    const lastVisible = response.docs[response.docs.length - 1];
+
+    return {
+      items: getFilteredGroups(condition, response.docs),
+      lastUid: targetFalseThenValue(isLengthLessThanPerPage(response))(lastVisible?.id),
+    };
+  }
+
+  const lastGroupRef = await getDoc(docRef(GROUPS, lastUid));
+  const getQuery = getGroupsQuery(condition, [
+    startAfter(lastGroupRef),
+    limit(perPage),
+  ]);
+
+  const response = await getDocs(getQuery);
+
+  if (isLengthLessThanPerPage(response)) {
+    return {
+      items: getFilteredGroups(condition, response.docs),
+    };
+  }
+
+  const lastVisible = response.docs[response.docs.length - 1];
+
+  return {
+    items: getFilteredGroups(condition, response.docs),
+    lastUid: lastVisible?.id,
+  };
 };
 
 export const getUserRecruitedGroupCount = async (userUid: string) => {

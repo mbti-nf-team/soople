@@ -1,5 +1,12 @@
 import {
-  addDoc, deleteDoc, getDoc, getDocs, serverTimestamp, updateDoc,
+  addDoc,
+  deleteDoc,
+  DocumentData,
+  getDoc,
+  getDocs,
+  QueryDocumentSnapshot,
+  serverTimestamp,
+  updateDoc,
 } from 'firebase/firestore';
 
 import { FilterGroupsCondition, WriteFields } from '@/models/group';
@@ -9,6 +16,7 @@ import {
   getFilteredGroups,
   getGroupDetail,
   getGroups,
+  getPaginationGroups,
   getUserRecruitedGroupCount,
   getUserRecruitedGroups,
   patchCompletedGroup,
@@ -147,11 +155,95 @@ describe('group API', () => {
     });
   });
 
+  describe('getPaginationGroups', () => {
+    const lastVisibleId = 'lastVisibleId';
+    const condition: FilterGroupsCondition = {
+      category: [],
+      isFilterCompleted: false,
+      tag: '',
+    };
+
+    context('"lastUid"가 존재하지 않는 경우', () => {
+      beforeEach(() => {
+        (getDocs as jest.Mock).mockImplementationOnce(() => ({
+          docs: [{
+            ...GROUP_FIXTURE,
+            id: lastVisibleId,
+          }],
+        }));
+        (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+      });
+
+      it('그룹 리스트가 반환되어야만 한다', async () => {
+        const response = await getPaginationGroups(condition, {
+          perPage: 10,
+        });
+
+        expect(response).toEqual({
+          items: [GROUP_FIXTURE],
+          lastUid: lastVisibleId,
+        });
+      });
+    });
+
+    context('"lastUid"가 존재하는 경우', () => {
+      context('empty가 true이거나 docs 길이가 perPage보다 작을 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: true,
+            docs: [{
+              ...GROUP_FIXTURE,
+              id: lastVisibleId,
+            }],
+          }));
+          (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+          (isLessThanPerPage as jest.Mock).mockImplementationOnce(
+            () => jest.fn().mockReturnValueOnce(true),
+          );
+        });
+
+        it('그룹 리스트가 반환되어야만 한다', async () => {
+          const response = await getPaginationGroups(condition, {
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [GROUP_FIXTURE],
+          });
+        });
+      });
+
+      context('empty가 false이고 docs 길이가 perPage보다 클 경우', () => {
+        beforeEach(() => {
+          (getDocs as jest.Mock).mockImplementationOnce(() => ({
+            empty: false,
+            docs: [{
+              ...GROUP_FIXTURE,
+              id: lastVisibleId,
+            }],
+          }));
+          (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+        });
+
+        it('그룹 리스트가 반환되어야만 한다', async () => {
+          const response = await getPaginationGroups(condition, {
+            perPage: 0,
+            lastUid: lastVisibleId,
+          });
+
+          expect(response).toEqual({
+            items: [GROUP_FIXTURE],
+            lastUid: lastVisibleId,
+          });
+        });
+      });
+    });
+  });
+
   describe('getFilteredGroups', () => {
+    const groups = [GROUP_FIXTURE] as unknown as QueryDocumentSnapshot<DocumentData>[];
+
     beforeEach(() => {
-      (getDocs as jest.Mock).mockImplementationOnce(() => ({
-        docs: [GROUP_FIXTURE],
-      }));
       (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
     });
 
@@ -161,7 +253,7 @@ describe('group API', () => {
           category: ['study', 'project'],
           isFilterCompleted: true,
           tag: 'test',
-        });
+        }, groups);
 
         expect(response).toEqual([GROUP_FIXTURE]);
       });
@@ -173,7 +265,7 @@ describe('group API', () => {
           category: ['study', 'project'],
           isFilterCompleted: false,
           tag: 'test',
-        });
+        }, groups);
 
         expect(response).toEqual([GROUP_FIXTURE]);
       });
