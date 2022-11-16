@@ -15,7 +15,7 @@ describe('getQuery', () => {
             category: ['project'],
             isFilterCompleted: true,
             tag: 'tag',
-          });
+          }, []);
 
           expect(where).toBeCalledWith('category', 'in', ['project']);
           expect(where).toBeCalledWith('isCompleted', '==', false);

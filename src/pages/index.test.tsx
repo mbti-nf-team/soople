@@ -1,10 +1,12 @@
+import { createRef } from 'react';
+
 import { useRouter } from 'next/router';
 
 import { act, render } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useGetUser from '@/hooks/api/auth/useGetUser';
-import useFetchGroups from '@/hooks/api/group/useFetchGroups';
+import useInfiniteFetchGroups from '@/hooks/api/group/useInfiniteFetchGroups';
 import useFetchTagsCount from '@/hooks/api/tagsCount/useFetchTagsCount';
 import InjectMockProviders from '@/test/InjectMockProviders';
 
@@ -20,7 +22,7 @@ jest.mock('nanoid', () => ({
 jest.mock('@/hooks/api/auth/useGetUser');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/tagsCount/useFetchTagsCount');
-jest.mock('@/hooks/api/group/useFetchGroups');
+jest.mock('@/hooks/api/group/useInfiniteFetchGroups');
 
 describe('HomePage', () => {
   beforeEach(() => {
@@ -31,8 +33,18 @@ describe('HomePage', () => {
       },
     }));
 
-    (useFetchGroups as jest.Mock).mockImplementation(() => ({
-      data: [],
+    (useInfiniteFetchGroups as jest.Mock).mockImplementation(() => ({
+      query: {
+        data: {
+          pages: [{
+            items: [],
+          }],
+        },
+      },
+      refState: {
+        lastItemRef: jest.fn(),
+        wrapperRef: createRef(),
+      },
     }));
 
     (useGetUser as jest.Mock).mockImplementation(() => ({

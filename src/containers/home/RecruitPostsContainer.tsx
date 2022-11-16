@@ -37,7 +37,7 @@ function RecruitPostsContainer(): ReactElement | null {
   return (
     <ClientOnly>
       <RecruitPostsWrapper>
-        <Suspense fallback={<RecruitPostsSkeletonLoader />}>
+        <Suspense fallback={<RecruitPostsSkeletonLoader length={12} />}>
           <RecruitPosts
             onClickEmptyButton={onClickEmptyButton}
           />

@@ -4,7 +4,7 @@ import RecruitPostsSkeletonLoader from './RecruitPostsSkeletonLoader';
 
 describe('RecruitPostsSkeletonLoader', () => {
   const renderRecruitPostsSkeletonLoader = () => render((
-    <RecruitPostsSkeletonLoader />
+    <RecruitPostsSkeletonLoader length={12} />
   ));
 
   it('로딩 스켈레톤이 나타나야만 한다', () => {

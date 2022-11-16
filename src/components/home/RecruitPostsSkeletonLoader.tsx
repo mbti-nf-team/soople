@@ -5,12 +5,15 @@ import styled from '@emotion/styled';
 import SkeletonItem from '../common/SkeletonItem';
 
 import { PostWriter, RecruitPostWrapper } from './RecruitPost';
-import { RecruitPostsWrapper } from './RecruitPosts';
 
-function RecruitPostsSkeletonLoader(): ReactElement {
+interface Props {
+  length: number;
+}
+
+function RecruitPostsSkeletonLoader({ length }: Props): ReactElement {
   return (
     <RecruitPostsWrapper title="loading...">
-      {Array.from({ length: 12 }, (_, i) => (i)).map((key) => (
+      {Array.from({ length }, (_, i) => (i)).map((key) => (
         <SkeletonBlock key={key}>
           <div className="contents">
             <div>
@@ -81,6 +84,12 @@ function RecruitPostsSkeletonLoader(): ReactElement {
 }
 
 export default RecruitPostsSkeletonLoader;
+
+const RecruitPostsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: -0.625rem;
+`;
 
 const SkeletonBlock = styled(RecruitPostWrapper)`
   & > .contents {
