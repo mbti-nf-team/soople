@@ -1,12 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Category } from '@/models/group';
-import { getFilteredGroups } from '@/services/api/group';
+import { getPaginationGroups } from '@/services/api/group';
 
 type FilterGroupsCondition = {
   category: string;
   isFilterCompleted: string;
   tag: string;
+  perPage?: string;
+  lastUid?: string;
 }
 
 const groupsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -17,15 +19,20 @@ const groupsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const { category, isFilterCompleted, tag } = req.query as FilterGroupsCondition;
+  const {
+    category, isFilterCompleted, tag, lastUid, perPage,
+  } = req.query as FilterGroupsCondition;
 
-  const data = await getFilteredGroups({
+  const groups = await getPaginationGroups({
     category: category.split(',') as Category[],
     isFilterCompleted: isFilterCompleted === 'true',
     tag,
-  }, []);
+  }, {
+    lastUid,
+    perPage: Number(perPage),
+  });
 
-  res.status(200).json(data);
+  res.status(200).json(groups);
 };
 
 export default groupsHandler;

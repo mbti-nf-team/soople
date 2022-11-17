@@ -8,7 +8,7 @@ import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';
 import { groupsConditionState } from '@/recoil/group/atom';
-import { getPaginationGroups } from '@/services/api/group';
+import { fetchGroups } from '@/services/api/group';
 import { checkEmpty } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
@@ -18,7 +18,7 @@ function useInfiniteFetchGroups() {
 
   const query = useInfiniteQuery<InfiniteResponse<Group>, FirestoreError>(['groups', groupsCondition], ({
     pageParam,
-  }) => getPaginationGroups(groupsCondition, {
+  }) => fetchGroups(groupsCondition, {
     perPage: 20,
     lastUid: pageParam,
   }), {

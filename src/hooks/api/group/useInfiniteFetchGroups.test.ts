@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/react';
 
-import { getPaginationGroups } from '@/services/api/group';
+import { fetchGroups } from '@/services/api/group';
 import renderSuspenseHook from '@/test/renderSuspenseHook';
 
 import FIXTURE_GROUP from '../../../../fixtures/group';
@@ -22,7 +22,7 @@ describe('useInfiniteFetchGroups', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (getPaginationGroups as jest.Mock).mockImplementation(() => (responseGroups));
+    (fetchGroups as jest.Mock).mockImplementation(() => (responseGroups));
   });
 
   it('groups에 대한 정보를 반환해야만 한다', async () => {
