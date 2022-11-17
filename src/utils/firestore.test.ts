@@ -6,6 +6,7 @@ import GROUP_FIXTURE from '../../fixtures/group';
 import PROFILE_FIXTURE from '../../fixtures/profile';
 
 import {
+  filterGroups,
   formatAlarm, formatComment, formatCreatedAt, formatGroup, isLessThanPerPage, timestampToString,
 } from './firestore';
 
@@ -198,6 +199,44 @@ describe('isLessThanPerPage', () => {
       const result = isLengthLessThanPerPage(documentData);
 
       expect(result).toBeFalsy();
+    });
+  });
+});
+
+describe('filterGroups', () => {
+  const date = {
+    toDate: () => GROUP_FIXTURE.createdAt,
+  };
+
+  const groups = [{
+    id: '1',
+    data: () => ({
+      ...GROUP_FIXTURE,
+      createdAt: date,
+    }),
+  }] as unknown as QueryDocumentSnapshot<DocumentData>[];
+
+  context('isFilterCompleted가 true인 경우', () => {
+    it('그룹 리스트가 반환되어야만 한다', () => {
+      const response = filterGroups({
+        category: ['study', 'project'],
+        isFilterCompleted: true,
+        tag: 'test',
+      }, groups);
+
+      expect(response).toEqual([GROUP_FIXTURE]);
+    });
+  });
+
+  context('isFilterCompleted가 false인 경우', () => {
+    it('그룹 리스트가 반환되어야만 한다', () => {
+      const response = filterGroups({
+        category: ['study', 'project'],
+        isFilterCompleted: false,
+        tag: 'test',
+      }, groups);
+
+      expect(response).toEqual([GROUP_FIXTURE]);
     });
   });
 });

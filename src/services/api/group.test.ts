@@ -1,10 +1,8 @@
 import {
   addDoc,
   deleteDoc,
-  DocumentData,
   getDoc,
   getDocs,
-  QueryDocumentSnapshot,
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore';
@@ -13,7 +11,6 @@ import { FilterGroupsCondition, WriteFields } from '@/models/group';
 import {
   deleteGroup,
   fetchGroups,
-  getFilteredGroups,
   getGroupDetail,
   getGroups,
   getPaginationGroups,
@@ -25,7 +22,7 @@ import {
   patchNumberApplicants,
   postNewGroup,
 } from '@/services/api/group';
-import { formatGroup, isLessThanPerPage } from '@/utils/firestore';
+import { filterGroups, formatGroup, isLessThanPerPage } from '@/utils/firestore';
 
 import GROUP_FIXTURE from '../../../fixtures/group';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -128,9 +125,13 @@ describe('group API', () => {
     });
 
     it('그룹 리스트가 반환되어야만 한다', async () => {
-      const response = await fetchGroups(params);
+      const perPage = 20;
 
-      expect(fetch).toBeCalledWith(`/api/groups?${paramsSerializer(params)}`, {
+      const response = await fetchGroups(params, {
+        perPage,
+      });
+
+      expect(fetch).toBeCalledWith(`/api/groups?perPage=${perPage}&${paramsSerializer(params)}`, {
         method: 'GET',
       });
       expect(response).toEqual([GROUP_FIXTURE]);
@@ -171,7 +172,7 @@ describe('group API', () => {
             id: lastVisibleId,
           }],
         }));
-        (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+        (filterGroups as jest.Mock).mockReturnValueOnce([GROUP_FIXTURE]);
       });
 
       it('그룹 리스트가 반환되어야만 한다', async () => {
@@ -196,7 +197,7 @@ describe('group API', () => {
               id: lastVisibleId,
             }],
           }));
-          (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+          (filterGroups as jest.Mock).mockReturnValueOnce([GROUP_FIXTURE]);
           (isLessThanPerPage as jest.Mock).mockImplementationOnce(
             () => jest.fn().mockReturnValueOnce(true),
           );
@@ -222,7 +223,7 @@ describe('group API', () => {
               id: lastVisibleId,
             }],
           }));
-          (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
+          (filterGroups as jest.Mock).mockReturnValueOnce([GROUP_FIXTURE]);
         });
 
         it('그룹 리스트가 반환되어야만 한다', async () => {
@@ -236,38 +237,6 @@ describe('group API', () => {
             lastUid: lastVisibleId,
           });
         });
-      });
-    });
-  });
-
-  describe('getFilteredGroups', () => {
-    const groups = [GROUP_FIXTURE] as unknown as QueryDocumentSnapshot<DocumentData>[];
-
-    beforeEach(() => {
-      (formatGroup as jest.Mock).mockReturnValueOnce(GROUP_FIXTURE);
-    });
-
-    context('isFilterCompleted가 true인 경우', () => {
-      it('그룹 리스트가 반환되어야만 한다', async () => {
-        const response = await getFilteredGroups({
-          category: ['study', 'project'],
-          isFilterCompleted: true,
-          tag: 'test',
-        }, groups);
-
-        expect(response).toEqual([GROUP_FIXTURE]);
-      });
-    });
-
-    context('isFilterCompleted가 false인 경우', () => {
-      it('그룹 리스트가 반환되어야만 한다', async () => {
-        const response = await getFilteredGroups({
-          category: ['study', 'project'],
-          isFilterCompleted: false,
-          tag: 'test',
-        }, groups);
-
-        expect(response).toEqual([GROUP_FIXTURE]);
       });
     });
   });

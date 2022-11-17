@@ -1,13 +1,11 @@
 import {
   addDoc,
   deleteDoc,
-  DocumentData,
   getDoc,
   getDocs,
   limit,
   orderBy,
   query,
-  QueryDocumentSnapshot,
   serverTimestamp,
   startAfter,
   updateDoc,
@@ -20,8 +18,10 @@ import {
   CompletedGroupForm,
   FilterGroupsCondition, Group, IncreaseViewRequestForm, WriteFields,
 } from '@/models/group';
-import { formatGroup, isLessThanPerPage, timestampToString } from '@/utils/firestore';
-import { isRecruiting, targetFalseThenValue } from '@/utils/utils';
+import {
+  filterGroups, formatGroup, isLessThanPerPage, timestampToString,
+} from '@/utils/firestore';
+import { targetFalseThenValue } from '@/utils/utils';
 
 import { collectionRef, docRef } from '../firebase';
 import { getGroupsQuery } from '../firebase/getQuery';
@@ -72,23 +72,11 @@ export const getGroups = async (condition: FilterGroupsCondition) => {
   return response.docs;
 };
 
-export const getFilteredGroups = (
+export const fetchGroups = async (
   condition: FilterGroupsCondition,
-  groups: QueryDocumentSnapshot<DocumentData>[],
-) => {
-  const filteredGroups = (groups.map(formatGroup) as Group[]).filter((group) => {
-    if (condition.isFilterCompleted && isRecruiting(group)) {
-      return group;
-    }
-
-    return group;
-  });
-
-  return filteredGroups;
-};
-
-export const fetchGroups = async (condition: FilterGroupsCondition): Promise<Group[]> => {
-  const response = await fetch(`/api/groups?${paramsSerializer(condition)}`, {
+  infiniteRequestForm: InfiniteRequest,
+): Promise<InfiniteResponse<Group>> => {
+  const response = await fetch(`/api/groups?${paramsSerializer(infiniteRequestForm)}&${paramsSerializer(condition)}`, {
     method: 'GET',
   });
 
@@ -110,7 +98,7 @@ export const getPaginationGroups = async (condition: FilterGroupsCondition, {
     const lastVisible = response.docs[response.docs.length - 1];
 
     return {
-      items: getFilteredGroups(condition, response.docs),
+      items: filterGroups(condition, response.docs),
       lastUid: targetFalseThenValue(isLengthLessThanPerPage(response))(lastVisible?.id),
     };
   }
@@ -125,14 +113,14 @@ export const getPaginationGroups = async (condition: FilterGroupsCondition, {
 
   if (isLengthLessThanPerPage(response)) {
     return {
-      items: getFilteredGroups(condition, response.docs),
+      items: filterGroups(condition, response.docs),
     };
   }
 
   const lastVisible = response.docs[response.docs.length - 1];
 
   return {
-    items: getFilteredGroups(condition, response.docs),
+    items: filterGroups(condition, response.docs),
     lastUid: lastVisible?.id,
   };
 };
