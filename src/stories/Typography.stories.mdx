@@ -1,0 +1,237 @@
+import { Meta, Typeset, Source } from "@storybook/addon-docs/blocks";
+import {
+  h1Font,
+  h2Font,
+  h3Font,
+  h4Font,
+  body1Font,
+  body2Font,
+  subtitle1Font,
+  subtitle2Font,
+} from "../styles/fontStyles";
+
+<Meta title="Typography" />
+
+export const typography = {
+  type: {
+    primary:
+      "Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif",
+  },
+  weight: {
+    regular: "400",
+    semibold: "600",
+    bold: "700",
+    black: "900",
+  },
+  size: {
+    s1: 11.2,
+    s2: 13.2,
+    s3: 14,
+    m1: 16,
+    m2: 18,
+    l1: 22,
+    l2: 32,
+    l3: 40,
+  },
+};
+
+export const sampleText =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+
+# Typography
+
+**Font:** Pretendard
+
+**Weight:** 400(regular), 600(semibold), 700(bold), 900(black)
+
+<Typeset
+  fontSizes={[
+    typography.size.s1,
+    typography.size.s2,
+    typography.size.s3,
+    typography.size.m1,
+    typography.size.m2,
+    typography.size.l1,
+    typography.size.l2,
+    typography.size.l3,
+  ]}
+  fontWeight={typography.weight.black}
+  sampleText={sampleText}
+  fontFamily={typography.type.primary}
+/>
+
+## H1 Font
+
+**Styles:**
+
+<Source language="css" code={h1Font().styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.l3]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.regular}
+  fontFamily={typography.type.primary}
+/>
+
+<Source language="css" code={h1Font(true).styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.l3]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.bold}
+  fontFamily={typography.type.primary}
+/>
+
+## H2 Font
+
+**Styles:**
+
+<Source language="css" code={h2Font().styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.l2]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.regular}
+  fontFamily={typography.type.primary}
+/>
+
+<Source language="css" code={h2Font(true).styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.l2]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.bold}
+  fontFamily={typography.type.primary}
+/>
+
+## H3 Font
+
+**Styles:**
+
+<Source language="css" code={h3Font().styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.l1]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.regular}
+  fontFamily={typography.type.primary}
+/>
+
+<Source language="css" code={h3Font(true).styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.l1]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.semibold}
+  fontFamily={typography.type.primary}
+/>
+
+## H4 Font
+
+**Styles:**
+
+<Source language="css" code={h4Font().styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.m2]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.regular}
+  fontFamily={typography.type.primary}
+/>
+
+<Source language="css" code={h4Font(true).styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.m2]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.semibold}
+  fontFamily={typography.type.primary}
+/>
+
+## Body1 Font
+
+**Styles:**
+
+<Source language="css" code={body1Font().styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.m1]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.regular}
+  fontFamily={typography.type.primary}
+/>
+
+<Source language="css" code={body1Font(true).styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.m1]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.semibold}
+  fontFamily={typography.type.primary}
+/>
+
+## Body2 Font
+
+**Styles:**
+
+<Source language="css" code={body2Font().styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.s3]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.regular}
+  fontFamily={typography.type.primary}
+/>
+
+<Source language="css" code={body2Font(true).styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.s3]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.semibold}
+  fontFamily={typography.type.primary}
+/>
+
+## Subtitle1 Font
+
+**Styles:**
+
+<Source language="css" code={subtitle1Font().styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.s2]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.regular}
+  fontFamily={typography.type.primary}
+/>
+
+<Source language="css" code={subtitle1Font(true).styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.s2]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.semibold}
+  fontFamily={typography.type.primary}
+/>
+
+## Subtitle2 Font
+
+**Styles:**
+
+<Source language="css" code={subtitle2Font().styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.s1]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.regular}
+  fontFamily={typography.type.primary}
+/>
+
+<Source language="css" code={subtitle2Font(true).styles} format dark />
+
+<Typeset
+  fontSizes={[typography.size.s1]}
+  sampleText={sampleText}
+  fontWeight={typography.weight.semibold}
+  fontFamily={typography.type.primary}
+/>
