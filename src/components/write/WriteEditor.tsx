@@ -18,6 +18,7 @@ import {
 import EditorToolbar from '@/components/write/EditorToolbar';
 import useBoolean from '@/hooks/useBoolean';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
+import { mobileMediaQuery } from '@/styles/responsive';
 
 import AlertTriangleIcon from '../../assets/icons/alert_triangle.svg';
 
@@ -152,12 +153,22 @@ const RemirrorEditorWrapper = styled(CoreStyledComponent)`
   }
 
   & >.remirror-editor-wrapper {
+    ${mobileMediaQuery} {
+      max-height: initial;
+    }
+
+    max-height: 500px;
     min-height: 258px;
     margin: 24px 0px;
   }
 
   .remirror-editor {
+    ${mobileMediaQuery} {
+      max-height: initial;
+    }
+
     ${body1Font()}
+    max-height: 500px;
     min-height: 258px;
     outline: none;
     overflow-y: auto !important;
