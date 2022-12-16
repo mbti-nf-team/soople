@@ -32,31 +32,29 @@ function RecruitPost({ group }: Props, ref: ForwardedRef<HTMLDivElement>): React
 
   return (
     <RecruitPostWrapper ref={ref}>
-      <Link href={`/detail/${groupId}`} passHref>
-        <RecruitPostContents>
-          <PostPreview>
-            {thumbnail && (
-              <ThumbnailWrapper>
-                <Thumbnail src={thumbnail} alt="thumbnail" />
-              </ThumbnailWrapper>
-            )}
-            <Title>{title}</Title>
-            <Content hasThumbnail={!!thumbnail} data-testid="content">
-              {emptyAThenB(removeAllHtml(content), shortDescription)}
-            </Content>
-          </PostPreview>
-          <PostMetaData>
-            <ViewsIcon
-              size={16}
-              color={theme.background}
-              fill={theme.accent6}
-            />
-            <span>{views}</span>
-            <Divider />
-            <span>{recruitDate}</span>
-          </PostMetaData>
-        </RecruitPostContents>
-      </Link>
+      <RecruitPostContents href={`/detail/${groupId}`}>
+        <PostPreview>
+          {thumbnail && (
+            <ThumbnailWrapper>
+              <Thumbnail src={thumbnail} alt="thumbnail" />
+            </ThumbnailWrapper>
+          )}
+          <Title>{title}</Title>
+          <Content hasThumbnail={!!thumbnail} data-testid="content">
+            {emptyAThenB(removeAllHtml(content), shortDescription)}
+          </Content>
+        </PostPreview>
+        <PostMetaData>
+          <ViewsIcon
+            size={16}
+            color={theme.background}
+            fill={theme.accent6}
+          />
+          <span>{views}</span>
+          <Divider />
+          <span>{recruitDate}</span>
+        </PostMetaData>
+      </RecruitPostContents>
       <PostWriter>
         <ProfileImage
           size="24px"
@@ -84,7 +82,7 @@ export const RecruitPostWrapper = styled.div`
   background-color: ${({ theme }) => theme.background};
 `;
 
-const RecruitPostContents = styled.a`
+const RecruitPostContents = styled(Link)`
   height: 100%; 
   display: flex;
   flex-direction: column;

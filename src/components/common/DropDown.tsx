@@ -30,19 +30,17 @@ function DropDown({
             <div className="user-name">{name}</div>
             <div className="user-email">{email}</div>
           </UserState>
-          <Link href="/myinfo/setting" passHref>
-            <MyInfoMenu>내 정보</MyInfoMenu>
-          </Link>
-          <Link href="/alarm" passHref>
-            <MyInfoMenu className="my-alarm">
-              <div>내 알림</div>
-              {!!numberAlertAlarms && (
-                <AlertAlarmStatus data-testid="dropdown-alarm-status">
-                  {numberAlertAlarms}
-                </AlertAlarmStatus>
-              )}
-            </MyInfoMenu>
-          </Link>
+          <MyInfoMenu href="/myinfo/setting">
+            내 정보
+          </MyInfoMenu>
+          <MyInfoMenu href="/alarm" className="my-alarm">
+            <div>내 알림</div>
+            {!!numberAlertAlarms && (
+              <AlertAlarmStatus data-testid="dropdown-alarm-status">
+                {numberAlertAlarms}
+              </AlertAlarmStatus>
+            )}
+          </MyInfoMenu>
         </div>
         <Pipe />
         <div className="content-wrapper">
@@ -116,7 +114,7 @@ const MenuContent = styled.div`
   ${navItem}
 `;
 
-const MyInfoMenu = styled.a`
+const MyInfoMenu = styled(Link)`
   ${navItem}
   display: block;
 

@@ -57,6 +57,7 @@ module.exports = withSentryConfig(
     dest: 'public',
     maximumFileSizeToCacheInBytes: 7000000,
     disable: process.env.NODE_ENV === 'development',
+    buildExcludes: [/_buildManifest\.js$/],
     runtimeCaching,
   })(nextConfig)),
   sentryWebpackPluginOptions,

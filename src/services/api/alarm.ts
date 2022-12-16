@@ -39,7 +39,7 @@ export const getUserAlarms = async (userUid: string, {
     const response = await getDocs(getQuery);
     const lastVisible = response.docs[response.docs.length - 1];
 
-    const alarms = await Promise.all([...response.docs.map(formatAlarm)]);
+    const alarms = await Promise.all(response.docs.map(formatAlarm));
 
     return {
       items: alarms,
@@ -58,7 +58,7 @@ export const getUserAlarms = async (userUid: string, {
   const response = await getDocs(getQuery);
 
   if (isLengthLessThanPerPage(response)) {
-    const alarms = await Promise.all([...response.docs.map(formatAlarm)]);
+    const alarms = await Promise.all(response.docs.map(formatAlarm));
 
     return {
       items: alarms,
@@ -66,7 +66,7 @@ export const getUserAlarms = async (userUid: string, {
   }
 
   const lastVisible = response.docs[response.docs.length - 1];
-  const alarms = await Promise.all([...response.docs.map(formatAlarm)]);
+  const alarms = await Promise.all(response.docs.map(formatAlarm));
 
   return {
     items: alarms,
