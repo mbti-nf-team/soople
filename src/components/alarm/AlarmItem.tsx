@@ -54,30 +54,33 @@ function AlarmItem({ alarm, onClick }: Props, ref: ForwardedRef<HTMLAnchorElemen
   const alarmUrl = type === 'applied' ? `/detail/${group.groupId}/applicants?applicant=${applicant?.uid}` : `/detail/${group.groupId}`;
 
   return (
-    <Link href={alarmUrl} passHref legacyBehavior>
-      <AlarmItemWrapper ref={ref} isViewed={isViewed} onClick={handleClick}>
-        <AlarmItemThumbnail>
-          {alarmThumbnail[type]}
-        </AlarmItemThumbnail>
-        <AlarmItemContents>
-          <AlarmItemMetaData>
-            <div>
-              {group.title}
-            </div>
-            <div className="date-status">{dayjs(createdAt).fromNow()}</div>
-          </AlarmItemMetaData>
+    <AlarmItemWrapper
+      href={alarmUrl}
+      isViewed={isViewed}
+      onClick={handleClick}
+      ref={ref}
+    >
+      <AlarmItemThumbnail>
+        {alarmThumbnail[type]}
+      </AlarmItemThumbnail>
+      <AlarmItemContents>
+        <AlarmItemMetaData>
           <div>
-            {alarmMessage[type]}
+            {group.title}
           </div>
-        </AlarmItemContents>
-      </AlarmItemWrapper>
-    </Link>
+          <div className="date-status">{dayjs(createdAt).fromNow()}</div>
+        </AlarmItemMetaData>
+        <div>
+          {alarmMessage[type]}
+        </div>
+      </AlarmItemContents>
+    </AlarmItemWrapper>
   );
 }
 
 export default memo(forwardRef<HTMLAnchorElement, Props>(AlarmItem));
 
-const AlarmItemWrapper = styled.a<{ isViewed: boolean; }>`
+const AlarmItemWrapper = styled(Link, { shouldForwardProp: (prop) => prop !== 'isViewed' })<{ isViewed: boolean; }>`
   display: flex;
   flex-direction: row;
   padding: 24px 16px 24px 16px;

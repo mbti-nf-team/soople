@@ -45,39 +45,38 @@ function MyGroup({ group }: Props, ref: ForwardedRef<HTMLAnchorElement>): ReactE
   const dateStatus = recruitStatus(`${dayjs(currentTime).to(dayjs(recruitmentEndDate))} 마감`)[status];
 
   return (
-    <Link href={`/detail/${groupId}`} passHref legacyBehavior>
-      <MyGroupWrapper
-        role="listitem"
-        ref={ref}
-      >
-        <div>
-          <MyGroupContents>
-            <div className="group-title">{title}</div>
-            <div className="group-content">
-              {shortDescription || removeAllHtml(content)}
-            </div>
-          </MyGroupContents>
-          <GroupMetaData status={status}>
-            <div className="date-status" data-testid="date-status">{dateStatus}</div>
-            <Divider />
-            <div className="number-applied">{numberApplied}</div>
-            <Divider />
-            <div>{dayjs(createdAt).format('YYYY년 MM월 DD일')}</div>
-          </GroupMetaData>
-        </div>
-        {thumbnail && (
-          <ThumbnailWrapper>
-            <Thumbnail src={thumbnail} alt="thumbnail" />
-          </ThumbnailWrapper>
-        )}
-      </MyGroupWrapper>
-    </Link>
+    <MyGroupLinkItem
+      href={`/detail/${groupId}`}
+      role="listitem"
+      ref={ref}
+    >
+      <div>
+        <MyGroupContents>
+          <div className="group-title">{title}</div>
+          <div className="group-content">
+            {shortDescription || removeAllHtml(content)}
+          </div>
+        </MyGroupContents>
+        <GroupMetaData status={status}>
+          <div className="date-status" data-testid="date-status">{dateStatus}</div>
+          <Divider />
+          <div className="number-applied">{numberApplied}</div>
+          <Divider />
+          <div>{dayjs(createdAt).format('YYYY년 MM월 DD일')}</div>
+        </GroupMetaData>
+      </div>
+      {thumbnail && (
+      <ThumbnailWrapper>
+        <Thumbnail src={thumbnail} alt="thumbnail" />
+      </ThumbnailWrapper>
+      )}
+    </MyGroupLinkItem>
   );
 }
 
 export default memo(forwardRef<HTMLAnchorElement, Props>(MyGroup));
 
-const MyGroupWrapper = styled.a`
+const MyGroupLinkItem = styled(Link)`
   ${mq({
     flexDirection: ['column', 'row'],
   })};

@@ -14,7 +14,6 @@ import AlarmListContainer from './AlarmListContainer';
 jest.mock('@/hooks/api/alarm/useInfiniteFetchAlarms');
 jest.mock('@/hooks/api/alarm/useUpdateAlarmViewed');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
-jest.mock('next/link', () => ({ children }: any) => children);
 
 describe('AlarmListContainer', () => {
   const mutate = jest.fn();

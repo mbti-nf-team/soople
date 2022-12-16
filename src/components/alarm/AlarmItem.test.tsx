@@ -4,8 +4,6 @@ import ALARM_FIXTURE from '../../../fixtures/alarm';
 
 import AlarmItem from './AlarmItem';
 
-jest.mock('next/link', () => ({ children }: any) => children);
-
 describe('AlarmItem', () => {
   const handleClick = jest.fn();
 

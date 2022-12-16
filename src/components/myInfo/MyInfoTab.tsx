@@ -19,22 +19,34 @@ interface Props {
 function MyInfoTab({ activeTab, numberAppliedGroups, numberRecruitedGroups }: Props): ReactElement {
   return (
     <MyInfoNav>
-      <Link href="/myinfo/setting" passHref legacyBehavior>
-        <StyledLink pathName="setting" activeTab={activeTab}>내 정보 수정</StyledLink>
-      </Link>
-      <Link href="/myinfo/recruited" passHref legacyBehavior>
-        <StyledLink pathName="recruited" activeTab={activeTab}>{`모집한 팀 ${numberRecruitedGroups}`}</StyledLink>
-      </Link>
-      <Link href="/myinfo/applied" passHref legacyBehavior>
-        <StyledLink pathName="applied" activeTab={activeTab}>{`신청한 팀 ${numberAppliedGroups}`}</StyledLink>
-      </Link>
+      <MyInfoNavItem
+        href="/myinfo/setting"
+        pathName="setting"
+        activeTab={activeTab}
+      >
+        내 정보 수정
+      </MyInfoNavItem>
+      <MyInfoNavItem
+        href="/myinfo/recruited"
+        pathName="recruited"
+        activeTab={activeTab}
+      >
+        {`모집한 팀 ${numberRecruitedGroups}`}
+      </MyInfoNavItem>
+      <MyInfoNavItem
+        href="/myinfo/applied"
+        pathName="applied"
+        activeTab={activeTab}
+      >
+        {`신청한 팀 ${numberAppliedGroups}`}
+      </MyInfoNavItem>
     </MyInfoNav>
   );
 }
 
 export default MyInfoTab;
 
-const StyledLink = styled.a<{ pathName: ActiveMyInfoTab; activeTab: ActiveMyInfoTab; }>`
+const MyInfoNavItem = styled(Link, { shouldForwardProp: (prop) => prop !== 'pathName' && prop !== 'activeTab' })<{ pathName: ActiveMyInfoTab; activeTab: ActiveMyInfoTab; }>`
   transition: border-color .2s ease-in-out;
   ${mq({
     padding: ['11px 12px', '12px'],

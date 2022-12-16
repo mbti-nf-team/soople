@@ -32,15 +32,14 @@ function Button({
 
   if (href) {
     return (
-      <Link href={href} passHref legacyBehavior>
-        <StyledLink
-          color={color}
-          size={size}
-          {...htmlProps}
-        >
-          {children}
-        </StyledLink>
-      </Link>
+      <StyledLink
+        href={href}
+        color={color}
+        size={size}
+        {...htmlProps}
+      >
+        {children}
+      </StyledLink>
     );
   }
 
