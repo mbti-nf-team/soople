@@ -54,7 +54,7 @@ function AlarmItem({ alarm, onClick }: Props, ref: ForwardedRef<HTMLAnchorElemen
   const alarmUrl = type === 'applied' ? `/detail/${group.groupId}/applicants?applicant=${applicant?.uid}` : `/detail/${group.groupId}`;
 
   return (
-    <Link href={alarmUrl} passHref>
+    <Link href={alarmUrl} passHref legacyBehavior>
       <AlarmItemWrapper ref={ref} isViewed={isViewed} onClick={handleClick}>
         <AlarmItemThumbnail>
           {alarmThumbnail[type]}

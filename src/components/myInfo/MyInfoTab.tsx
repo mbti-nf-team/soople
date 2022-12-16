@@ -19,13 +19,13 @@ interface Props {
 function MyInfoTab({ activeTab, numberAppliedGroups, numberRecruitedGroups }: Props): ReactElement {
   return (
     <MyInfoNav>
-      <Link href="/myinfo/setting" passHref>
+      <Link href="/myinfo/setting" passHref legacyBehavior>
         <StyledLink pathName="setting" activeTab={activeTab}>내 정보 수정</StyledLink>
       </Link>
-      <Link href="/myinfo/recruited" passHref>
+      <Link href="/myinfo/recruited" passHref legacyBehavior>
         <StyledLink pathName="recruited" activeTab={activeTab}>{`모집한 팀 ${numberRecruitedGroups}`}</StyledLink>
       </Link>
-      <Link href="/myinfo/applied" passHref>
+      <Link href="/myinfo/applied" passHref legacyBehavior>
         <StyledLink pathName="applied" activeTab={activeTab}>{`신청한 팀 ${numberAppliedGroups}`}</StyledLink>
       </Link>
     </MyInfoNav>

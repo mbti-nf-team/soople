@@ -45,7 +45,7 @@ function MyGroup({ group }: Props, ref: ForwardedRef<HTMLAnchorElement>): ReactE
   const dateStatus = recruitStatus(`${dayjs(currentTime).to(dayjs(recruitmentEndDate))} 마감`)[status];
 
   return (
-    <Link href={`/detail/${groupId}`} passHref>
+    <Link href={`/detail/${groupId}`} passHref legacyBehavior>
       <MyGroupWrapper
         role="listitem"
         ref={ref}

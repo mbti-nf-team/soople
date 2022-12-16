@@ -30,10 +30,10 @@ function DropDown({
             <div className="user-name">{name}</div>
             <div className="user-email">{email}</div>
           </UserState>
-          <Link href="/myinfo/setting" passHref>
+          <Link href="/myinfo/setting" passHref legacyBehavior>
             <MyInfoMenu>내 정보</MyInfoMenu>
           </Link>
-          <Link href="/alarm" passHref>
+          <Link href="/alarm" passHref legacyBehavior>
             <MyInfoMenu className="my-alarm">
               <div>내 알림</div>
               {!!numberAlertAlarms && (

@@ -32,7 +32,7 @@ function Button({
 
   if (href) {
     return (
-      <Link href={href} passHref>
+      <Link href={href} passHref legacyBehavior>
         <StyledLink
           color={color}
           size={size}
@@ -158,7 +158,7 @@ const ButtonWrapper = ({ color, size, theme }: StyledButtonProps) => css`
   }
 `;
 
-const StyledLink = styled.a<StyledButtonProps>`
+const StyledLink = styled(Link)<StyledButtonProps>`
   ${ButtonWrapper}
 `;
 

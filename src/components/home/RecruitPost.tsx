@@ -32,7 +32,7 @@ function RecruitPost({ group }: Props, ref: ForwardedRef<HTMLDivElement>): React
 
   return (
     <RecruitPostWrapper ref={ref}>
-      <Link href={`/detail/${groupId}`} passHref>
+      <Link href={`/detail/${groupId}`} passHref legacyBehavior>
         <RecruitPostContents>
           <PostPreview>
             {thumbnail && (

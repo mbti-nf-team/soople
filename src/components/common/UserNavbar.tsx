@@ -44,15 +44,13 @@ function UserNavbar({ user, signOut }: Props): ReactElement {
         팀 모집하기
       </Button>
       {!isMobile && (
-        <Link href="/alarm" passHref>
-          <AlarmLink className="alarm-icon">
-            {!isEmpty(alertAlarms) && (
-              <AlertAlarmStatus data-testid="alarm-status">
-                {alertAlarms.length}
-              </AlertAlarmStatus>
-            )}
-            <AlarmIcon color={theme.accent6} />
-          </AlarmLink>
+        <Link href="/alarm" className="alarm-icon">
+          {!isEmpty(alertAlarms) && (
+            <AlertAlarmStatus data-testid="alarm-status">
+              {alertAlarms.length}
+            </AlertAlarmStatus>
+          )}
+          <AlarmIcon color={theme.accent6} />
         </Link>
       )}
       <div className="profile-dropdown-wrapper" ref={userIconRef}>
@@ -86,6 +84,7 @@ const UserNavbarWrapper = styled.div<{ isMobile: boolean; }>`
 
   .alarm-icon {
     margin: 0 22px;
+    position: relative;
   }
 
   .profile-dropdown-wrapper {
@@ -95,10 +94,6 @@ const UserNavbarWrapper = styled.div<{ isMobile: boolean; }>`
 
     position: relative;
   }
-`;
-
-const AlarmLink = styled.a`
-  position: relative;
 `;
 
 const AlertAlarmStatus = styled.div`

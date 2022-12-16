@@ -33,10 +33,8 @@ function HeaderWrapper({
     <>
       <HeaderBlock hasBackground={hasBackground} isScrollTop={isScrollTop} data-testid={testId}>
         <HeaderContents>
-          <Link href="/" passHref>
-            <a>
-              <LogoIcon onClick={onClickLogo} data-testid="logo-icon" />
-            </a>
+          <Link href="/">
+            <LogoIcon onClick={onClickLogo} data-testid="logo-icon" />
           </Link>
           {children}
         </HeaderContents>
