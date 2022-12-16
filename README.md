@@ -1,7 +1,7 @@
 # <img src="./images/soople.png" width="30px" height="30px"> soople
 
 <a href="https://github.com/jenny-harang/soople/actions/workflows/ci.yml">
-  <img src="https://img.shields.io/github/workflow/status/jenny-harang/soople/CI?label=CI&logo=GitHub&style=flat-square" />
+  <img src="https://img.shields.io/github/actions/workflow/status/jenny-harang/soople/ci.yml?branch=main&label=CI&logo=GitHub&style=flat-square" />
 </a>
 
 <a href="https://codecov.io/gh/jenny-harang/soople">
