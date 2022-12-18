@@ -29,7 +29,7 @@ describe('DetailHeaderSection', () => {
         },
       });
 
-      expect(screen.getByTestId('default-profile-icon')).toHaveAttribute('width', '36px');
+      expect(screen.getByTestId('default-profile-icon')).toHaveAttribute('width', '36');
     });
   });
 

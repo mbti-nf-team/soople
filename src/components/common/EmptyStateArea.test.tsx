@@ -16,7 +16,7 @@ describe('EmptyStateArea', () => {
   ));
 
   context('이미지 url이 존재하는 경우', () => {
-    given('imageUrl', () => 'test.com');
+    given('imageUrl', () => '/test.com');
 
     it('이미지가 나타나야만 한다', () => {
       renderEmptyStateArea();

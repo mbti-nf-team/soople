@@ -6,6 +6,8 @@ import { PlusCircle } from 'react-feather';
 import ReactImageUploading, { ImageListType } from 'react-images-uploading';
 import { useEffectOnce } from 'react-use';
 
+import Image from 'next/image';
+
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { nanoid } from 'nanoid';
@@ -17,7 +19,7 @@ import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { body2Font, subtitle1Font } from '@/styles/fontStyles';
 import mq from '@/styles/responsive';
-import { isEmpty } from '@/utils/utils';
+import { isEmpty, stringToExcludeNull } from '@/utils/utils';
 
 import CloseSvg from '../../assets/icons/close.svg';
 import HelperMessage from '../common/HelperMessage';
@@ -126,7 +128,12 @@ function ThumbnailUpload(): ReactElement {
                       ) => handleRemoveThumbnail(e, () => onImageRemove(index))}
                       data-testid="close-icon"
                     />
-                    <ThumbnailImage src={image.dataURL} alt="thumbnail" />
+                    <ThumbnailImage
+                      fill
+                      src={stringToExcludeNull(image.dataURL)}
+                      alt="thumbnail"
+                      sizes="(max-width: 500px) 100vw, 50vw"
+                    />
                   </ThumbnailImageWrapper>
                 ))}
               </>
@@ -183,7 +190,7 @@ const ThumbnailUploadBox = styled.div<{ isError?: boolean; }>`
   border-radius: 8px;
 `;
 
-const ThumbnailImage = styled.img`
+const ThumbnailImage = styled(Image)`
   width: 100%;
   height: 100%;
   display: block;
@@ -203,4 +210,5 @@ const CloseIcon = styled(CloseSvg)`
   position: absolute;
   top: 12px;
   right: 12px;
+  z-index: 1;
 `;

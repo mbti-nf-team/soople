@@ -34,7 +34,7 @@ function MembersViewModal({ isVisible, onClose }: Props) {
       <MembersListWrapper>
         {confirmedApplicants.map(({ uid, applicant }) => (
           <MemberWrapper key={uid}>
-            <ProfileImage src={applicant.image} size={isMobile ? '36px' : '48px'} />
+            <ProfileImage src={applicant.image} size={isMobile ? '36' : '48'} />
             <MemberInformation>
               <div>{emptyAThenB(applicant.email, applicant.name)}</div>
               <MemberMetaData>

@@ -24,7 +24,7 @@ function EmptyStateArea({
   return (
     <EmptyStateWrapper marginTop={marginTop}>
       <div className="empty-state-image">
-        {imageUrl && <img src={imageUrl} alt={imageName} data-testid="empty-state-image" />}
+        {imageUrl && <img src={imageUrl} alt={`${imageName}`} data-testid="empty-state-image" />}
         {svg}
       </div>
       <EmptyStateText>

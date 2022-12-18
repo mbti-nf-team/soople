@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { Eye as ViewsIcon } from 'react-feather';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { useTheme } from '@emotion/react';
@@ -36,7 +37,16 @@ function RecruitPost({ group }: Props, ref: ForwardedRef<HTMLDivElement>): React
         <PostPreview>
           {thumbnail && (
             <ThumbnailWrapper>
-              <Thumbnail src={thumbnail} alt="thumbnail" />
+              <Thumbnail
+                fill
+                blurDataURL={thumbnail}
+                placeholder="blur"
+                src={thumbnail}
+                alt="thumbnail"
+                sizes="(max-width: 650px) 100vw,
+                (max-width: 850px) 50vw,
+                33vw"
+              />
             </ThumbnailWrapper>
           )}
           <Title>{title}</Title>
@@ -57,7 +67,7 @@ function RecruitPost({ group }: Props, ref: ForwardedRef<HTMLDivElement>): React
       </RecruitPostContents>
       <PostWriter>
         <ProfileImage
-          size="24px"
+          size="24"
           src={writer.image}
         />
         <span>{emptyAThenB(writer.email, writer.name)}</span>
@@ -137,12 +147,7 @@ export const PostWriter = styled.div`
   }
 `;
 
-const Thumbnail = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
+const Thumbnail = styled(Image)`
   display: block;
   object-fit: cover;
 `;

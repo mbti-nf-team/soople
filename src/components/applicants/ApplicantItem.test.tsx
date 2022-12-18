@@ -36,7 +36,7 @@ describe('ApplicantItem', () => {
     it('프로필 이미지 크기는 "36px"이어야만 한다', () => {
       renderApplicantItem();
 
-      expect(screen.getByTestId('default-profile-icon')).toHaveAttribute('width', '36px');
+      expect(screen.getByTestId('default-profile-icon')).toHaveAttribute('width', '36');
     });
   });
 
