@@ -20,7 +20,7 @@ describe('MyGroup', () => {
   context('썸네일과 짧은 소개글이 존재하는 경우', () => {
     given('group', () => ({
       ...FIXTURE_GROUP,
-      thumbnail: 'www.test.com',
+      thumbnail: 'http://www.test.com',
       shortDescription: '짧은 소개글',
     }));
 

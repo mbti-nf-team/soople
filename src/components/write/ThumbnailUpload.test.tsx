@@ -117,7 +117,7 @@ describe('ThumbnailUpload', () => {
     const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
 
     context('thumbnail이 존재하는 경우', () => {
-      const thumbnailUrl = 'www.test.com';
+      const thumbnailUrl = 'http://www.test.com';
 
       given('thumbnail', () => thumbnailUrl);
 

@@ -1,17 +1,19 @@
 import React, { ReactElement } from 'react';
 
+import Image from 'next/image';
+
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 interface Props {
   src?: string | null;
   alt?: string;
-  size?: string;
+  size?: number | `${number}`;
   onClick?: () => void;
 }
 
 function ProfileImage({
-  src, alt = '프로필 이미지', size = '32px', onClick,
+  src, alt = '프로필 이미지', size = 32, onClick,
 }: Props): ReactElement {
   if (!src) {
     return (
@@ -47,7 +49,7 @@ function ProfileImage({
 
 export default ProfileImage;
 
-const ProfileAvatarImage = styled.img`
+const ProfileAvatarImage = styled(Image)`
   border-radius: 70%;
   overflow: hidden;
   ${({ onClick }) => onClick && css`

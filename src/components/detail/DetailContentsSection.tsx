@@ -1,5 +1,6 @@
 import React, { memo, ReactElement } from 'react';
 
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
@@ -67,7 +68,17 @@ function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
       )}
       {thumbnail && (
         <div className="post-thumbnail-wrapper">
-          <img src={thumbnail} alt="글 썸네일 이미지" />
+          <Image
+            priority
+            src={thumbnail}
+            placeholder="blur"
+            blurDataURL={thumbnail}
+            className="post-thumbnail"
+            alt="글 썸네일 이미지"
+            width={0}
+            height={0}
+            sizes="100vw"
+          />
         </div>
       )}
       <DetailContentWrapper dangerouslySetInnerHTML={{ __html: convertedCleanHtml }} />
@@ -139,13 +150,12 @@ const DetailContentsWrapper = styled.div`
   margin-bottom: 24px;
 
   & > .post-thumbnail-wrapper {
-    width: 100%;
+    margin: 2rem auto;
 
-    & > img {
-      display: block;
-      margin: 2rem auto;
-      max-width: 100%;
-      height: auto;
+    & > .post-thumbnail {
+      object-fit: contain;
+      width: 100%; 
+      height: auto; 
       max-height: 500px;
     }
   }

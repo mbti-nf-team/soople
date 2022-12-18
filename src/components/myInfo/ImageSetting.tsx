@@ -41,7 +41,7 @@ function ImageSetting({
 
   return (
     <ImageSettingWrapper>
-      <ProfileImage src={imageUrl} size="96px" alt="프로필 이미지" />
+      <ProfileImage src={imageUrl} size="96" alt="프로필 이미지" />
       <Button
         size="small"
         color="primary"

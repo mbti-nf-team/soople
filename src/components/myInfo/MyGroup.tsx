@@ -2,6 +2,7 @@ import React, {
   ForwardedRef, forwardRef, memo, ReactElement,
 } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { css } from '@emotion/react';
@@ -67,7 +68,14 @@ function MyGroup({ group }: Props, ref: ForwardedRef<HTMLAnchorElement>): ReactE
       </div>
       {thumbnail && (
       <ThumbnailWrapper>
-        <Thumbnail src={thumbnail} alt="thumbnail" />
+        <Thumbnail
+          fill
+          src={thumbnail}
+          alt="thumbnail"
+          blurDataURL={thumbnail}
+          placeholder="blur"
+          sizes="(max-width: 500px) 100vw, 33vw"
+        />
       </ThumbnailWrapper>
       )}
     </MyGroupLinkItem>
@@ -130,7 +138,7 @@ const GroupMetaData = styled.div<{ status: RecruitmentStatus; }>`
   }
 `;
 
-const Thumbnail = styled.img`
+const Thumbnail = styled(Image)`
   position: absolute;
   top: 0px;
   left: 0px;

@@ -31,7 +31,7 @@ function ApplicantItem({ applicationForm, onToggle }: Props): ReactElement {
     <ApplicantItemWrapper>
       <ApplicantSubInformation>
         <ApplicantProfile>
-          <ProfileImage size={isMobile ? '36px' : '48px'} src={image} />
+          <ProfileImage size={isMobile ? '36' : '48'} src={image} />
           <ApplicantTextWrapper>
             <span>{emptyAThenB(email, name)}</span>
             <MetadataWrapper>

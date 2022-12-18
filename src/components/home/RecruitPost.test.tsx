@@ -14,7 +14,7 @@ describe('RecruitPost', () => {
   context('썸네일이 존재하는 경우', () => {
     given('group', () => ({
       ...GROUP_FIXTURE,
-      thumbnail: 'www.test.com',
+      thumbnail: 'http://www.test.com',
     }));
 
     it('썸네일이 나타나야만 한다', () => {
@@ -42,7 +42,7 @@ describe('RecruitPost', () => {
 
     given('group', () => ({
       ...GROUP_FIXTURE,
-      thumbnail: 'www.test.com',
+      thumbnail: 'http://www.test.com',
       shortDescription,
     }));
 

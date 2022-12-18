@@ -37,7 +37,7 @@ function DetailHeaderSection({ group, children }: PropsWithChildren<Props>): Rea
         <WriterProfile>
           <ProfileImage
             src={writer.image}
-            size={isMobile ? '36px' : '48px'}
+            size={isMobile ? '36' : '48'}
           />
           <WriterProfileTextWrapper>
             <span>
