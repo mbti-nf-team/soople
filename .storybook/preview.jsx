@@ -5,12 +5,9 @@ import { Global, ThemeProvider } from '@emotion/react';
 import { setGlobalStyles } from '../src/styles/GlobalStyles';
 import { lightTheme } from '../src/styles/theme';
 
-const OriginalNextImage = NextImage.default;
-
-Object.defineProperty(NextImage, "default", {
-  configurable: true,
-  value: (props) => <OriginalNextImage {...props} unoptimized />,
-});
+NextImage.defaultProps = {
+  unoptimized: true,
+};
 
 export const decorators = [
   (Story) => (
