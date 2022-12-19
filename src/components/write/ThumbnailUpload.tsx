@@ -19,6 +19,7 @@ import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { body2Font, subtitle1Font } from '@/styles/fontStyles';
 import mq from '@/styles/responsive';
+import { shimmer, toBase64 } from '@/utils/imageBlur';
 import { isEmpty, stringToExcludeNull } from '@/utils/utils';
 
 import CloseSvg from '../../assets/icons/close.svg';
@@ -131,6 +132,8 @@ function ThumbnailUpload(): ReactElement {
                     <ThumbnailImage
                       fill
                       src={stringToExcludeNull(image.dataURL)}
+                      placeholder="blur"
+                      blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(100, 100))}`}
                       alt="thumbnail"
                       sizes="(max-width: 500px) 100vw, 50vw"
                     />

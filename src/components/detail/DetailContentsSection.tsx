@@ -71,8 +71,6 @@ function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
           <Image
             priority
             src={thumbnail}
-            placeholder="blur"
-            blurDataURL={thumbnail}
             className="post-thumbnail"
             alt="글 썸네일 이미지"
             width={0}
