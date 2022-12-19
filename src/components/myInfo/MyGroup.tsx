@@ -18,6 +18,7 @@ import {
 } from '@/styles/fontStyles';
 import mq, { mobileMediaQuery } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
+import { shimmer, toBase64 } from '@/utils/imageBlur';
 
 interface Props {
   group: Group;
@@ -72,8 +73,8 @@ function MyGroup({ group }: Props, ref: ForwardedRef<HTMLAnchorElement>): ReactE
           fill
           src={thumbnail}
           alt="thumbnail"
-          blurDataURL={thumbnail}
           placeholder="blur"
+          blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(100, 100))}`}
           sizes="(max-width: 500px) 100vw, 33vw"
         />
       </ThumbnailWrapper>

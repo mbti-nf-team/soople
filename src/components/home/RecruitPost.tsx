@@ -15,6 +15,7 @@ import Divider from '@/styles/Divider';
 import { body2Font, h4Font, subtitle1Font } from '@/styles/fontStyles';
 import { mq2 } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
+import { shimmer, toBase64 } from '@/utils/imageBlur';
 import { emptyAThenB } from '@/utils/utils';
 
 import ProfileImage from '../common/ProfileImage';
@@ -39,9 +40,9 @@ function RecruitPost({ group }: Props, ref: ForwardedRef<HTMLDivElement>): React
             <ThumbnailWrapper>
               <Thumbnail
                 fill
-                blurDataURL={thumbnail}
                 placeholder="blur"
                 src={thumbnail}
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(100, 100))}`}
                 alt="thumbnail"
                 sizes="(max-width: 650px) 100vw,
                 (max-width: 850px) 50vw,
