@@ -9,15 +9,17 @@ interface Props {
   src?: string | null;
   alt?: string;
   size?: number | `${number}`;
+  priority?: boolean;
   onClick?: () => void;
 }
 
 function ProfileImage({
-  src, alt = '프로필 이미지', size = 32, onClick,
+  src, alt = '프로필 이미지', size = 32, onClick, priority = false,
 }: Props): ReactElement {
   if (!src) {
     return (
       <ProfileAvatarImage
+        priority={priority}
         src="/img_avatar_default.png"
         alt={alt}
         width={size}
@@ -34,6 +36,7 @@ function ProfileImage({
 
   return (
     <ProfileAvatarImage
+      priority={priority}
       src={src}
       alt={alt}
       width={size}
