@@ -11,8 +11,6 @@ import { groupsConditionState } from '@/recoil/group/atom';
 import { fetchGroups } from '@/services/api/group';
 import { checkEmpty } from '@/utils/utils';
 
-import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
-
 function useInfiniteFetchGroups() {
   const groupsCondition = useRecoilValue(groupsConditionState);
 
@@ -24,17 +22,10 @@ function useInfiniteFetchGroups() {
   }), {
     getNextPageParam: ({ lastUid }) => lastUid,
     suspense: true,
+    useErrorBoundary: true,
   });
 
-  const {
-    isError, error, hasNextPage, fetchNextPage,
-  } = query;
-
-  useCatchFirestoreErrorWithToast({
-    isError,
-    error,
-    defaultErrorMessage: '팀 리스트를 불러오는데 실패했어요! 다시 시도해주세요!',
-  });
+  const { hasNextPage, fetchNextPage } = query;
 
   const refState = useIntersectionObserver<HTMLDivElement>({
     intersectionOptions: {

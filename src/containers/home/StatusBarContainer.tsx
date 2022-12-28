@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 
+import ErrorBoundary from '@/components/common/ErrorBoundary';
 import FilterBar from '@/components/home/FilterBar';
 import TagsBarSkeletonLoader from '@/components/home/skeleton/TagsBarSkeletonLoader';
 import useResponsive from '@/hooks/useResponsive';
@@ -56,9 +57,11 @@ function StatusBarContainer(): ReactElement {
         {(isClient && !isMobile) && (
           <>
             <StyledDivider />
-            <Suspense fallback={<TagsBarSkeletonLoader />}>
-              <TagsBar />
-            </Suspense>
+            <ErrorBoundary errorMessage="태그를 불러오는데 실패했어요!">
+              <Suspense fallback={<TagsBarSkeletonLoader />}>
+                <TagsBar />
+              </Suspense>
+            </ErrorBoundary>
           </>
         )}
       </div>

@@ -7,6 +7,11 @@ import InjectMockProviders from '@/test/InjectMockProviders';
 
 import StatusBarContainer from './StatusBarContainer';
 
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    replace: jest.fn(),
+  })),
+}));
 jest.mock('@/hooks/api/tagsCount/useFetchTagsCount');
 jest.mock('react-toastify', () => ({
   toast: {
