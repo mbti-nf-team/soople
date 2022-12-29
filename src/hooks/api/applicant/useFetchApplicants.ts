@@ -10,7 +10,9 @@ import { checkEmpty } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
-function useFetchApplicants({ suspense }: { suspense: boolean; }) {
+function useFetchApplicants({
+  suspense, useErrorBoundary = false,
+}: { suspense: boolean; useErrorBoundary?: boolean; }) {
   const router = useRouter();
 
   const { id } = router.query as GroupQuery;
@@ -18,6 +20,7 @@ function useFetchApplicants({ suspense }: { suspense: boolean; }) {
   const query = useQuery<Applicant[], FirestoreError>(['applicants', id], () => getApplicants(id), {
     enabled: !!id,
     suspense,
+    useErrorBoundary,
   });
 
   const { isError, error, data } = query;
