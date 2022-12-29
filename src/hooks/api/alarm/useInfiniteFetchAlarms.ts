@@ -21,6 +21,7 @@ function useInfiniteFetchAlarms({ userUid }: { userUid?: string }) {
     getNextPageParam: ({ lastUid }) => lastUid,
     enabled: !!userUid,
     suspense: true,
+    useErrorBoundary: true,
   });
 
   const {

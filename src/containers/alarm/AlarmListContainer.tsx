@@ -6,7 +6,7 @@ import useUpdateAlarmViewed from '@/hooks/api/alarm/useUpdateAlarmViewed';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 
 function AlarmListContainer(): ReactElement {
-  const { data: user } = useFetchUserProfile({ suspense: true });
+  const { data: user } = useFetchUserProfile({ suspense: true, useErrorBoundary: true });
   const { query, refState } = useInfiniteFetchAlarms({ userUid: user?.uid });
   const { mutate: updateAlarm } = useUpdateAlarmViewed();
 
