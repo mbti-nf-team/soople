@@ -26,6 +26,7 @@ function useInfiniteFetchUserRecruitedGroups({ userUid, perPage }: UserRecruited
       getNextPageParam: ({ lastUid }) => lastUid,
       enabled: !!userUid && !!perPage,
       suspense: true,
+      useErrorBoundary: true,
     },
   );
 
