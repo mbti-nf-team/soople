@@ -11,8 +11,6 @@ import { Comment } from '@/models/group';
 import { getGroupComments } from '@/services/api/comment';
 import { checkEmpty } from '@/utils/utils';
 
-import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
-
 function useInfiniteFetchComments({ perPage }: InfiniteRequest) {
   const router = useRouter();
 
@@ -28,18 +26,11 @@ function useInfiniteFetchComments({ perPage }: InfiniteRequest) {
       getNextPageParam: ({ lastUid }) => lastUid,
       enabled: !!id && !!perPage,
       suspense: true,
+      useErrorBoundary: true,
     },
   );
 
-  const {
-    isError, error, hasNextPage, fetchNextPage,
-  } = query;
-
-  useCatchFirestoreErrorWithToast({
-    isError,
-    error,
-    defaultErrorMessage: '해당 글의 댓글을 불러오는데 실패하였습니다.',
-  });
+  const { hasNextPage, fetchNextPage } = query;
 
   const refState = useIntersectionObserver<HTMLDivElement>({
     intersectionOptions: {

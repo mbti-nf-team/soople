@@ -17,7 +17,7 @@ import ApplicantItem from './ApplicantItem';
 
 function ApplicationStatus(): ReactElement {
   const { query, back } = useRouter();
-  const { data: applicants } = useFetchApplicants({ suspense: true });
+  const { data: applicants } = useFetchApplicants({ suspense: true, useErrorBoundary: true });
   const { mutate } = useUpdateApplicant();
 
   const onToggleConfirm = useCallback((applicant: Applicant) => mutate({

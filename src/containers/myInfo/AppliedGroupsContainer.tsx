@@ -6,7 +6,7 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useInfiniteFetchUserAppliedGroups from '@/hooks/api/group/useInfiniteFetchUserAppliedGroups';
 
 function AppliedGroupsContainer(): ReactElement {
-  const { data: user } = useFetchUserProfile({ suspense: true });
+  const { data: user } = useFetchUserProfile({ suspense: true, useErrorBoundary: true });
   const { query, refState } = useInfiniteFetchUserAppliedGroups({
     userUid: user?.uid,
     perPage: 10,

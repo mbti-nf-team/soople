@@ -9,8 +9,6 @@ import { Group } from '@/models/group';
 import { getUserAppliedGroups } from '@/services/api/applicants';
 import { checkEmpty } from '@/utils/utils';
 
-import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
-
 interface UserAppliedGroupsRequest extends InfiniteRequest {
   userUid?: string;
 }
@@ -26,18 +24,11 @@ function useInfiniteFetchUserAppliedGroups({ userUid, perPage }: UserAppliedGrou
       getNextPageParam: ({ lastUid }) => lastUid,
       enabled: !!userUid && !!perPage,
       suspense: true,
+      useErrorBoundary: true,
     },
   );
 
-  const {
-    error, isError, hasNextPage, fetchNextPage,
-  } = query;
-
-  useCatchFirestoreErrorWithToast({
-    error,
-    isError,
-    defaultErrorMessage: '신청한 팀을 불러오는데 실패했어요!',
-  });
+  const { hasNextPage, fetchNextPage } = query;
 
   const refState = useIntersectionObserver<HTMLAnchorElement>({
     intersectionOptions: {
