@@ -9,8 +9,6 @@ import { Alarm } from '@/models/alarm';
 import { getUserAlarms } from '@/services/api/alarm';
 import { checkEmpty } from '@/utils/utils';
 
-import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
-
 function useInfiniteFetchAlarms({ userUid }: { userUid?: string }) {
   const query = useInfiniteQuery<InfiniteResponse<Alarm>, FirestoreError>(['alarms'], ({
     pageParam,
@@ -24,15 +22,7 @@ function useInfiniteFetchAlarms({ userUid }: { userUid?: string }) {
     useErrorBoundary: true,
   });
 
-  const {
-    isError, error, hasNextPage, fetchNextPage,
-  } = query;
-
-  useCatchFirestoreErrorWithToast({
-    isError,
-    error,
-    defaultErrorMessage: '알람을 불러오는데 실패했어요!',
-  });
+  const { hasNextPage, fetchNextPage } = query;
 
   const refState = useIntersectionObserver<HTMLAnchorElement>({
     intersectionOptions: {
