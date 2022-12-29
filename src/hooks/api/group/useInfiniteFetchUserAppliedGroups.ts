@@ -26,6 +26,7 @@ function useInfiniteFetchUserAppliedGroups({ userUid, perPage }: UserAppliedGrou
       getNextPageParam: ({ lastUid }) => lastUid,
       enabled: !!userUid && !!perPage,
       suspense: true,
+      useErrorBoundary: true,
     },
   );
 

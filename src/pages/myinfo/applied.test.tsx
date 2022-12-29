@@ -10,6 +10,11 @@ import FIXTURE_GROUP from '../../../fixtures/group';
 
 import AppliedPage, { getServerSideProps } from './applied.page';
 
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockImplementation(() => ({
+    replace: jest.fn(),
+  })),
+}));
 jest.mock('@/hooks/api/group/useInfiniteFetchUserAppliedGroups');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/services/serverSideProps/authenticatedServerSideProps');
