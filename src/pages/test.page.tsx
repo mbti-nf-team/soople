@@ -46,6 +46,7 @@ const TestLayout = styled(Layout)`
   margin-top: 120px;
 
   .type-animation::after {
-    color: ${({ theme }) => theme.accent6};
+    font-weight: 400;
+    color: ${({ theme }) => theme.accent4};
   }
 `;
