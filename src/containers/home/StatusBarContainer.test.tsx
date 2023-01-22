@@ -18,9 +18,6 @@ jest.mock('react-toastify', () => ({
     error: jest.fn(),
   },
 }));
-jest.mock('nanoid', () => ({
-  nanoid: jest.fn().mockImplementation(() => Math.random()),
-}));
 
 describe('StatusBarContainer', () => {
   beforeEach(() => {

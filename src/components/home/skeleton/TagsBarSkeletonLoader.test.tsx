@@ -2,10 +2,6 @@ import { render, screen } from '@testing-library/react';
 
 import TagsBarSkeletonLoader from './TagsBarSkeletonLoader';
 
-jest.mock('nanoid', () => ({
-  nanoid: jest.fn().mockImplementation(() => Math.random()),
-}));
-
 describe('TagsBarSkeletonLoader', () => {
   const renderTagsBarSkeletonLoader = () => render((
     <TagsBarSkeletonLoader />
