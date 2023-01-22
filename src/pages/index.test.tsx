@@ -15,10 +15,6 @@ import HomePage from './index.page';
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
-jest.mock('nanoid', () => ({
-  nanoid: jest.fn().mockImplementation(() => Math.random()),
-}));
-
 jest.mock('@/hooks/api/auth/useGetUser');
 jest.mock('@/hooks/api/auth/useFetchUserProfile');
 jest.mock('@/hooks/api/tagsCount/useFetchTagsCount');
