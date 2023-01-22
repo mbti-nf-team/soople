@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, {
-  DetailedHTMLProps, ForwardedRef, forwardRef, KeyboardEvent, ReactElement, TextareaHTMLAttributes,
+  DetailedHTMLProps, ForwardedRef, forwardRef, ReactElement, TextareaHTMLAttributes,
 } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import useActionKeyEvent from '@/hooks/useActionKeyEvent';
 import { body1Font } from '@/styles/fontStyles';
 
 import HelperMessage from './HelperMessage';
@@ -29,7 +30,9 @@ function Textarea({
   disabled,
   isError, height, id, labelText, labelOptionText, message, ...rest
 }: Props, ref: ForwardedRef<HTMLTextAreaElement>): ReactElement {
-  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => e.code === 'Enter' && e.stopPropagation();
+  const handleKeyDownEvent = useActionKeyEvent<HTMLTextAreaElement>(['Enter', 'NumpadEnter'], (e) => {
+    e.stopPropagation();
+  });
 
   return (
     <TextareaWrapper isError={isError}>
@@ -45,7 +48,7 @@ function Textarea({
         id={id}
         value={value}
         onChange={onChange}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleKeyDownEvent}
         placeholder={placeholder}
         disabled={disabled}
         isError={isError}

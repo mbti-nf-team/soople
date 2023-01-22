@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, {
-  FormEvent, KeyboardEvent, PropsWithChildren, ReactElement, ReactNode,
+  FormEvent, PropsWithChildren, ReactElement, ReactNode,
 } from 'react';
 import { X as CloseSvg } from 'react-feather';
 import { useLockBodyScroll } from 'react-use';
@@ -8,6 +8,7 @@ import { useLockBodyScroll } from 'react-use';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import useActionKeyEvent from '@/hooks/useActionKeyEvent';
 import useResponsive from '@/hooks/useResponsive';
 import animations from '@/styles/animations';
 import { h4Font } from '@/styles/fontStyles';
@@ -45,9 +46,11 @@ function FormModal({
 }: PropsWithChildren<Props>): ReactElement | null {
   const theme = useTheme();
   const { isClient, isMobile } = useResponsive();
+  const handleKeyDownEvent = useActionKeyEvent<HTMLFormElement>(['Enter', 'NumpadEnter'], (e) => {
+    e.preventDefault();
+  });
 
   const isClientDesktop = isClient && !isMobile;
-  const checkKeyDown = (e: KeyboardEvent<HTMLFormElement>) => e.code === 'Enter' && e.preventDefault();
 
   useLockBodyScroll(isClientDesktop && isVisible);
 
@@ -61,7 +64,7 @@ function FormModal({
             role="dialog"
             data-testid="form-modal-box"
           >
-            <StyledForm onSubmit={onSubmit} onKeyDown={checkKeyDown}>
+            <StyledForm onSubmit={onSubmit} onKeyDown={handleKeyDownEvent}>
               <HeaderWrapper>
                 <h4>{title}</h4>
                 <CloseIcon
