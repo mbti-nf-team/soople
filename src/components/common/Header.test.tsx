@@ -81,7 +81,7 @@ describe('Header', () => {
 
         fireEvent.click(screen.getByText('시작하기'));
 
-        expect(handleClick).toBeCalledTimes(1);
+        expect(handleClick).toHaveBeenCalledTimes(1);
       });
     });
   });

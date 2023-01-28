@@ -43,7 +43,7 @@ describe('WriteForm', () => {
 
       fireEvent.change(screen.getByPlaceholderText('제목을 입력하세요'), { target: inputValue });
 
-      expect(handleChange).toBeCalledWith({ title: 'test' });
+      expect(handleChange).toHaveBeenCalledWith({ title: 'test' });
     });
   });
 
@@ -57,7 +57,7 @@ describe('WriteForm', () => {
 
       fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
 
-      expect(handleChange).toBeCalledWith({ tags: ['test'] });
+      expect(handleChange).toHaveBeenCalledWith({ tags: ['test'] });
     });
   });
 });

@@ -23,5 +23,5 @@ export const HasImage = Template.bind({});
 HasImage.args = {
   emptyText: '리스트가 존재하지 않아요.',
   buttonText: '확인',
-  imageUrl: EmptySvg,
+  imageUrl: EmptySvg as string,
 };

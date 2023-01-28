@@ -21,12 +21,12 @@ describe('Textarea', () => {
   ));
 
   context('textarea에서 Enter 키를 클릭했을 경우', () => {
-    it('change 이벤트는 호출되지 않아먄 한다', async () => {
+    it('change 이벤트는 호출되지 않아먄 한다', () => {
       renderTextarea();
 
       fireEvent.keyDown(screen.getByPlaceholderText('test'), { key: 'Enter', code: 'Enter', charCode: 13 });
 
-      expect(handleChange).not.toBeCalled();
+      expect(handleChange).not.toHaveBeenCalled();
     });
   });
 
@@ -50,7 +50,7 @@ describe('Textarea', () => {
         },
       });
 
-      expect(handleChange).toBeCalled();
+      expect(handleChange).toHaveBeenCalled();
     });
   });
 

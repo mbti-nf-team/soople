@@ -20,7 +20,7 @@ describe('useUpdateApplicant', () => {
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-    expect(putApplicant).toBeCalledWith(FIXTURE_APPLICANT);
+    expect(putApplicant).toHaveBeenCalledWith(FIXTURE_APPLICANT);
   });
 });
 

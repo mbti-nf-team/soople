@@ -16,8 +16,8 @@ function useAuthIdToken<R = IdTokenResult | null>(
     forceRefresh?: boolean;
   },
   useQueryOptions?: Omit<
-    UseQueryOptions<IdTokenResult | null, AuthError, R>,
-    'queryFn'
+  UseQueryOptions<IdTokenResult | null, AuthError, R>,
+  'queryFn'
   >,
 ): UseQueryResult<R, AuthError> {
   const client = useQueryClient();

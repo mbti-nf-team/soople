@@ -71,7 +71,7 @@ describe('SignUpContainer', () => {
           await fireEvent.submit(screen.getByText('확인'));
         });
 
-        expect(mutate).toBeCalledWith({
+        expect(mutate).toHaveBeenCalledWith({
           ...PROFILE_FIXTURE,
           portfolioUrl: '',
           position: '프론트엔드',

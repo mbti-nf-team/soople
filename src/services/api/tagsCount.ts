@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/await-thenable */
 import {
   deleteDoc, getDoc, getDocs, limit, orderBy, query, setDoc, updateDoc,
 } from 'firebase/firestore';

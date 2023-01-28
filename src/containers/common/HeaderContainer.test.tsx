@@ -102,7 +102,7 @@ describe('HeaderContainer', () => {
         fireEvent.click(screen.getByTestId('default-profile-icon'));
         fireEvent.click(screen.getByText('로그아웃'));
 
-        expect(mutate).toBeCalled();
+        expect(mutate).toHaveBeenCalled();
       });
     });
   });
@@ -116,7 +116,7 @@ describe('HeaderContainer', () => {
 
         fireEvent.click(screen.getByText('시작하기'));
 
-        expect(setSignInModalVisible).toBeCalledWith(true);
+        expect(setSignInModalVisible).toHaveBeenCalledWith(true);
       });
     });
   });

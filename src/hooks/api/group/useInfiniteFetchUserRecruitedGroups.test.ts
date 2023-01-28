@@ -37,7 +37,7 @@ describe('useInfiniteFetchUserRecruitedGroups', () => {
 
     await waitFor(() => result.current.query.isSuccess);
 
-    expect(getUserRecruitedGroups).toBeCalledTimes(1);
+    expect(getUserRecruitedGroups).toHaveBeenCalledTimes(1);
     expect(result.current.query.data?.pages).toEqual([responseGroups]);
   });
 });

@@ -22,7 +22,7 @@ describe('SocialButtonGroup', () => {
 
         fireEvent.click(screen.getByTestId('google-icon'));
 
-        expect(signInRedirectOAuth).toBeCalledWith(googleProvider);
+        expect(signInRedirectOAuth).toHaveBeenCalledWith(googleProvider);
       });
     });
   });
@@ -34,7 +34,7 @@ describe('SocialButtonGroup', () => {
 
         fireEvent.click(screen.getByTestId('github-icon'));
 
-        expect(signInRedirectOAuth).toBeCalledWith(githubProvider);
+        expect(signInRedirectOAuth).toHaveBeenCalledWith(githubProvider);
       });
     });
   });

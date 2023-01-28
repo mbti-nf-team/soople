@@ -53,7 +53,7 @@ describe('applicants API', () => {
     it('addDoc 함수가 호출되어야만 한다', async () => {
       const response = await postAddApplicant(applicant);
 
-      expect(addDoc).toBeCalledWith(collection, {
+      expect(addDoc).toHaveBeenCalledWith(collection, {
         ...applicant,
         isConfirm: false,
         createdAt,
@@ -78,7 +78,7 @@ describe('applicants API', () => {
       const response = await getApplicants('groupId');
 
       expect(response).toEqual([APPLICANT_FIXTURE]);
-      expect(getDocs).toBeCalledTimes(1);
+      expect(getDocs).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -200,7 +200,7 @@ describe('applicants API', () => {
     it('"updateDoc"이 호출되어야만 한다', async () => {
       await putApplicant(APPLICANT_FIXTURE);
 
-      expect(updateDoc).toBeCalledTimes(1);
+      expect(updateDoc).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -215,7 +215,7 @@ describe('applicants API', () => {
         groupId: '1',
       });
 
-      expect(patchNumberApplicants).toBeCalledWith({
+      expect(patchNumberApplicants).toHaveBeenCalledWith({
         groupId: '1',
         isApply: false,
       });
@@ -240,7 +240,7 @@ describe('applicants API', () => {
       const response = await getAppliedGroups(doc);
 
       expect(response).toEqual(GROUP_FIXTURE);
-      expect(getGroupDetail).toBeCalledWith(groupId);
+      expect(getGroupDetail).toHaveBeenCalledWith(groupId);
     });
   });
 });

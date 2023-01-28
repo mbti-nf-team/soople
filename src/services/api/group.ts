@@ -8,6 +8,7 @@ import {
   query,
   serverTimestamp,
   startAfter,
+  Timestamp,
   updateDoc,
   where,
 } from 'firebase/firestore';
@@ -60,7 +61,7 @@ export const getGroupDetail = async (uid: string) => {
   return {
     groupId: response.id,
     ...group,
-    createdAt: timestampToString(group.createdAt),
+    createdAt: timestampToString(group.createdAt as Timestamp),
   } as Group;
 };
 
@@ -80,7 +81,7 @@ export const fetchGroups = async (
     method: 'GET',
   });
 
-  const groups = await response.json();
+  const groups = await response.json() as InfiniteResponse<Group>;
 
   return groups;
 };

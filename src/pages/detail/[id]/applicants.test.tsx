@@ -79,7 +79,7 @@ describe('getServerSideProps', () => {
     it('notFound가 "true"를 반환해야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
-      expect(getGroupDetail).toBeCalledWith('id');
+      expect(getGroupDetail).toHaveBeenCalledWith('id');
       expect(response.notFound).toBeTruthy();
     });
   });
@@ -107,7 +107,7 @@ describe('getServerSideProps', () => {
     it('"already-completed" error와 함께 상세 페이지 redirect를 반환해야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
-      expect(getGroupDetail).toBeCalledWith('id');
+      expect(getGroupDetail).toHaveBeenCalledWith('id');
       expect(response.redirect).toEqual({
         permanent: false,
         destination: `/detail/${groupId}/?error=already-completed`,
@@ -142,7 +142,7 @@ describe('getServerSideProps', () => {
     it('"unauthenticated" 에러와 함께 redirect를 반환해야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
-      expect(getGroupDetail).toBeCalledWith('id');
+      expect(getGroupDetail).toHaveBeenCalledWith('id');
       expect(response.redirect).toEqual({
         permanent: false,
         destination: '/?error=unauthenticated',
@@ -178,7 +178,7 @@ describe('getServerSideProps', () => {
     it('group이 반환되어야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
-      expect(getGroupDetail).toBeCalledWith('id');
+      expect(getGroupDetail).toHaveBeenCalledWith('id');
       expect(response.props.dehydratedState.queries[0].state.data).toEqual({
         ...GROUP_FIXTURE,
         writer,

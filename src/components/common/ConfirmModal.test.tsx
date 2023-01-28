@@ -30,7 +30,7 @@ describe('ConfirmModal', () => {
 
         fireEvent.click(screen.getByText('닫기'));
 
-        expect(handleClose).toBeCalledTimes(1);
+        expect(handleClose).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -40,7 +40,7 @@ describe('ConfirmModal', () => {
 
         fireEvent.click(screen.getByText('확인'));
 
-        expect(handleConfirm).toBeCalledTimes(1);
+        expect(handleConfirm).toHaveBeenCalledTimes(1);
       });
     });
 

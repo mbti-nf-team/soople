@@ -50,7 +50,7 @@ describe('AlarmListContainer', () => {
   it('알람 리스트에 대한 정보가 나타나야만 한다', () => {
     const { container } = renderAlarmListContainer();
 
-    expect(useInfiniteFetchAlarms).toBeCalled();
+    expect(useInfiniteFetchAlarms).toHaveBeenCalled();
     expect(container).toHaveTextContent(ALARM_FIXTURE.group.title);
   });
 
@@ -60,7 +60,7 @@ describe('AlarmListContainer', () => {
 
       fireEvent.click(screen.getByText(ALARM_FIXTURE.group.title));
 
-      expect(mutate).toBeCalledWith(ALARM_FIXTURE.uid);
+      expect(mutate).toHaveBeenCalledWith(ALARM_FIXTURE.uid);
     });
   });
 });

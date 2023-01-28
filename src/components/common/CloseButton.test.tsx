@@ -17,7 +17,7 @@ describe('CloseButton', () => {
 
       fireEvent.click(screen.getByTestId('close-icon'));
 
-      expect(handleClick).toBeCalledTimes(1);
+      expect(handleClick).toHaveBeenCalledTimes(1);
     });
   });
 });

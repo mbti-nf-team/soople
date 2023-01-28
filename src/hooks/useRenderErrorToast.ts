@@ -8,7 +8,7 @@ type TRenderErrorToast = {
   errorStatus: 'unauthenticated' | 'already-completed';
   errorMessage: string;
   replaceUrl: string;
-}
+};
 
 function useRenderErrorToast({ errorMessage, errorStatus, replaceUrl }: TRenderErrorToast) {
   const { replace, query } = useRouter();

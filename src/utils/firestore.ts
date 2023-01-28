@@ -1,4 +1,6 @@
-import type { DocumentData, QueryDocumentSnapshot, QuerySnapshot } from 'firebase/firestore';
+import {
+  DocumentData, QueryDocumentSnapshot, QuerySnapshot, Timestamp,
+} from 'firebase/firestore';
 
 import { Alarm, AlarmResponse } from '@/models/alarm';
 import { Profile } from '@/models/auth';
@@ -7,7 +9,7 @@ import { getUserProfile } from '@/services/api/auth';
 
 import { isRecruiting } from './utils';
 
-export const timestampToString = (timestamp: any) => timestamp.toDate().toString();
+export const timestampToString = (timestamp: Timestamp) => timestamp.toDate().toString();
 
 export const formatGroup = (group: QueryDocumentSnapshot<DocumentData>) => {
   const { createdAt } = group.data();
@@ -15,7 +17,7 @@ export const formatGroup = (group: QueryDocumentSnapshot<DocumentData>) => {
   return {
     ...group.data(),
     groupId: group.id,
-    createdAt: timestampToString(createdAt),
+    createdAt: timestampToString(createdAt as Timestamp),
   };
 };
 
@@ -25,7 +27,7 @@ export const formatComment = (comment: QueryDocumentSnapshot<DocumentData>) => {
   return {
     ...comment.data(),
     commentId: comment.id,
-    createdAt: timestampToString(createdAt),
+    createdAt: timestampToString(createdAt as Timestamp),
   };
 };
 
@@ -35,7 +37,7 @@ export const formatCreatedAt = (applicant: QueryDocumentSnapshot<DocumentData>) 
   return {
     ...applicant.data(),
     uid: applicant.id,
-    createdAt: timestampToString(createdAt),
+    createdAt: timestampToString(createdAt as Timestamp),
   };
 };
 
@@ -50,7 +52,7 @@ export const formatAlarm = async (alarm: QueryDocumentSnapshot<DocumentData>) =>
     group,
     type,
     isViewed,
-    createdAt: timestampToString(createdAt),
+    createdAt: timestampToString(createdAt as unknown as Timestamp),
   };
 
   if (applicantUid) {

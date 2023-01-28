@@ -9,9 +9,9 @@ export const loadItem = <T>(key: string) => {
 
   try {
     const item = localStorage.getItem(key);
-    const parsed = JSON.parse(item || '');
+    const parsed = JSON.parse(item || '') as T | null;
 
-    return parsed as T | null;
+    return parsed;
   } catch (error) {
     return null;
   }

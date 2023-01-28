@@ -39,7 +39,7 @@ describe('ImageSetting', () => {
 
       fireEvent.click(screen.getByText('이미지 삭제'));
 
-      expect(handleDelete).toBeCalledTimes(1);
+      expect(handleDelete).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -56,7 +56,7 @@ describe('ImageSetting', () => {
           });
         });
 
-        expect(handleUpload).not.toBeCalled();
+        expect(handleUpload).not.toHaveBeenCalled();
       });
     });
 
@@ -75,7 +75,7 @@ describe('ImageSetting', () => {
             });
           });
 
-          expect(handleUpload).toBeCalledTimes(1);
+          expect(handleUpload).toHaveBeenCalledTimes(1);
         });
       });
 
@@ -94,7 +94,7 @@ describe('ImageSetting', () => {
             });
           });
 
-          expect(errorToast).toBeCalledWith('이미지 업로드 최대 사이즈는 5MB입니다.');
+          expect(errorToast).toHaveBeenCalledWith('이미지 업로드 최대 사이즈는 5MB입니다.');
         });
       });
     });

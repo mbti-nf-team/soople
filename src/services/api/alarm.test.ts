@@ -44,7 +44,7 @@ describe('alarm API', () => {
     it('addDoc 함수가 호출되어야만 한다', async () => {
       const id = await postAddAlarm(alarm);
 
-      expect(addDoc).toBeCalledWith(collection, {
+      expect(addDoc).toHaveBeenCalledWith(collection, {
         ...alarm,
         isViewed: false,
         createdAt,
@@ -146,7 +146,7 @@ describe('alarm API', () => {
       const response = await getUserAlertAlarm('userUid');
 
       expect(response).toEqual([ALARM_FIXTURE]);
-      expect(getDocs).toBeCalledTimes(1);
+      expect(getDocs).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -154,7 +154,7 @@ describe('alarm API', () => {
     it('updateDoc가 호출되어야만 한다', async () => {
       await patchAlarmViewed('alarmUid');
 
-      expect(updateDoc).toBeCalledWith(undefined, {
+      expect(updateDoc).toHaveBeenCalledWith(undefined, {
         isViewed: true,
       });
     });

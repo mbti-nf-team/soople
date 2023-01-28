@@ -16,7 +16,7 @@ import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast'
 type PublishNewGroupRequest = {
   profile: Profile;
   writeFields: WriteFields;
-}
+};
 
 function usePublishNewGroup() {
   const { replace } = useRouter();

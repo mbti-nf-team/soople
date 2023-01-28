@@ -41,8 +41,8 @@ describe('useRenderErrorToast', () => {
     it('"errorToast"가 메시지와 함꼐 호출되어야하고 replace가 url과 함께 호출되어야만 한다', () => {
       useRenderErrorToastHook();
 
-      expect(errorToast).toBeCalledWith(errorMessage);
-      expect(mockReplace).toBeCalledWith(replaceUrl, undefined, { shallow: true });
+      expect(errorToast).toHaveBeenCalledWith(errorMessage);
+      expect(mockReplace).toHaveBeenCalledWith(replaceUrl, undefined, { shallow: true });
     });
   });
 
@@ -54,7 +54,7 @@ describe('useRenderErrorToast', () => {
     it('"errorToast"가 호출되지 않아야만 한다', () => {
       useRenderErrorToastHook();
 
-      expect(errorToast).not.toBeCalled();
+      expect(errorToast).not.toHaveBeenCalled();
     });
   });
 });

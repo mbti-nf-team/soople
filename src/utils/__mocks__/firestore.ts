@@ -1,4 +1,6 @@
-export const timestampToString = jest.fn((date) => date);
+import { Timestamp } from 'firebase/firestore';
+
+export const timestampToString = jest.fn((date: Timestamp) => date);
 
 export const formatGroup = jest.fn();
 

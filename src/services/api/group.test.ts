@@ -62,7 +62,7 @@ describe('group API', () => {
     it('addDoc 함수가 호출되어야만 한다', async () => {
       const id = await postNewGroup(PROFILE_FIXTURE, group);
 
-      expect(addDoc).toBeCalledWith(undefined, {
+      expect(addDoc).toHaveBeenCalledWith(undefined, {
         ...group,
         isCompleted: false,
         views: 0,
@@ -131,7 +131,7 @@ describe('group API', () => {
         perPage,
       });
 
-      expect(fetch).toBeCalledWith(`/api/groups?perPage=${perPage}&${paramsSerializer(params)}`, {
+      expect(fetch).toHaveBeenCalledWith(`/api/groups?perPage=${perPage}&${paramsSerializer(params)}`, {
         method: 'GET',
       });
       expect(response).toEqual([GROUP_FIXTURE]);
@@ -354,7 +354,7 @@ describe('group API', () => {
           isApply: true,
         });
 
-        expect(updateDoc).toBeCalledWith('ref', {
+        expect(updateDoc).toHaveBeenCalledWith('ref', {
           numberApplicants: 2,
         });
         expect(response).toBe(2);
@@ -368,7 +368,7 @@ describe('group API', () => {
           isApply: false,
         });
 
-        expect(updateDoc).toBeCalledWith('ref', {
+        expect(updateDoc).toHaveBeenCalledWith('ref', {
           numberApplicants: 0,
         });
         expect(response).toBe(0);
@@ -380,7 +380,7 @@ describe('group API', () => {
     it('"updateDoc"이 호출되어야만 한다', async () => {
       await patchCompletedGroup('groupId', { message: 'test', numberConfirmApplicants: 3 });
 
-      expect(updateDoc).toBeCalledTimes(1);
+      expect(updateDoc).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -399,7 +399,7 @@ describe('group API', () => {
     it('"updateDoc"이 호출되어야만 한다', async () => {
       await patchEditGroup('groupId', writeFields);
 
-      expect(updateDoc).toBeCalledWith(undefined, writeFields);
+      expect(updateDoc).toHaveBeenCalledWith(undefined, writeFields);
     });
   });
 
@@ -414,7 +414,7 @@ describe('group API', () => {
           views,
         });
 
-        expect(updateDoc).toBeCalledWith(undefined, {
+        expect(updateDoc).toHaveBeenCalledWith(undefined, {
           views: views + 1,
         });
         expect(result).toEqual({
@@ -433,7 +433,7 @@ describe('group API', () => {
           views,
         }, viewedIds);
 
-        expect(updateDoc).toBeCalledWith(undefined, {
+        expect(updateDoc).toHaveBeenCalledWith(undefined, {
           views: views + 1,
         });
         expect(result).toEqual({
@@ -452,7 +452,7 @@ describe('group API', () => {
           views,
         }, viewedIds);
 
-        expect(updateDoc).not.toBeCalled();
+        expect(updateDoc).not.toHaveBeenCalled();
         expect(result).toEqual({
           viewedIds,
           isAlreadyRead: true,
@@ -471,7 +471,7 @@ describe('group API', () => {
     it('"deleteDoc"이 호출되어야만 한다', async () => {
       await deleteGroup('groupId');
 
-      expect(deleteDoc).toBeCalledTimes(3);
+      expect(deleteDoc).toHaveBeenCalledTimes(3);
     });
   });
 });

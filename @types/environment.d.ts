@@ -1,14 +1,7 @@
-/* eslint-disable unused-imports/no-unused-vars */
-/* eslint-disable no-unused-vars */
 namespace NodeJS {
   interface ProcessEnv extends NodeJS.ProcessEnv {
-    GITHUB_ID: string;
-    GITHUB_SECRET: string;
-    GOOGLE_ID: string;
-    GOOGLE_SECRET: string;
-    KAKAO_ID: string;
-    KAKAO_SECRET: string;
     NEXT_PUBLIC_ORIGIN: string;
     NEXT_PUBLIC_FIREBASE_STORAGE_URL: string;
+    NEXT_PUBLIC_FIREBASE_ADMIN_PROJECT_ID: string;
   }
 }

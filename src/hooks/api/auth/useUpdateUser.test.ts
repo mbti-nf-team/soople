@@ -31,6 +31,6 @@ describe('useUpdateUser', () => {
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-    expect(updateUserProfile).toBeCalledWith(PROFILE_FIXTURE);
+    expect(updateUserProfile).toHaveBeenCalledWith(PROFILE_FIXTURE);
   });
 });

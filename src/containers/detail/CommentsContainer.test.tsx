@@ -87,7 +87,7 @@ describe('CommentsContainer', () => {
 
         fireEvent.click(screen.getByText('댓글 남기기'));
 
-        expect(mutate).toBeCalledWith({
+        expect(mutate).toHaveBeenCalledWith({
           content: commentValue,
           writer,
           groupId: '1',
@@ -100,7 +100,7 @@ describe('CommentsContainer', () => {
 
           fireEvent.click(screen.getByText('삭제'));
 
-          expect(mutate).toBeCalledWith({
+          expect(mutate).toHaveBeenCalledWith({
             commentId: COMMENT_FIXTURE.commentId,
             groupId: '1',
           });

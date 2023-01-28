@@ -33,7 +33,7 @@ describe('useAddComment', () => {
       expect(result.current.isSuccess).toBe(true);
     });
 
-    expect(postGroupComment).toBeCalled();
+    expect(postGroupComment).toHaveBeenCalled();
     expect(result.current.data).toBe('commentId');
   });
 });

@@ -25,7 +25,7 @@ describe('AskRemoveGroupModal', () => {
 
         fireEvent.click(screen.getByText('닫기'));
 
-        expect(handleClose).toBeCalledTimes(1);
+        expect(handleClose).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -37,7 +37,7 @@ describe('AskRemoveGroupModal', () => {
           fireEvent.click(button);
         });
 
-        expect(handleConfirm).toBeCalledTimes(1);
+        expect(handleConfirm).toHaveBeenCalledTimes(1);
       });
     });
   });

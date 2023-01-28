@@ -5,10 +5,6 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  globals: {
-    context: 'readonly',
-    given: 'readonly',
-  },
   ignorePatterns: [
     'node_modules/',
     '.pnp.cjs',
@@ -16,27 +12,65 @@ module.exports = {
   ],
   extends: [
     'airbnb',
+    'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
-    'plugin:jest/recommended',
-    'plugin:testing-library/react',
+    'plugin:react/jsx-runtime',
   ],
   plugins: [
-    '@typescript-eslint',
     'simple-import-sort',
     'unused-imports',
-    'flowtype',
-    'jest',
-    'testing-library',
     '@emotion',
   ],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
   overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'airbnb-typescript',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      ],
+      plugins: [
+        '@typescript-eslint',
+        'flowtype',
+      ],
+      rules: {
+        '@typescript-eslint/no-use-before-define': 'off',
+        '@typescript-eslint/no-floating-promises': 'off',
+        '@typescript-eslint/no-misused-promises': 'off',
+      },
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: ['./tsconfig.json'],
+      },
+    },
+    {
+      files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+      extends: ['plugin:testing-library/react', 'plugin:jest/recommended'],
+      rules: {
+        'jest/no-identical-title': 'off',
+        'testing-library/no-unnecessary-act': 'off',
+        '@typescript-eslint/await-thenable': 'off',
+        '@typescript-eslint/unbound-method': 'off',
+        '@typescript-eslint/no-unsafe-argument': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
     {
       extends: ['plugin:cypress/recommended'],
       files: ['cypress/**/*.ts'],
-      rules: {
-        'jest/expect-expect': 'off',
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: ['./cypress/tsconfig.json'],
       },
     },
     {
@@ -45,47 +79,39 @@ module.exports = {
       rules: {
         'react/function-component-definition': 'off',
         'react/jsx-props-no-spreading': 'off',
+        'import/no-extraneous-dependencies': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
       },
     },
   ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
   settings: {
     'import/resolver': {
-      typescript: {
-        project: './tsconfig.json',
+      alias: {
+        map: [['@', './src']],
+        extensions: ['.ts', '.js', '.tsx', '.json'],
       },
-    },
-    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
   },
   rules: {
+    '@emotion/pkg-renaming': 'error',
     'react-hooks/rules-of-hooks': 'off',
     'react/function-component-definition': 'off',
-    'import/extensions': ['error', 'ignorePackages', {
-      js: 'never',
-      jsx: 'never',
-      ts: 'never',
-      tsx: 'never',
-    }],
-    'react/jsx-filename-extension': ['warn', {
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    }],
+    // 'import/extensions': ['error', 'ignorePackages', {
+    //   js: 'never',
+    //   jsx: 'never',
+    //   ts: 'never',
+    //   tsx: 'never',
+    // }],
+    // 'react/jsx-filename-extension': ['warn', {
+    //   extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    // }],
     'no-console': ['warn', {
       allow: ['warn', 'error'],
     }],
     'import/no-unresolved': 'error',
     'react/react-in-jsx-scope': 'off',
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['off'],
+    // '@typescript-eslint/no-use-before-define': ['off'],
     'simple-import-sort/imports': ['error', {
       groups: [
         // Node.js builtins. You could also generate this regex if you use a `.js` config.
@@ -106,7 +132,7 @@ module.exports = {
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
     'no-undef': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
+    // '@typescript-eslint/no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'error',
     'unused-imports/no-unused-vars': ['warn', {
       vars: 'all',
@@ -119,15 +145,10 @@ module.exports = {
     }],
     'import/no-extraneous-dependencies': ['error', {
       devDependencies: [
-        '**/*.test.ts',
-        '**/*.test.tsx',
         'jest.setup.js',
-        '**/*.stories.tsx',
         'cypress/**',
       ],
     }],
-    'jest/no-identical-title': 'off',
-    'testing-library/no-unnecessary-act': 'off',
     'jsx-a11y/label-has-associated-control': [2, {
       labelAttributes: ['label'],
       depth: 3,

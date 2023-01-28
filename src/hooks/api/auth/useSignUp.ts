@@ -14,7 +14,7 @@ function useSignUp() {
   const { replace } = useRouter();
 
   const mutation = useMutation<
-    void, FirestoreError, Profile
+  void, FirestoreError, Profile
   >((profile) => postUserProfile(profile), {
     onSuccess: () => {
       removeItem('isSignUp');

@@ -24,7 +24,7 @@ describe('useRenderSuccessToast', () => {
     it('"successToast"가 메시지와 함꼐 호출되어야만 한다', () => {
       useRenderSuccessToastHook();
 
-      expect(successToast).toBeCalledWith(message, undefined);
+      expect(successToast).toHaveBeenCalledWith(message, undefined);
     });
   });
 
@@ -34,7 +34,7 @@ describe('useRenderSuccessToast', () => {
     it('"successToast"가 호출되지 않아야만 한다', () => {
       useRenderSuccessToastHook();
 
-      expect(successToast).not.toBeCalled();
+      expect(successToast).not.toHaveBeenCalled();
     });
   });
 });

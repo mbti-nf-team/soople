@@ -43,7 +43,7 @@ describe('comment API', () => {
     it('addDoc 함수가 호출되어야만 한다', async () => {
       const id = await postGroupComment(comment);
 
-      expect(addDoc).toBeCalledWith(collection, {
+      expect(addDoc).toHaveBeenCalledWith(collection, {
         ...comment,
         createdAt,
       });
@@ -152,7 +152,7 @@ describe('comment API', () => {
     it('"deleteDoc"이 호출되어야만 한다', async () => {
       await deleteGroupComment('commentId');
 
-      expect(deleteDoc).toBeCalledTimes(1);
+      expect(deleteDoc).toHaveBeenCalledTimes(1);
     });
   });
 });

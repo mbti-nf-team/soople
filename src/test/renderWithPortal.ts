@@ -3,8 +3,8 @@ import { JSXElementConstructor, ReactElement } from 'react';
 
 import { render } from '@testing-library/react';
 
-const renderWithPortal = (
-  ui: ReactElement<any, string | JSXElementConstructor<any>>,
+const renderWithPortal = <P>(
+  ui: ReactElement<P, string | JSXElementConstructor<P>>,
   elementId = 'portal-container',
 ) => {
   const portalContainer = document.createElement('div');

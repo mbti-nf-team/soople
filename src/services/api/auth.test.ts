@@ -37,7 +37,7 @@ describe('auth API', () => {
     it('setDoc 함수가 호출되어야만 한다', async () => {
       await postUserProfile(FIXTURE_PROFILE);
 
-      expect(setDoc).toBeCalledWith(userRef, FIXTURE_PROFILE);
+      expect(setDoc).toHaveBeenCalledWith(userRef, FIXTURE_PROFILE);
     });
   });
 
@@ -51,7 +51,7 @@ describe('auth API', () => {
     it('updateDoc 함수가 호출되어야만 한다', async () => {
       await updateUserProfile(FIXTURE_PROFILE);
 
-      expect(updateDoc).toBeCalledWith(userRef, FIXTURE_PROFILE);
+      expect(updateDoc).toHaveBeenCalledWith(userRef, FIXTURE_PROFILE);
     });
   });
 
@@ -93,7 +93,7 @@ describe('auth API', () => {
         it('해당 detail 글 정보가 나타나야만 한다', async () => {
           const response = await getUserProfile('id');
 
-          expect(getDoc).toBeCalled();
+          expect(getDoc).toHaveBeenCalled();
           expect(response).toEqual(mockResponse);
         });
       });
@@ -104,7 +104,7 @@ describe('auth API', () => {
     it('"signOut"이 호출되어야만 한다', async () => {
       await postSignOut();
 
-      expect(signOut).toBeCalled();
+      expect(signOut).toHaveBeenCalled();
     });
   });
 
@@ -133,7 +133,7 @@ describe('auth API', () => {
       it('"getRedirectResult"이 호출되어야만 한다', async () => {
         const user = await getAuthRedirectResult();
 
-        expect(getRedirectResult).toBeCalled();
+        expect(getRedirectResult).toHaveBeenCalled();
         expect(user).toEqual(FIXTURE_PROFILE);
       });
     });
@@ -148,7 +148,7 @@ describe('auth API', () => {
       it('"reauthenticateWithRedirect"이 호출되지 않아야만 한다', async () => {
         await postReauthenticateWithProvider();
 
-        expect(reauthenticateWithRedirect).not.toBeCalled();
+        expect(reauthenticateWithRedirect).not.toHaveBeenCalled();
       });
     });
 
@@ -165,7 +165,7 @@ describe('auth API', () => {
         it('"reauthenticateWithRedirect"이 호출되어야만 한다', async () => {
           await postReauthenticateWithProvider();
 
-          expect(reauthenticateWithRedirect).toBeCalledTimes(1);
+          expect(reauthenticateWithRedirect).toHaveBeenCalledTimes(1);
         });
       });
 
@@ -181,7 +181,7 @@ describe('auth API', () => {
         it('"reauthenticateWithRedirect"이 호출되어야만 한다', async () => {
           await postReauthenticateWithProvider();
 
-          expect(reauthenticateWithRedirect).toBeCalledTimes(1);
+          expect(reauthenticateWithRedirect).toHaveBeenCalledTimes(1);
         });
       });
     });
@@ -196,7 +196,7 @@ describe('auth API', () => {
       it('"deleteUser"이 호출되어야만 한다', async () => {
         await deleteMember();
 
-        expect(deleteUser).toBeCalled();
+        expect(deleteUser).toHaveBeenCalled();
       });
     });
 
@@ -208,7 +208,7 @@ describe('auth API', () => {
       it('"deleteUser"이 호출되지 않아야만 한다', async () => {
         await deleteMember();
 
-        expect(deleteUser).not.toBeCalled();
+        expect(deleteUser).not.toHaveBeenCalled();
       });
     });
   });

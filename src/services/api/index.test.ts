@@ -14,7 +14,7 @@ describe('paramsSerializer', () => {
     const result = paramsSerializer(params);
 
     expect(result).toBe('param1=apple&param2=banana&param3=orange');
-    expect(qsSpyOn).toBeCalledWith(params, {
+    expect(qsSpyOn).toHaveBeenCalledWith(params, {
       indices: false,
       arrayFormat: 'comma',
     });

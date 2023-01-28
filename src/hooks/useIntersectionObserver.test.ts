@@ -32,7 +32,7 @@ describe('useIntersectionObserver', () => {
     it('fetchNextPage가 호출되어야만 한다', () => {
       useIntersectionObserverHook();
 
-      expect(handleFetchNextPage).toBeCalledTimes(1);
+      expect(handleFetchNextPage).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -43,7 +43,7 @@ describe('useIntersectionObserver', () => {
     it('fetchNextPage가 호출되어야만 한다', () => {
       useIntersectionObserverHook();
 
-      expect(handleFetchNextPage).not.toBeCalled();
+      expect(handleFetchNextPage).not.toHaveBeenCalled();
     });
   });
 });

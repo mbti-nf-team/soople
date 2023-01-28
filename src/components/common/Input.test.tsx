@@ -87,7 +87,7 @@ describe('Input', () => {
 
           fireEvent.click(screen.getByTestId('clear-icon'));
 
-          expect(handleClear).toBeCalledTimes(1);
+          expect(handleClear).toHaveBeenCalledTimes(1);
         });
       });
     });

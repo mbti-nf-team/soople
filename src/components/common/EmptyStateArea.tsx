@@ -3,6 +3,7 @@ import React, { memo, ReactElement } from 'react';
 import styled from '@emotion/styled';
 
 import { h3Font } from '@/styles/fontStyles';
+import { stringToExcludeNull } from '@/utils/utils';
 
 import Button, { ColorType } from './Button';
 
@@ -24,7 +25,7 @@ function EmptyStateArea({
   return (
     <EmptyStateWrapper marginTop={marginTop}>
       <div className="empty-state-image">
-        {imageUrl && <img src={imageUrl} alt={`${imageName}`} data-testid="empty-state-image" />}
+        {imageUrl && <img src={imageUrl} alt={stringToExcludeNull(imageName)} data-testid="empty-state-image" />}
         {svg}
       </div>
       <EmptyStateText>

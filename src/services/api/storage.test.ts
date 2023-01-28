@@ -39,7 +39,7 @@ describe('storage API', () => {
     it('deleteObject가 호출되어야만 한다', async () => {
       await deleteStorageFile(fileUrl);
 
-      expect(deleteObject).toBeCalledWith(fileUrl);
+      expect(deleteObject).toHaveBeenCalledWith(fileUrl);
     });
   });
 });

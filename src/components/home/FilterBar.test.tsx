@@ -22,7 +22,7 @@ describe('FilterBar', () => {
       fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
       fireEvent.click(screen.getByText('스터디'));
 
-      expect(handleChange).toBeCalledWith('study');
+      expect(handleChange).toHaveBeenCalledWith('study');
     });
   });
 });

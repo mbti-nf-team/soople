@@ -12,6 +12,7 @@ import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import renderWithPortal from '@/test/renderWithPortal';
 import { successToast } from '@/utils/toast';
+import { stringToExcludeNull } from '@/utils/utils';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
@@ -102,7 +103,7 @@ describe('MyInfoSettingContainer', () => {
     it('replace가 "/?error=unauthenticated"와 함께 호출되어야만 한다', async () => {
       renderMyInfoSettingContainer();
 
-      await act(() => expect(mockReplace).toBeCalledWith('/?error=unauthenticated'));
+      await act(() => expect(mockReplace).toHaveBeenCalledWith('/?error=unauthenticated'));
     });
   });
 
@@ -116,7 +117,9 @@ describe('MyInfoSettingContainer', () => {
     it('내 정보 수정 페이지에 대한 내용이 나타나야만 한다', async () => {
       const { container } = renderMyInfoSettingContainer();
 
-      await act(() => expect(container).toHaveTextContent(`${FIXTURE_PROFILE.position}`));
+      await act(() => expect(
+        container,
+      ).toHaveTextContent(stringToExcludeNull(FIXTURE_PROFILE.position)));
     });
 
     describe('"저장하기" 버튼을 클릭한다', () => {
@@ -140,10 +143,10 @@ describe('MyInfoSettingContainer', () => {
           fireEvent.click(screen.getByText('백엔드'));
 
           await act(async () => {
-            fireEvent.submit(button);
+            await fireEvent.submit(button);
           });
 
-          await act(() => expect(mutate).toBeCalled());
+          await act(() => expect(mutate).toHaveBeenCalled());
           expect(button).toHaveAttribute('disabled');
         });
       });
@@ -162,10 +165,10 @@ describe('MyInfoSettingContainer', () => {
           fireEvent.click(screen.getByText('백엔드'));
 
           await act(async () => {
-            fireEvent.submit(button);
+            await fireEvent.submit(button);
           });
 
-          await act(() => expect(mutate).toBeCalled());
+          await act(() => expect(mutate).toHaveBeenCalled());
         });
       });
 
@@ -183,12 +186,12 @@ describe('MyInfoSettingContainer', () => {
           fireEvent.click(screen.getByText('백엔드'));
 
           await act(async () => {
-            fireEvent.submit(button);
+            await fireEvent.submit(button);
           });
 
           await act(() => {
-            expect(successToast).toBeCalledTimes(1);
-            expect(reset).toBeCalledTimes(1);
+            expect(successToast).toHaveBeenCalledTimes(1);
+            expect(reset).toHaveBeenCalledTimes(1);
           });
         });
       });
@@ -210,7 +213,7 @@ describe('MyInfoSettingContainer', () => {
 
           fireEvent.click(screen.getByText('이미지 삭제'));
 
-          await act(() => expect(mutate).not.toBeCalled());
+          await act(() => expect(mutate).not.toHaveBeenCalled());
         });
       });
 
@@ -235,7 +238,7 @@ describe('MyInfoSettingContainer', () => {
           fireEvent.click(deleteImageButton);
 
           await act(() => {
-            expect(mutate).not.toBeCalled();
+            expect(mutate).not.toHaveBeenCalled();
             expect(deleteImageButton).toHaveAttribute('disabled');
           });
         });
@@ -262,9 +265,9 @@ describe('MyInfoSettingContainer', () => {
             fireEvent.click(screen.getByText('이미지 삭제'));
 
             await act(() => {
-              expect(mutate).toBeCalledTimes(2);
-              expect(mutate).toBeCalledWith(imageUrl);
-              expect(mutate).toBeCalledWith({
+              expect(mutate).toHaveBeenCalledTimes(2);
+              expect(mutate).toHaveBeenCalledWith(imageUrl);
+              expect(mutate).toHaveBeenCalledWith({
                 ...FIXTURE_PROFILE,
                 image: null,
               });
@@ -290,8 +293,8 @@ describe('MyInfoSettingContainer', () => {
             fireEvent.click(screen.getByText('이미지 삭제'));
 
             await act(() => {
-              expect(mutate).toBeCalledTimes(1);
-              expect(mutate).toBeCalledWith({
+              expect(mutate).toHaveBeenCalledTimes(1);
+              expect(mutate).toHaveBeenCalledWith({
                 ...FIXTURE_PROFILE,
                 image: null,
               });
@@ -336,8 +339,8 @@ describe('MyInfoSettingContainer', () => {
           });
 
           await act(() => {
-            expect(mutate).toBeCalledTimes(2);
-            expect(mutate).toBeCalledWith(imageUrl);
+            expect(mutate).toHaveBeenCalledTimes(2);
+            expect(mutate).toHaveBeenCalledWith(imageUrl);
           });
         });
       });
@@ -364,7 +367,7 @@ describe('MyInfoSettingContainer', () => {
           });
 
           await act(() => {
-            expect(mutate).toBeCalledTimes(1);
+            expect(mutate).toHaveBeenCalledTimes(1);
           });
         });
       });
@@ -386,8 +389,8 @@ describe('MyInfoSettingContainer', () => {
           renderMyInfoSettingContainer();
 
           await act(() => {
-            expect(mutate).toBeCalledTimes(1);
-            expect(mutate).toBeCalledWith({
+            expect(mutate).toHaveBeenCalledTimes(1);
+            expect(mutate).toHaveBeenCalledWith({
               ...FIXTURE_PROFILE,
               image: uploadProfileImageUrl,
             });
@@ -403,7 +406,7 @@ describe('MyInfoSettingContainer', () => {
         fireEvent.click(screen.getByText('회원 탈퇴하기'));
         fireEvent.click(screen.getByText('탈퇴하기'));
 
-        await act(() => expect(mutate).toBeCalledTimes(2));
+        await act(() => expect(mutate).toHaveBeenCalledTimes(2));
       });
     });
   });

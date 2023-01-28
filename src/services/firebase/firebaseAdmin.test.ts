@@ -10,7 +10,7 @@ jest.mock('firebase-admin', () => ({
 describe('firebaseAdmin', () => {
   context('apps의 길이가 0보다 클 때', () => {
     it('"initializeApp"은 호출되지 않아야만 한다', () => {
-      expect(firebaseAdmin.initializeApp).not.toBeCalled();
+      expect(firebaseAdmin.initializeApp).not.toHaveBeenCalled();
     });
   });
 });

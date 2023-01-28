@@ -42,7 +42,7 @@ describe('TagsBar', () => {
 
       fireEvent.click(screen.getByText(`#${tagName}`));
 
-      expect(handleClick).toBeCalled();
+      expect(handleClick).toHaveBeenCalled();
     });
   });
 });

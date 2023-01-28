@@ -103,12 +103,12 @@ describe('ApplicantStatusButton', () => {
                   fireEvent.submit(screen.getByTestId('apply-button'));
                 });
 
-                expect(handleApply).toBeCalledTimes(1);
+                expect(handleApply).toHaveBeenCalledTimes(1);
               });
             });
 
             describe('신청 모달창에서 "닫기" 버튼을 클릭한다', () => {
-              it('모달창이 나타나지 않아야한다', async () => {
+              it('모달창이 나타나지 않아야한다', () => {
                 const { container } = renderApplicantStatusButton();
 
                 fireEvent.click(screen.getByText('신청하기'));
@@ -131,7 +131,7 @@ describe('ApplicantStatusButton', () => {
 
               fireEvent.click(screen.getByText('신청하기'));
 
-              expect(handleVisibleSignInModal).toBeCalledTimes(1);
+              expect(handleVisibleSignInModal).toHaveBeenCalledTimes(1);
             });
           });
         });
@@ -172,7 +172,7 @@ describe('ApplicantStatusButton', () => {
             fireEvent.click(screen.getByText('신청 취소'));
             fireEvent.click(screen.getByText('취소하기'));
 
-            expect(handleCancelApply).toBeCalledWith('2');
+            expect(handleCancelApply).toHaveBeenCalledWith('2');
           });
         });
       });
@@ -213,7 +213,7 @@ describe('ApplicantStatusButton', () => {
         fireEvent.click(screen.getByText('팀원 보기'));
         fireEvent.click(screen.getByTestId('close-icon'));
 
-        await act(async () => {
+        await act(() => {
           jest.advanceTimersByTime(400);
         });
 

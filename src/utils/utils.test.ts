@@ -244,7 +244,7 @@ describe('removeToken', () => {
   it('token이 삭제되어야만 한다', () => {
     removeToken();
 
-    expect(setCookie).toBeCalledWith(null, 'token', '', { path: '/' });
+    expect(setCookie).toHaveBeenCalledWith(null, 'token', '', { path: '/' });
   });
 });
 

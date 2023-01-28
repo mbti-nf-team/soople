@@ -14,7 +14,7 @@ function useInfiniteFetchAlarms({ userUid }: { userUid?: string }) {
     pageParam,
   }) => getUserAlarms(userUid as string, {
     perPage: 15,
-    lastUid: pageParam,
+    lastUid: pageParam as string,
   }), {
     getNextPageParam: ({ lastUid }) => lastUid,
     enabled: !!userUid,

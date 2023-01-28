@@ -21,7 +21,7 @@ describe('timestampToString', () => {
   };
 
   it('날짜 형식으로 변경되어야만 한다', () => {
-    const result = timestampToString(timestamp);
+    const result = timestampToString(timestamp as any);
 
     expect(result).toBe('2021-11-11');
   });

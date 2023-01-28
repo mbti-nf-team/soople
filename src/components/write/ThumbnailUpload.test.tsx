@@ -75,7 +75,9 @@ describe('ThumbnailUpload', () => {
           });
         });
 
-        await waitFor(async () => expect(container).toHaveTextContent('10MB 이하의 이미지만 등록할 수 있어요.'));
+        await waitFor(async () => {
+          await expect(container).toHaveTextContent('10MB 이하의 이미지만 등록할 수 있어요.');
+        });
       });
     });
 
@@ -91,11 +93,11 @@ describe('ThumbnailUpload', () => {
           });
         });
 
-        await waitFor(
-          async () => expect(mutate).toBeCalledWith({
+        await waitFor(async () => {
+          await expect(mutate).toHaveBeenCalledWith({
             storagePath: `thumbnail/${FIXTURE_PROFILE.uid}/${nanoid()}/${file.name}`, file,
-          }),
-        );
+          });
+        });
       });
     });
 
@@ -105,7 +107,7 @@ describe('ThumbnailUpload', () => {
       it('recoil write fields state가 호출되어야만 한다', () => {
         renderThumbnailUpload();
 
-        expect(handleChangeWriteFields).toBeCalledWith({
+        expect(handleChangeWriteFields).toHaveBeenCalledWith({
           ...initialWriteFieldsState,
           thumbnail: fileUrl,
         });
@@ -130,17 +132,19 @@ describe('ThumbnailUpload', () => {
           });
         });
 
-        await waitFor(
-          async () => expect(mutate).toBeCalledWith({
+        await waitFor(async () => {
+          await expect(mutate).toHaveBeenCalledWith({
             storagePath: `thumbnail/${FIXTURE_PROFILE.uid}/${nanoid()}/${file.name}`, file,
-          }),
-        );
+          });
+        });
 
         act(() => {
           fireEvent.click(screen.getByTestId('close-icon'));
         });
 
-        await waitFor(async () => expect(removeMutate).toBeCalledWith(thumbnailUrl));
+        await waitFor(async () => {
+          await expect(removeMutate).toHaveBeenCalledWith(thumbnailUrl);
+        });
       });
     });
 
@@ -156,15 +160,19 @@ describe('ThumbnailUpload', () => {
           });
         });
 
-        await waitFor(async () => expect(mutate).toBeCalledWith({
-          storagePath: `thumbnail/${FIXTURE_PROFILE.uid}/${nanoid()}/${file.name}`, file,
-        }));
+        await waitFor(async () => {
+          await expect(mutate).toHaveBeenCalledWith({
+            storagePath: `thumbnail/${FIXTURE_PROFILE.uid}/${nanoid()}/${file.name}`, file,
+          });
+        });
 
         act(() => {
           fireEvent.click(screen.getByTestId('close-icon'));
         });
 
-        await waitFor(async () => expect(removeMutate).not.toBeCalled());
+        await waitFor(async () => {
+          await expect(removeMutate).not.toHaveBeenCalled();
+        });
       });
     });
   });

@@ -36,19 +36,19 @@ describe('useCheckSignUp', () => {
       const { result } = useCheckSignUpHook();
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-      expect(postSignOut).toBeCalled();
-      expect(removeItem).toBeCalledWith('isSignUp');
+      expect(postSignOut).toHaveBeenCalled();
+      expect(removeItem).toHaveBeenCalledWith('isSignUp');
     });
   });
 
   context('pathname이 /signup이거나 isSignUp이 false가 아닌 경우', () => {
     given('pathname', () => '/signup');
 
-    it('postSignOut는 호출되지 않아야만 한다', async () => {
+    it('postSignOut는 호출되지 않아야만 한다', () => {
       useCheckSignUpHook();
 
-      expect(postSignOut).not.toBeCalled();
-      expect(removeItem).not.toBeCalled();
+      expect(postSignOut).not.toHaveBeenCalled();
+      expect(removeItem).not.toHaveBeenCalled();
     });
   });
 });

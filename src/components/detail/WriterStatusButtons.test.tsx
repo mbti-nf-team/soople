@@ -83,7 +83,7 @@ describe('WriterStatusButtons', () => {
 
         fireEvent.click(screen.getByText('수정'));
 
-        expect(mockPush).toBeCalledWith(`/write?id=${FIXTURE_GROUP.groupId}`);
+        expect(mockPush).toHaveBeenCalledWith(`/write?id=${FIXTURE_GROUP.groupId}`);
       });
     });
 
@@ -128,11 +128,11 @@ describe('WriterStatusButtons', () => {
             fireEvent.click(screen.getByText('삭제'));
             fireEvent.click(screen.getByTestId('confirm-button'));
 
-            expect(removeGroupMutate).toBeCalledWith({
+            expect(removeGroupMutate).toHaveBeenCalledWith({
               ...FIXTURE_GROUP,
               thumbnail,
             });
-            expect(removeGroupThumbnailMutate).toBeCalledWith(thumbnail);
+            expect(removeGroupThumbnailMutate).toHaveBeenCalledWith(thumbnail);
           });
         });
 
@@ -145,8 +145,8 @@ describe('WriterStatusButtons', () => {
             fireEvent.click(screen.getByText('삭제'));
             fireEvent.click(screen.getByTestId('confirm-button'));
 
-            expect(removeGroupMutate).toBeCalledWith(FIXTURE_GROUP);
-            expect(removeGroupThumbnailMutate).not.toBeCalled();
+            expect(removeGroupMutate).toHaveBeenCalledWith(FIXTURE_GROUP);
+            expect(removeGroupThumbnailMutate).not.toHaveBeenCalled();
           });
         });
       });
@@ -191,7 +191,7 @@ describe('WriterStatusButtons', () => {
           fireEvent.click(screen.getByText('팀원 보기'));
           fireEvent.click(screen.getByTestId('close-icon'));
 
-          await act(async () => {
+          await act(() => {
             jest.advanceTimersByTime(400);
           });
 

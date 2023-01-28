@@ -13,7 +13,7 @@ type Props = {
 function ErrorBoundary({ isRootError, errorMessage, children }: PropsWithChildren<Props>) {
   const { replace } = useRouter();
 
-  const memoizedFallbackComponent = useCallback((test: SentryFallbackRenderProps) => {
+  const memoizedFallbackComponent = useCallback(({ resetError }: SentryFallbackRenderProps) => {
     if (isRootError) {
       replace('/500');
     }
@@ -21,7 +21,7 @@ function ErrorBoundary({ isRootError, errorMessage, children }: PropsWithChildre
     return (
       <div style={{ textAlign: 'center' }}>
         <div>{errorMessage}</div>
-        <button type="button" onClick={test.resetError}>
+        <button type="button" onClick={resetError}>
           재시도
         </button>
       </div>

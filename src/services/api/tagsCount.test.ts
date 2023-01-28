@@ -1,6 +1,5 @@
 import {
-  deleteDoc,
-  getDoc, getDocs, setDoc, updateDoc,
+  deleteDoc, getDoc, getDocs, setDoc, updateDoc,
 } from 'firebase/firestore';
 
 import {
@@ -53,7 +52,7 @@ describe('tagsCount API', () => {
       it('update가 count는 1 증가와 함께 호출되어야만 한다', async () => {
         await updateTagCount(mockResponse.name);
 
-        expect(updateDoc).toBeCalledWith(ref, {
+        expect(updateDoc).toHaveBeenCalledWith(ref, {
           count: mockResponse.count + 1,
         });
       });
@@ -71,7 +70,7 @@ describe('tagsCount API', () => {
       it('set가 count는 1과 함께 호출되어야만 한다', async () => {
         await updateTagCount(mockResponse.name);
 
-        expect(setDoc).toBeCalledWith(ref, {
+        expect(setDoc).toHaveBeenCalledWith(ref, {
           name: mockResponse.name,
           count: 1,
         });
@@ -99,7 +98,7 @@ describe('tagsCount API', () => {
         it('update가 count는 1 감소와 함께 호출되어야만 한다', async () => {
           await deleteTagCount(mockResponse.name);
 
-          expect(updateDoc).toBeCalledWith(ref, {
+          expect(updateDoc).toHaveBeenCalledWith(ref, {
             count: mockResponse.count - 1,
           });
         });
@@ -120,7 +119,7 @@ describe('tagsCount API', () => {
         it('deleteDoc가 호출되어야만 한다', async () => {
           await deleteTagCount(mockResponse.name);
 
-          expect(deleteDoc).toBeCalledWith(ref);
+          expect(deleteDoc).toHaveBeenCalledWith(ref);
         });
       });
     });
@@ -135,8 +134,8 @@ describe('tagsCount API', () => {
       it('deleteDoc나 updateDoc가 호출되지 않아야만 한다', async () => {
         await deleteTagCount(mockResponse.name);
 
-        expect(deleteDoc).not.toBeCalled();
-        expect(updateDoc).not.toBeCalled();
+        expect(deleteDoc).not.toHaveBeenCalled();
+        expect(updateDoc).not.toHaveBeenCalled();
       });
     });
   });
@@ -159,7 +158,7 @@ describe('tagsCount API', () => {
     it('updateDoc이 호출되어야만 한다', async () => {
       await editTagsCount(['test'], ['test2']);
 
-      expect(updateDoc).toBeCalled();
+      expect(updateDoc).toHaveBeenCalled();
     });
   });
 });

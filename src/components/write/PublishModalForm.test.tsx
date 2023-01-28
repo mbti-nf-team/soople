@@ -103,7 +103,7 @@ describe('PublishModalForm', () => {
         fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
         fireEvent.keyDown(input, { key: 'Enter', code: 13 });
 
-        expect(handleChangeFields).toBeCalledWith({ category: 'study' });
+        expect(handleChangeFields).toHaveBeenCalledWith({ category: 'study' });
       });
     });
 
@@ -116,7 +116,7 @@ describe('PublishModalForm', () => {
 
           fireEvent.change(screen.getByLabelText('소개글'), { target: { value: shortDescription } });
 
-          expect(handleChangeFields).toBeCalledWith({ shortDescription });
+          expect(handleChangeFields).toHaveBeenCalledWith({ shortDescription });
         });
       });
 
@@ -128,7 +128,7 @@ describe('PublishModalForm', () => {
 
           fireEvent.change(screen.getByLabelText('소개글'), { target: { value: shortDescription } });
 
-          expect(handleChangeFields).toBeCalledWith({ shortDescription });
+          expect(handleChangeFields).toHaveBeenCalledWith({ shortDescription });
         });
 
         it(`폰트 색상이 ${lightTheme.warning}이어야만 한다`, () => {
@@ -156,7 +156,7 @@ describe('PublishModalForm', () => {
 
         fireEvent.change(screen.getByPlaceholderText('모집 마감일시를 입력하세요'), { target: { value: recruitmentEndDate } });
 
-        expect(handleChangeFields).toBeCalledWith({ recruitmentEndDate: '' });
+        expect(handleChangeFields).toHaveBeenCalledWith({ recruitmentEndDate: '' });
       });
     });
 
@@ -170,7 +170,7 @@ describe('PublishModalForm', () => {
         fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
         fireEvent.click(screen.getByText('수동으로 마감'));
 
-        expect(handleChangeFields).toBeCalledWith({ recruitmentEndSetting: 'manual' });
+        expect(handleChangeFields).toHaveBeenCalledWith({ recruitmentEndSetting: 'manual' });
       });
     });
 
@@ -191,7 +191,7 @@ describe('PublishModalForm', () => {
           });
 
           expect(screen.getByLabelText('모집 마감일시')).toHaveAttribute('disabled');
-          expect(handleChangeFields).toBeCalledWith({ recruitmentEndDate: '' });
+          expect(handleChangeFields).toHaveBeenCalledWith({ recruitmentEndDate: '' });
         });
       });
     });
@@ -202,7 +202,7 @@ describe('PublishModalForm', () => {
 
         fireEvent.click(screen.getByText('닫기'));
 
-        expect(handleClose).toBeCalled();
+        expect(handleClose).toHaveBeenCalled();
       });
     });
 
@@ -223,7 +223,7 @@ describe('PublishModalForm', () => {
 
         fireEvent.click(screen.getByText('등록하기'));
 
-        expect(handleSubmit).toBeCalled();
+        expect(handleSubmit).toHaveBeenCalled();
       });
     });
   });

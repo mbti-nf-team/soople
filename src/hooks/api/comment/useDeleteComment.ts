@@ -14,7 +14,7 @@ import { deleteCommentQueryData } from './queryDataUtils';
 type DeleteCommentForm = {
   commentId: string;
   groupId: string;
-}
+};
 
 function useDeleteComment(perPage: number) {
   const queryClient = useQueryClient();

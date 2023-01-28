@@ -57,7 +57,7 @@ describe('ApplyFormModal', () => {
           fireEvent.submit(screen.getByText('신청하기'));
         });
 
-        expect(handleSubmit).toBeCalledTimes(1);
+        expect(handleSubmit).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -66,7 +66,7 @@ describe('ApplyFormModal', () => {
         const { container } = renderApplyFormModal();
 
         await act(async () => {
-          fireEvent.submit(screen.getByText('신청하기'));
+          await fireEvent.submit(screen.getByText('신청하기'));
         });
 
         expect(container).toHaveTextContent('소개글을 입력해주세요.');
@@ -80,7 +80,7 @@ describe('ApplyFormModal', () => {
 
       fireEvent.click(screen.getByText('닫기'));
 
-      expect(handleClose).toBeCalledTimes(1);
+      expect(handleClose).toHaveBeenCalledTimes(1);
     });
   });
 });

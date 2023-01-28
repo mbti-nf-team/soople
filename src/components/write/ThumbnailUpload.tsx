@@ -56,7 +56,7 @@ function ThumbnailUpload(): ReactElement {
   useEffect(() => {
     if (!isEmpty(images) && images[0].file) {
       onUploadThumbnail({
-        storagePath: `thumbnail/${user?.uid}/${nanoid()}/${images[0].file.name}`,
+        storagePath: `thumbnail/${stringToExcludeNull(user?.uid)}/${nanoid()}/${images[0].file.name}`,
         file: images[0].file,
       });
       setIsError(false);

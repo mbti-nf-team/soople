@@ -19,6 +19,6 @@ describe('useReauthenticateWithProvider', () => {
       await result.current.mutate();
     });
 
-    expect(postReauthenticateWithProvider).toBeCalledTimes(1);
+    expect(postReauthenticateWithProvider).toHaveBeenCalledTimes(1);
   });
 });

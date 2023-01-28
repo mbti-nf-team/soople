@@ -25,7 +25,7 @@ describe('CommentView', () => {
 
         fireEvent.click(screen.getByText('삭제'));
 
-        expect(handleRemove).toBeCalledWith(COMMENT_FIXTURE.commentId);
+        expect(handleRemove).toHaveBeenCalledWith(COMMENT_FIXTURE.commentId);
       });
     });
   });

@@ -89,7 +89,7 @@ describe('SelectBox', () => {
         fireEvent.keyDown(input, { key: 'ArrowDown', code: 40 });
         fireEvent.click(screen.getByText(positionOption[1].value));
 
-        expect(handleChange).toBeCalledWith(positionOption[1].value);
+        expect(handleChange).toHaveBeenCalledWith(positionOption[1].value);
       });
     });
   });

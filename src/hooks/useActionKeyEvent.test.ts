@@ -27,7 +27,7 @@ describe('useActionKeyEvent', () => {
 
           act(() => result.current(mockEvent));
 
-          expect(callback).toBeCalledTimes(1);
+          expect(callback).toHaveBeenCalledTimes(1);
         });
       });
 
@@ -41,7 +41,7 @@ describe('useActionKeyEvent', () => {
 
           act(() => result.current(mockEvent));
 
-          expect(callback).toBeCalledTimes(1);
+          expect(callback).toHaveBeenCalledTimes(1);
         });
       });
     });
@@ -59,7 +59,7 @@ describe('useActionKeyEvent', () => {
 
         act(() => result.current(mockEvent));
 
-        expect(callback).toBeCalledTimes(1);
+        expect(callback).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -77,7 +77,7 @@ describe('useActionKeyEvent', () => {
 
       act(() => result.current(mockEvent));
 
-      expect(callback).not.toBeCalled();
+      expect(callback).not.toHaveBeenCalled();
     });
   });
 });

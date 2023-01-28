@@ -38,7 +38,7 @@ describe('CompleteApplyFormModal', () => {
 
       fireEvent.submit(screen.getByText('완료하기'));
 
-      expect(handleSubmit).toBeCalledWith({
+      expect(handleSubmit).toHaveBeenCalledWith({
         numberConfirmApplicants: 3,
         message: 'test',
       });
@@ -66,7 +66,7 @@ describe('CompleteApplyFormModal', () => {
       it(`"아직 모집 마감시간이 ${timeRemaining} 남아있어요."와 함께 토스트 메시지가 호출되어야만 한다`, () => {
         renderCompleteApplyFormModal();
 
-        expect(defaultToast).toBeCalledWith(`아직 모집 마감시간이 ${timeRemaining} 남아있어요.`, {
+        expect(defaultToast).toHaveBeenCalledWith(`아직 모집 마감시간이 ${timeRemaining} 남아있어요.`, {
           position: 'bottom-center',
           style: {
             margin: '0 20px 8px 20px',

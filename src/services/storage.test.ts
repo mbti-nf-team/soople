@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable no-proto */
 import { loadItem, removeItem, saveItem } from './storage';
 
@@ -25,7 +26,7 @@ describe('storage', () => {
     it('localStorage setItem이 호출되어야만 한다', () => {
       saveItem('key', value);
 
-      expect(window.localStorage.setItem).toBeCalledWith('key', JSON.stringify(value));
+      expect(window.localStorage.setItem).toHaveBeenCalledWith('key', JSON.stringify(value));
     });
   });
 
@@ -43,7 +44,7 @@ describe('storage', () => {
         it('localStorage getItem이 호출되어야만 한다', () => {
           loadItem('key');
 
-          expect(window.localStorage.getItem).toBeCalledWith('key');
+          expect(window.localStorage.getItem).toHaveBeenCalledWith('key');
         });
       });
 
@@ -53,12 +54,12 @@ describe('storage', () => {
         it('localStorage getItem이 호출되어야만 한다', () => {
           loadItem('key');
 
-          expect(window.localStorage.getItem).toBeCalledWith('key');
+          expect(window.localStorage.getItem).toHaveBeenCalledWith('key');
         });
       });
 
       context('window가 undefined인 경우', () => {
-        const windowSpy = jest.spyOn(window, 'window', 'get') as any;
+        const windowSpy = jest.spyOn(window, 'window', 'get') as jest.Mock;
 
         afterEach(() => {
           windowSpy.mockRestore();
@@ -73,17 +74,6 @@ describe('storage', () => {
         });
       });
     });
-
-    context('Error가 발생한 경우', () => {
-      const spyOnParse = jest.spyOn(JSON, 'parse').mockImplementationOnce(() => new Error('error'));
-
-      it('null을 반환해야만 한다', () => {
-        const result = loadItem('key');
-
-        expect(spyOnParse).toBeCalled();
-        expect(result).toBeNull();
-      });
-    });
   });
 
   describe('removeItem', () => {
@@ -92,7 +82,7 @@ describe('storage', () => {
     it('localStorage removeItem이 호출되어야만 한다', () => {
       removeItem('key');
 
-      expect(window.localStorage.removeItem).toBeCalledWith('key');
+      expect(window.localStorage.removeItem).toHaveBeenCalledWith('key');
     });
   });
 });

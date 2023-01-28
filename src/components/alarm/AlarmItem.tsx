@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { Alarm, AlarmType } from '@/models/alarm';
 import { Category } from '@/models/group';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
+import { stringToExcludeNull } from '@/utils/utils';
 
 import AlarmConfirmedSvg from '../../assets/icons/img_alarm_confirmed.svg';
 import AlarmRejectedSvg from '../../assets/icons/img_alarm_rejected.svg';
@@ -48,10 +49,10 @@ function AlarmItem({ alarm, onClick }: Props, ref: ForwardedRef<HTMLAnchorElemen
   const alarmMessage: { [K in AlarmType]: string; } = {
     confirmed: `축하드려요 🎉 ${groupCategory[group.category]}의 팀원이 되었어요. 지금 바로 팀장이 보낸 메시지를 확인해볼까요?`,
     rejected: `아쉽게도 ${groupCategory[group.category]}의 팀원이 되지 않았어요.`,
-    applied: `${applicant?.name}님이 팀원을 신청했어요.`,
+    applied: `${stringToExcludeNull(applicant?.name)}님이 팀원을 신청했어요.`,
   };
 
-  const alarmUrl = type === 'applied' ? `/detail/${group.groupId}/applicants?applicant=${applicant?.uid}` : `/detail/${group.groupId}`;
+  const alarmUrl = type === 'applied' ? `/detail/${group.groupId}/applicants?applicant=${stringToExcludeNull(applicant?.uid)}` : `/detail/${group.groupId}`;
 
   return (
     <AlarmItemWrapper

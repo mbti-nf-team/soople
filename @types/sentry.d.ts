@@ -3,4 +3,4 @@ declare type SentryFallbackRenderProps = {
   componentStack: string | null;
   eventId: string | null;
   resetError(): void;
-}
+};

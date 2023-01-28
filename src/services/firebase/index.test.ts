@@ -12,7 +12,7 @@ describe('firebase', () => {
     it('collection이 호출되어야만 한다', () => {
       collectionRef('id');
 
-      expect(collection).toBeCalledWith(undefined, 'id');
+      expect(collection).toHaveBeenCalledWith(undefined, 'id');
     });
   });
 
@@ -20,7 +20,7 @@ describe('firebase', () => {
     it('doc이 호출되어야만 한다', () => {
       docRef('collectionId', 'id');
 
-      expect(doc).toBeCalledWith(undefined, 'collectionId', 'id');
+      expect(doc).toHaveBeenCalledWith(undefined, 'collectionId', 'id');
     });
   });
 
@@ -28,7 +28,7 @@ describe('firebase', () => {
     it('signInWithRedirect가 호출되어야만 한다', () => {
       signInRedirectOAuth(googleProvider);
 
-      expect(signInWithRedirect).toBeCalledWith({ languageCode: 'ko' }, googleProvider);
+      expect(signInWithRedirect).toHaveBeenCalledWith({ languageCode: 'ko' }, googleProvider);
     });
   });
 
@@ -38,7 +38,7 @@ describe('firebase', () => {
     it('ref가 호출되어야만 한다', () => {
       storageRef(url);
 
-      expect(ref).toBeCalledWith(undefined, url);
+      expect(ref).toHaveBeenCalledWith(undefined, url);
     });
   });
 });
