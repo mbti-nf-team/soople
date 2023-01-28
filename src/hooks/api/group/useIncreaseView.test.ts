@@ -55,11 +55,11 @@ describe('useIncreaseView', () => {
         });
       });
 
-      expect(patchIncreaseView).toBeCalledWith({
+      expect(patchIncreaseView).toHaveBeenCalledWith({
         groupId: FIXTURE_GROUP.groupId,
         views: FIXTURE_GROUP.views,
       }, viewedIds);
-      expect(setCookie).not.toBeCalled();
+      expect(setCookie).not.toHaveBeenCalled();
     });
   });
 
@@ -80,11 +80,11 @@ describe('useIncreaseView', () => {
         });
       });
 
-      expect(patchIncreaseView).toBeCalledWith({
+      expect(patchIncreaseView).toHaveBeenCalledWith({
         groupId: FIXTURE_GROUP.groupId,
         views: FIXTURE_GROUP.views,
       }, viewedIds);
-      expect(setCookie).toBeCalledWith(null, 'viewedGroup', viewedIds, {
+      expect(setCookie).toHaveBeenCalledWith(null, 'viewedGroup', viewedIds, {
         expires: expiredDate,
         path: '/',
       });

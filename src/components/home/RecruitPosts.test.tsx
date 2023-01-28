@@ -73,7 +73,7 @@ describe('RecruitPosts', () => {
 
         fireEvent.click(screen.getByText('팀 모집하기'));
 
-        expect(handleClickEmptyButton).toBeCalledTimes(1);
+        expect(handleClickEmptyButton).toHaveBeenCalledTimes(1);
       });
     });
   });

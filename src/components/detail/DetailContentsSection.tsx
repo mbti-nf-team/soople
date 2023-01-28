@@ -39,9 +39,9 @@ function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
   };
 
   const convertedCleanHtml = filteredWithSanitizeHtml(unified()
-    .use(rehypeParse)
+    .use(rehypeParse as never)
     .use(rehypePrism)
-    .use(rehypeStringify)
+    .use(rehypeStringify as never)
     .processSync(content)
     .toString());
 

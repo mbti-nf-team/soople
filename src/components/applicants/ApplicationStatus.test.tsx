@@ -52,7 +52,7 @@ describe('ApplicationStatus', () => {
 
         fireEvent.click(screen.getByText('선택'));
 
-        expect(updateMutate).toBeCalledWith({
+        expect(updateMutate).toHaveBeenCalledWith({
           ...APPLICANT_FIXTURE,
           isConfirm: !APPLICANT_FIXTURE.isConfirm,
         });
@@ -65,7 +65,7 @@ describe('ApplicationStatus', () => {
       it('errorToast가 "신청을 취소한 사용자에요."와 함께 호출되어야만 한다', () => {
         renderApplicationStatus();
 
-        expect(errorToast).toBeCalledWith('신청을 취소한 사용자에요.');
+        expect(errorToast).toHaveBeenCalledWith('신청을 취소한 사용자에요.');
       });
     });
 
@@ -75,7 +75,7 @@ describe('ApplicationStatus', () => {
       it('errorToast가 호출되지 않아야만 한다', () => {
         renderApplicationStatus();
 
-        expect(errorToast).not.toBeCalled();
+        expect(errorToast).not.toHaveBeenCalled();
       });
     });
   });

@@ -12,7 +12,7 @@ import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast'
 type ApplyResponse = {
   uid: string;
   numberApplicants: number;
-}
+};
 
 function useApplyGroup() {
   const queryClient = useQueryClient();

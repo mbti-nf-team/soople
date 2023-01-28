@@ -152,7 +152,7 @@ describe('getServerSideProps', () => {
     it('notFound가 "true"를 반환해야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
-      expect(getGroupDetail).toBeCalledWith('id');
+      expect(getGroupDetail).toHaveBeenCalledWith('id');
       expect(response.notFound).toBeTruthy();
     });
   });
@@ -171,7 +171,7 @@ describe('getServerSideProps', () => {
     it('그룹 정보가 반환되어야만 한다', async () => {
       const response: any = await getServerSideProps(mockContext as GetServerSidePropsContext);
 
-      expect(getGroupDetail).toBeCalledWith('id');
+      expect(getGroupDetail).toHaveBeenCalledWith('id');
       expect(response.props.dehydratedState.queries[0].state.data).toEqual(GROUP_FIXTURE);
     });
   });

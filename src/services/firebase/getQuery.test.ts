@@ -17,9 +17,9 @@ describe('getQuery', () => {
             tag: 'tag',
           }, []);
 
-          expect(where).toBeCalledWith('category', 'in', ['project']);
-          expect(where).toBeCalledWith('isCompleted', '==', false);
-          expect(where).toBeCalledWith('tags', 'array-contains', 'tag');
+          expect(where).toHaveBeenCalledWith('category', 'in', ['project']);
+          expect(where).toHaveBeenCalledWith('isCompleted', '==', false);
+          expect(where).toHaveBeenCalledWith('tags', 'array-contains', 'tag');
         });
       });
 
@@ -31,8 +31,8 @@ describe('getQuery', () => {
             tag: '',
           });
 
-          expect(where).toBeCalledWith('category', 'in', ['project']);
-          expect(where).toBeCalledWith('isCompleted', '==', false);
+          expect(where).toHaveBeenCalledWith('category', 'in', ['project']);
+          expect(where).toHaveBeenCalledWith('isCompleted', '==', false);
         });
       });
     });
@@ -46,8 +46,8 @@ describe('getQuery', () => {
             tag: 'tag',
           });
 
-          expect(where).toBeCalledWith('category', 'in', ['project']);
-          expect(where).toBeCalledWith('tags', 'array-contains', 'tag');
+          expect(where).toHaveBeenCalledWith('category', 'in', ['project']);
+          expect(where).toHaveBeenCalledWith('tags', 'array-contains', 'tag');
         });
       });
 
@@ -59,7 +59,7 @@ describe('getQuery', () => {
             tag: '',
           });
 
-          expect(where).toBeCalledWith('category', 'in', ['project']);
+          expect(where).toHaveBeenCalledWith('category', 'in', ['project']);
         });
       });
     });

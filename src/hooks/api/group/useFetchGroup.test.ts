@@ -30,7 +30,7 @@ describe('useFetchGroup', () => {
 
     await waitFor(() => result.current.isSuccess);
 
-    expect(getGroupDetail).toBeCalledWith('groupId');
+    expect(getGroupDetail).toHaveBeenCalledWith('groupId');
     expect(result.current.data).toEqual(FIXTURE_GROUP);
   });
 });

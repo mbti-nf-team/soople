@@ -80,7 +80,7 @@ describe('ApplicationStatusHeaderContainer', () => {
 
           fireEvent.click(screen.getByText('2명의 신청현황'));
 
-          expect(handleBack).toBeCalledTimes(1);
+          expect(handleBack).toHaveBeenCalledTimes(1);
         });
       });
 
@@ -91,7 +91,7 @@ describe('ApplicationStatusHeaderContainer', () => {
           fireEvent.click(screen.getByText('모집 완료'));
           fireEvent.click(screen.getByText('완료하기'));
 
-          expect(mutate).toBeCalledWith({
+          expect(mutate).toHaveBeenCalledWith({
             groupId: GROUP_FIXTURE.groupId,
             completedGroupForm: {
               numberConfirmApplicants: 1,

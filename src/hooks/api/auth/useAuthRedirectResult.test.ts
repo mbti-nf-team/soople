@@ -43,8 +43,8 @@ describe('useAuthRedirectResult', () => {
       const { result } = useAuthRedirectResultHook();
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-      expect(getAuthRedirectResult).toBeCalled();
-      expect(mockPush).toBeCalledWith('/signup');
+      expect(getAuthRedirectResult).toHaveBeenCalled();
+      expect(mockPush).toHaveBeenCalledWith('/signup');
     });
   });
 
@@ -55,7 +55,7 @@ describe('useAuthRedirectResult', () => {
       const { result } = useAuthRedirectResultHook();
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-      expect(mockPush).not.toBeCalled();
+      expect(mockPush).not.toHaveBeenCalled();
     });
   });
 });

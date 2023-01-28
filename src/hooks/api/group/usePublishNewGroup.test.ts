@@ -42,8 +42,8 @@ describe('usePublishNewGroup', () => {
       });
     });
 
-    expect(postNewGroup).toBeCalledWith(PROFILE_FIXTURE, WRITE_FIELDS_FIXTURE);
+    expect(postNewGroup).toHaveBeenCalledWith(PROFILE_FIXTURE, WRITE_FIELDS_FIXTURE);
     expect(result.current.isSuccess).toBeTruthy();
-    expect(replace).toBeCalledWith('/detail/1');
+    expect(replace).toHaveBeenCalledWith('/detail/1');
   });
 });

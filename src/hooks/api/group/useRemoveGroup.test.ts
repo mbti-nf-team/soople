@@ -31,7 +31,7 @@ describe('useRemoveGroup', () => {
       });
     });
 
-    expect(deleteGroup).toBeCalled();
-    expect(deleteTagCount).toBeCalled();
+    expect(deleteGroup).toHaveBeenCalled();
+    expect(deleteTagCount).toHaveBeenCalled();
   });
 });

@@ -4,7 +4,7 @@ import { X as CloseIcon } from 'react-feather';
 import { useTheme } from '@emotion/react';
 
 interface Props {
-  closeToast: any;
+  closeToast: () => void;
 }
 
 function CloseButton({ closeToast }: Props): ReactElement {

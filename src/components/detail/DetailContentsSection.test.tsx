@@ -53,8 +53,8 @@ describe('DetailContentsSection', () => {
 
       fireEvent.click(screen.getByText('#javascript'));
 
-      expect(handleClick).toBeCalled();
-      expect(mockPush).toBeCalledWith('/');
+      expect(handleClick).toHaveBeenCalled();
+      expect(mockPush).toHaveBeenCalledWith('/');
     });
   });
 

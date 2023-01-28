@@ -5,7 +5,7 @@ import { successToast } from '@/utils/toast';
 
 function useRenderSuccessToast(isSuccess: boolean, {
   message, toastOptions,
-}: {message: string; toastOptions?: ToastOptions; }) {
+}: { message: string; toastOptions?: ToastOptions; }) {
   useEffect(() => {
     if (isSuccess) {
       successToast(message, toastOptions);

@@ -24,7 +24,7 @@ describe('SubHeader', () => {
 
         fireEvent.click(screen.getByTestId('go-back-title'));
 
-        expect(handleGoBack).toBeCalledTimes(1);
+        expect(handleGoBack).toHaveBeenCalledTimes(1);
       });
     });
   });

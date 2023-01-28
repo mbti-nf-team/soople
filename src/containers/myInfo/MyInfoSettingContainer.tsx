@@ -89,7 +89,7 @@ function MyInfoSettingContainer(): ReactElement | null {
 
     uploadStorageUserImage({
       file,
-      storagePath: `profile/${user?.uid}/${Date.now()}-${file.name}`,
+      storagePath: `profile/${stringToExcludeNull(user?.uid)}/${Date.now()}-${file.name}`,
     });
   }, [user, uploadStorageUserImage, deleteStorageUserImage]);
 

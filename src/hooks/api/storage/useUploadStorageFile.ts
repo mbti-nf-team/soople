@@ -8,7 +8,7 @@ import useCatchStorageErrorWithToast from '../useCatchStorageErrorWithToast';
 type UploadFileRequest = {
   storagePath: string;
   file: File;
-}
+};
 
 function useUploadStorageFile() {
   const mutation = useMutation<string, StorageError, UploadFileRequest>((

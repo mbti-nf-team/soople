@@ -21,7 +21,7 @@ describe('useLessThenScrollY', () => {
     it('true를 반환해야만 한다', async () => {
       const { result } = useLessThenScrollYHook();
 
-      await act(async () => {
+      await act(() => {
         fireEvent.scroll(window, { target: { scrollY } });
         jest.advanceTimersByTime(200);
       });
@@ -34,7 +34,7 @@ describe('useLessThenScrollY', () => {
     it('false를 반환해야만 한다', async () => {
       const { result } = useLessThenScrollYHook();
 
-      await act(async () => {
+      await act(() => {
         fireEvent.scroll(window, { target: { scrollY: 200 } });
         jest.advanceTimersByTime(200);
       });

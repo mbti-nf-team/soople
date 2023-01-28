@@ -20,7 +20,7 @@ function useInfiniteFetchComments({ perPage }: InfiniteRequest) {
     ['comments', { id, perPage }],
     ({ pageParam }) => getGroupComments(id, {
       perPage,
-      lastUid: pageParam,
+      lastUid: pageParam as string,
     }),
     {
       getNextPageParam: ({ lastUid }) => lastUid,

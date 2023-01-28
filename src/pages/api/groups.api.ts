@@ -9,7 +9,7 @@ type FilterGroupsCondition = {
   tag: string;
   perPage?: string;
   lastUid?: string;
-}
+};
 
 const groupsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {

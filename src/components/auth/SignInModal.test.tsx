@@ -36,7 +36,7 @@ describe('SignInModal', () => {
 
         fireEvent.click(screen.getByTestId('close-icon'));
 
-        expect(handleClose).toBeCalledTimes(1);
+        expect(handleClose).toHaveBeenCalledTimes(1);
       });
     });
   });

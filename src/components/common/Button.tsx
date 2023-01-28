@@ -28,7 +28,6 @@ function Button({
   color = 'outlined', size = 'medium', href, children, type = 'button', isLoading = false, disabled, ...rest
 }: PropsWithChildren<Props>): ReactElement {
   const theme = useTheme();
-  const htmlProps = rest as any;
 
   if (href) {
     return (
@@ -36,7 +35,7 @@ function Button({
         href={href}
         color={color}
         size={size}
-        {...htmlProps}
+        {...rest as any}
       >
         {children}
       </StyledLink>
@@ -49,7 +48,7 @@ function Button({
       size={size}
       type={type}
       disabled={disabled || isLoading}
-      {...htmlProps}
+      {...rest as any}
     >
       <FadeLoader
         height={size === 'large' ? 5.4 : 4}

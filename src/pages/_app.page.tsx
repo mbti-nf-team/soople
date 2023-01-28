@@ -31,11 +31,11 @@ type PageProps = {
 
 type NextPageWithLayout = NextPage<PageProps> & {
   getLayout?: (page: ReactElement) => ReactNode;
-}
+};
 
 type AppPropsWithLayout = AppProps<PageProps> & {
   Component: NextPageWithLayout;
-}
+};
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);

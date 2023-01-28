@@ -16,7 +16,7 @@ type CompletedGroupResponse = {
   groupId: string;
   completedGroupForm: CompletedGroupForm;
   alarmForms: AlarmForm[];
-}
+};
 
 function useUpdateCompletedApply() {
   const queryClient = useQueryClient();

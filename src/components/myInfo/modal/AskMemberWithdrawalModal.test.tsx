@@ -25,7 +25,7 @@ describe('AskMemberWithdrawalModal', () => {
 
         fireEvent.click(screen.getByText('닫기'));
 
-        expect(handleClose).toBeCalledTimes(1);
+        expect(handleClose).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -37,7 +37,7 @@ describe('AskMemberWithdrawalModal', () => {
           fireEvent.click(button);
         });
 
-        expect(handleWithdrawal).toBeCalledTimes(1);
+        expect(handleWithdrawal).toHaveBeenCalledTimes(1);
       });
     });
   });

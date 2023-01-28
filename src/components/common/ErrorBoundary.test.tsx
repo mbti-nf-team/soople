@@ -47,7 +47,7 @@ describe('ErrorBoundary', () => {
     it('router.replace가 "/500"과 함께 호출되어야만 한다', () => {
       renderErrorBoundary();
 
-      expect(mockReplace).toBeCalledWith('/500');
+      expect(mockReplace).toHaveBeenCalledWith('/500');
     });
   });
 
@@ -63,7 +63,7 @@ describe('ErrorBoundary', () => {
     it('router.replace는 호출되지 않아만한다', () => {
       renderErrorBoundary();
 
-      expect(mockReplace).not.toBeCalled();
+      expect(mockReplace).not.toHaveBeenCalled();
     });
   });
 });

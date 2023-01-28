@@ -18,7 +18,7 @@ function useInfiniteFetchUserAppliedGroups({ userUid, perPage }: UserAppliedGrou
     ['appliedGroups', { userUid, perPage }],
     ({ pageParam }) => getUserAppliedGroups(userUid as string, {
       perPage,
-      lastUid: pageParam,
+      lastUid: pageParam as string,
     }),
     {
       getNextPageParam: ({ lastUid }) => lastUid,

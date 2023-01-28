@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, {
   CSSProperties, ReactElement, useCallback, useEffect, useRef,
 } from 'react';

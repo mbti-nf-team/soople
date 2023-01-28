@@ -32,7 +32,7 @@ describe('AlarmItem', () => {
 
         fireEvent.click(screen.getByText(ALARM_FIXTURE.group.title));
 
-        expect(handleClick).toBeCalledWith(ALARM_FIXTURE.uid);
+        expect(handleClick).toHaveBeenCalledWith(ALARM_FIXTURE.uid);
       });
     });
   });
@@ -47,7 +47,7 @@ describe('AlarmItem', () => {
 
         fireEvent.click(screen.getByText(ALARM_FIXTURE.group.title));
 
-        expect(handleClick).not.toBeCalled();
+        expect(handleClick).not.toHaveBeenCalled();
       });
     });
   });

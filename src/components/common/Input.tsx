@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, {
+import {
   ChangeEvent,
   DetailedHTMLProps,
   ForwardedRef,
@@ -20,7 +20,7 @@ import HelperMessage from './HelperMessage';
 import Label from './Label';
 
 interface Props extends DetailedHTMLProps<
-  InputHTMLAttributes<HTMLInputElement>, HTMLInputElement
+InputHTMLAttributes<HTMLInputElement>, HTMLInputElement
 > {
   id: string;
   labelText: string;

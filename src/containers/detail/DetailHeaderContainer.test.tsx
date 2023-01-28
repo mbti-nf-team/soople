@@ -65,7 +65,7 @@ describe('DetailHeaderContainer', () => {
 
         fireEvent.click(screen.getByText('신청하기'));
 
-        expect(handleSetSignInModalVisible).toBeCalledWith(true);
+        expect(handleSetSignInModalVisible).toHaveBeenCalledWith(true);
       });
     });
   });
@@ -93,7 +93,7 @@ describe('DetailHeaderContainer', () => {
             fireEvent.submit(screen.getByTestId('apply-button'));
           });
 
-          expect(mutate).toBeCalledWith({
+          expect(mutate).toHaveBeenCalledWith({
             portfolioUrl: PROFILE_FIXTURE.portfolioUrl,
             introduce: 'test',
             group: GROUP_FIXTURE,
@@ -108,7 +108,7 @@ describe('DetailHeaderContainer', () => {
         it('successToast가 "팀 신청을 완료했어요."와 함께 호출되어야만 한다', () => {
           renderDetailHeaderContainer();
 
-          expect(successToast).toBeCalledWith('팀 신청을 완료했어요.');
+          expect(successToast).toHaveBeenCalledWith('팀 신청을 완료했어요.');
         });
       });
     });
@@ -129,7 +129,7 @@ describe('DetailHeaderContainer', () => {
           fireEvent.click(screen.getByText('신청 취소'));
           fireEvent.click(screen.getByText('취소하기'));
 
-          expect(mutate).toBeCalledWith(APPLICANT_FIXTURE.uid);
+          expect(mutate).toHaveBeenCalledWith(APPLICANT_FIXTURE.uid);
         });
       });
 
@@ -139,7 +139,7 @@ describe('DetailHeaderContainer', () => {
         it('successToast가 "신청을 취소했어요."와 함께 호출되어야만 한다', () => {
           renderDetailHeaderContainer();
 
-          expect(successToast).toBeCalledWith('신청을 취소했어요.');
+          expect(successToast).toHaveBeenCalledWith('신청을 취소했어요.');
         });
       });
     });

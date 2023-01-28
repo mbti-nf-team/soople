@@ -73,7 +73,7 @@ describe('RecruitPostsContainer', () => {
       it('errorToast가 호출되어야만 한다', () => {
         renderRecruitPostsContainer();
 
-        expect(errorToast).toBeCalledWith('접근 권한이 없는 페이지에요.');
+        expect(errorToast).toHaveBeenCalledWith('접근 권한이 없는 페이지에요.');
       });
     });
   });
@@ -96,7 +96,7 @@ describe('RecruitPostsContainer', () => {
 
           fireEvent.click(screen.getByText('팀 모집하기'));
 
-          expect(mockPush).toBeCalledWith('/write');
+          expect(mockPush).toHaveBeenCalledWith('/write');
         });
       });
     });
@@ -110,7 +110,7 @@ describe('RecruitPostsContainer', () => {
 
           fireEvent.click(screen.getByText('팀 모집하기'));
 
-          expect(handleSignInModalVisible).toBeCalledWith(true);
+          expect(handleSignInModalVisible).toHaveBeenCalledWith(true);
         });
       });
     });

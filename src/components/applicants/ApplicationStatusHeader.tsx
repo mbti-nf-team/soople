@@ -13,7 +13,7 @@ import SubHeader from '../common/SubHeader';
 
 import CompleteApplyFormModal from './CompleteApplyFormModal';
 
-interface Props{
+interface Props {
   goBack: () => void;
   applicants: Applicant[];
   onSubmit: (completedGroupForm: CompletedGroupForm) => void;

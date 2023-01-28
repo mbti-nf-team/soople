@@ -62,7 +62,7 @@ describe('TagsForm', () => {
             expect(input).toHaveValue('');
           });
 
-          expect(handleChange).toBeCalledTimes(2);
+          expect(handleChange).toHaveBeenCalledTimes(2);
         });
       });
 
@@ -78,7 +78,7 @@ describe('TagsForm', () => {
 
           fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 });
 
-          expect(handleChange).not.toBeCalled();
+          expect(handleChange).not.toHaveBeenCalled();
         });
       });
 
@@ -97,7 +97,7 @@ describe('TagsForm', () => {
 
             expect(input).toHaveValue('');
 
-            expect(handleChange).not.toBeCalled();
+            expect(handleChange).not.toHaveBeenCalled();
           });
         });
       });
@@ -117,7 +117,7 @@ describe('TagsForm', () => {
           fireEvent.keyDown(input, { key: ',', code: 188, charCode: 188 });
         });
 
-        expect(handleChange).toBeCalled();
+        expect(handleChange).toHaveBeenCalled();
       });
     });
 
@@ -137,7 +137,7 @@ describe('TagsForm', () => {
           expect(input).toHaveValue(tag);
         });
 
-        expect(handleChange).not.toBeCalled();
+        expect(handleChange).not.toHaveBeenCalled();
       });
     });
 
@@ -168,7 +168,7 @@ describe('TagsForm', () => {
 
       expect(container).not.toHaveTextContent('#JavaScript');
 
-      expect(handleChange).toBeCalledWith([]);
+      expect(handleChange).toHaveBeenCalledWith([]);
     });
   });
 });

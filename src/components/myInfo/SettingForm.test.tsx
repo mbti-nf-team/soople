@@ -74,7 +74,7 @@ describe('SettingForm', () => {
       const input = screen.getByPlaceholderText('닉네임을 입력하세요');
 
       await act(async () => {
-        screen.getAllByTestId('clear-icon').forEach((inputTag) => {
+        await screen.getAllByTestId('clear-icon').forEach((inputTag) => {
           fireEvent.click(inputTag);
         });
       });
@@ -118,10 +118,10 @@ describe('SettingForm', () => {
         fireEvent.click(screen.getByText('백엔드'));
 
         await act(async () => {
-          fireEvent.submit(button);
+          await fireEvent.submit(button);
         });
 
-        expect(handleSubmit).toBeCalledTimes(1);
+        expect(handleSubmit).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -176,7 +176,7 @@ describe('SettingForm', () => {
       fireEvent.click(screen.getByText('회원 탈퇴하기'));
       fireEvent.click(screen.getByText('탈퇴하기'));
 
-      await act(() => expect(handleWithdrawal).toBeCalled());
+      await act(() => expect(handleWithdrawal).toHaveBeenCalled());
     });
   });
 });

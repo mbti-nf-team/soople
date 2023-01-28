@@ -27,7 +27,7 @@ describe('useRefreshToken', () => {
     it('getIdToken이 호출되지 않아야만 한다', async () => {
       useRefreshTokenHook();
 
-      await act(async () => {
+      await act(() => {
         jest.advanceTimersByTime(10 * 60 * 1000);
       });
 
@@ -49,11 +49,11 @@ describe('useRefreshToken', () => {
     it('10분마다 getIdToken이 호출되어야만 한다', async () => {
       useRefreshTokenHook();
 
-      await act(async () => {
+      await act(() => {
         jest.advanceTimersByTime(10 * 60 * 1000);
       });
 
-      expect(getIdToken).toBeCalledTimes(1);
+      expect(getIdToken).toHaveBeenCalledTimes(1);
     });
 
     it('"getIdToken"이 호출되어야만 한다', async () => {
@@ -63,7 +63,7 @@ describe('useRefreshToken', () => {
         await result.current.mutate();
       });
 
-      expect(getIdToken).toBeCalledTimes(1);
+      expect(getIdToken).toHaveBeenCalledTimes(1);
     });
   });
 });

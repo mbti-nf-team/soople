@@ -37,7 +37,7 @@ describe('useSignUp', () => {
       await result.current.mutate(PROFILE_FIXTURE);
     });
 
-    expect(postUserProfile).toBeCalledWith(PROFILE_FIXTURE);
-    expect(replace).toBeCalledWith('/');
+    expect(postUserProfile).toHaveBeenCalledWith(PROFILE_FIXTURE);
+    expect(replace).toHaveBeenCalledWith('/');
   });
 });

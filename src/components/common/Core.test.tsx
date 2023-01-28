@@ -46,13 +46,13 @@ describe('Core', () => {
   it('useGetUserToken가 호출되어야만 한다', () => {
     renderCore();
 
-    expect(useGetUserToken).toBeCalled();
+    expect(useGetUserToken).toHaveBeenCalled();
   });
 
   context('모바일 환경 경우', () => {
     given('width', () => '400px');
 
-    it('닫기 버튼이 안보여야만 한다', async () => {
+    it('닫기 버튼이 안보여야만 한다', () => {
       renderCore();
 
       expect(screen.queryByTestId('close-icon')).toBeNull();

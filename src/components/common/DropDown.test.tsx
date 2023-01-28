@@ -26,7 +26,7 @@ describe('DropDown', () => {
 
         fireEvent.click(screen.getByText('로그아웃'));
 
-        expect(handleSignOut).toBeCalledTimes(1);
+        expect(handleSignOut).toHaveBeenCalledTimes(1);
       });
     });
 

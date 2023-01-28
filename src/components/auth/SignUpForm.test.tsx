@@ -32,7 +32,7 @@ describe('SignUpForm', () => {
       const input = screen.getByPlaceholderText('닉네임을 입력해주세요');
 
       await act(async () => {
-        screen.getAllByTestId('clear-icon').forEach((inputTag) => {
+        await screen.getAllByTestId('clear-icon').forEach((inputTag) => {
           fireEvent.click(inputTag);
         });
       });
@@ -77,10 +77,10 @@ describe('SignUpForm', () => {
         fireEvent.click(screen.getByText('백엔드'));
 
         await act(async () => {
-          fireEvent.submit(button);
+          await fireEvent.submit(button);
         });
 
-        expect(handleSubmit).toBeCalledTimes(1);
+        expect(handleSubmit).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -100,7 +100,7 @@ describe('SignUpForm', () => {
             await fireEvent.submit(button);
           });
 
-          expect(handleSubmit).not.toBeCalled();
+          expect(handleSubmit).not.toHaveBeenCalled();
           expect(button).toHaveAttribute('disabled');
         });
       });
@@ -117,7 +117,7 @@ describe('SignUpForm', () => {
             await fireEvent.submit(button);
           });
 
-          expect(handleSubmit).not.toBeCalled();
+          expect(handleSubmit).not.toHaveBeenCalled();
           expect(button).toHaveAttribute('disabled');
         });
       });

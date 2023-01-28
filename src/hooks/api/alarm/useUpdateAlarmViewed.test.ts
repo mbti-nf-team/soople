@@ -24,6 +24,6 @@ describe('useUpdateAlarmViewed', () => {
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-    expect(patchAlarmViewed).toBeCalledTimes(1);
+    expect(patchAlarmViewed).toHaveBeenCalledTimes(1);
   });
 });

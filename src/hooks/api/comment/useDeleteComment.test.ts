@@ -28,6 +28,6 @@ describe('useDeleteComment', () => {
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-    expect(deleteGroupComment).toBeCalled();
+    expect(deleteGroupComment).toHaveBeenCalled();
   });
 });

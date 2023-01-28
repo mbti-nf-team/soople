@@ -55,7 +55,7 @@ function PublishModalForm({
     value,
   }) => value === recruitmentEndSetting);
 
-  const handleChangeFields = (e: ChangeEvent<HTMLInputElement| HTMLTextAreaElement>) => {
+  const handleChangeFields = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = e.target;
 
     onChangeFields({ [name]: value });

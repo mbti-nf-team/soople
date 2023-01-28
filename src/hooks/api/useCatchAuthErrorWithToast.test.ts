@@ -33,7 +33,7 @@ describe('useCatchAuthErrorWithToast', () => {
     it('errorToast는 호출되지 않아야만 한다', () => {
       useCatchAuthErrorWithToastHook();
 
-      expect(errorToast).not.toBeCalled();
+      expect(errorToast).not.toHaveBeenCalled();
     });
   });
 
@@ -44,7 +44,7 @@ describe('useCatchAuthErrorWithToast', () => {
     it('errorToast는 기본 에러 메시지와 함께 호출되어야만 한다', () => {
       useCatchAuthErrorWithToastHook();
 
-      expect(errorToast).toBeCalledWith(defaultErrorMessage);
+      expect(errorToast).toHaveBeenCalledWith(defaultErrorMessage);
     });
   });
 
@@ -57,7 +57,7 @@ describe('useCatchAuthErrorWithToast', () => {
       it('errorToast는 "알 수 없는 오류가 발생했습니다."와 함께 호출되어야만 한다', () => {
         useCatchAuthErrorWithToastHook();
 
-        expect(errorToast).toBeCalledWith('알 수 없는 오류가 발생했습니다.');
+        expect(errorToast).toHaveBeenCalledWith('알 수 없는 오류가 발생했습니다.');
       });
     });
 
@@ -69,7 +69,7 @@ describe('useCatchAuthErrorWithToast', () => {
       it('errorToast는 code의 error 메시지와 함께 호출되어야만 한다', () => {
         useCatchAuthErrorWithToastHook();
 
-        expect(errorToast).toBeCalledWith('다시 로그인 후 진행해주세요.');
+        expect(errorToast).toHaveBeenCalledWith('다시 로그인 후 진행해주세요.');
       });
     });
   });

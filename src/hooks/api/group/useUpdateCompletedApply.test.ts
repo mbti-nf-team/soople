@@ -51,9 +51,9 @@ describe('useUpdateCompletedApply', () => {
       });
     });
 
-    expect(patchCompletedGroup).toBeCalled();
-    expect(postAddAlarm).toBeCalled();
+    expect(patchCompletedGroup).toHaveBeenCalled();
+    expect(postAddAlarm).toHaveBeenCalled();
     expect(result.current.isSuccess).toBeTruthy();
-    expect(mockReplace).toBeCalledWith(`/detail/${groupId}`);
+    expect(mockReplace).toHaveBeenCalledWith(`/detail/${groupId}`);
   });
 });

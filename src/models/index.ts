@@ -8,7 +8,7 @@ export interface GroupQuery extends ParsedUrlQuery {
 
 export type SelectOption<T> = {
   value: T; label: string;
-}
+};
 
 export interface InfiniteResponse<T> {
   items: T[];

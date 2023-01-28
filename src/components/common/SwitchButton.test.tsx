@@ -18,7 +18,7 @@ describe('SwitchButton', () => {
 
       fireEvent.click(screen.getByTestId('switch-button'));
 
-      expect(handleChange).toBeCalledTimes(1);
+      expect(handleChange).toHaveBeenCalledTimes(1);
     });
   });
 });

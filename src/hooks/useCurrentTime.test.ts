@@ -25,7 +25,7 @@ describe('useCurrentTime', () => {
 
       const now = Date.now();
 
-      await act(async () => {
+      await act(() => {
         jest.advanceTimersByTime(1000);
       });
 
@@ -41,7 +41,7 @@ describe('useCurrentTime', () => {
 
       const now = Date.now();
 
-      await act(async () => {
+      await act(() => {
         jest.advanceTimersByTime(1000);
       });
 
@@ -63,7 +63,7 @@ describe('useCurrentTime', () => {
 
         const now = Date.now();
 
-        await act(async () => {
+        await act(() => {
           jest.advanceTimersByTime(1000);
         });
 
@@ -84,7 +84,7 @@ describe('useCurrentTime', () => {
 
         const now = Date.now();
 
-        await act(async () => {
+        await act(() => {
           jest.advanceTimersByTime(1000);
         });
 

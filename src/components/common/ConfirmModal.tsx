@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from 'react';
+import { ReactElement, useRef } from 'react';
 import { X as CloseSvg } from 'react-feather';
 import { useClickAway, useLockBodyScroll } from 'react-use';
 

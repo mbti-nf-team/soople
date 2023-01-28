@@ -104,7 +104,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('bold-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -114,7 +114,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('h1-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -124,7 +124,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('h2-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -134,7 +134,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('h3-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -144,7 +144,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('italic-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -154,7 +154,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('underline-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -164,7 +164,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('strike-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -174,7 +174,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('blockquote-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -184,7 +184,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('code-block-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -194,7 +194,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('bullet-list-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 
@@ -204,7 +204,7 @@ describe('EditorToolbar', () => {
 
       fireEvent.click(screen.getByTestId('ordered-list-button'));
 
-      expect(useChainedCommands).toBeCalled();
+      expect(useChainedCommands).toHaveBeenCalled();
     });
   });
 

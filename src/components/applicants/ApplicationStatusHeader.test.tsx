@@ -66,7 +66,7 @@ describe('ApplicationStatusHeader', () => {
 
       fireEvent.click(screen.getByText('1명의 신청현황'));
 
-      expect(handleGoBack).toBeCalledTimes(1);
+      expect(handleGoBack).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -81,7 +81,7 @@ describe('ApplicationStatusHeader', () => {
         fireEvent.click(screen.getByText('모집 완료'));
         fireEvent.click(screen.getByText('완료하기'));
 
-        expect(handleSubmit).toBeCalledTimes(1);
+        expect(handleSubmit).toHaveBeenCalledTimes(1);
       });
     });
 

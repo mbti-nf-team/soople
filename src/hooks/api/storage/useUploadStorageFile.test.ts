@@ -31,6 +31,6 @@ describe('useUploadStorageFile', () => {
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-    expect(uploadStorageFile).toBeCalledWith({ file: { name: thumbnailUrl } as File, storagePath: '/test' });
+    expect(uploadStorageFile).toHaveBeenCalledWith({ file: { name: thumbnailUrl } as File, storagePath: '/test' });
   });
 });

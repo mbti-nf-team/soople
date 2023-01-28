@@ -46,7 +46,7 @@ describe('MembersViewModal', () => {
 
         fireEvent.click(screen.getByText('닫기'));
 
-        expect(handleClose).toBeCalled();
+        expect(handleClose).toHaveBeenCalled();
       });
     });
   });
@@ -67,7 +67,7 @@ describe('MembersViewModal', () => {
 
       fireEvent.click(screen.getByTestId('close-icon'));
 
-      expect(handleClose).toBeCalled();
+      expect(handleClose).toHaveBeenCalled();
     });
   });
 

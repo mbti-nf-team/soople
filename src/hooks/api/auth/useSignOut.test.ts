@@ -36,7 +36,7 @@ describe('useSignOut', () => {
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-    expect(postSignOut).toBeCalled();
-    expect(replace).toBeCalledWith('/', undefined, { shallow: true });
+    expect(postSignOut).toHaveBeenCalled();
+    expect(replace).toHaveBeenCalledWith('/', undefined, { shallow: true });
   });
 });

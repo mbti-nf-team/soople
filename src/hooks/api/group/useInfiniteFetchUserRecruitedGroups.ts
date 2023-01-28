@@ -18,7 +18,7 @@ function useInfiniteFetchUserRecruitedGroups({ userUid, perPage }: UserRecruited
     ['recruitedGroups', { userUid, perPage }],
     ({ pageParam }) => getUserRecruitedGroups(userUid as string, {
       perPage,
-      lastUid: pageParam,
+      lastUid: pageParam as string,
     }),
     {
       getNextPageParam: ({ lastUid }) => lastUid,

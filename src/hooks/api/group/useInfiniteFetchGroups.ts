@@ -18,7 +18,7 @@ function useInfiniteFetchGroups() {
     pageParam,
   }) => fetchGroups(groupsCondition, {
     perPage: 20,
-    lastUid: pageParam,
+    lastUid: pageParam as string,
   }), {
     getNextPageParam: ({ lastUid }) => lastUid,
     suspense: true,

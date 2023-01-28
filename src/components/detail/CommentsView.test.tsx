@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import useInfiniteFetchComments from '@/hooks/api/comment/useInfiniteFetchComments';
-import { Profile } from '@/models/auth';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
 import PROFILE_FIXTURE from '../../../fixtures/profile';
@@ -33,7 +32,7 @@ describe('CommentsView', () => {
   const renderCommentsView = () => render((
     <CommentsView
       perPage={15}
-      user={PROFILE_FIXTURE as Profile}
+      user={PROFILE_FIXTURE}
       onRemove={handleRemove}
     />
   ));
@@ -54,7 +53,7 @@ describe('CommentsView', () => {
 
       fireEvent.click(screen.getByText('삭제'));
 
-      expect(handleRemove).toBeCalledWith(COMMENT_FIXTURE.commentId);
+      expect(handleRemove).toHaveBeenCalledWith(COMMENT_FIXTURE.commentId);
     });
   });
 });

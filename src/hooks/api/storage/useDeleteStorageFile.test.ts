@@ -28,6 +28,6 @@ describe('useDeleteStorageFile', () => {
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
-    expect(deleteStorageFile).toBeCalledWith(thumbnailUrl);
+    expect(deleteStorageFile).toHaveBeenCalledWith(thumbnailUrl);
   });
 });

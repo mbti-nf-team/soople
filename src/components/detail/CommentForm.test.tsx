@@ -68,7 +68,7 @@ describe('CommentForm', () => {
 
           fireEvent.click(screen.getByText('댓글 남기기'));
 
-          expect(handleSubmit).toBeCalledWith({
+          expect(handleSubmit).toHaveBeenCalledWith({
             content,
             writer: PROFILE_FIXTURE,
           });
@@ -90,7 +90,7 @@ describe('CommentForm', () => {
           fireEvent.click(button);
 
           expect(button).toHaveAttribute('disabled');
-          expect(handleSubmit).not.toBeCalled();
+          expect(handleSubmit).not.toHaveBeenCalled();
         });
       });
     });

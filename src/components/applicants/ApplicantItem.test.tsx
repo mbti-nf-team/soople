@@ -49,7 +49,7 @@ describe('ApplicantItem', () => {
 
         fireEvent.click(screen.getByText('해제'));
 
-        expect(handleToggle).toBeCalledWith({
+        expect(handleToggle).toHaveBeenCalledWith({
           ...APPLICANT_FIXTURE,
           applicant: mockApplicant,
           isConfirm: true,
@@ -67,7 +67,7 @@ describe('ApplicantItem', () => {
 
         fireEvent.click(screen.getByText('선택'));
 
-        expect(handleToggle).toBeCalledWith({
+        expect(handleToggle).toHaveBeenCalledWith({
           ...APPLICANT_FIXTURE,
           applicant: mockApplicant,
           isConfirm: false,

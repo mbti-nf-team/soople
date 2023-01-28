@@ -39,7 +39,7 @@ describe('ViewModalWindow', () => {
 
         fireEvent.click(screen.getByTestId('close-icon'));
 
-        expect(handleClose).toBeCalledTimes(1);
+        expect(handleClose).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -50,7 +50,7 @@ describe('ViewModalWindow', () => {
     it('아무것도 나타나지 않아야만 한다', async () => {
       const { container } = renderViewModalWindow();
 
-      await act(async () => {
+      await act(() => {
         jest.advanceTimersByTime(400);
       });
 

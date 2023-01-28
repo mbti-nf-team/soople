@@ -29,7 +29,7 @@ describe('useGetUserToken', () => {
 
     await waitFor(() => !!result.current);
 
-    expect(useAuthIdToken).toBeCalled();
+    expect(useAuthIdToken).toHaveBeenCalled();
   });
 });
 
@@ -42,7 +42,7 @@ describe('onGetTokenSuccess', () => {
     it('removeToken이 호출되어야만 한다', () => {
       onGetTokenSuccess(null);
 
-      expect(removeToken).toBeCalled();
+      expect(removeToken).toHaveBeenCalled();
     });
   });
 
@@ -52,7 +52,7 @@ describe('onGetTokenSuccess', () => {
         token: 'token',
       } as IdTokenResult);
 
-      expect(setCookie).toBeCalledWith(null, 'token', 'token', { path: '/' });
+      expect(setCookie).toHaveBeenCalledWith(null, 'token', 'token', { path: '/' });
     });
   });
 });

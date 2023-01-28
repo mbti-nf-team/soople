@@ -22,7 +22,7 @@ function useCatchAuthErrorWithToast({ isError, error, defaultErrorMessage }: Pro
       [TOO_MANY_ATTEMPTS_TRY_LATER]: '잠시 후 다시 시도해주세요.',
       [TOKEN_EXPIRED]: '토큰이 만료되었어요. 다시 로그인 후 진행해주세요.',
       unknown: '알 수 없는 오류가 발생했습니다.',
-    } as any;
+    };
 
     if (!isError && !error) {
       return;
@@ -33,7 +33,7 @@ function useCatchAuthErrorWithToast({ isError, error, defaultErrorMessage }: Pro
       return;
     }
 
-    errorToast(authErrorMessage[error?.code || 'unknown']);
+    errorToast(authErrorMessage[error?.code as keyof typeof authErrorMessage || 'unknown']);
   }, [isError, error, defaultErrorMessage]);
 }
 

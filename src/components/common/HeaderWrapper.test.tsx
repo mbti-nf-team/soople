@@ -1,3 +1,5 @@
+import { PropsWithChildren } from 'react';
+
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { groupsConditionState } from '@/recoil/group/atom';
@@ -8,7 +10,7 @@ import RecoilObserver from '@/test/RecoilObserver';
 
 import HeaderWrapper from './HeaderWrapper';
 
-jest.mock('next/link', () => ({ children }: any) => children);
+jest.mock('next/link', () => ({ children }: PropsWithChildren) => children);
 
 describe('HeaderWrapper', () => {
   const handleChange = jest.fn();
@@ -36,7 +38,7 @@ describe('HeaderWrapper', () => {
 
       fireEvent.click(screen.getByTestId('logo-icon'));
 
-      expect(handleChange).toBeCalledWith({
+      expect(handleChange).toHaveBeenCalledWith({
         isFilterCompleted: false,
         category: ['study', 'project'],
         tag: '',

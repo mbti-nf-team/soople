@@ -26,7 +26,7 @@ describe('Tag', () => {
 
         fireEvent.click(screen.getByTestId('remove-icon'));
 
-        expect(handleClick).toBeCalledTimes(1);
+        expect(handleClick).toHaveBeenCalledTimes(1);
       });
     });
   });

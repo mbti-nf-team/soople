@@ -13,7 +13,7 @@ import HelperMessage from './HelperMessage';
 import Label from './Label';
 
 interface Props extends DetailedHTMLProps<
-  TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement
+TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement
 > {
   height?: string;
   placeholder: string;
@@ -83,7 +83,7 @@ const TextareaWrapper = styled.div<{ isError?: boolean; }>`
   }
 `;
 
-const TextareaBlock = styled.textarea<{isError?: boolean; height?: string }>`
+const TextareaBlock = styled.textarea<{ isError?: boolean; height?: string }>`
   ${body1Font()};
   width: 100%;
   height: ${({ height }) => (height || '72px')};

@@ -100,7 +100,7 @@ describe('WriteHeaderContainer', () => {
 
           fireEvent.click(screen.getByText('등록하기'));
 
-          expect(handleSetPublishModalVisible).not.toBeCalled();
+          expect(handleSetPublishModalVisible).not.toHaveBeenCalled();
         });
       });
 
@@ -110,7 +110,7 @@ describe('WriteHeaderContainer', () => {
 
           fireEvent.click(screen.getByText('팀 모집하기'));
 
-          expect(mockBack).toBeCalledTimes(1);
+          expect(mockBack).toHaveBeenCalledTimes(1);
         });
       });
     });
@@ -126,7 +126,7 @@ describe('WriteHeaderContainer', () => {
 
           fireEvent.click(screen.getByText('등록하기'));
 
-          expect(handleSetPublishModalVisible).toBeCalledWith(true);
+          expect(handleSetPublishModalVisible).toHaveBeenCalledWith(true);
         });
       });
     });

@@ -131,7 +131,7 @@ describe('PublishModalContainer', () => {
 
             fireEvent.click(screen.getByText('등록하기'));
 
-            expect(mutate).not.toBeCalled();
+            expect(mutate).not.toHaveBeenCalled();
           });
         });
 
@@ -154,7 +154,7 @@ describe('PublishModalContainer', () => {
 
             fireEvent.click(screen.getByText('등록하기'));
 
-            expect(mutate).toBeCalledWith({
+            expect(mutate).toHaveBeenCalledWith({
               writeFields,
               profile: 'user',
             });
@@ -174,7 +174,7 @@ describe('PublishModalContainer', () => {
 
             fireEvent.click(screen.getByText('저장하기'));
 
-            expect(mutate).not.toBeCalled();
+            expect(mutate).not.toHaveBeenCalled();
           });
         });
 
@@ -197,7 +197,7 @@ describe('PublishModalContainer', () => {
 
             fireEvent.click(screen.getByText('저장하기'));
 
-            expect(mutate).toBeCalledWith({
+            expect(mutate).toHaveBeenCalledWith({
               writeFields,
               deleteTags: ['test'],
               groupId: FIXTURE_GROUP.groupId,
@@ -215,7 +215,7 @@ describe('PublishModalContainer', () => {
 
         fireEvent.change(screen.getByLabelText('소개글'), { target: { value: shortDescription } });
 
-        expect(handleChangeWriteFields).toBeCalledWith({
+        expect(handleChangeWriteFields).toHaveBeenCalledWith({
           ...WRITE_FIELDS_FIXTURE,
           title,
           shortDescription,

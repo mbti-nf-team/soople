@@ -25,7 +25,7 @@ describe('AskApplyCancelModal', () => {
 
         fireEvent.click(screen.getByText('닫기'));
 
-        expect(handleClose).toBeCalledTimes(1);
+        expect(handleClose).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -37,7 +37,7 @@ describe('AskApplyCancelModal', () => {
           fireEvent.click(button);
         });
 
-        expect(handleCancel).toBeCalledTimes(1);
+        expect(handleCancel).toHaveBeenCalledTimes(1);
       });
     });
   });

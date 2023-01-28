@@ -16,7 +16,7 @@ describe('errorToast', () => {
   it('toast.error가 메시지와 함께 호출되어야만 한다', () => {
     errorToast(errorMessage);
 
-    expect(toast.error).toBeCalledTimes(1);
+    expect(toast.error).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -26,7 +26,7 @@ describe('successToast', () => {
   it('toast.success가 메시지와 함께 호출되어야만 한다', () => {
     successToast(successMessage);
 
-    expect(toast.success).toBeCalledTimes(1);
+    expect(toast.success).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -36,6 +36,6 @@ describe('defaultToast', () => {
   it('toast.info가 메시지와 함께 호출되어야만 한다', () => {
     defaultToast(defaultMessage);
 
-    expect(toast.info).toBeCalledTimes(1);
+    expect(toast.info).toHaveBeenCalledTimes(1);
   });
 });

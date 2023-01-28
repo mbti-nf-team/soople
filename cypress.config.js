@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-unused-vars */
 import { defineConfig } from 'cypress';
 import { plugin as cypressFirebasePlugin } from 'cypress-firebase';
 import admin from 'firebase-admin';

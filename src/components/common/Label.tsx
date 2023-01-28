@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import { body2Font } from '@/styles/fontStyles';
 
 interface Props extends DetailedHTMLProps<
-  LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement
+LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement
 > {
   isError?: boolean;
   labelText: string;

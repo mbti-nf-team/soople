@@ -42,8 +42,8 @@ describe('useEditGroup', () => {
       });
     });
 
-    expect(patchEditGroup).toBeCalledWith(groupId, WRITE_FIELDS_FIXTURE);
+    expect(patchEditGroup).toHaveBeenCalledWith(groupId, WRITE_FIELDS_FIXTURE);
     expect(result.current.isSuccess).toBeTruthy();
-    expect(replace).toBeCalledWith(`/detail/${groupId}`);
+    expect(replace).toHaveBeenCalledWith(`/detail/${groupId}`);
   });
 });

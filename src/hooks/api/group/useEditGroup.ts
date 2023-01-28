@@ -16,7 +16,7 @@ type EditGroupRequest = {
   groupId: string;
   writeFields: WriteFields;
   deleteTags: string[];
-}
+};
 
 function useEditGroup() {
   const { replace } = useRouter();
