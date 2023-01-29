@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
 
 import DetailContentsSection from '@/components/detail/DetailContentsSection';
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';

@@ -1,6 +1,4 @@
-import React, {
-  ReactElement, useEffect, useState,
-} from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 

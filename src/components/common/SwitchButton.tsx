@@ -1,4 +1,3 @@
-import React from 'react';
 import Toggle from 'react-toggle';
 
 import styled from '@emotion/styled';

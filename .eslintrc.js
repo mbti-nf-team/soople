@@ -36,7 +36,6 @@ module.exports = {
       extends: [
         'airbnb-typescript',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking',
       ],
       plugins: [
         '@typescript-eslint',
@@ -44,8 +43,6 @@ module.exports = {
       ],
       rules: {
         '@typescript-eslint/no-use-before-define': 'off',
-        '@typescript-eslint/no-floating-promises': 'off',
-        '@typescript-eslint/no-misused-promises': 'off',
       },
       parser: '@typescript-eslint/parser',
       parserOptions: {
@@ -58,10 +55,6 @@ module.exports = {
       rules: {
         'jest/no-identical-title': 'off',
         'testing-library/no-unnecessary-act': 'off',
-        '@typescript-eslint/await-thenable': 'off',
-        '@typescript-eslint/unbound-method': 'off',
-        '@typescript-eslint/no-unsafe-argument': 'off',
-        '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
       },
     },
@@ -96,22 +89,12 @@ module.exports = {
     '@emotion/pkg-renaming': 'error',
     'react-hooks/rules-of-hooks': 'off',
     'react/function-component-definition': 'off',
-    // 'import/extensions': ['error', 'ignorePackages', {
-    //   js: 'never',
-    //   jsx: 'never',
-    //   ts: 'never',
-    //   tsx: 'never',
-    // }],
-    // 'react/jsx-filename-extension': ['warn', {
-    //   extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    // }],
     'no-console': ['warn', {
       allow: ['warn', 'error'],
     }],
     'import/no-unresolved': 'error',
     'react/react-in-jsx-scope': 'off',
     'no-use-before-define': 'off',
-    // '@typescript-eslint/no-use-before-define': ['off'],
     'simple-import-sort/imports': ['error', {
       groups: [
         // Node.js builtins. You could also generate this regex if you use a `.js` config.
@@ -132,7 +115,6 @@ module.exports = {
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
     'no-undef': 'off',
-    // '@typescript-eslint/no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'error',
     'unused-imports/no-unused-vars': ['warn', {
       vars: 'all',

@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 
-import {
-  act, fireEvent, screen,
-} from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import InjectTestingRecoilState from '@/test/InjectTestingRecoilState';

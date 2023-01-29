@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { HTMLProps, PropsWithChildren, ReactElement } from 'react';
+import { HTMLProps, PropsWithChildren, ReactElement } from 'react';
 import FadeLoader from 'react-spinners/FadeLoader';
 
 import Link from 'next/link';
@@ -28,6 +28,7 @@ function Button({
   color = 'outlined', size = 'medium', href, children, type = 'button', isLoading = false, disabled, ...rest
 }: PropsWithChildren<Props>): ReactElement {
   const theme = useTheme();
+  const htmlProps = rest as any;
 
   if (href) {
     return (
@@ -35,7 +36,7 @@ function Button({
         href={href}
         color={color}
         size={size}
-        {...rest as any}
+        {...htmlProps}
       >
         {children}
       </StyledLink>
@@ -48,7 +49,7 @@ function Button({
       size={size}
       type={type}
       disabled={disabled || isLoading}
-      {...rest as any}
+      {...htmlProps}
     >
       <FadeLoader
         height={size === 'large' ? 5.4 : 4}

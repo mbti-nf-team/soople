@@ -1,6 +1,4 @@
-import React, {
-  ReactElement, useState,
-} from 'react';
+import { ReactElement, useState } from 'react';
 import Select, { GroupBase, OptionsOrGroups } from 'react-select';
 import { useIsomorphicLayoutEffect } from 'react-use';
 

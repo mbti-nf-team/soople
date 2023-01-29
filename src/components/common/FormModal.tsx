@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, {
+import {
   FormEvent, PropsWithChildren, ReactElement, ReactNode,
 } from 'react';
 import { X as CloseSvg } from 'react-feather';

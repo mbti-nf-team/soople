@@ -1,4 +1,4 @@
-import React, { ReactElement, Suspense, useCallback } from 'react';
+import { ReactElement, Suspense, useCallback } from 'react';
 
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';

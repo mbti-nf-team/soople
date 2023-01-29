@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { X as CloseSvg } from 'react-feather';
 
 import { useTheme } from '@emotion/react';

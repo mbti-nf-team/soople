@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, LabelHTMLAttributes } from 'react';
+import { DetailedHTMLProps, LabelHTMLAttributes } from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';

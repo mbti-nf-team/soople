@@ -1,4 +1,4 @@
-import React, { memo, PropsWithChildren, ReactElement } from 'react';
+import { memo, PropsWithChildren, ReactElement } from 'react';
 
 import Link from 'next/link';
 

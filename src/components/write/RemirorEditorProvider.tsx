@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
 
 import { Remirror, useRemirror } from '@remirror/react';
 import { useRecoilValue } from 'recoil';

@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from 'react';
+import { ReactElement, useRef } from 'react';
 import { X as CloseIcon } from 'react-feather';
 import { useClickAway } from 'react-use';
 

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, {
+import {
   MouseEvent, ReactElement, useCallback, useEffect, useState,
 } from 'react';
 import { PlusCircle } from 'react-feather';

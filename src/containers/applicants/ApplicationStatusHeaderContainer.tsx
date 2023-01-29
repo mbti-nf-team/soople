@@ -1,4 +1,4 @@
-import React, {
+import {
   ReactElement, useCallback, useMemo,
 } from 'react';
 

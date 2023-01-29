@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useEffectOnce, useLocalStorage } from 'react-use';
 

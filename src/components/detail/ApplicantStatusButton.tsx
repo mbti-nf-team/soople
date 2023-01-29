@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import useBoolean from '@/hooks/useBoolean';
 import useResponsive from '@/hooks/useResponsive';

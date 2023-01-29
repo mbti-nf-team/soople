@@ -3,8 +3,7 @@ import { collection, doc } from 'firebase/firestore';
 import { ref } from 'firebase/storage';
 
 import {
-  collectionRef, docRef, googleProvider, signInRedirectOAuth,
-  storageRef,
+  collectionRef, docRef, googleProvider, signInRedirectOAuth, storageRef,
 } from '.';
 
 describe('firebase', () => {

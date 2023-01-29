@@ -10,7 +10,6 @@ interface Props<T> {
 function RecoilObserver<T>({ node, onChange }: PropsWithChildren<Props<T>>): null {
   const value = useRecoilValue(node);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   useEffect(() => onChange(value), [onChange, value]);
 
   return null;
