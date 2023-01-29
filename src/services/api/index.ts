@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import qs from 'qs';
 
-export const paramsSerializer = (params: any): string => qs.stringify(params, {
+export const paramsSerializer = <T>(params: T): string => qs.stringify(params, {
   arrayFormat: 'comma',
   indices: false,
 });

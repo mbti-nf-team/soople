@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, {
+import {
   CSSProperties, ReactElement, useCallback, useEffect, useRef,
 } from 'react';
 import ReactCanvasConfetti from 'react-canvas-confetti';

@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from 'react';
+import { memo, ReactElement } from 'react';
 
 import Link from 'next/link';
 

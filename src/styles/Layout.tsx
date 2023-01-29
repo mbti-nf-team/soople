@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 import styled from '@emotion/styled';
 import facepaint from 'facepaint';

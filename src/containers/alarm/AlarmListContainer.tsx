@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react';
+import { ReactElement, useCallback } from 'react';
 
 import Alarms from '@/components/alarm/Alarms';
 import useInfiniteFetchAlarms from '@/hooks/api/alarm/useInfiniteFetchAlarms';

@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react';
+import { ReactElement, useCallback } from 'react';
 import { Edit, Trash2 } from 'react-feather';
 
 import { useRouter } from 'next/router';

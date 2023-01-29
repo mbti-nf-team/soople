@@ -1,6 +1,4 @@
-import React, {
-  memo, ReactElement, useRef,
-} from 'react';
+import { memo, ReactElement, useRef } from 'react';
 import { Bell as AlarmIcon } from 'react-feather';
 import { useClickAway } from 'react-use';
 

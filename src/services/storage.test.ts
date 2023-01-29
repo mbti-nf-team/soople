@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable no-proto */
 import { loadItem, removeItem, saveItem } from './storage';
 

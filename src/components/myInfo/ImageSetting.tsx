@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent, memo, ReactElement, useRef,
 } from 'react';
 

@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from 'react';
+import { memo, ReactElement } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -39,9 +39,9 @@ function DetailContentsSection({ group, isGroupMember }: Props): ReactElement {
   };
 
   const convertedCleanHtml = filteredWithSanitizeHtml(unified()
-    .use(rehypeParse as never)
+    .use(rehypeParse)
     .use(rehypePrism)
-    .use(rehypeStringify as never)
+    .use(rehypeStringify)
     .processSync(content)
     .toString());
 

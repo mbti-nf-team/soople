@@ -1,4 +1,4 @@
-import React, { ReactElement, Suspense, useCallback } from 'react';
+import { ReactElement, Suspense, useCallback } from 'react';
 import { useLocalStorage } from 'react-use';
 
 import dynamic from 'next/dynamic';

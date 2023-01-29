@@ -1,4 +1,4 @@
-import React, { memo, PropsWithChildren, ReactElement } from 'react';
+import { memo, PropsWithChildren, ReactElement } from 'react';
 import { Eye as ViewsIcon } from 'react-feather';
 
 import { useTheme } from '@emotion/react';

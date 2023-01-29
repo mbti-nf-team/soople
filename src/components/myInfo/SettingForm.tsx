@@ -1,4 +1,4 @@
-import React, {
+import {
   memo, ReactElement, useEffect, useState,
 } from 'react';
 import { useForm } from 'react-hook-form';

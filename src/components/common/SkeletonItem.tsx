@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 
 import { css, SerializedStyles } from '@emotion/react';
 import styled from '@emotion/styled';

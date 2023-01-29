@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 
-function useThrottleCallback<U extends any[]>(
+function useThrottleCallback<U extends never[]>(
   callback: (...args: U) => void,
   delay: number,
 ) {

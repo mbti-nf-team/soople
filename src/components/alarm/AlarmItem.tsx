@@ -1,4 +1,4 @@
-import React, {
+import {
   ForwardedRef, forwardRef, memo, ReactElement,
 } from 'react';
 

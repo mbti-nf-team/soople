@@ -1,4 +1,4 @@
-import React, {
+import {
   ReactElement, UIEvent, useLayoutEffect, useRef, useState,
 } from 'react';
 import { ChevronRight } from 'react-feather';

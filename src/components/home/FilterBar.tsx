@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { SelectOption } from '@/models';
 import { Category } from '@/models/group';

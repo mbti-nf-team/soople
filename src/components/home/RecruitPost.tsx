@@ -1,4 +1,4 @@
-import React, {
+import {
   ForwardedRef, forwardRef, memo, ReactElement,
 } from 'react';
 import { Eye as ViewsIcon } from 'react-feather';

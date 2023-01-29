@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import MyInfoTab from '@/components/myInfo/MyInfoTab';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';

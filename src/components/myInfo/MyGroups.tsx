@@ -1,4 +1,4 @@
-import React, { memo, PropsWithChildren, ReactElement } from 'react';
+import { memo, PropsWithChildren, ReactElement } from 'react';
 
 import { InfiniteRefState, InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';

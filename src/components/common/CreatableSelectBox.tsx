@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { XCircle } from 'react-feather';
 import { ClearIndicatorProps, GroupBase, OptionsOrGroups } from 'react-select';
 import CreatableSelect from 'react-select/creatable';

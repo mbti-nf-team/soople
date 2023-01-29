@@ -6,8 +6,8 @@ import GROUP_FIXTURE from '../../fixtures/group';
 import PROFILE_FIXTURE from '../../fixtures/profile';
 
 import {
-  filterGroups,
-  formatAlarm, formatComment, formatCreatedAt, formatGroup, isLessThanPerPage, timestampToString,
+  filterGroups, formatAlarm, formatComment,
+  formatCreatedAt, formatGroup, isLessThanPerPage, timestampToString,
 } from './firestore';
 
 jest.mock('@/services/api/group');

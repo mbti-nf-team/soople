@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';

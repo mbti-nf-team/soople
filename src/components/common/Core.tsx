@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Bounce } from 'react-toastify';
 
 import NextNProgress from 'nextjs-progressbar';

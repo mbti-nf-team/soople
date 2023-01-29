@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent, FormEvent, memo, useEffect, useState,
 } from 'react';
 import { Info as InfoIcon } from 'react-feather';

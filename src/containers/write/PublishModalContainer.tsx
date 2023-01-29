@@ -1,4 +1,4 @@
-import React, {
+import {
   ReactElement, useCallback, useEffect, useState,
 } from 'react';
 import { useEffectOnce, useUnmount } from 'react-use';
