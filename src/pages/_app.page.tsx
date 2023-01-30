@@ -15,7 +15,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { RecoilRoot } from 'recoil';
 
 import Core from '@/components/common/Core';
-import ErrorBoundary from '@/components/common/ErrorBoundary';
+import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import SignInModalContainer from '@/containers/auth/SignInModalContainer';
 import { lightTheme } from '@/styles/theme';
 
@@ -51,7 +51,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <DefaultSeo {...defaultNextSeoConfig} />
-      <ErrorBoundary isRootError errorMessage="알 수 없는 오류가 발생했어요!">
+      <ErrorBoundary isRootError>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <RecoilRoot>

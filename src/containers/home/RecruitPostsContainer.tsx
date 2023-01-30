@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
 
 import ClientOnly from '@/components/common/ClientOnly';
-import ErrorBoundary from '@/components/common/ErrorBoundary';
+import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import RecruitPostsSkeletonLoader from '@/components/home/RecruitPostsSkeletonLoader';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useRenderErrorToast from '@/hooks/useRenderErrorToast';
@@ -38,7 +38,7 @@ function RecruitPostsContainer(): ReactElement | null {
   return (
     <ClientOnly>
       <RecruitPostsWrapper>
-        <ErrorBoundary errorMessage="글 리스트를 불러오는데 실패했어요!">
+        <ErrorBoundary>
           <Suspense fallback={<RecruitPostsSkeletonLoader length={12} />}>
             <RecruitPosts
               onClickEmptyButton={onClickEmptyButton}
