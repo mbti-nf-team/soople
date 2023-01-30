@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 
 import ClientOnly from '@/components/common/ClientOnly';
-import ErrorBoundary from '@/components/common/ErrorBoundary';
+import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import CommentForm from '@/components/detail/CommentForm';
 import CommentSkeletonLoader from '@/components/detail/CommentSkeletonLoader';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
@@ -47,7 +47,7 @@ function CommentsContainer(): ReactElement {
         onSubmit={onSubmit}
       />
       <ClientOnly>
-        <ErrorBoundary errorMessage="댓글을 불러오는데 실패하였습니다.">
+        <ErrorBoundary>
           <Suspense fallback={<CommentSkeletonLoader />}>
             <CommentsView
               user={user}

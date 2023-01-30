@@ -6,7 +6,7 @@ import { NextSeo } from 'next-seo';
 
 import AlarmsSkeletonLoader from '@/components/alarm/AlarmsSkeletonLoader';
 import ClientOnly from '@/components/common/ClientOnly';
-import ErrorBoundary from '@/components/common/ErrorBoundary';
+import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import HeaderContainer from '@/containers/common/HeaderContainer';
 import authenticatedServerSideProps from '@/services/serverSideProps/authenticatedServerSideProps';
 import { DetailLayout } from '@/styles/Layout';
@@ -28,7 +28,7 @@ function AlarmPage(): ReactElement {
       <HeaderContainer />
       <DetailLayout>
         <ClientOnly>
-          <ErrorBoundary errorMessage="알람을 불러오는데 실패했어요!">
+          <ErrorBoundary>
             <Suspense fallback={<AlarmsSkeletonLoader />}>
               <AlarmListContainer />
             </Suspense>

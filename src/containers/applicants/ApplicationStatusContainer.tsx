@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 
 import ApplicationStatusSkeletonLoader from '@/components/applicants/ApplicationStatusSkeletonLoader';
 import ClientOnly from '@/components/common/ClientOnly';
-import ErrorBoundary from '@/components/common/ErrorBoundary';
+import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import useResponsive from '@/hooks/useResponsive';
 import GradientBlock from '@/styles/GradientBlock';
 import { DetailLayout } from '@/styles/Layout';
@@ -20,7 +20,7 @@ function ApplicationStatusContainer(): ReactElement {
   return (
     <ClientOnly>
       <ApplicationStatusDetailLayout>
-        <ErrorBoundary errorMessage="해당 글의 신청자 정보를 불러오는데 실패했어요!">
+        <ErrorBoundary>
           <Suspense fallback={<ApplicationStatusSkeletonLoader isMobile={isMobile} />}>
             <ApplicationStatus />
           </Suspense>
