@@ -1,6 +1,8 @@
 import { PropsWithChildren } from 'react';
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act, fireEvent, render, screen,
+} from '@testing-library/react';
 
 import { groupsConditionState } from '@/recoil/group/atom';
 import { lightTheme } from '@/styles/theme';
@@ -17,6 +19,7 @@ describe('HeaderWrapper', () => {
 
   beforeEach(() => {
     handleChange.mockClear();
+    jest.useFakeTimers();
   });
 
   const renderHeaderWrapper = () => render((
@@ -46,11 +49,16 @@ describe('HeaderWrapper', () => {
     });
   });
 
-  context('hasBackground가 true인 경우', () => {
+  context('hasBackground가 true이고 스크롤 높이가 336 초과인 경우', () => {
     given('hasBackground', () => true);
 
     it(`background 속성이 ${lightTheme.accent1}이어야 한다`, () => {
       renderHeaderWrapper();
+
+      act(() => {
+        fireEvent.scroll(window, { target: { scrollY: 400 } });
+        jest.advanceTimersByTime(200);
+      });
 
       expect(screen.getByTestId('test-id')).toHaveStyle({
         background: lightTheme.accent1,
