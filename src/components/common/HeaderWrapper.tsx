@@ -1,10 +1,13 @@
-import { memo, PropsWithChildren, ReactElement } from 'react';
+import {
+  memo, PropsWithChildren, ReactElement,
+} from 'react';
 
 import Link from 'next/link';
 
 import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
 
+import useLessThenScrollY from '@/hooks/useLessThenScrollY';
 import { groupsConditionState } from '@/recoil/group/atom';
 import Layout from '@/styles/Layout';
 import { mq2 } from '@/styles/responsive';
@@ -22,6 +25,7 @@ function HeaderWrapper({
   hasBackground, isScrollTop, testId, children,
 }: PropsWithChildren<Props>):ReactElement {
   const setGroupsCondition = useSetRecoilState(groupsConditionState);
+  const isLessThenScrollY = useLessThenScrollY(336);
 
   const onClickLogo = () => setGroupsCondition((prev) => ({
     ...prev,
@@ -31,7 +35,11 @@ function HeaderWrapper({
 
   return (
     <>
-      <HeaderBlock hasBackground={hasBackground} isScrollTop={isScrollTop} data-testid={testId}>
+      <HeaderBlock
+        hasBackground={hasBackground && !isLessThenScrollY}
+        isScrollTop={isScrollTop}
+        data-testid={testId}
+      >
         <HeaderContents>
           <Link href="/">
             <LogoIcon onClick={onClickLogo} data-testid="logo-icon" />
@@ -50,13 +58,13 @@ const LogoIcon = styled(LogoSvg)`
   height: 24px;
 `;
 
-const HeaderBlock = styled.div<{ hasBackground: boolean; isScrollTop: boolean }>`
+const HeaderBlock = styled.div<{ hasBackground: boolean; isScrollTop: boolean; }>`
   position: fixed;
   width: 100%;
   z-index: ${zIndexes.TopNavigation};
   background: ${({ hasBackground, theme }) => (hasBackground ? theme.accent1 : theme.background)};
   box-shadow: 0 1px 0 0 ${({ isScrollTop, theme }) => (isScrollTop ? 'transparent' : theme.accent2)};
-  transition: box-shadow .2s ease-in-out;
+  transition: box-shadow .2s ease-in-out, background-color .2s ease-in-out;
 `;
 
 const Spacer = styled.div`

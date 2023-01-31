@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
+import BrandingTypeAnimation from '@/components/home/BrandingTypeAnimation';
 import HeaderContainer from '@/containers/common/HeaderContainer';
 import RecruitPostsContainer from '@/containers/home/RecruitPostsContainer';
 import StatusBarContainer from '@/containers/home/StatusBarContainer';
@@ -12,6 +13,7 @@ function HomePage(): ReactElement {
   return (
     <>
       <HeaderContainer />
+      <BrandingTypeAnimation />
       <HomePageLayout>
         <StatusBarContainer />
         <RecruitPostsContainer />
