@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -83,7 +83,7 @@ function RecruitPostsSkeletonLoader({ length }: Props): ReactElement {
   );
 }
 
-export default RecruitPostsSkeletonLoader;
+export default memo(RecruitPostsSkeletonLoader);
 
 const RecruitPostsWrapper = styled.div`
   display: flex;
