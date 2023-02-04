@@ -13,7 +13,7 @@ import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useRenderErrorToast from '@/hooks/useRenderErrorToast';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
 
-const RecruitPosts = dynamic(() => import('@/components/home/RecruitPosts'), { suspense: true });
+const RecruitPosts = dynamic(() => import('@/components/home/RecruitPosts'), { ssr: true });
 
 function RecruitPostsContainer(): ReactElement | null {
   const { push } = useRouter();

@@ -1,12 +1,13 @@
 import { ReactElement, Suspense, useCallback } from 'react';
-import { useLocalStorage } from 'react-use';
 
 import dynamic from 'next/dynamic';
 
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 
+import ClientOnly from '@/components/common/ClientOnly';
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
+import SwitchButton from '@/components/common/SwitchButton';
 import FilterBar from '@/components/home/FilterBar';
 import TagsBarSkeletonLoader from '@/components/home/skeleton/TagsBarSkeletonLoader';
 import useResponsive from '@/hooks/useResponsive';
@@ -16,12 +17,10 @@ import Divider from '@/styles/Divider';
 import { body1Font } from '@/styles/fontStyles';
 
 const TagsBar = dynamic(() => import('@/components/home/TagsBar'), { ssr: false });
-const SwitchButton = dynamic(() => import('@/components/common/SwitchButton'), { ssr: false });
 
 function StatusBarContainer(): ReactElement {
   const { isMobile, isClient } = useResponsive();
 
-  const [initFilterCompleted, toggleFilterCompleted] = useLocalStorage('isFilterCompleted', false);
   const [{
     isFilterCompleted, category: filterCategory,
   }, setCondition] = useRecoilState(groupsConditionState);
@@ -31,7 +30,7 @@ function StatusBarContainer(): ReactElement {
   ) => setCondition((prevCondition) => ({
     ...prevCondition,
     ...condition,
-  })), [setCondition]);
+  })), []);
 
   const onChange = useCallback((category: string) => {
     if (category === 'all') {
@@ -42,10 +41,7 @@ function StatusBarContainer(): ReactElement {
     setGroupsCondition({ category: [category] as Category[] });
   }, [setGroupsCondition]);
 
-  const onToggle = (isWithCompleted: boolean) => {
-    setGroupsCondition({ isFilterCompleted: isWithCompleted });
-    toggleFilterCompleted(isWithCompleted);
-  };
+  const onToggle = (isCompleted: boolean) => setGroupsCondition({ isFilterCompleted: isCompleted });
 
   return (
     <StatusBarWrapper>
@@ -67,10 +63,12 @@ function StatusBarContainer(): ReactElement {
       </div>
       <RecruitmentDeadline>
         <span>모집 마감 안보기</span>
-        <SwitchButton
-          defaultChecked={!!initFilterCompleted}
-          onChange={() => onToggle(!isFilterCompleted)}
-        />
+        <ClientOnly>
+          <SwitchButton
+            defaultChecked={isFilterCompleted}
+            onChange={() => onToggle(!isFilterCompleted)}
+          />
+        </ClientOnly>
       </RecruitmentDeadline>
     </StatusBarWrapper>
   );
