@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useInfiniteFetchComments from '@/hooks/api/comment/useInfiniteFetchComments';
 
 import COMMENT_FIXTURE from '../../../fixtures/comment';
@@ -8,6 +9,7 @@ import PROFILE_FIXTURE from '../../../fixtures/profile';
 import CommentsView from './CommentsView';
 
 jest.mock('@/hooks/api/comment/useInfiniteFetchComments');
+jest.mock('@/hooks/api/comment/useDeleteComment');
 
 describe('CommentsView', () => {
   const handleRemove = jest.fn();
@@ -27,13 +29,16 @@ describe('CommentsView', () => {
         lastItemRef,
       },
     }));
+
+    (useDeleteComment as jest.Mock).mockImplementation(() => ({
+      mutate: handleRemove,
+    }));
   });
 
   const renderCommentsView = () => render((
     <CommentsView
       perPage={15}
-      user={PROFILE_FIXTURE}
-      onRemove={handleRemove}
+      userUid={PROFILE_FIXTURE.uid}
     />
   ));
 
@@ -53,7 +58,9 @@ describe('CommentsView', () => {
 
       fireEvent.click(screen.getByText('삭제'));
 
-      expect(handleRemove).toHaveBeenCalledWith(COMMENT_FIXTURE.commentId);
+      expect(handleRemove).toHaveBeenCalledWith({
+        commentId: COMMENT_FIXTURE.commentId, groupId: COMMENT_FIXTURE.groupId,
+      });
     });
   });
 });

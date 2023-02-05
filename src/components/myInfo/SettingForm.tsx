@@ -1,6 +1,4 @@
-import {
-  memo, ReactElement, useEffect, useState,
-} from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useEffectOnce, useUpdateEffect } from 'react-use';
 
@@ -133,7 +131,7 @@ function SettingForm({
   );
 }
 
-export default memo(SettingForm);
+export default SettingForm;
 
 const MemberWithdrawalButton = styled(Button)`
   color: ${({ theme }) => theme.accent6};

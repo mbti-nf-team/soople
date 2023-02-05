@@ -11,7 +11,7 @@ import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast'
 
 import { deleteCommentQueryData } from './queryDataUtils';
 
-type DeleteCommentForm = {
+export type DeleteCommentForm = {
   commentId: string;
   groupId: string;
 };
