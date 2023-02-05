@@ -21,7 +21,7 @@ jest.mock('@/hooks/api/comment/useAddComment');
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockImplementation(() => ({
     query: {
-      id: '1',
+      id: COMMENT_FIXTURE.groupId,
     },
   })),
 }));
@@ -90,7 +90,7 @@ describe('CommentsContainer', () => {
         expect(mutate).toHaveBeenCalledWith({
           content: commentValue,
           writer,
-          groupId: '1',
+          groupId: COMMENT_FIXTURE.groupId,
         });
       });
 
@@ -102,7 +102,7 @@ describe('CommentsContainer', () => {
 
           expect(mutate).toHaveBeenCalledWith({
             commentId: COMMENT_FIXTURE.commentId,
-            groupId: '1',
+            groupId: COMMENT_FIXTURE.groupId,
           });
         });
       });

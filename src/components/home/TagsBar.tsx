@@ -1,4 +1,4 @@
-import { memo, ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
@@ -29,7 +29,7 @@ function TagsBar(): ReactElement {
   );
 }
 
-export default memo(TagsBar);
+export default TagsBar;
 
 const TagsWrapper = styled.div`
   height: 36px;

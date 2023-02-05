@@ -11,7 +11,6 @@ import CommentForm from '@/components/detail/CommentForm';
 import CommentSkeletonLoader from '@/components/detail/CommentSkeletonLoader';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useAddComment from '@/hooks/api/comment/useAddComment';
-import useDeleteComment from '@/hooks/api/comment/useDeleteComment';
 import useFetchCommentCount from '@/hooks/api/comment/useFetchCommentCount';
 import { GroupQuery } from '@/models';
 import { CommentFields } from '@/models/group';
@@ -28,16 +27,11 @@ function CommentsContainer(): ReactElement {
   const { data: user } = useFetchUserProfile();
   const { data: commentCount } = useFetchCommentCount(groupId);
   const { mutate: addCommentMutate } = useAddComment(perPage);
-  const { mutate: deleteCommentMutate } = useDeleteComment(perPage);
 
   const onSubmit = useCallback((commentForm: CommentFields) => addCommentMutate({
     ...commentForm,
     groupId,
-  }), [groupId, addCommentMutate]);
-
-  const onRemoveComment = useCallback((commentId: string) => deleteCommentMutate({
-    commentId, groupId,
-  }), [groupId, deleteCommentMutate]);
+  }), [groupId]);
 
   return (
     <>
@@ -50,9 +44,8 @@ function CommentsContainer(): ReactElement {
         <ErrorBoundary>
           <Suspense fallback={<CommentSkeletonLoader />}>
             <CommentsView
-              user={user}
+              userUid={user?.uid}
               perPage={perPage}
-              onRemove={onRemoveComment}
             />
           </Suspense>
         </ErrorBoundary>

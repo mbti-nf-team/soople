@@ -1,26 +1,30 @@
-import { memo, ReactElement } from 'react';
+import { ReactElement, useCallback } from 'react';
 
 import styled from '@emotion/styled';
 
+import useDeleteComment, { DeleteCommentForm } from '@/hooks/api/comment/useDeleteComment';
 import useInfiniteFetchComments from '@/hooks/api/comment/useInfiniteFetchComments';
-import { Profile } from '@/models/auth';
 import { targetFalseThenValue } from '@/utils/utils';
 
 import CommentSkeletonLoader from './CommentSkeletonLoader';
 import CommentView from './CommentView';
 
 interface Props {
-  user: Profile | null;
+  userUid: string | undefined;
   perPage: number;
-  onRemove: (commentId: string) => void;
 }
 
-function CommentsView({ user, perPage, onRemove }: Props): ReactElement {
+function CommentsView({ userUid, perPage }: Props): ReactElement {
   const { query: { data, isFetchingNextPage }, refState } = useInfiniteFetchComments({
     perPage,
   });
+  const { mutate: deleteCommentMutate } = useDeleteComment(perPage);
 
   const comments = data.pages;
+
+  const onRemoveComment = useCallback((
+    commentForm: DeleteCommentForm,
+  ) => deleteCommentMutate(commentForm), []);
 
   return (
     <CommentsViewWrapper>
@@ -31,8 +35,8 @@ function CommentsView({ user, perPage, onRemove }: Props): ReactElement {
           return (
             <CommentView
               key={comment.commentId}
-              user={user}
-              onRemove={onRemove}
+              userUid={userUid}
+              onRemove={onRemoveComment}
               comment={comment}
               ref={targetFalseThenValue(!isLastItem)(refState.lastItemRef)}
             />
@@ -46,7 +50,7 @@ function CommentsView({ user, perPage, onRemove }: Props): ReactElement {
   );
 }
 
-export default memo(CommentsView);
+export default CommentsView;
 
 const CommentsViewWrapper = styled.div`
   & > div:last-of-type {

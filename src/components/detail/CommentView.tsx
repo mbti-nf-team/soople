@@ -5,7 +5,7 @@ import {
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 
-import { Profile } from '@/models/auth';
+import { DeleteCommentForm } from '@/hooks/api/comment/useDeleteComment';
 import { Comment } from '@/models/group';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import { filteredWithSanitizeHtml } from '@/utils/filter';
@@ -15,17 +15,25 @@ import ProfileImage from '../common/ProfileImage';
 
 interface Props {
   comment: Comment;
-  user: Profile | null;
-  onRemove: (commentId: string) => void;
+  userUid: string | undefined;
+  onRemove: ({ commentId, groupId }: DeleteCommentForm) => void;
 }
 
+const commentViewPropsAreEqual = (prevProps: Props, nextProps: Props) => (
+  prevProps.comment.commentId === nextProps.comment.commentId
+    && prevProps.userUid === nextProps.userUid
+    && prevProps.onRemove === nextProps.onRemove
+    && prevProps.comment.writer.uid === nextProps.comment.writer.uid
+    && prevProps.comment.groupId === nextProps.comment.groupId
+);
+
 function CommentView({
-  comment, user, onRemove,
+  comment, userUid, onRemove,
 }: Props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const {
-    writer, content, createdAt, commentId,
+    content, createdAt, commentId, groupId, writer,
   } = comment;
-  const isWriter = user?.uid === writer.uid;
+  const isWriter = userUid === writer.uid;
 
   return (
     <CommentViewWrapper ref={ref}>
@@ -40,7 +48,7 @@ function CommentView({
           {isWriter && (
             <RemoveCommentButton
               type="button"
-              onClick={() => onRemove(commentId)}
+              onClick={() => onRemove({ commentId, groupId })}
             >
               삭제
             </RemoveCommentButton>
@@ -52,7 +60,7 @@ function CommentView({
   );
 }
 
-export default memo(forwardRef<HTMLDivElement, Props>(CommentView));
+export default memo(forwardRef<HTMLDivElement, Props>(CommentView), commentViewPropsAreEqual);
 
 const CommentStatus = styled.div`
   display: flex;
