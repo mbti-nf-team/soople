@@ -13,7 +13,7 @@ import zIndexes from '@/styles/zIndexes';
 
 import Button from './Button';
 import DelayRenderComponent from './DelayRenderComponent';
-import ModalPortal from './ModalPortal';
+import GlobalPortal from './GlobalPortal';
 
 interface Props {
   isVisible: boolean;
@@ -38,7 +38,7 @@ function ConfirmModal({
 
   return (
     <DelayRenderComponent isVisible={isVisible}>
-      <ModalPortal>
+      <GlobalPortal>
         <ConfirmModalWrapper isVisible={isVisible}>
           <ConfirmModalBox isVisible={isVisible} ref={modalRef} role="dialog">
             <HeaderWrapper>
@@ -71,7 +71,7 @@ function ConfirmModal({
             </FooterWrapper>
           </ConfirmModalBox>
         </ConfirmModalWrapper>
-      </ModalPortal>
+      </GlobalPortal>
     </DelayRenderComponent>
   );
 }

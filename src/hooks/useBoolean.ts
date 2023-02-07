@@ -7,13 +7,7 @@ function useBoolean(
 
   const setTrue = useCallback(() => setState(true), []);
   const setFalse = useCallback(() => setState(false), []);
-  const onToggle = useCallback((nextValue?: boolean) => setState((prevState) => {
-    if (typeof nextValue === 'boolean') {
-      return nextValue;
-    }
-
-    return !prevState;
-  }), []);
+  const onToggle = useCallback(() => setState((prevState) => !prevState), []);
 
   return [state, setTrue, setFalse, onToggle];
 }
