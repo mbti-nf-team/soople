@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import useGetUserToken from '@/hooks/api/auth/useGetUserToken';
 import InjectResponsiveContext from '@/test/InjectResponsiveContext';
 import MockTheme from '@/test/MockTheme';
+import renderWithPortal from '@/test/renderWithPortal';
 import { errorToast } from '@/utils/toast';
 
 import Core from './Core';
@@ -34,7 +35,7 @@ describe('Core', () => {
     );
   };
 
-  const renderCore = () => render((
+  const renderCore = () => renderWithPortal((
     <InjectResponsiveContext width={given.width}>
       <MockTheme>
         <Core />

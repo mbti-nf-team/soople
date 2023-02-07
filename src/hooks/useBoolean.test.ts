@@ -63,34 +63,17 @@ describe('useBoolean', () => {
   });
 
   describe('반환되는 네번째 배열을 호출한다', () => {
-    context('다음 상태값과 함께 호출한 경우', () => {
-      it('상태값은 다음 상태값으로 변해야만 한다', () => {
-        const { result } = useBooleanHook();
-        const [, , , onToggle] = result.current;
+    it('상태값 반대되는 상태로 변해야만 한다 (true일 경우 false, false일 경우 true)', () => {
+      const { result } = useBooleanHook();
+      const [, , , onToggle] = result.current;
 
-        expect(result.current[0]).toBe(false);
+      expect(result.current[0]).toBe(false);
 
-        act(() => {
-          onToggle(false);
-        });
-
-        expect(result.current[0]).toBe(false);
+      act(() => {
+        onToggle();
       });
-    });
 
-    context('다음 상태값이 없이 호출한 경우', () => {
-      it('상태값 반대되는 상태로 변해야만 한다 (true일 경우 false, false일 경우 true)', () => {
-        const { result } = useBooleanHook();
-        const [, , , onToggle] = result.current;
-
-        expect(result.current[0]).toBe(false);
-
-        act(() => {
-          onToggle();
-        });
-
-        expect(result.current[0]).toBe(true);
-      });
+      expect(result.current[0]).toBe(true);
     });
   });
 });

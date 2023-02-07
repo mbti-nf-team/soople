@@ -8,13 +8,13 @@ import { useTheme } from '@emotion/react';
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
 import useCheckSignUp from '@/hooks/api/auth/useCheckSignUp';
 import useGetUserToken from '@/hooks/api/auth/useGetUserToken';
+import useRefreshToken from '@/hooks/api/auth/useRefreshToken';
 import useResponsive from '@/hooks/useResponsive';
 import GlobalStyles from '@/styles/GlobalStyles';
 import StyledToastContainer from '@/styles/StyledToastContainer';
 
-import useRefreshToken from '../../hooks/api/auth/useRefreshToken';
-
 import CloseButton from './CloseButton';
+import GlobalPortal from './GlobalPortal';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -39,19 +39,21 @@ function Core(): ReactElement {
         }}
       />
       <GlobalStyles />
-      <StyledToastContainer
-        closeOnClick
-        pauseOnHover
-        transition={Bounce}
-        hideProgressBar
-        pauseOnFocusLoss
-        draggable
-        position="top-center"
-        autoClose={3000}
-        icon={false}
-        isMobile={isMobile}
-        closeButton={!isMobile && CloseButton}
-      />
+      <GlobalPortal>
+        <StyledToastContainer
+          closeOnClick
+          pauseOnHover
+          transition={Bounce}
+          hideProgressBar
+          pauseOnFocusLoss
+          draggable
+          position="top-center"
+          autoClose={3000}
+          icon={false}
+          isMobile={isMobile}
+          closeButton={!isMobile && CloseButton}
+        />
+      </GlobalPortal>
     </>
   );
 }

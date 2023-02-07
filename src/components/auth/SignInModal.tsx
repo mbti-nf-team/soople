@@ -12,7 +12,7 @@ import zIndexes from '@/styles/zIndexes';
 
 import LogoSvg from '../../assets/icons/img_logo_soople.svg';
 import DelayRenderComponent from '../common/DelayRenderComponent';
-import ModalPortal from '../common/ModalPortal';
+import GlobalPortal from '../common/GlobalPortal';
 
 interface Props {
   isVisible: boolean;
@@ -30,7 +30,7 @@ function SignInModal({
 
   return (
     <DelayRenderComponent isVisible={isVisible}>
-      <ModalPortal>
+      <GlobalPortal>
         <SignInModalWrapper isVisible={isVisible}>
           <SignInModalBox isVisible={isVisible} ref={modalRef} role="dialog">
             <HeaderWrapper>
@@ -50,7 +50,7 @@ function SignInModal({
             </SignInDescription>
           </SignInModalBox>
         </SignInModalWrapper>
-      </ModalPortal>
+      </GlobalPortal>
     </DelayRenderComponent>
   );
 }

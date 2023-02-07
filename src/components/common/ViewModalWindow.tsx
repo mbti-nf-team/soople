@@ -12,7 +12,7 @@ import zIndexes from '@/styles/zIndexes';
 import { emptyAThenB } from '@/utils/utils';
 
 import DelayRenderComponent from './DelayRenderComponent';
-import ModalPortal from './ModalPortal';
+import GlobalPortal from './GlobalPortal';
 
 interface Props {
   isVisible: boolean;
@@ -35,7 +35,7 @@ function ViewModalWindow({
 
   return (
     <DelayRenderComponent isVisible={isVisible}>
-      <ModalPortal>
+      <GlobalPortal>
         <ViewModalWindowWrapper isVisible={isVisible}>
           <ViewModalWindowBox
             size={size}
@@ -56,7 +56,7 @@ function ViewModalWindow({
             {children}
           </ViewModalWindowBox>
         </ViewModalWindowWrapper>
-      </ModalPortal>
+      </GlobalPortal>
     </DelayRenderComponent>
   );
 }

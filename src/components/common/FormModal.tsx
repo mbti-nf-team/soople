@@ -17,7 +17,7 @@ import zIndexes from '@/styles/zIndexes';
 import type { ColorType as ButtonColorType } from './Button';
 import Button from './Button';
 import DelayRenderComponent from './DelayRenderComponent';
-import ModalPortal from './ModalPortal';
+import GlobalPortal from './GlobalPortal';
 
 interface Props {
   isVisible: boolean;
@@ -55,7 +55,7 @@ function FormModal({
 
   return (
     <DelayRenderComponent isVisible={isVisible}>
-      <ModalPortal>
+      <GlobalPortal>
         <FormModalWrapper isVisible={isVisible}>
           <FormModalBox
             size={size}
@@ -91,7 +91,7 @@ function FormModal({
             </StyledForm>
           </FormModalBox>
         </FormModalWrapper>
-      </ModalPortal>
+      </GlobalPortal>
     </DelayRenderComponent>
   );
 }
