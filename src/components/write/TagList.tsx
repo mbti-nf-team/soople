@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { memo, ReactElement, useCallback } from 'react';
 
 import Tag from '../common/Tag';
 
@@ -8,11 +8,11 @@ interface Props {
 }
 
 function TagList({ onRemove, tags }: Props): ReactElement {
-  const handleRemove = (target: string) => {
+  const handleRemove = useCallback((target: string) => {
     const nextTags = tags.filter((tag) => tag !== target);
 
     onRemove(nextTags);
-  };
+  }, [tags, onRemove]);
 
   return (
     <>
@@ -27,4 +27,4 @@ function TagList({ onRemove, tags }: Props): ReactElement {
   );
 }
 
-export default TagList;
+export default memo(TagList);

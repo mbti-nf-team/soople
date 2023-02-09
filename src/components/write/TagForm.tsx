@@ -53,10 +53,10 @@ function TagForm({ tags: initialTags, onChange }: Props): ReactElement {
     actionKeyEvent(e, ['Enter']);
   }, [actionKeyEvent]);
 
-  const handleRemove = (nextTags: string[]) => {
+  const handleRemove = useCallback((nextTags: string[]) => {
     setTags(nextTags);
     onChange(nextTags);
-  };
+  }, [onChange]);
 
   useEffect(() => {
     setTags(initialTags);

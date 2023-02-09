@@ -9,17 +9,19 @@ interface Props {
   defaultChecked: boolean;
 }
 
-const SwitchButton = ({ onChange, defaultChecked }: Props) => (
-  <SwitchButtonWrapper
-    name="switch-toggle"
-    defaultChecked={defaultChecked}
-    title="switchButton"
-    aria-label="No label tag"
-    onChange={onChange}
-    icons={false}
-    data-testid="switch-button"
-  />
-);
+function SwitchButton({ onChange, defaultChecked }: Props) {
+  return (
+    <SwitchButtonWrapper
+      name="switch-toggle"
+      defaultChecked={defaultChecked}
+      title="switchButton"
+      aria-label="No label tag"
+      onChange={onChange}
+      icons={false}
+      data-testid="switch-button"
+    />
+  );
+}
 
 export default SwitchButton;
 

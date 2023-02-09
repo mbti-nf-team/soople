@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { memo, ReactElement } from 'react';
 
 import Image from 'next/image';
 
@@ -50,7 +50,7 @@ function ProfileImage({
   );
 }
 
-export default ProfileImage;
+export default memo(ProfileImage);
 
 const ProfileAvatarImage = styled(Image)`
   border-radius: 70%;
