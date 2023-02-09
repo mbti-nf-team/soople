@@ -13,7 +13,7 @@ function WriteFormContainer(): ReactElement | null {
 
   const onChangeFields = useCallback((form: Partial<WriteFields>) => {
     changeFields((prevState) => ({ ...prevState, ...form }));
-  }, [changeFields]);
+  }, []);
 
   if (!user) {
     return null;

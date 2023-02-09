@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { memo, ReactElement, useCallback } from 'react';
 
 import styled from '@emotion/styled';
 import { useSetRecoilState } from 'recoil';
@@ -13,23 +13,25 @@ function TagsBar(): ReactElement {
 
   const setGroupsCondition = useSetRecoilState(groupsConditionState);
 
+  const onClick = useCallback((name: string) => setGroupsCondition((prev) => ({
+    ...prev,
+    tag: name,
+  })), []);
+
   return (
     <TagsWrapper>
       {tags.map(({ name }) => (
         <Tag
           key={name}
           tag={name}
-          onClick={() => setGroupsCondition((prev) => ({
-            ...prev,
-            tag: name,
-          }))}
+          onClick={() => onClick(name)}
         />
       ))}
     </TagsWrapper>
   );
 }
 
-export default TagsBar;
+export default memo(TagsBar);
 
 const TagsWrapper = styled.div`
   height: 36px;

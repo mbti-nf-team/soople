@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { memo, ReactElement } from 'react';
 import { X as CloseSvg } from 'react-feather';
 
 import { useTheme } from '@emotion/react';
@@ -37,7 +37,7 @@ function Tag({ tag, onRemove, onClick }: Props): ReactElement {
   );
 }
 
-export default Tag;
+export default memo(Tag);
 
 const TagWrapper = styled.div`
   display: inline-flex;
