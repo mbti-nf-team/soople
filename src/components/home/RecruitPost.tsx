@@ -15,16 +15,18 @@ import Divider from '@/styles/Divider';
 import { body2Font, h4Font, subtitle1Font } from '@/styles/fontStyles';
 import { mq2 } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
-import { shimmer, toBase64 } from '@/utils/imageBlur';
 import { emptyAThenB } from '@/utils/utils';
 
 import ProfileImage from '../common/ProfileImage';
 
 interface Props {
   group: Group;
+  isPriority: boolean;
 }
 
-function RecruitPost({ group }: Props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
+function RecruitPost({
+  group, isPriority,
+}: Props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const {
     title, content, groupId, writer, views, shortDescription, thumbnail,
   } = group;
@@ -40,9 +42,9 @@ function RecruitPost({ group }: Props, ref: ForwardedRef<HTMLDivElement>): React
             <ThumbnailWrapper>
               <Thumbnail
                 fill
-                placeholder="blur"
+                priority={isPriority}
+                placeholder="empty"
                 src={thumbnail}
-                blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(100, 100))}`}
                 alt="thumbnail"
                 sizes="(max-width: 650px) 100vw,
                 (max-width: 850px) 50vw,

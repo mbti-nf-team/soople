@@ -8,6 +8,7 @@ describe('RecruitPost', () => {
   const renderRecruitPost = () => render((
     <RecruitPost
       group={given.group}
+      isPriority={false}
     />
   ));
 
