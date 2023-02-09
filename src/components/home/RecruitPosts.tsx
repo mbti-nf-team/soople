@@ -43,6 +43,7 @@ function RecruitPosts({ onClickEmptyButton }: Props): ReactElement {
               <RecruitPost
                 key={group.groupId}
                 group={group}
+                isPriority={index <= 4}
                 ref={targetFalseThenValue(!isLastItem)(refState.lastItemRef)}
               />
             );

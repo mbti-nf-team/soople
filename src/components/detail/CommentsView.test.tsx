@@ -21,7 +21,7 @@ describe('CommentsView', () => {
     (useInfiniteFetchComments as jest.Mock).mockImplementation(() => ({
       query: {
         data: {
-          pages: [{ items: [COMMENT_FIXTURE] }],
+          pages: [{ items: [COMMENT_FIXTURE, { ...COMMENT_FIXTURE, commentId: '2' }] }],
         },
         isFetchingNextPage: given.isFetchingNextPage,
       },
@@ -56,7 +56,9 @@ describe('CommentsView', () => {
     it('클릭 이벤트가 발생해야만 한다', () => {
       renderCommentsView();
 
-      fireEvent.click(screen.getByText('삭제'));
+      screen.getAllByText('삭제').forEach((removeButton) => {
+        fireEvent.click(removeButton);
+      });
 
       expect(handleRemove).toHaveBeenCalledWith({
         commentId: COMMENT_FIXTURE.commentId, groupId: COMMENT_FIXTURE.groupId,
