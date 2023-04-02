@@ -4,9 +4,9 @@
   <img src="https://img.shields.io/github/actions/workflow/status/jenny-harang/soople/ci.yml?branch=main&label=CI&logo=GitHub&style=flat-square" />
 </a>
 
-<a href="https://codecov.io/gh/jenny-harang/soople">
-  <img src="https://codecov.io/gh/jenny-harang/soople/branch/main/graph/badge.svg?token=hxDPxQyLYa"/>
-</a>
+<a href="https://codecov.io/gh/mbti-nf-team/soople" > 
+  <img src="https://codecov.io/gh/mbti-nf-team/soople/branch/main/graph/badge.svg?token=hxDPxQyLYa"/> 
+ </a>
 
 <a href="https://dashboard.cypress.io/projects/oj7cg1/runs">
   <img src="https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/oj7cg1&style=flat-square&logo=cypress">
