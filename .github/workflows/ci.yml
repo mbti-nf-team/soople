@@ -207,7 +207,7 @@ jobs:
           key: ${{ env.BUILD_CACHE_KEY }}
 
       - name: Install global @lhci/cli dependencies
-        run: yarn dlx global add @lhci/cli
+        run: yarn add @lhci/cli
 
       - name: Run Lighthouse CI
         env:
