@@ -21,9 +21,10 @@ import { body2Font, subtitle1Font } from '@/styles/fontStyles';
 import mq from '@/styles/responsive';
 import { isEmpty, stringToExcludeNull } from '@/utils/utils';
 
-import CloseSvg from '../../assets/icons/close.svg';
 import HelperMessage from '../common/HelperMessage';
 import Label from '../common/Label';
+
+import CloseSvg from '../../assets/icons/close.svg';
 
 function ThumbnailUpload(): ReactElement {
   const theme = useTheme();

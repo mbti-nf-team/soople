@@ -1,26 +1,15 @@
 module.exports = {
   root: true,
   env: {
-    browser: true,
-    es2021: true,
     jest: true,
   },
   ignorePatterns: [
-    'node_modules/',
-    '.pnp.cjs',
-    '.pnp.loader.mjs',
+    'storybook-static',
   ],
   extends: [
-    'airbnb',
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:jsx-a11y/recommended',
-    'plugin:react/jsx-runtime',
+    '@nft-team/eslint-config',
   ],
   plugins: [
-    'simple-import-sort',
-    'unused-imports',
     '@emotion',
   ],
   parserOptions: {
@@ -33,17 +22,6 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
-      extends: [
-        'airbnb-typescript',
-        'plugin:@typescript-eslint/recommended',
-      ],
-      plugins: [
-        '@typescript-eslint',
-        'flowtype',
-      ],
-      rules: {
-        '@typescript-eslint/no-use-before-define': 'off',
-      },
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: ['./tsconfig.json'],
@@ -56,6 +34,8 @@ module.exports = {
         'jest/no-identical-title': 'off',
         'testing-library/no-unnecessary-act': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
+        'react-hooks/rules-of-hooks': 'off',
+        'import/no-extraneous-dependencies': 'off',
       },
     },
     {
@@ -86,8 +66,8 @@ module.exports = {
     },
   },
   rules: {
+    'import/order': 'off',
     '@emotion/pkg-renaming': 'error',
-    'react-hooks/rules-of-hooks': 'off',
     'react/function-component-definition': 'off',
     'no-console': ['warn', {
       allow: ['warn', 'error'],
@@ -97,16 +77,15 @@ module.exports = {
     'no-use-before-define': 'off',
     'simple-import-sort/imports': ['error', {
       groups: [
-        // Node.js builtins. You could also generate this regex if you use a `.js` config.
-        // For example: `^(${require("module").builtinModules.join("|")})(/|$)`
-        ['^(assert|buffer|child_process|cluster|console|constants|crypto|dgram|dns|domain|events|fs|http|https|module|net|os|path|punycode|querystring|readline|repl|stream|string_decoder|sys|timers|tls|tty|url|util|vm|zlib|freelist|v8|process|async_hooks|http2|perf_hooks)(/.*|$)'], // Packages. `react` related packages come first.
+        ['^\\u0000'],
+        ['^(assert|buffer|child_process|cluster|console|constants|crypto|dgram|dns|domain|events|fs|http|https|module|net|os|path|punycode|querystring|readline|repl|stream|string_decoder|sys|timers|tls|tty|url|util|vm|zlib|freelist|v8|process|async_hooks|http2|perf_hooks)(/.*|$)'],
         ['^react'],
         ['^next'],
-        ['^@?\\w'], // Internal packages.
-        ['^(@|@company|@ui|components|utils|config|vendored-lib)(/.*|$)'], // Side effect imports.
-        ['^\\u0000'], // Parent imports. Put `..` last.
-        ['^\\.\\.(?!/?$)', '^\\.\\./?$'], // Other relative imports. Put same-folder imports and `.` last.
-        ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'], // Style imports.
+        ['^@?\\w'],
+        ['^(@|@hooks|@ui|components|utils|models|pages|services)(/.*|$)'],
+        ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+        ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+        ['^.+\\.svg$'],
         ['^.+\\.s?css$'],
       ],
     }],
@@ -115,13 +94,6 @@ module.exports = {
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
     'no-undef': 'off',
-    'unused-imports/no-unused-imports': 'error',
-    'unused-imports/no-unused-vars': ['warn', {
-      vars: 'all',
-      varsIgnorePattern: '^_',
-      args: 'after-used',
-      argsIgnorePattern: '^_',
-    }],
     'react/jsx-props-no-spreading': ['error', {
       exceptions: ['input', 'SelectBox', 'Textarea', 'Input'],
     }],

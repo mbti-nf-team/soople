@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getGroupCommentCount } from '@/services/api/comment';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -21,10 +21,9 @@ describe('useFetchCommentCount', () => {
   });
 
   it('댓글의 개수를 반환해야만 한다', async () => {
-    const { result, waitFor } = useFetchCommentCountHook();
+    const { result } = useFetchCommentCountHook();
 
-    await waitFor(() => result.current.isSuccess);
-
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(result.current.data).toBe(count);
   });
 });

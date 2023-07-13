@@ -1,8 +1,8 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import EmptySvg from '../../assets/icons/empty-frame.svg';
-
 import EmptyStateArea from './EmptyStateArea';
+
+import EmptySvg from '../../assets/icons/empty-frame.svg';
 
 export default {
   title: 'Components/EmptyStateArea',

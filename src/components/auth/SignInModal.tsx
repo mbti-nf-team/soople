@@ -10,9 +10,10 @@ import { body1Font } from '@/styles/fontStyles';
 import mq from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
-import LogoSvg from '../../assets/icons/img_logo_soople.svg';
 import DelayRenderComponent from '../common/DelayRenderComponent';
 import GlobalPortal from '../common/GlobalPortal';
+
+import LogoSvg from '../../assets/icons/img_logo_soople.svg';
 
 interface Props {
   isVisible: boolean;
