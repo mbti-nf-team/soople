@@ -17,8 +17,9 @@ import styledAnchor from '@/styles/styledAnchor';
 import { filteredWithSanitizeHtml } from '@/utils/filter';
 import rehypePrism from '@/utils/rehypePrism';
 
-import AlertIcon from '../../assets/icons/alert.svg';
 import Tag from '../common/Tag';
+
+import AlertIcon from '../../assets/icons/alert.svg';
 
 interface Props {
   group: Group;

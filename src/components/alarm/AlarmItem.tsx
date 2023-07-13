@@ -13,9 +13,10 @@ import { Category } from '@/models/group';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
 import { stringToExcludeNull } from '@/utils/utils';
 
+import ProfileImage from '../common/ProfileImage';
+
 import AlarmConfirmedSvg from '../../assets/icons/img_alarm_confirmed.svg';
 import AlarmRejectedSvg from '../../assets/icons/img_alarm_rejected.svg';
-import ProfileImage from '../common/ProfileImage';
 
 interface Props {
   alarm: Alarm;

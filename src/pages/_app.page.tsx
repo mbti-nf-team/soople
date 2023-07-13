@@ -1,4 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import 'dayjs/locale/ko';
+
 import { ReactElement, ReactNode, useState } from 'react';
 
 import type { NextPage } from 'next';
@@ -18,8 +20,6 @@ import Core from '@/components/common/Core';
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import SignInModalContainer from '@/containers/auth/SignInModalContainer';
 import { lightTheme } from '@/styles/theme';
-
-import 'dayjs/locale/ko';
 
 import defaultNextSeoConfig from '../../next-seo.config';
 

@@ -1,5 +1,4 @@
-import { renderHook } from '@testing-library/react';
-import { act } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import useBoolean from './useBoolean';
 

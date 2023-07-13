@@ -5,11 +5,12 @@ import styled from '@emotion/styled';
 import useInfiniteFetchGroups from '@/hooks/api/group/useInfiniteFetchGroups';
 import { isEmpty, targetFalseThenValue } from '@/utils/utils';
 
-import EmptyFrameSvg from '../../assets/icons/empty-frame.svg';
 import EmptyStateArea from '../common/EmptyStateArea';
 
 import RecruitPost from './RecruitPost';
 import RecruitPostsSkeletonLoader from './RecruitPostsSkeletonLoader';
+
+import EmptyFrameSvg from '../../assets/icons/empty-frame.svg';
 
 interface Props {
   onClickEmptyButton: () => void;

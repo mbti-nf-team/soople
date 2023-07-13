@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 
 import { postReauthenticateWithProvider } from '@/services/api/auth';
 import wrapper from '@/test/ReactQueryWrapper';

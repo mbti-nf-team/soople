@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getUserProfile } from '@/services/api/auth';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -38,10 +38,9 @@ describe('useFetchUserProfile', () => {
     given('isLoading', () => false);
 
     it('user에 대한 profile 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchUserProfileHook();
+      const { result } = useFetchUserProfileHook();
 
-      await waitFor(() => result.current.isSuccess);
-
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
       expect(result.current.data).toEqual(FIXTURE_PROFILE);
     });
   });
@@ -51,10 +50,9 @@ describe('useFetchUserProfile', () => {
     given('isLoading', () => true);
 
     it('user에 대한 profile 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useFetchUserProfileHook();
+      const { result } = useFetchUserProfileHook();
 
-      await waitFor(() => result.current.isSuccess);
-
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
       expect(result.current.data).toEqual(null);
     });
   });

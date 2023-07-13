@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getApplicants } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -30,9 +30,9 @@ describe('useFetchApplicants', () => {
   given('applicants', () => [FIXTURE_APPLICANT]);
 
   it('applicants에 대한 정보를 반환해야만 한다', async () => {
-    const { result, waitFor } = useFetchApplicantsHook();
+    const { result } = useFetchApplicantsHook();
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
     expect(result.current.data).toEqual([FIXTURE_APPLICANT]);
   });
