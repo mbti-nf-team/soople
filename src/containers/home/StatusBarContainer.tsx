@@ -3,9 +3,9 @@ import { ReactElement, Suspense, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 
 import styled from '@emotion/styled';
+import { ClientOnly } from '@nft-team/react';
 import { useRecoilState } from 'recoil';
 
-import ClientOnly from '@/components/common/ClientOnly';
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import SwitchButton from '@/components/common/SwitchButton';
 import FilterBar from '@/components/home/FilterBar';

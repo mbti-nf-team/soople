@@ -2,8 +2,8 @@ import { PropsWithChildren, ReactElement } from 'react';
 import { ChevronLeft } from 'react-feather';
 
 import styled from '@emotion/styled';
+import { useActionKeyEvent } from '@nft-team/react';
 
-import useActionKeyEvent from '@/hooks/useActionKeyEvent';
 import { body1Font, h4Font } from '@/styles/fontStyles';
 import Layout from '@/styles/Layout';
 import mq, { mediaQueries } from '@/styles/responsive';

@@ -4,6 +4,7 @@ import { Bounce } from 'react-toastify';
 import NextNProgress from 'nextjs-progressbar';
 
 import { useTheme } from '@emotion/react';
+import { GlobalPortal } from '@nft-team/react';
 
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
 import useCheckSignUp from '@/hooks/api/auth/useCheckSignUp';
@@ -14,7 +15,6 @@ import GlobalStyles from '@/styles/GlobalStyles';
 import StyledToastContainer from '@/styles/StyledToastContainer';
 
 import CloseButton from './CloseButton';
-import GlobalPortal from './GlobalPortal';
 
 import 'react-toastify/dist/ReactToastify.css';
 

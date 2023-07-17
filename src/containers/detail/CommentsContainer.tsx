@@ -4,8 +4,8 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
+import { ClientOnly } from '@nft-team/react';
 
-import ClientOnly from '@/components/common/ClientOnly';
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import CommentForm from '@/components/detail/CommentForm';
 import CommentSkeletonLoader from '@/components/detail/CommentSkeletonLoader';

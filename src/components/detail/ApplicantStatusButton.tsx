@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
-import useBoolean from '@/hooks/useBoolean';
+import { useBoolean } from '@nft-team/react';
+
 import useResponsive from '@/hooks/useResponsive';
 import { Profile } from '@/models/auth';
 import { Applicant, ApplicantForm } from '@/models/group';

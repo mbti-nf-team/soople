@@ -6,9 +6,9 @@ import Link from 'next/link';
 
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useBoolean } from '@nft-team/react';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
-import useBoolean from '@/hooks/useBoolean';
 import useResponsive from '@/hooks/useResponsive';
 import { Profile } from '@/models/auth';
 import { subtitle2Font } from '@/styles/fontStyles';
