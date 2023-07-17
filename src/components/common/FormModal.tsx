@@ -6,8 +6,8 @@ import { useLockBodyScroll } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { DelayRenderComponent, GlobalPortal, useActionKeyEvent } from '@nft-team/react';
 
-import useActionKeyEvent from '@/hooks/useActionKeyEvent';
 import useResponsive from '@/hooks/useResponsive';
 import animations from '@/styles/animations';
 import { h4Font } from '@/styles/fontStyles';
@@ -16,8 +16,6 @@ import zIndexes from '@/styles/zIndexes';
 
 import type { ColorType as ButtonColorType } from './Button';
 import Button from './Button';
-import DelayRenderComponent from './DelayRenderComponent';
-import GlobalPortal from './GlobalPortal';
 
 interface Props {
   isVisible: boolean;

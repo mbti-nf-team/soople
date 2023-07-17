@@ -4,9 +4,9 @@ import { useEffectOnce, useUpdateEffect } from 'react-use';
 
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useBoolean } from '@nft-team/react';
 import * as yup from 'yup';
 
-import useBoolean from '@/hooks/useBoolean';
 import { SelectOption } from '@/models';
 import { Profile, SignUpAdditionalForm } from '@/models/auth';
 import { Position, positionOption } from '@/models/group';

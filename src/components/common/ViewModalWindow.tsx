@@ -4,15 +4,13 @@ import { useClickAway, useLockBodyScroll } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { DelayRenderComponent, GlobalPortal } from '@nft-team/react';
 
 import animations from '@/styles/animations';
 import { h4Font } from '@/styles/fontStyles';
 import mq, { mediaQueries } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 import { emptyAThenB } from '@/utils/utils';
-
-import DelayRenderComponent from './DelayRenderComponent';
-import GlobalPortal from './GlobalPortal';
 
 interface Props {
   isVisible: boolean;

@@ -3,9 +3,9 @@ import { ReactElement, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
 import styled from '@emotion/styled';
+import { ClientOnly } from '@nft-team/react';
 
 import ApplicationStatusSkeletonLoader from '@/components/applicants/ApplicationStatusSkeletonLoader';
-import ClientOnly from '@/components/common/ClientOnly';
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import useResponsive from '@/hooks/useResponsive';
 import GradientBlock from '@/styles/GradientBlock';
