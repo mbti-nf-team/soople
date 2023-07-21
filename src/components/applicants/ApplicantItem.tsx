@@ -1,6 +1,7 @@
 import { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
+import { emptyAThenB, removeNullable } from '@nft-team/core';
 
 import useResponsive from '@/hooks/useResponsive';
 import { Applicant } from '@/models/group';
@@ -8,7 +9,6 @@ import Divider from '@/styles/Divider';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import mq, { mobileMediaQuery } from '@/styles/responsive';
 import styledAnchor from '@/styles/styledAnchor';
-import { emptyAThenB, stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
 import ProfileImage from '../common/ProfileImage';
@@ -40,7 +40,7 @@ function ApplicantItem({ applicationForm, onToggle }: Props): ReactElement {
                 <Divider />
               )}
               <PortfolioUrl
-                href={stringToExcludeNull(portfolioUrl)}
+                href={removeNullable(portfolioUrl)}
                 rel="noopener noreferrer"
                 target="_blank"
               >

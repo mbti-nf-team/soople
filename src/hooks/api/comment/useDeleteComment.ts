@@ -1,3 +1,4 @@
+import { checkNumber } from '@nft-team/core';
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 
@@ -5,7 +6,6 @@ import useRenderSuccessToast from '@/hooks/useRenderSuccessToast';
 import { InfiniteResponse } from '@/models';
 import { Comment } from '@/models/group';
 import { deleteGroupComment } from '@/services/api/comment';
-import { checkNumNull } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 
@@ -23,7 +23,7 @@ function useDeleteComment(perPage: number) {
     commentForm,
   ) => deleteGroupComment(commentForm.commentId), {
     onSuccess: (_: void, { groupId, commentId }: DeleteCommentForm) => {
-      queryClient.setQueryData<number>(['commentCount', groupId], (commentCount) => checkNumNull(commentCount) - 1);
+      queryClient.setQueryData<number>(['commentCount', groupId], (commentCount) => checkNumber(commentCount) - 1);
       queryClient.setQueryData<InfiniteData<InfiniteResponse<Comment>> | undefined>(['comments', {
         id: groupId,
         perPage,

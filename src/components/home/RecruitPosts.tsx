@@ -1,9 +1,10 @@
 import { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
+import { isEmpty } from '@nft-team/core';
 
 import useInfiniteFetchGroups from '@/hooks/api/group/useInfiniteFetchGroups';
-import { isEmpty, targetFalseThenValue } from '@/utils/utils';
+import { targetFalseThenValue } from '@/utils/utils';
 
 import EmptyStateArea from '../common/EmptyStateArea';
 

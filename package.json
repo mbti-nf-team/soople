@@ -46,6 +46,7 @@
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^2.9.10",
     "@next/bundle-analyzer": "^13.4.4",
+    "@nft-team/core": "^1.1.0",
     "@nft-team/react": "^1.2.0",
     "@remirror/pm": "^1.0.20",
     "@remirror/react": "^1.0.39",

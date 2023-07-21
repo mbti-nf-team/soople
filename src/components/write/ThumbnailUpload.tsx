@@ -10,6 +10,7 @@ import Image from 'next/image';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { isEmpty, removeNullable } from '@nft-team/core';
 import { nanoid } from 'nanoid';
 import { useRecoilState } from 'recoil';
 
@@ -19,7 +20,6 @@ import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { body2Font, subtitle1Font } from '@/styles/fontStyles';
 import mq from '@/styles/responsive';
-import { isEmpty, stringToExcludeNull } from '@/utils/utils';
 
 import HelperMessage from '../common/HelperMessage';
 import Label from '../common/Label';
@@ -56,7 +56,7 @@ function ThumbnailUpload(): ReactElement {
   useEffect(() => {
     if (!isEmpty(images) && images[0].file) {
       onUploadThumbnail({
-        storagePath: `thumbnail/${stringToExcludeNull(user?.uid)}/${nanoid()}/${images[0].file.name}`,
+        storagePath: `thumbnail/${removeNullable(user?.uid)}/${nanoid()}/${images[0].file.name}`,
         file: images[0].file,
       });
       setIsError(false);
@@ -131,7 +131,7 @@ function ThumbnailUpload(): ReactElement {
                     />
                     <ThumbnailImage
                       fill
-                      src={stringToExcludeNull(image.dataURL)}
+                      src={removeNullable(image.dataURL)}
                       placeholder="empty"
                       alt="thumbnail"
                       sizes="(max-width: 500px) 100vw, 50vw"

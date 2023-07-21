@@ -4,13 +4,13 @@ import { useEffectOnce, useUpdateEffect } from 'react-use';
 
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { removeNullable } from '@nft-team/core';
 import { useBoolean } from '@nft-team/react';
 import * as yup from 'yup';
 
 import { SelectOption } from '@/models';
 import { Profile, SignUpAdditionalForm } from '@/models/auth';
 import { Position, positionOption } from '@/models/group';
-import { stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
 import CreatableSelectBox from '../common/CreatableSelectBox';
@@ -51,18 +51,18 @@ function SettingForm({
     if (user) {
       const { name, portfolioUrl } = user;
 
-      setValue('name', stringToExcludeNull(name), { shouldValidate: true });
-      setValue('portfolioUrl', stringToExcludeNull(portfolioUrl), { shouldValidate: true });
+      setValue('name', removeNullable(name), { shouldValidate: true });
+      setValue('portfolioUrl', removeNullable(portfolioUrl), { shouldValidate: true });
     }
   }, [user]);
 
   useEffectOnce(() => {
-    setValue('position', stringToExcludeNull(position), { shouldValidate: true });
+    setValue('position', removeNullable(position), { shouldValidate: true });
   });
 
   useUpdateEffect(() => {
     if (position) {
-      setValue('position', stringToExcludeNull(position), { shouldValidate: true, shouldDirty: true });
+      setValue('position', removeNullable(position), { shouldValidate: true, shouldDirty: true });
     }
   }, [position]);
 
@@ -84,7 +84,7 @@ function SettingForm({
           type="email"
           labelText="이메일"
           placeholder="이메일을 입력하세요"
-          defaultValue={stringToExcludeNull(user?.email)}
+          defaultValue={removeNullable(user?.email)}
           disabled
         />
         <CreatableSelectBox

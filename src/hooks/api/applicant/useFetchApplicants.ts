@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 
+import { checkEmpty } from '@nft-team/core';
 import { useQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 
 import { GroupQuery } from '@/models';
 import { Applicant } from '@/models/group';
 import { getApplicants } from '@/services/api/applicants';
-import { checkEmpty } from '@/utils/utils';
 
 import useCatchFirestoreErrorWithToast from '../useCatchFirestoreErrorWithToast';
 

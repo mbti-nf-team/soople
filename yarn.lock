@@ -2535,6 +2535,11 @@
   resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.4.4.tgz#faab69239f8a9d0be7cd473e65f5a07735ef7b0e"
   integrity sha512-AHRITu/CrlQ+qzoqQtEMfaTu7GHaQ6bziQln/pVWpOYC1wU+Mq6VQQFlsDtMCnDztPZtppAXdvvbNS7pcfRzlw==
 
+"@nft-team/core@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@nft-team/core/-/core-1.1.0.tgz#0beef73f3d96a5b40082f0c290fe701579b8e2c9"
+  integrity sha512-4wZoR+w6+jtGUTEndlol6VU2cHfqiPnMtLK5sOTo3+pAHCuZWcQvNgTifhHkHMdaGMaBRrss4r6Ny4fxu1mFXA==
+
 "@nft-team/eslint-config@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@nft-team/eslint-config/-/eslint-config-1.1.1.tgz#045333238826439bf3eb9cfbc93b1e54d27b2923"
