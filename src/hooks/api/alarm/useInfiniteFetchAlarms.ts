@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { checkEmpty } from '@nft-team/core';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 
@@ -7,7 +8,6 @@ import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { InfiniteResponse } from '@/models';
 import { Alarm } from '@/models/alarm';
 import { getUserAlarms } from '@/services/api/alarm';
-import { checkEmpty } from '@/utils/utils';
 
 function useInfiniteFetchAlarms({ userUid }: { userUid?: string }) {
   const query = useInfiniteQuery<InfiniteResponse<Alarm>, FirestoreError>(['alarms'], ({

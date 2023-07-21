@@ -4,13 +4,13 @@ import { useEffectOnce, useLocalStorage } from 'react-use';
 
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { removeNullable } from '@nft-team/core';
 import { User } from 'firebase/auth';
 import * as yup from 'yup';
 
 import type { SignUpAdditionalForm } from '@/models/auth';
 import { Position, positionOption } from '@/models/group';
 import mq from '@/styles/responsive';
-import { stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
 import CreatableSelectBox from '../common/CreatableSelectBox';
@@ -56,7 +56,7 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         placeholder="닉네임을 입력해주세요"
         register={register('name')}
         onClear={() => resetField('name')}
-        defaultValue={stringToExcludeNull(fields?.displayName)}
+        defaultValue={removeNullable(fields?.displayName)}
         isError={!!errors.name}
         message={errors.name?.message}
         type="text"
@@ -65,7 +65,7 @@ function SignUpForm({ onSubmit, fields }: Props): ReactElement {
         id="email"
         labelText="이메일"
         placeholder="이메일을 입력해주세요"
-        defaultValue={stringToExcludeNull(fields?.email)}
+        defaultValue={removeNullable(fields?.email)}
         type="email"
         disabled
       />

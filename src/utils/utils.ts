@@ -5,28 +5,6 @@ import { Group } from '@/models/group';
 
 export const isProdLevel = (env: string): boolean => env === 'production';
 
-export const stringToExcludeNull = (value?: string | null): string => {
-  if (typeof value === 'undefined') {
-    return '';
-  }
-
-  if (value === null) {
-    return '';
-  }
-
-  return value;
-};
-
-export const checkNumNull = (value?: number | null): number => {
-  if (!value) {
-    return 0;
-  }
-
-  return value;
-};
-
-export const emptyAThenB = (b: string, a?: string | null): string => a || b;
-
 export const targetFalseThenValue = (
   target?: boolean,
 ) => <T>(value: T): undefined | T => (target ? undefined : value);
@@ -67,32 +45,4 @@ export const isRecruitCompletedAndManual = (group: Group) => {
 export const removeToken = () => {
   destroyCookie(null, 'token');
   setCookie(null, 'token', '', { path: '/' });
-};
-
-export const trueOrFalse = (value?: string | null | number | boolean): boolean => {
-  if (!value) {
-    return false;
-  }
-
-  return true;
-};
-
-export const checkEmpty = <T>(value?: T[]): T[] => {
-  if (!value || !value.length) {
-    return [];
-  }
-
-  return value;
-};
-
-export const isEmpty = <T>(value?: T[]) => {
-  if (!value) {
-    return true;
-  }
-
-  if (value.length > 0) {
-    return false;
-  }
-
-  return true;
 };

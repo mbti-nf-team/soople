@@ -6,6 +6,7 @@ import { useLocalStorage } from 'react-use';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
+import { removeNullable } from '@nft-team/core';
 
 import ImageSetting from '@/components/myInfo/ImageSetting';
 import SettingForm from '@/components/myInfo/SettingForm';
@@ -19,7 +20,6 @@ import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import { SignUpAdditionalForm } from '@/models/auth';
 import { DetailLayout } from '@/styles/Layout';
 import { successToast } from '@/utils/toast';
-import { stringToExcludeNull } from '@/utils/utils';
 
 type MyInfoActionType = 'deleteImage' | 'uploadImage' | 'updateUser';
 
@@ -89,7 +89,7 @@ function MyInfoSettingContainer(): ReactElement | null {
 
     uploadStorageUserImage({
       file,
-      storagePath: `profile/${stringToExcludeNull(user?.uid)}/${Date.now()}-${file.name}`,
+      storagePath: `profile/${removeNullable(user?.uid)}/${Date.now()}-${file.name}`,
     });
   }, [user, uploadStorageUserImage, deleteStorageUserImage]);
 
@@ -118,7 +118,7 @@ function MyInfoSettingContainer(): ReactElement | null {
 
   useEffect(() => {
     if (isSuccessUpdate && toastMessage && myInfoActionType) {
-      successToast(stringToExcludeNull(toastMessage[myInfoActionType]));
+      successToast(removeNullable(toastMessage[myInfoActionType]));
       setMyInfoActionType(undefined);
       resetUpdateProfile();
     }

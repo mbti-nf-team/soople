@@ -3,13 +3,13 @@ import {
 } from 'react';
 
 import styled from '@emotion/styled';
+import { emptyAThenB } from '@nft-team/core';
 import dayjs from 'dayjs';
 
 import { DeleteCommentForm } from '@/hooks/api/comment/useDeleteComment';
 import { Comment } from '@/models/group';
 import { body1Font, body2Font, subtitle1Font } from '@/styles/fontStyles';
 import { filteredWithSanitizeHtml } from '@/utils/filter';
-import { emptyAThenB } from '@/utils/utils';
 
 import ProfileImage from '../common/ProfileImage';
 

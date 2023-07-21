@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
+import { checkNumber } from '@nft-team/core';
 import { ClientOnly } from '@nft-team/react';
 
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
@@ -15,7 +16,6 @@ import useFetchCommentCount from '@/hooks/api/comment/useFetchCommentCount';
 import { GroupQuery } from '@/models';
 import { CommentFields } from '@/models/group';
 import { h4Font } from '@/styles/fontStyles';
-import { checkNumNull } from '@/utils/utils';
 
 const CommentsView = dynamic(() => import('@/components/detail/CommentsView'), { suspense: true });
 
@@ -35,7 +35,7 @@ function CommentsContainer(): ReactElement {
 
   return (
     <>
-      <CommentCount>{`댓글 ${checkNumNull(commentCount)}`}</CommentCount>
+      <CommentCount>{`댓글 ${checkNumber(commentCount)}`}</CommentCount>
       <CommentForm
         user={user}
         onSubmit={onSubmit}

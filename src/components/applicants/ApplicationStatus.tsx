@@ -3,13 +3,13 @@ import { ReactElement, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
+import { isEmpty } from '@nft-team/core';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';
 import { Applicant } from '@/models/group';
 import { mobileMediaQuery } from '@/styles/responsive';
 import { errorToast } from '@/utils/toast';
-import { isEmpty } from '@/utils/utils';
 
 import EmptyStateArea from '../common/EmptyStateArea';
 
