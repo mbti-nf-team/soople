@@ -2,11 +2,11 @@ import { ReactElement, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useLessThenScrollY } from '@nft-team/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import Button from '@/components/common/Button';
 import SubHeader from '@/components/common/SubHeader';
-import useLessThenScrollY from '@/hooks/useLessThenScrollY';
 import useResponsive from '@/hooks/useResponsive';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { publishModalVisibleState } from '@/recoil/modal/atom';
