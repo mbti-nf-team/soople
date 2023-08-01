@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { checkNumber } from '@nft-team/core';
+import { checkNumber } from '@nf-team/core';
 
 import MyInfoTab from '@/components/myInfo/MyInfoTab';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';

@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 
-import { ClientOnly } from '@nft-team/react';
+import { ClientOnly } from '@nf-team/react';
 
 import AlarmsSkeletonLoader from '@/components/alarm/AlarmsSkeletonLoader';
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';

@@ -1,6 +1,6 @@
 import { memo, PropsWithChildren, ReactElement } from 'react';
 
-import { isEmpty } from '@nft-team/core';
+import { isEmpty } from '@nf-team/core';
 
 import { InfiniteRefState, InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';

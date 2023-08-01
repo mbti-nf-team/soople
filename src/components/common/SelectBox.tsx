@@ -3,7 +3,7 @@ import Select, { GroupBase, OptionsOrGroups } from 'react-select';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useIsomorphicLayoutEffect } from '@nft-team/react';
+import { useIsomorphicLayoutEffect } from '@nf-team/react';
 
 import { SelectOption } from '@/models';
 import { body1Font } from '@/styles/fontStyles';

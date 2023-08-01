@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { checkEmpty } from '@nft-team/core';
+import { checkEmpty } from '@nf-team/core';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 

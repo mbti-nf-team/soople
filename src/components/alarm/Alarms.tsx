@@ -1,7 +1,7 @@
 import { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { isEmpty } from '@nft-team/core';
+import { isEmpty } from '@nf-team/core';
 
 import { InfiniteRefState, InfiniteResponse } from '@/models';
 import { Alarm } from '@/models/alarm';

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import styled from '@emotion/styled';
-import { useBoolean } from '@nft-team/react';
+import { useBoolean } from '@nf-team/react';
 
 import useResponsive from '@/hooks/useResponsive';
 import { Applicant, CompletedGroupForm } from '@/models/group';

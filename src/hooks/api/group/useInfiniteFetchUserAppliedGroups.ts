@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { checkEmpty } from '@nft-team/core';
+import { checkEmpty } from '@nf-team/core';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 

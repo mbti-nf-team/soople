@@ -1,4 +1,4 @@
-import { checkNumber } from '@nft-team/core';
+import { checkNumber } from '@nf-team/core';
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 

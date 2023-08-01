@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useLessThenScrollY } from '@nft-team/react';
+import { useLessThenScrollY } from '@nf-team/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import Button from '@/components/common/Button';

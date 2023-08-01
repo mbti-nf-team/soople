@@ -6,8 +6,8 @@ import Link from 'next/link';
 
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { isEmpty } from '@nft-team/core';
-import { useBoolean } from '@nft-team/react';
+import { isEmpty } from '@nf-team/core';
+import { useBoolean } from '@nf-team/react';
 
 import useFetchAlertAlarms from '@/hooks/api/alarm/useFetchAlertAlarms';
 import useResponsive from '@/hooks/useResponsive';

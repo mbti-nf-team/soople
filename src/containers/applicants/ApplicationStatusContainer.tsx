@@ -3,7 +3,7 @@ import { ReactElement, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
 import styled from '@emotion/styled';
-import { ClientOnly } from '@nft-team/react';
+import { ClientOnly } from '@nf-team/react';
 
 import ApplicationStatusSkeletonLoader from '@/components/applicants/ApplicationStatusSkeletonLoader';
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';

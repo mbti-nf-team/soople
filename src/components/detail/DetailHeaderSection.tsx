@@ -3,7 +3,7 @@ import { Eye as ViewsIcon } from 'react-feather';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { emptyAThenB } from '@nft-team/core';
+import { emptyAThenB } from '@nf-team/core';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import useResponsive from '@/hooks/useResponsive';

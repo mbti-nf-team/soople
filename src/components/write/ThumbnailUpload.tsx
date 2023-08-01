@@ -10,7 +10,7 @@ import Image from 'next/image';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { isEmpty, removeNullable } from '@nft-team/core';
+import { isEmpty, removeNullable } from '@nf-team/core';
 import { nanoid } from 'nanoid';
 import { useRecoilState } from 'recoil';
 

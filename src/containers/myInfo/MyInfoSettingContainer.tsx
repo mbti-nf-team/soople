@@ -6,7 +6,7 @@ import { useLocalStorage } from 'react-use';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
-import { removeNullable } from '@nft-team/core';
+import { removeNullable } from '@nf-team/core';
 
 import ImageSetting from '@/components/myInfo/ImageSetting';
 import SettingForm from '@/components/myInfo/SettingForm';

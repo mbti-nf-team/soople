@@ -6,7 +6,7 @@ import { useLockBodyScroll } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { DelayRenderComponent, GlobalPortal, useActionKeyEvent } from '@nft-team/react';
+import { DelayRenderComponent, GlobalPortal, useActionKeyEvent } from '@nf-team/react';
 
 import useResponsive from '@/hooks/useResponsive';
 import animations from '@/styles/animations';

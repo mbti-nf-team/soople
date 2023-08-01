@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { removeNullable } from '@nft-team/core';
+import { removeNullable } from '@nf-team/core';
 import dayjs from 'dayjs';
 
 import { Alarm, AlarmType } from '@/models/alarm';

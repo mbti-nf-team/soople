@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { removeNullable } from '@nft-team/core';
+import { removeNullable } from '@nf-team/core';
 
 import { h3Font } from '@/styles/fontStyles';
 

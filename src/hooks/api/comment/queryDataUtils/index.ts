@@ -1,4 +1,4 @@
-import { checkEmpty } from '@nft-team/core';
+import { checkEmpty } from '@nf-team/core';
 import { InfiniteData } from '@tanstack/react-query';
 
 import { InfiniteResponse } from '@/models';

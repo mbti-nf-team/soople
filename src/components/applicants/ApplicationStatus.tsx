@@ -3,7 +3,7 @@ import { ReactElement, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
-import { isEmpty } from '@nft-team/core';
+import { isEmpty } from '@nf-team/core';
 
 import useFetchApplicants from '@/hooks/api/applicant/useFetchApplicants';
 import useUpdateApplicant from '@/hooks/api/applicant/useUpdateApplicant';

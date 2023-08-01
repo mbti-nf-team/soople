@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
-import { ClientOnly } from '@nft-team/react';
+import { ClientOnly } from '@nf-team/react';
 import { useSetRecoilState } from 'recoil';
 
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';

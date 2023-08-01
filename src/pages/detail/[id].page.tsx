@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
 
 import styled from '@emotion/styled';
-import { emptyAThenB } from '@nft-team/core';
+import { emptyAThenB } from '@nf-team/core';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { FirebaseError } from 'firebase/app';
 

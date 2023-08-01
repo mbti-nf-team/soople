@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { emptyAThenB } from '@nft-team/core';
+import { emptyAThenB } from '@nf-team/core';
 
 import Button from '@/components/common/Button';
 import ProfileImage from '@/components/common/ProfileImage';
