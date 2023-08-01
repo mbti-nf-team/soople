@@ -3,7 +3,7 @@ import {
 } from 'react';
 
 import styled from '@emotion/styled';
-import { emptyAThenB } from '@nft-team/core';
+import { emptyAThenB } from '@nf-team/core';
 import dayjs from 'dayjs';
 
 import { DeleteCommentForm } from '@/hooks/api/comment/useDeleteComment';

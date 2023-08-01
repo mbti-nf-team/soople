@@ -1,4 +1,4 @@
-import { checkEmpty } from '@nft-team/core';
+import { checkEmpty } from '@nf-team/core';
 import { useQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 

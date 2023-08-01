@@ -3,7 +3,7 @@ import {
 } from 'react';
 
 import styled from '@emotion/styled';
-import { removeNullable } from '@nft-team/core';
+import { removeNullable } from '@nf-team/core';
 
 import { SelectOption } from '@/models';
 import {

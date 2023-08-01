@@ -4,7 +4,7 @@ import { useClickAway, useLockBodyScroll } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { DelayRenderComponent, GlobalPortal } from '@nft-team/react';
+import { DelayRenderComponent, GlobalPortal } from '@nf-team/react';
 
 import useResponsive from '@/hooks/useResponsive';
 import animations from '@/styles/animations';

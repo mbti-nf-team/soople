@@ -3,7 +3,7 @@ import { X as CloseIcon } from 'react-feather';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useBoolean } from '@nft-team/react';
+import { useBoolean } from '@nf-team/react';
 import { EditorComponent } from '@remirror/react';
 import {
   CoreStyledComponent,

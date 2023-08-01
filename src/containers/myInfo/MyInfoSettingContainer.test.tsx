@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { removeNullable } from '@nft-team/core';
+import { removeNullable } from '@nf-team/core';
 import { act, fireEvent, screen } from '@testing-library/react';
 
 import useAccountWithdrawal from '@/hooks/api/auth/useAccountWithdrawal';

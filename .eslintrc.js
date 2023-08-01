@@ -7,7 +7,7 @@ module.exports = {
     'storybook-static',
   ],
   extends: [
-    '@nft-team/eslint-config',
+    '@nf-team/eslint-config',
   ],
   plugins: [
     '@emotion',

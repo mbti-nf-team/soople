@@ -1,7 +1,7 @@
 import { memo, ReactElement } from 'react';
 
 import styled from '@emotion/styled';
-import { emptyAThenB, removeNullable } from '@nft-team/core';
+import { emptyAThenB, removeNullable } from '@nf-team/core';
 
 import useResponsive from '@/hooks/useResponsive';
 import { Applicant } from '@/models/group';

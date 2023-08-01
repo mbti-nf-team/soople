@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
-import { useIsomorphicLayoutEffect } from '@nft-team/react';
+import { useIsomorphicLayoutEffect } from '@nf-team/react';
 
 import { breakpoint } from '@/styles/responsive';
 

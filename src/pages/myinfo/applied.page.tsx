@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 
-import { ClientOnly } from '@nft-team/react';
+import { ClientOnly } from '@nf-team/react';
 
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import MyGroupsSkeletonLoader from '@/components/myInfo/MyGroupsSkeletonLoader';

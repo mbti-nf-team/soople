@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { emptyAThenB } from '@nft-team/core';
+import { emptyAThenB } from '@nf-team/core';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';

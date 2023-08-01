@@ -4,8 +4,8 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
-import { checkNumber } from '@nft-team/core';
-import { ClientOnly } from '@nft-team/react';
+import { checkNumber } from '@nf-team/core';
+import { ClientOnly } from '@nf-team/react';
 
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import CommentForm from '@/components/detail/CommentForm';

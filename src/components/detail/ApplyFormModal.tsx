@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { removeNullable } from '@nft-team/core';
+import { removeNullable } from '@nf-team/core';
 import * as yup from 'yup';
 
 import FormModal from '@/components/common/FormModal';

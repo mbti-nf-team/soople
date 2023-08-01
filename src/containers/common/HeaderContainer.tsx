@@ -2,7 +2,7 @@ import { ReactElement, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useLessThenScrollY } from '@nft-team/react';
+import { useLessThenScrollY } from '@nf-team/react';
 import { useSetRecoilState } from 'recoil';
 
 import Header from '@/components/common/Header';

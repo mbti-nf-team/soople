@@ -5,7 +5,7 @@ import {
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useActionKeyEvent } from '@nft-team/react';
+import { useActionKeyEvent } from '@nf-team/react';
 
 import { body1Font } from '@/styles/fontStyles';
 

@@ -5,7 +5,7 @@ import {
 import Link from 'next/link';
 
 import styled from '@emotion/styled';
-import { useLessThenScrollY } from '@nft-team/react';
+import { useLessThenScrollY } from '@nf-team/react';
 import { useSetRecoilState } from 'recoil';
 
 import { groupsConditionState } from '@/recoil/group/atom';

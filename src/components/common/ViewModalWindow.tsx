@@ -4,8 +4,8 @@ import { useClickAway, useLockBodyScroll } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { emptyAThenB } from '@nft-team/core';
-import { DelayRenderComponent, GlobalPortal } from '@nft-team/react';
+import { emptyAThenB } from '@nf-team/core';
+import { DelayRenderComponent, GlobalPortal } from '@nf-team/react';
 
 import animations from '@/styles/animations';
 import { h4Font } from '@/styles/fontStyles';

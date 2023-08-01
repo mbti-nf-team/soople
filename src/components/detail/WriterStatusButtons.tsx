@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { removeNullable } from '@nft-team/core';
-import { useActionKeyEvent, useBoolean } from '@nft-team/react';
+import { removeNullable } from '@nf-team/core';
+import { useActionKeyEvent, useBoolean } from '@nf-team/react';
 import { useSetRecoilState } from 'recoil';
 
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';

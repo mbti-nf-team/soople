@@ -2,7 +2,7 @@ import { PropsWithChildren, ReactElement } from 'react';
 import { ChevronLeft } from 'react-feather';
 
 import styled from '@emotion/styled';
-import { useActionKeyEvent } from '@nft-team/react';
+import { useActionKeyEvent } from '@nf-team/react';
 
 import { body1Font, h4Font } from '@/styles/fontStyles';
 import Layout from '@/styles/Layout';

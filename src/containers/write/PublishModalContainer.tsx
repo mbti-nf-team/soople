@@ -5,7 +5,7 @@ import { useEffectOnce, useUnmount } from 'react-use';
 
 import { useRouter } from 'next/router';
 
-import { isEmpty } from '@nft-team/core';
+import { isEmpty } from '@nf-team/core';
 import { useHelpers, useRemirrorContext } from '@remirror/react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 

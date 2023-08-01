@@ -4,7 +4,7 @@ import { Bounce } from 'react-toastify';
 import NextNProgress from 'nextjs-progressbar';
 
 import { useTheme } from '@emotion/react';
-import { GlobalPortal } from '@nft-team/react';
+import { GlobalPortal } from '@nf-team/react';
 
 import useAuthRedirectResult from '@/hooks/api/auth/useAuthRedirectResult';
 import useCheckSignUp from '@/hooks/api/auth/useCheckSignUp';

@@ -4,8 +4,8 @@ import { useEffectOnce, useUpdateEffect } from 'react-use';
 
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { removeNullable } from '@nft-team/core';
-import { useBoolean } from '@nft-team/react';
+import { removeNullable } from '@nf-team/core';
+import { useBoolean } from '@nf-team/react';
 import * as yup from 'yup';
 
 import { SelectOption } from '@/models';
