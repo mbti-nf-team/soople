@@ -2535,15 +2535,15 @@
   resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.4.4.tgz#faab69239f8a9d0be7cd473e65f5a07735ef7b0e"
   integrity sha512-AHRITu/CrlQ+qzoqQtEMfaTu7GHaQ6bziQln/pVWpOYC1wU+Mq6VQQFlsDtMCnDztPZtppAXdvvbNS7pcfRzlw==
 
-"@nf-team/core@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@nf-team/core/-/core-2.0.0.tgz#f307b878d1e8cdb9b2d3fc870e29f2fec5a3af45"
-  integrity sha512-bnTdDMvGls9996pxuSdnEqa/is+uFhnyPlyaIfZcTq1xJY1q1Xez9QPiAlPaI95B0Mf0IPalz53m9r1cz2lOUw==
+"@nf-team/core@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@nf-team/core/-/core-2.0.1.tgz#e73d52d3c2dfc9b0b1fbc30a8815d6cbb76e398c"
+  integrity sha512-Q89uC7S1dOZ3wEOm5OLKteIddsfjU3hd4RwET5i+gMi39/f5Wbq8158iyo86OQgPWmPUDDGFR5ZFEoUwmF2iyA==
 
-"@nf-team/eslint-config@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@nf-team/eslint-config/-/eslint-config-2.0.0.tgz#56275b66b06bbda02b1ee706959cb029b30cdaac"
-  integrity sha512-DPydqb8NdE/bwkLA3ieO3AsNRO7Zn6VMw2p/GihHS9zJbwD9Wk0DW18P0cZWMyVBrIKiwg0uRd66DhewahCDUw==
+"@nf-team/eslint-config@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@nf-team/eslint-config/-/eslint-config-2.0.1.tgz#f5b93d7cee6b20a5c08e58cdfac08c0b61b90ecb"
+  integrity sha512-Ne+QkusVfMSNTIN/xBtbvxvXCu540CTrn187Tn2W/YQ58I2xALADEZG6YAXs3QrKYNchcFh9VT32Z8jUHmf/LA==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.60.0"
     "@typescript-eslint/parser" "^5.60.0"
@@ -2558,10 +2558,10 @@
     eslint-plugin-simple-import-sort "^10.0.0"
     eslint-plugin-unused-imports "^2.0.0"
 
-"@nf-team/react@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@nf-team/react/-/react-2.0.0.tgz#fcb24464bdff2a68daa4eb5a7f9a95700b4d57d2"
-  integrity sha512-WNDjxRUtPPOG4wwUFMIXGfA0sP5WveTZmcsgySfYvhorlWTVZRUFIV66s6B3zqGjfgD+Ucej01/xLZTh1jtv2Q==
+"@nf-team/react@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@nf-team/react/-/react-2.0.1.tgz#e569a863bb77a8cc6b0c96512448612f44629222"
+  integrity sha512-2vuqu3E/+m9OMp8aocwn35N1fQp+bAH+M708TokzmpMQSIbX0rzyCi0jxUXrzpb//18dbSGVQX8C/l/jofuNXA==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
