@@ -86,7 +86,7 @@
     "rehype-parse": "^8.0.4",
     "rehype-stringify": "^9.0.3",
     "remirror": "^1.0.85",
-    "sanitize-html": "^2.7.0",
+    "sanitize-html": "^2.12.1",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.0",
     "yup": "^0.32.11"
