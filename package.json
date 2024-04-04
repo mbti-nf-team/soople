@@ -148,7 +148,7 @@
     "react-test-renderer": "^18.2.0",
     "start-server-and-test": "^1.14.0",
     "typescript": "^4.6.4",
-    "vite": "^3.2.8"
+    "vite": "^3.2.10"
   },
   "browserslist": [
     "since 2017"
