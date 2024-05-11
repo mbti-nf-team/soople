@@ -6,9 +6,9 @@ import { useWindowSize } from 'react-use';
 
 import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useLessThenScrollY } from '@nf-team/react';
 import { useActive, useChainedCommands } from '@remirror/react';
 
-import useLessThenScrollY from '@/hooks/useLessThenScrollY';
 import useResponsive from '@/hooks/useResponsive';
 import Divider from '@/styles/Divider';
 import mq, { mediaQueries } from '@/styles/responsive';

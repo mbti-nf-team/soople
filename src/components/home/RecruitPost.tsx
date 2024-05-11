@@ -8,6 +8,7 @@ import Link from 'next/link';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { emptyAThenB } from '@nf-team/core';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import { Group } from '@/models/group';
@@ -15,7 +16,6 @@ import Divider from '@/styles/Divider';
 import { body2Font, h4Font, subtitle1Font } from '@/styles/fontStyles';
 import { mq2 } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
-import { emptyAThenB } from '@/utils/utils';
 
 import ProfileImage from '../common/ProfileImage';
 

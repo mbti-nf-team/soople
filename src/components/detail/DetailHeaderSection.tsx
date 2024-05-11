@@ -3,6 +3,7 @@ import { Eye as ViewsIcon } from 'react-feather';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { emptyAThenB } from '@nf-team/core';
 
 import useRecruitDateStatus from '@/hooks/useRecruitDateStatus';
 import useResponsive from '@/hooks/useResponsive';
@@ -12,7 +13,6 @@ import {
   body1Font, h2Font, h3Font, subtitle1Font,
 } from '@/styles/fontStyles';
 import { mediaQueries } from '@/styles/responsive';
-import { emptyAThenB } from '@/utils/utils';
 
 import ProfileImage from '../common/ProfileImage';
 

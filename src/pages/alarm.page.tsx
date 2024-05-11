@@ -4,8 +4,9 @@ import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 
+import { ClientOnly } from '@nf-team/react';
+
 import AlarmsSkeletonLoader from '@/components/alarm/AlarmsSkeletonLoader';
-import ClientOnly from '@/components/common/ClientOnly';
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import HeaderContainer from '@/containers/common/HeaderContainer';
 import authenticatedServerSideProps from '@/services/serverSideProps/authenticatedServerSideProps';

@@ -3,6 +3,7 @@ import {
 } from 'react';
 
 import styled from '@emotion/styled';
+import { removeNullable } from '@nf-team/core';
 
 import { SelectOption } from '@/models';
 import {
@@ -10,7 +11,6 @@ import {
 } from '@/models/group';
 import { subtitle1Font } from '@/styles/fontStyles';
 import { mediaQueries, mobileMediaQuery } from '@/styles/responsive';
-import { stringToExcludeNull } from '@/utils/utils';
 
 import FormModal from '../common/FormModal';
 import Input from '../common/Input';
@@ -158,7 +158,7 @@ function PublishModalForm({
               placeholder="모집 마감일시를 입력하세요"
               type="datetime-local"
               onChange={handleChangeFields}
-              value={stringToExcludeNull(recruitmentEndDate)}
+              value={removeNullable(recruitmentEndDate)}
               disabled={isEndDateDisabled || !isRecruiting}
             />
           </PublishFormWrapper>

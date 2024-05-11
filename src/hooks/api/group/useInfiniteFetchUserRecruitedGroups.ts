@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { checkEmpty } from '@nf-team/core';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 
@@ -7,7 +8,6 @@ import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { InfiniteRequest, InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';
 import { getUserRecruitedGroups } from '@/services/api/group';
-import { checkEmpty } from '@/utils/utils';
 
 interface UserRecruitedGroupsRequest extends InfiniteRequest {
   userUid?: string;

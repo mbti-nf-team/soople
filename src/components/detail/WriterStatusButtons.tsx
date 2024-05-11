@@ -5,18 +5,17 @@ import { useRouter } from 'next/router';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { removeNullable } from '@nf-team/core';
+import { useActionKeyEvent, useBoolean } from '@nf-team/react';
 import { useSetRecoilState } from 'recoil';
 
 import useRemoveGroup from '@/hooks/api/group/useRemoveGroup';
 import useDeleteStorageFile from '@/hooks/api/storage/useDeleteStorageFile';
-import useActionKeyEvent from '@/hooks/useActionKeyEvent';
-import useBoolean from '@/hooks/useBoolean';
 import useResponsive from '@/hooks/useResponsive';
 import { Group } from '@/models/group';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { mobileMediaQuery } from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
-import { stringToExcludeNull } from '@/utils/utils';
 
 import Button from '../common/Button';
 
@@ -55,8 +54,8 @@ function WriterStatusButtons({ group, isCompleted }: Props): ReactElement {
       title,
       recruitmentEndDate,
       recruitmentEndSetting,
-      thumbnail: stringToExcludeNull(initialWriteFields.thumbnail),
-      shortDescription: stringToExcludeNull(initialWriteFields.shortDescription),
+      thumbnail: removeNullable(initialWriteFields.thumbnail),
+      shortDescription: removeNullable(initialWriteFields.shortDescription),
     });
     router.push(`/write?id=${groupId}`);
   };

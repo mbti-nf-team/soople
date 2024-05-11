@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 
 import styled from '@emotion/styled';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { removeNullable } from '@nf-team/core';
 import * as yup from 'yup';
 
 import FormModal from '@/components/common/FormModal';
 import Textarea from '@/components/common/Textarea';
 import { ApplicantForm } from '@/models/group';
-import { stringToExcludeNull } from '@/utils/utils';
 
 import Input from '../common/Input';
 
@@ -52,7 +52,7 @@ function ApplyFormModal({
         <Input
           labelText="포트폴리오"
           id="portfolioUrl"
-          defaultValue={stringToExcludeNull(initPortfolioUrl)}
+          defaultValue={removeNullable(initPortfolioUrl)}
           type="text"
           placeholder="URL을 입력하세요"
           labelOptionText="선택"

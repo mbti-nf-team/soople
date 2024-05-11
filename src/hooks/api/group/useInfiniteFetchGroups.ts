@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { checkEmpty } from '@nf-team/core';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 import { useRecoilValue } from 'recoil';
@@ -9,7 +10,6 @@ import { InfiniteResponse } from '@/models';
 import { Group } from '@/models/group';
 import { groupsConditionState } from '@/recoil/group/atom';
 import { fetchGroups } from '@/services/api/group';
-import { checkEmpty } from '@/utils/utils';
 
 function useInfiniteFetchGroups() {
   const groupsCondition = useRecoilValue(groupsConditionState);

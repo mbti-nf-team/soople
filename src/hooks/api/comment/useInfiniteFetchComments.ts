@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { checkEmpty } from '@nf-team/core';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { FirestoreError } from 'firebase/firestore';
 
@@ -9,7 +10,6 @@ import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { GroupQuery, InfiniteRequest, InfiniteResponse } from '@/models';
 import { Comment } from '@/models/group';
 import { getGroupComments } from '@/services/api/comment';
-import { checkEmpty } from '@/utils/utils';
 
 function useInfiniteFetchComments({ perPage }: InfiniteRequest) {
   const router = useRouter();

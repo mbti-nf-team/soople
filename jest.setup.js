@@ -1,10 +1,10 @@
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-
 import 'dayjs/locale/ko';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-plugin-context/setup';
 import 'given2/setup';
+
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 jest.mock('@/utils/rehypePrism');
 jest.mock('next/dynamic', () => ({

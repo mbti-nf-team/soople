@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { emptyAThenB } from '@nf-team/core';
 
 import Button from '@/components/common/Button';
 import ProfileImage from '@/components/common/ProfileImage';
@@ -10,7 +11,6 @@ import { body1Font, subtitle1Font } from '@/styles/fontStyles';
 import GradientBlock from '@/styles/GradientBlock';
 import mq from '@/styles/responsive';
 import styledAnchor from '@/styles/styledAnchor';
-import { emptyAThenB } from '@/utils/utils';
 
 interface Props {
   isVisible: boolean;

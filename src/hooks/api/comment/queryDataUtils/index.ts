@@ -1,8 +1,8 @@
+import { checkEmpty } from '@nf-team/core';
 import { InfiniteData } from '@tanstack/react-query';
 
 import { InfiniteResponse } from '@/models';
 import { Comment, CommentForm } from '@/models/group';
-import { checkEmpty } from '@/utils/utils';
 
 export const addCommentQueryData = (commentId: string, commentForm: CommentForm) => (
   comments?: InfiniteData<InfiniteResponse<Comment>>,

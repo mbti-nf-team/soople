@@ -1,9 +1,9 @@
 import { ReactElement, useState } from 'react';
 import Select, { GroupBase, OptionsOrGroups } from 'react-select';
-import { useIsomorphicLayoutEffect } from 'react-use';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useIsomorphicLayoutEffect } from '@nf-team/react';
 
 import { SelectOption } from '@/models';
 import { body1Font } from '@/styles/fontStyles';

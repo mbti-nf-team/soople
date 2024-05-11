@@ -1,6 +1,6 @@
-import { lightTheme } from '@/styles/theme';
-
 import '@emotion/react';
+
+import { lightTheme } from '@/styles/theme';
 
 declare module '@emotion/react' {
   type CustomTheme = typeof lightTheme;

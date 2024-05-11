@@ -5,6 +5,7 @@ import { useEffectOnce, useUnmount } from 'react-use';
 
 import { useRouter } from 'next/router';
 
+import { isEmpty } from '@nf-team/core';
 import { useHelpers, useRemirrorContext } from '@remirror/react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
@@ -18,7 +19,6 @@ import { Profile } from '@/models/auth';
 import { WriteFields } from '@/models/group';
 import { writeFieldsState } from '@/recoil/group/atom';
 import { publishModalVisibleState } from '@/recoil/modal/atom';
-import { isEmpty } from '@/utils/utils';
 
 function PublishModalContainer(): ReactElement {
   const router = useRouter();

@@ -1,8 +1,8 @@
 import { memo } from 'react';
 
 import styled from '@emotion/styled';
+import { useBoolean } from '@nf-team/react';
 
-import useBoolean from '@/hooks/useBoolean';
 import useResponsive from '@/hooks/useResponsive';
 import { Applicant, CompletedGroupForm } from '@/models/group';
 import { body2Font } from '@/styles/fontStyles';

@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getUserAppliedGroupCount } from '@/services/api/applicants';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -21,9 +21,9 @@ describe('useFetchUserAppliedGroups', () => {
   });
 
   it('신청한 groups에 대한 개수를 반환해야만 한다', async () => {
-    const { result, waitFor } = useFetchUserAppliedGroupsHook();
-    await waitFor(() => result.current.isSuccess);
+    const { result } = useFetchUserAppliedGroupsHook();
 
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
     expect(result.current.data).toBe(count);
   });
 });

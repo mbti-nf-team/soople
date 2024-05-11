@@ -1,10 +1,11 @@
 import { ReactElement } from 'react';
 
+import { checkNumber } from '@nf-team/core';
+
 import MyInfoTab from '@/components/myInfo/MyInfoTab';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useFetchUserAppliedGroupCount from '@/hooks/api/group/useFetchUserAppliedGroupCount';
 import useFetchUserRecruitedGroupCount from '@/hooks/api/group/useFetchUserRecruitedGroupCount';
-import { checkNumNull } from '@/utils/utils';
 
 export type ActiveMyInfoTab = 'setting' | 'recruited' | 'applied';
 
@@ -20,8 +21,8 @@ function MyInfoTabContainer({ activeTab }: Props): ReactElement {
   return (
     <MyInfoTab
       activeTab={activeTab}
-      numberAppliedGroups={checkNumNull(appliedGroupCount)}
-      numberRecruitedGroups={checkNumNull(recruitedGroupCount)}
+      numberAppliedGroups={checkNumber(appliedGroupCount)}
+      numberRecruitedGroups={checkNumber(recruitedGroupCount)}
     />
   );
 }

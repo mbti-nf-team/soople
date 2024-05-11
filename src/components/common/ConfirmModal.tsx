@@ -4,6 +4,7 @@ import { useClickAway, useLockBodyScroll } from 'react-use';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { DelayRenderComponent, GlobalPortal } from '@nf-team/react';
 
 import useResponsive from '@/hooks/useResponsive';
 import animations from '@/styles/animations';
@@ -12,8 +13,6 @@ import mq from '@/styles/responsive';
 import zIndexes from '@/styles/zIndexes';
 
 import Button from './Button';
-import DelayRenderComponent from './DelayRenderComponent';
-import GlobalPortal from './GlobalPortal';
 
 interface Props {
   isVisible: boolean;

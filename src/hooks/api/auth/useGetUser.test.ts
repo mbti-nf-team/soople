@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 
 import wrapper from '@/test/ReactQueryWrapper';
 
@@ -23,10 +23,8 @@ describe('useGetUser', () => {
   context('user.data가 존재하지 않는 경우', () => {
     given('user', () => null);
 
-    it('user에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useGetUserHook();
-
-      await waitFor(() => result.current.isSuccess);
+    it('user에 대한 정보를 반환해야만 한다', () => {
+      const { result } = useGetUserHook();
 
       expect(result.current.data).toEqual(null);
     });
@@ -35,10 +33,8 @@ describe('useGetUser', () => {
   context('user.data가 존재하는 경우', () => {
     given('user', () => FIXTURE_PROFILE);
 
-    it('user에 대한 정보를 반환해야만 한다', async () => {
-      const { result, waitFor } = useGetUserHook();
-
-      await waitFor(() => result.current.isSuccess);
+    it('user에 대한 정보를 반환해야만 한다', () => {
+      const { result } = useGetUserHook();
 
       expect(result.current.data).toEqual(FIXTURE_PROFILE);
     });

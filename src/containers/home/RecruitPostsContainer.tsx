@@ -4,9 +4,9 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import styled from '@emotion/styled';
+import { ClientOnly } from '@nf-team/react';
 import { useSetRecoilState } from 'recoil';
 
-import ClientOnly from '@/components/common/ClientOnly';
 import ErrorBoundary from '@/components/common/errorBoundary/ErrorBoundary';
 import RecruitPostsSkeletonLoader from '@/components/home/RecruitPostsSkeletonLoader';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';

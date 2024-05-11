@@ -2,12 +2,12 @@ import { ReactElement, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useLessThenScrollY } from '@nf-team/react';
 import { useSetRecoilState } from 'recoil';
 
 import Header from '@/components/common/Header';
 import useFetchUserProfile from '@/hooks/api/auth/useFetchUserProfile';
 import useSignOut from '@/hooks/api/auth/useSignOut';
-import useLessThenScrollY from '@/hooks/useLessThenScrollY';
 import { signInModalVisibleState } from '@/recoil/modal/atom';
 
 function HeaderContainer(): ReactElement {

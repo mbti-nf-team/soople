@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { getUserRecruitedGroupCount } from '@/services/api/group';
 import wrapper from '@/test/ReactQueryWrapper';
@@ -21,9 +21,9 @@ describe('useFetchUserRecruitedGroupCount', () => {
   });
 
   it('모집한 groups 대한 개수를 반환해야만 한다', async () => {
-    const { result, waitFor } = useFetchUserRecruitedGroupCountHook();
+    const { result } = useFetchUserRecruitedGroupCountHook();
 
-    await waitFor(() => result.current.isSuccess);
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
     expect(result.current.data).toBe(count);
   });

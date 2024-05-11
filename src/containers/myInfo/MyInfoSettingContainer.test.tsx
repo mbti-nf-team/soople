@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 
+import { removeNullable } from '@nf-team/core';
 import { act, fireEvent, screen } from '@testing-library/react';
 
 import useAccountWithdrawal from '@/hooks/api/auth/useAccountWithdrawal';
@@ -12,7 +13,6 @@ import useUploadStorageFile from '@/hooks/api/storage/useUploadStorageFile';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import renderWithPortal from '@/test/renderWithPortal';
 import { successToast } from '@/utils/toast';
-import { stringToExcludeNull } from '@/utils/utils';
 
 import FIXTURE_PROFILE from '../../../fixtures/profile';
 
@@ -119,7 +119,7 @@ describe('MyInfoSettingContainer', () => {
 
       await act(() => expect(
         container,
-      ).toHaveTextContent(stringToExcludeNull(FIXTURE_PROFILE.position)));
+      ).toHaveTextContent(removeNullable(FIXTURE_PROFILE.position)));
     });
 
     describe('"저장하기" 버튼을 클릭한다', () => {

@@ -3,6 +3,7 @@ import { X as CloseIcon } from 'react-feather';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+import { useBoolean } from '@nf-team/react';
 import { EditorComponent } from '@remirror/react';
 import {
   CoreStyledComponent,
@@ -16,7 +17,6 @@ import {
 } from '@remirror/styles/emotion';
 
 import EditorToolbar from '@/components/write/EditorToolbar';
-import useBoolean from '@/hooks/useBoolean';
 import { body1Font, subtitle1Font } from '@/styles/fontStyles';
 import { mobileMediaQuery } from '@/styles/responsive';
 

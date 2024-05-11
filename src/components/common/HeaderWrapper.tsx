@@ -5,9 +5,9 @@ import {
 import Link from 'next/link';
 
 import styled from '@emotion/styled';
+import { useLessThenScrollY } from '@nf-team/react';
 import { useSetRecoilState } from 'recoil';
 
-import useLessThenScrollY from '@/hooks/useLessThenScrollY';
 import { groupsConditionState } from '@/recoil/group/atom';
 import Layout from '@/styles/Layout';
 import { mq2 } from '@/styles/responsive';

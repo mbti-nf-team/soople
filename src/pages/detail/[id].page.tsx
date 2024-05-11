@@ -4,6 +4,7 @@ import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
 
 import styled from '@emotion/styled';
+import { emptyAThenB } from '@nf-team/core';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { FirebaseError } from 'firebase/app';
 
@@ -22,7 +23,6 @@ import { getGroupDetail } from '@/services/api/group';
 import { DetailLayout } from '@/styles/Layout';
 import { mobileMediaQuery } from '@/styles/responsive';
 import { removeAllHtml } from '@/utils/filter';
-import { emptyAThenB } from '@/utils/utils';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params! as GroupQuery;
