@@ -328,7 +328,7 @@ jobs:
       - run: yarn
       - uses: chromaui/action@v1
         env:
-          NODE_OPTIONS: --max-old-space-size=6144
+          NODE_OPTIONS: "--max-old-space-size=6144 --openssl-legacy-provider"
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           skip: 'dependabot/**'
