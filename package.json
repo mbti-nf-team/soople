@@ -57,7 +57,7 @@
     "dayjs": "^1.11.6",
     "emotion-normalize": "^11.0.1",
     "facepaint": "^1.2.1",
-    "firebase": "^9.9.1",
+    "firebase": "^10.9.0",
     "firebase-admin": "^11.0.0",
     "hast-util-to-string": "^2.0.0",
     "nanoid": "^4.0.2",
